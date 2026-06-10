@@ -1,0 +1,1156 @@
+[
+  {
+    "id": 63,
+    "filename": "board_00063.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "257a618a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T14:40:48",
+    "copy_data": {
+      "h1": "Luka Bersalin Lambat Pulih?",
+      "h2": "Jeli Gamat percepat penyembuhan, kurangkan radang.",
+      "cta": "Pulih Cepat, Pesan Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Sifat anti-radang bantu kurangkan keradangan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 62,
+    "filename": "board_00062.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "53840c82",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T14:15:38",
+    "copy_data": {
+      "h1": "Penyembuhan Pantas Ibu Bersalin Pilihan Serigama",
+      "h2": "Sokongan Semulajadi, Pulih Cepat Selepas Bersalin Lebih Cergas.",
+      "cta": "Alami Penyembuhan Optimum Kini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Membantu pemulihan badan secara menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 61,
+    "filename": "board_00061.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "cebc35c9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T13:30:52",
+    "copy_data": {
+      "h1": "Pulih Bersalin Pantas, Luka Sembuh Segera!",
+      "h2": "Jeli Gamat: Pemulihan Menyeluruh Selepas Bersalin.",
+      "cta": "Alami Pemulihan Anda Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Penyembuhan luka lebih cepat",
+        "Kurangkan keradangan selepas pembedahan",
+        "Tingkat daya ketahanan badan",
+        "Kurangkan keradangan dalam badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 60,
+    "filename": "board_00060.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "cebc35c9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T13:30:40",
+    "copy_data": {
+      "h1": "Pulih Bersalin Pantas, Luka Sembuh Segera!",
+      "h2": "Jeli Gamat: Pemulihan Menyeluruh Selepas Bersalin.",
+      "cta": "Alami Pemulihan Anda Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Penyembuhan luka lebih cepat",
+        "Kurangkan keradangan selepas pembedahan",
+        "Tingkat daya ketahanan badan",
+        "Kurangkan keradangan dalam badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 59,
+    "filename": "board_00059.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3fade08d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T11:56:50",
+    "copy_data": {
+      "h1": "Nikmati Semula Kebebasan Bergerak Aktif!",
+      "h2": "Kurangkan sakit osteoarthritis, pulihkan rawan secara semula jadi.",
+      "cta": "Rasai Perbezaannya Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Glukosamin tinggi kesihatan rawan",
+        "Kurangkan bengkak, sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 58,
+    "filename": "board_00058.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "d87125ac",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T11:26:29",
+    "copy_data": {
+      "h1": "Nikmati Semula Kebebasan Bergerak Aktif!",
+      "h2": "Kurangkan sakit osteoarthritis, pulihkan rawan secara semula jadi.",
+      "cta": "Rasai Perbezaannya Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 57,
+    "filename": "board_00057.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "79609aa2",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T11:14:20",
+    "copy_data": {
+      "h1": "Nikmati Semula Kebebasan Bergerak Aktif!",
+      "h2": "Kurangkan sakit osteoarthritis, pulihkan rawan secara semula jadi.",
+      "cta": "Rasai Perbezaannya Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan sakit akibat osteoarthritis",
+        "Rangsang pembentukan, pulihkan rawan",
+        "Glukosamin tinggi, sihatkan rawan",
+        "Kurangkan bengkak, redakan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 56,
+    "filename": "board_00056.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "bc9c8467",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T10:56:07",
+    "copy_data": {
+      "h1": "Penyembuhan Luka Bersalin Cepat & Menyeluruh!",
+      "h2": "Ekstrak Gamat Premium Untuk Pemulihan Menyeluruh Ibu Bersalin.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka.",
+        "Mengurangkan keradangan selepas pembedahan.",
+        "Meningkatkan daya ketahanan badan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 55,
+    "filename": "board_00055.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Gout",
+    "quality": "draft",
+    "session_id": "377e9843",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T10:37:36",
+    "copy_data": {
+      "h1": "Sakit Gout Menyeksa Setiap Langkah?",
+      "h2": "Glukosamin & anti-radang kurangkan bengkak sendi.",
+      "cta": "Dapatkan Pelegakan Segera!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glukosamin kesihatan rawan",
+        "Kurangkan bengkak, sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 54,
+    "filename": "board_00054.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Gout",
+    "quality": "draft",
+    "session_id": "b9d467aa",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T10:15:52",
+    "copy_data": {
+      "h1": "Sakit Gout Menyeksa Setiap Langkah?",
+      "h2": "Glukosamin & anti-radang kurangkan bengkak sendi.",
+      "cta": "Dapatkan Pelegakan Segera!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan bengkak dan kesakitan sendi",
+        "Sifat anti-radang mengurangkan keradangan",
+        "Tinggi glucosamine kesihatan tulang rawan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 53,
+    "filename": "board_00053.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Gout",
+    "quality": "draft",
+    "session_id": "b9d467aa",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-10T10:15:37",
+    "copy_data": {
+      "h1": "Sakit Gout Menyeksa Setiap Langkah?",
+      "h2": "Glukosamin & anti-radang kurangkan bengkak sendi.",
+      "cta": "Dapatkan Pelegakan Segera!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan bengkak dan kesakitan sendi",
+        "Sifat anti-radang mengurangkan keradangan",
+        "Tinggi glucosamine kesihatan tulang rawan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 52,
+    "filename": "board_00052.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "8cd738f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T17:27:58",
+    "copy_data": {
+      "h1": "20 Tahun Warisan Penyembuhan Semulajadi.",
+      "h2": "Lebih 10 Juta Botol Terjual, KKM Diluluskan.",
+      "cta": "Pilih Jeli Gamat Anda.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Kurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 51,
+    "filename": "board_00051.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "8cd738f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T17:27:19",
+    "copy_data": {
+      "h1": "20 Tahun Warisan Penyembuhan Semulajadi.",
+      "h2": "Lebih 10 Juta Botol Terjual, KKM Diluluskan.",
+      "cta": "Pilih Jeli Gamat Anda.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Kurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 50,
+    "filename": "board_00050.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "8cd738f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T17:26:47",
+    "copy_data": {
+      "h1": "20 Tahun Warisan Penyembuhan Semulajadi.",
+      "h2": "Lebih 10 Juta Botol Terjual, KKM Diluluskan.",
+      "cta": "Pilih Jeli Gamat Anda.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Kurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 49,
+    "filename": "board_00049.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "63de14c3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T17:23:40",
+    "copy_data": {
+      "h1": "Penyelesaian Sendi Dipercayai 20 Tahun!",
+      "h2": "KKM Diluluskan, Halal & Lebih 10 Juta Terjual.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pemulihan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 48,
+    "filename": "board_00048.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "63de14c3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T17:23:27",
+    "copy_data": {
+      "h1": "Penyelesaian Sendi Dipercayai 20 Tahun!",
+      "h2": "KKM Diluluskan, Halal & Lebih 10 Juta Terjual.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pemulihan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 47,
+    "filename": "board_00047.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "5eb45720",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T16:03:47",
+    "copy_data": {
+      "h1": "Glucosamine Bantu Kurang Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Emas Lebih Semulajadi",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine untuk tulang rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 46,
+    "filename": "board_00046.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "5eb45720",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T16:03:20",
+    "copy_data": {
+      "h1": "Glucosamine Bantu Kurang Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Emas Lebih Semulajadi",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine untuk tulang rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 45,
+    "filename": "board_00045.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "5eb45720",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T16:02:46",
+    "copy_data": {
+      "h1": "Glucosamine Bantu Kurang Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Emas Lebih Semulajadi",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine untuk tulang rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 44,
+    "filename": "board_00044.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "511b459c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T15:10:26",
+    "copy_data": {
+      "h1": "Tinggi Glucosamine Bantu Kurang Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Lebih Semulajadi",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 43,
+    "filename": "board_00043.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "511b459c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T15:09:54",
+    "copy_data": {
+      "h1": "Tinggi Glucosamine Bantu Kurang Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Lebih Semulajadi",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 42,
+    "filename": "board_00042.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "511b459c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T15:09:22",
+    "copy_data": {
+      "h1": "Tinggi Glucosamine Bantu Kurang Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Lebih Semulajadi",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 41,
+    "filename": "board_00041.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "15a998f7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-09T09:40:45",
+    "copy_data": {
+      "h1": "Penyembuhan PANTAS Ibu, Kuasa Gamat BARU!",
+      "h2": "Jeli Gamat 550ML: Sokongan Semulajadi Lengkap Pasca Bersalin.",
+      "cta": "Dapatkan Jeli Gamat 550ML Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Mengurangkan keradangan dalam badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 40,
+    "filename": "board_00040.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "59adc8aa",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-08T14:17:21",
+    "copy_data": {
+      "h1": "Jeli Gamat 550ML: Pulih Pantas Pascabersalin!",
+      "h2": "Sokongan Penyembuhan Semula Jadi Untuk Ibu Selepas Bersalin.",
+      "cta": "Dapatkan Serigama Jeli Gamat 550ML!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Mengurangkan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 39,
+    "filename": "board_00039.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "149ea743",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-05T10:23:28",
+    "copy_data": {
+      "h1": "Penyembuhan Pasca Bersalin Lebih Cepat, Berkesan!",
+      "h2": "550ML: Sokongan pemulihan menyeluruh ibu berpantang.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 38,
+    "filename": "board_00038.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "978ffe1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T22:47:50",
+    "copy_data": {
+      "h1": "Pemulihan Bersalin Lebih Cepat, Menyeluruh!",
+      "h2": "Jeli Gamat 550ML: Kekuatan Gamat Semula Jadi.",
+      "cta": "Dapatkan Jeli Gamat 550ML Anda!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Bantu pemulihan badan menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\978ffe1a\\img_03_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 36,
+    "filename": "board_00036.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "978ffe1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T22:47:18",
+    "copy_data": {
+      "h1": "Pemulihan Bersalin Lebih Cepat, Menyeluruh!",
+      "h2": "Jeli Gamat 550ML: Kekuatan Gamat Semula Jadi.",
+      "cta": "Dapatkan Jeli Gamat 550ML Anda!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Bantu pemulihan badan menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\978ffe1a\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 35,
+    "filename": "board_00035.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "9e46fefb",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T17:48:39",
+    "copy_data": {
+      "h1": "100% Ekstrak Gamat Untuk Luka Bersalin",
+      "h2": "10 Juta Botol Terjual",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka.",
+        "Mengurangkan keradangan selepas pembedahan.",
+        "Meningkatkan daya ketahanan badan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\9e46fefb\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 31,
+    "filename": "board_00031.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "9e758aa7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T15:54:49",
+    "copy_data": {
+      "h1": "Penyembuhan Pantas, Ibu Kembali Cergas!",
+      "h2": "Jeli Gamat: Ekstrak Asli Bantu Pemulihan Menyeluruh Ibu.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan"
+      ],
+      "_framework": "BENEFIT"
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\9e758aa7\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 30,
+    "filename": "board_00030.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "c2624f82",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T15:51:19",
+    "copy_data": {
+      "h1": "Jeli Gamat: Pemulihan Pantas Pasca Bersalin!",
+      "h2": "Sokong penyembuhan luka dan tingkatkan daya tahan.",
+      "cta": "Dapatkan Jeli Gamat 550ML Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka pembedahan",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Sokong pemulihan tisu radang/iritasi"
+      ],
+      "_framework": "BENEFIT"
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\c2624f82\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 27,
+    "filename": "board_00027.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "7b7350ba",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T15:17:25",
+    "copy_data": {
+      "h1": "100% Ekstrak Gamat Untuk Luka Bersalin",
+      "h2": "10 Juta Botol Terjual",
+      "cta": "Penghantaran Percuma",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka bersalin.",
+        "Mengurangkan keradangan selepas pembedahan.",
+        "Meningkatkan daya ketahanan badan ibu.",
+        "Mengurangkan keradangan dalam badan."
+      ],
+      "_framework": "BENEFIT"
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\7b7350ba\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 22,
+    "filename": "board_00022.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "2b02eace",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-04T11:18:29",
+    "copy_data": {
+      "h1": "\"Nak... Mak Sakit Lutut\"",
+      "h2": "Belikan Mak Jeli Gamat",
+      "cta": "Penghantaran Percuma",
+      "left_header": "JENAMA LAIN",
+      "right_header": "SERIGAMA",
+      "left_bullets": [],
+      "right_bullets": []
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\2b02eace\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 20,
+    "filename": "board_00020.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "8b38093f",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T18:25:18",
+    "copy_data": {
+      "h1": "Tulang Rawan Makin Nipis?",
+      "h2": "Jeli Gamat Tinggi Glucosamine Untuk Tulang Rawan",
+      "cta": "Penghantaran Percuma",
+      "left_header": "JENAMA LAIN",
+      "right_header": "SERIGAMA",
+      "left_bullets": [],
+      "right_bullets": []
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\8b38093f\\img_02_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 19,
+    "filename": "board_00019.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "8b38093f",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T18:25:02",
+    "copy_data": {
+      "h1": "Tulang Rawan Makin Nipis?",
+      "h2": "Jeli Gamat Tinggi Glucosamine Untuk Tulang Rawan",
+      "cta": "Penghantaran Percuma",
+      "left_header": "JENAMA LAIN",
+      "right_header": "SERIGAMA",
+      "left_bullets": [],
+      "right_bullets": []
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\8b38093f\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 18,
+    "filename": "board_00018.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3be3f2e9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T18:15:35",
+    "copy_data": {
+      "h1": "Kini Dah Tak Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Emas, Tinggi Glucosamine",
+      "cta": "Penghantaran Percuma",
+      "left_header": "JENAMA LAIN",
+      "right_header": "SERIGAMA",
+      "left_bullets": [],
+      "right_bullets": []
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\3be3f2e9\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 17,
+    "filename": "board_00017.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "264bfeb4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T17:45:09",
+    "copy_data": {
+      "h1": "Kini Dah Tak Sakit Lutut",
+      "h2": "100% Ekstrak Gamat Emas, Tinggi Glucosamine",
+      "cta": "Penghantaran Percuma",
+      "left_header": "JENAMA LAIN",
+      "right_header": "SERIGAMA",
+      "left_bullets": [],
+      "right_bullets": []
+    },
+    "bg_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\264bfeb4\\img_01_draft_bg.png",
+    "public_url": "",
+    "bg_public_url": "",
+    "canva_url": ""
+  },
+  {
+    "id": 16,
+    "filename": "board_00016.png",
+    "label": "Ad 2 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "5ca945c4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T12:02:15",
+    "public_url": "https://files.catbox.moe/2y1026.png",
+    "canva_pending": false,
+    "canva_url": "https://www.canva.com/d/tW0b2Y0BM5qCcyf"
+  },
+  {
+    "id": 15,
+    "filename": "board_00015.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "5ca945c4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T12:01:08"
+  },
+  {
+    "id": 14,
+    "filename": "board_00014.png",
+    "label": "Ad 2 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "c87cfa3d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T11:11:50"
+  },
+  {
+    "id": 13,
+    "filename": "board_00013.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "c87cfa3d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T11:11:03"
+  },
+  {
+    "id": 12,
+    "filename": "board_00012.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "82cf5b87",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:46:56"
+  },
+  {
+    "id": 11,
+    "filename": "board_00011.png",
+    "label": "Ad 2 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "15ab263b",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:43:16"
+  },
+  {
+    "id": 10,
+    "filename": "board_00010.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "15ab263b",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:42:33"
+  },
+  {
+    "id": 9,
+    "filename": "board_00009.png",
+    "label": "Ad 3 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "76ebd923",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:28:51"
+  },
+  {
+    "id": 8,
+    "filename": "board_00008.png",
+    "label": "Ad 2 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "76ebd923",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:28:08"
+  },
+  {
+    "id": 7,
+    "filename": "board_00007.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "76ebd923",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:27:20"
+  },
+  {
+    "id": 6,
+    "filename": "board_00006.png",
+    "label": "Ad 3 — Product 1",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "444047e4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:10:37"
+  },
+  {
+    "id": 5,
+    "filename": "board_00005.png",
+    "label": "Ad 2 — Product 1",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "444047e4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:10:06"
+  },
+  {
+    "id": 4,
+    "filename": "board_00004.png",
+    "label": "Ad 1 — Product 1",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "444047e4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-03T00:09:33"
+  },
+  {
+    "id": 3,
+    "filename": "board_00003.png",
+    "label": "Ad 3",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "158fb451",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-02T22:43:21"
+  },
+  {
+    "id": 2,
+    "filename": "board_00002.png",
+    "label": "Ad 2",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "158fb451",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-02T22:42:47"
+  },
+  {
+    "id": 1,
+    "filename": "board_00001.png",
+    "label": "Ad 1",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "158fb451",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-02T22:42:11"
+  }
+]

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "51e3b635",
+    "label": "Serigama Jeli Gamat Ad",
+    "filename": "img_02_draft.png",
+    "session_id": "049cface",
+    "local_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\sessions\\049cface\\img_02_draft.png",
+    "temp_url": "https://files.catbox.moe/aenb0o.png",
+    "status": "pending_canva",
+    "queued_at": "2026-06-09T10:19:01.056796"
+  },
+  {
+    "id": "5cc9ec41-76a4-4494-bb4e-ff2e96b92a2b",
+    "label": "Serigama Jeli Gamat - Luka Bersalin",
+    "filename": "img_03_draft.png",
+    "session_id": "049cface",
+    "method": "direct_binary",
+    "status": "uploaded",
+    "uploaded_at": "2026-06-09T12:06:48.663659"
+  },
+  {
+    "id": "d16a9ea5-c8c9-4003-b75a-0dba7d2c9cc7",
+    "label": "Ad 3",
+    "filename": "img_03_draft.png",
+    "session_id": "511b459c",
+    "method": "direct_binary",
+    "status": "uploaded",
+    "uploaded_at": "2026-06-09T15:11:15.407742"
+  },
+  {
+    "id": "25a2e6d8-0731-4341-b289-d23cfe771a37",
+    "label": "Ad 2",
+    "filename": "img_02_draft.png",
+    "session_id": "511b459c",
+    "method": "direct_binary",
+    "status": "uploaded",
+    "uploaded_at": "2026-06-09T15:12:20.408954"
+  },
+  {
+    "id": "e6a5279d-e008-4f11-84ae-77776384fb2d",
+    "label": "Ad 2",
+    "filename": "img_02_draft.png",
+    "session_id": "511b459c",
+    "method": "direct_binary",
+    "status": "uploaded",
+    "uploaded_at": "2026-06-09T15:12:52.181375"
+  }
+]

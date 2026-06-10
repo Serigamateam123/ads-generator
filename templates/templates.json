@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0001.png",
+    "label": "Winning Ad #1",
+    "section": "Product Details",
+    "source": "Winning Ads.pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "single column, text and logo at top, product at bottom",
+        "product_placement": "bottom center",
+        "headline_placement": "top-middle section, centered",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F1F0E7",
+        "background_description": "flat solid",
+        "dominant_color": "#F1F0E7",
+        "dominant_description": "background",
+        "accent_color": "#256A49",
+        "accent_description": "headline text and brand logo",
+        "text_color_headline": "#256A49",
+        "text_color_subheadline": "#256A49",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "mixed (Title case, UPPERCASE, lowercase)",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines with key word emphasized",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium compared to headline, small for surrounding text"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clean, reassuring, and confident brand promoting intimate health through a testimonial."
+      },
+      "composition": {
+        "style": "minimalist, balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "standing on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "the large, bold green word \"EMBARRASSED\"",
+        "second_attention": "the full headline quote text",
+        "third_attention": "the brand logo and 5 stars",
+        "fourth_attention": "the product packaging 'Healthy V'"
+      },
+      "forbidden_elements": [
+        "NO human presence",
+        "NO busy background scene",
+        "NO harsh shadows",
+        "NO vibrant, high-saturation colors for the background or main text",
+        "NO complex illustrations or patterns",
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO gradient on background",
+        "NO warm orange tones",
+        "NO cluttered layout",
+        "NO price information",
+        "NO call-to-action button"
+      ],
+      "size": "portrait"
+    }
+  },
+  {
+    "id": 2,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0002.png",
+    "label": "Winning Ad #2",
+    "section": "Product Details",
+    "source": "Winning Ads.pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right",
+        "product_placement": "right side, centered vertically on a stack of bread slices",
+        "headline_placement": "left side, stacked vertically",
+        "cta_placement": "top right (circular badge)",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F8F8F8",
+        "background_description": "flat solid",
+        "dominant_color": "#F8F8F8",
+        "dominant_description": "background",
+        "accent_color": "#306631",
+        "accent_description": "headline text, brand logo, and time-relief badge",
+        "text_color_headline": "#306631",
+        "text_color_subheadline": "none distinct, light green/beige on label, white in badge",
+        "cta_color": "#306631"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "mixed case (first word capitalized, rest lowercase)",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "much smaller than headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A clean, modern, and reliable brand feel that emphasizes natural and effective relief with a hint of product context."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "sliced bread, butter knife",
+        "product_style": "standing on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "headline text 'Quick relief for bloating & gastric pains'",
+        "second_attention": "product bottle 'MOOM de/bloat'",
+        "third_attention": "circular badge 'UNDER 60 MINS NATURAL RELIEF'",
+        "fourth_attention": "MOOM brand logo at bottom left"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy background scenes",
+        "NO gradient background",
+        "NO dramatic shadows",
+        "NO overly bright or neon colors",
+        "NO complex illustrations",
+        "NO hands holding product",
+        "NO speech bubbles"
+      ],
+      "size": "1080x1080 square"
+    }
+  },
+  {
+    "id": 3,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0003.png",
+    "label": "Winning Ad #3",
+    "section": "Product Details",
+    "source": "Winning Ads.pdf",
+    "page": 0
+  },
+  {
+    "id": 4,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0004.png",
+    "label": "Winning Ad #4",
+    "section": "Rage Bait",
+    "source": "Winning Ads.pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right",
+        "product_placement": "The white bottle is on the left side, slightly below the vertical center. The Mars Men black bottle is on the right side, slightly below the vertical center.",
+        "headline_placement": "The headline 'TYPICAL T-BOOSTERS' is on the top left. The brand logo 'MARS MEN' is on the top right.",
+        "cta_placement": "none",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#323232 (left panel), #1C1C1C (right panel)",
+        "background_description": "flat solid, split into two distinct color panels",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "text, 'VS' icon, and the typical product bottle",
+        "accent_color": "#FF6600",
+        "accent_description": "Mars Men logo dot, checkmarks, and elements on the Mars Men product bottle label",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (e.g., 'TYPICAL' on one line, 'T-BOOSTERS' on the next)",
+        "subheadline_weight": "bold",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A direct and informative comparison with a clean, modern aesthetic that emphasizes product transparency and benefits."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "standing on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "The main headlines 'TYPICAL T-BOOSTERS VS MARS MEN' and the central 'VS' icon.",
+        "second_attention": "The two product bottles.",
+        "third_attention": "The bulleted lists of features/benefits/drawbacks.",
+        "fourth_attention": "The smaller 'MARS MEN' logo at the bottom right."
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex background scenes or photographs",
+        "NO speech bubbles",
+        "NO certification badges as separate graphical elements (though cGMP is mentioned in text)",
+        "NO cluttered layout",
+        "NO sunburst or gradient backgrounds",
+        "NO playful or cartoonish elements",
+        "NO elaborate decorative fonts",
+        "NO overlay styles on the background",
+        "NO warm orange tones dominating the background"
+      ],
+      "size": "Custom, wider than 1:1, approx. 1.3:1 aspect ratio"
+    }
+  },
+  {
+    "id": 5,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0005.png",
+    "label": "Winning Ad #5",
+    "section": "Rage Bait",
+    "source": "Winning Ads.pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "products in top half, review overlay central, large horizontal text bar at bottom",
+        "product_placement": "Three product pouches are visible in the top and mid-sections, two standing upright (orange, black) and one partially visible (white). A smaller black product package (FOCUS) is horizontal beneath the review box.",
+        "headline_placement": "Centered horizontally at the bottom of the image, within a black horizontal bar.",
+        "cta_placement": "none",
+        "negative_space": "moderate, primarily in the top corners and around the standing products"
+      },
+      "colors": {
+        "background": "#F7F3EC",
+        "background_description": "flat solid",
+        "dominant_color": "#000000",
+        "dominant_description": "black product packaging, bottom text bar, review text",
+        "accent_color": "#F08930",
+        "accent_description": "orange product packaging",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#000000",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clean and direct presentation that leverages social proof to build confidence in the product's effectiveness."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "solid color block",
+        "props": "a black scoop/spoon is partially visible under the review box",
+        "product_style": "standing on surface and lying flat on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "the white review box and its bold text",
+        "second_attention": "the large headline 'THE REVIEWS ARE IN.'",
+        "third_attention": "the primary product pouches (orange and black)",
+        "fourth_attention": "the small 'FW' brand logos"
+      },
+      "forbidden_elements": [
+        "NO human figures",
+        "NO cluttered background",
+        "NO gradient background",
+        "NO complex illustrations",
+        "NO urgent or aggressive call to action",
+        "NO bright, highly saturated background colors",
+        "NO abstract shapes or patterns in the background"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 6,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0006.png",
+    "label": "Winning Ad #6",
+    "section": "Rage Bait",
+    "source": "Winning Ads.pdf",
+    "page": 1
+  },
+  {
+    "id": 7,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0007.png",
+    "label": "Winning Ad #7",
+    "section": "Rage Bait",
+    "source": "Winning Ads.pdf",
+    "page": 1
+  },
+  {
+    "id": 8,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0008.png",
+    "label": "Winning Ad #8",
+    "section": "Benefit Product",
+    "source": "Winning Ads.pdf",
+    "page": 2
+  },
+  {
+    "id": 9,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0009.png",
+    "label": "Winning Ad #9",
+    "section": "Benefit Product",
+    "source": "Winning Ads.pdf",
+    "page": 2
+  },
+  {
+    "id": 10,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0010.png",
+    "label": "Winning Ad #10",
+    "section": "Benefit Product",
+    "source": "Winning Ads.pdf",
+    "page": 2,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with text and benefits on the left, and the product on the right",
+        "product_placement": "right side, vertically centered",
+        "headline_placement": "top left quadrant",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#f7f7f7",
+        "background_description": "flat solid",
+        "dominant_color": "#ffffff",
+        "dominant_description": "product can body and overall background",
+        "accent_color": "#df1e52",
+        "accent_description": "headline number '154', fruit on can, and numerical data highlights on can",
+        "text_color_headline": "#df1e52 (for number), #212121 (for text)",
+        "text_color_subheadline": "#212121 (main benefits), #666666 (explanatory text)",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "numbers and lowercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "bold (main point), regular (details)",
+        "subheadline_size": "small"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A clean, modern, and highly informative brand feel that emphasizes health benefits with scientific backing."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "water droplets on can, cherries and raspberries (on can design)",
+        "product_style": "standing on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "the large '154 health benefits' headline",
+        "second_attention": "the Huel product can",
+        "third_attention": "the list of four specific health benefits",
+        "fourth_attention": "the small data points on the can (26 vitamins, 154 health benefits, 30 calories)"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex photographic backgrounds",
+        "NO gradient on background",
+        "NO busy or cluttered layout",
+        "NO explicit call-to-action buttons",
+        "NO serif fonts for main body text",
+        "NO dark or moody lighting",
+        "NO sunbursts or explosive graphics",
+        "NO cartoonish elements"
+      ],
+      "size": "1080x1080 square"
+    }
+  },
+  {
+    "id": 11,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0011.png",
+    "label": "Winning Ad #11",
+    "section": "Testimonial",
+    "source": "Winning Ads.pdf",
+    "page": 3
+  },
+  {
+    "id": 12,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0012.png",
+    "label": "Winning Ad #12",
+    "section": "Testimonial",
+    "source": "Winning Ads.pdf",
+    "page": 3
+  }
+]
