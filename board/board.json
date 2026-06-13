@@ -1,5 +1,1091 @@
 [
   {
+    "id": 109,
+    "filename": "board_00109.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "7373d397",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-12T00:14:05",
+    "copy_data": {
+      "h1": "Sakit Sendi Mengganggu Hidup Anda?",
+      "h2": "Jeli Gamat Serigama: Pemulihan Sendi Menyeluruh Semulajadi.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan baru",
+        "Glucosamine tinggi, sihatkan tulang rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 108,
+    "filename": "board_00108.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "d1d6b2af",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-12T00:10:53",
+    "copy_data": {
+      "h1": "Jeli Gamat Serigama Redakan Sakit Sendi.",
+      "h2": "Solusi Semula Jadi Untuk Kesihatan Sendi Optimal.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 107,
+    "filename": "board_00107.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "a16df692",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T22:17:34",
+    "copy_data": {
+      "h1": "Penyelesaian Sakit Sendi Semula Jadi",
+      "h2": "Pulihkan Sendi Anda, Nikmati Kebebasan Bergerak",
+      "cta": "Alami Kebaikan Gamat Hari Ini",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 106,
+    "filename": "board_00106.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "1cbe77e4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T22:07:46",
+    "copy_data": {
+      "h1": "Serigama Jeli Gamat: Pakar Sendi Terunggul Malaysia",
+      "h2": "Warisan 20 Tahun, 10 Juta Botol Terjual Untuk Sendi Sihat.",
+      "cta": "Alami Perbezaan Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pemulihan tulang rawan",
+        "Tinggi glucosamine kesihatan tulang rawan",
+        "Kurangkan bengkak, sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 105,
+    "filename": "board_00105.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "a5f351e9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:34:04",
+    "copy_data": {
+      "h1": "Serigama Jeli Gamat: Sendi Sihat!",
+      "h2": "Warisan 20 tahun penyembuhan sendi semulajadi.",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit osteoarthritis",
+        "Merangsang tulang rawan baru",
+        "Tinggi glucosamine tulang rawan",
+        "Kurangkan bengkak, sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 104,
+    "filename": "board_00104.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "676ec16e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:32:20",
+    "copy_data": {
+      "h1": "Jeli Gamat Serigama: Sendi Kembali Sihat!",
+      "h2": "Pilihan utama Malaysia untuk pemulihan sendi menyeluruh.",
+      "cta": "Pulihkan Sendi Anda Sekarang!",
+      "left_header": "JENAMA LAIN",
+      "left_bullets": [
+        "Botol lazimnya hanya 350ML",
+        "Kandungan gamat tidak jelas",
+        "Tiada kelulusan Halal JAKIM",
+        "Tiada kelulusan KKM"
+      ],
+      "right_header": "Serigama",
+      "right_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi",
+        "Kurangkan sakit osteoarthritis"
+      ],
+      "benefit_bullets": [],
+      "_framework": "US_VS_THEM"
+    }
+  },
+  {
+    "id": 103,
+    "filename": "board_00103.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "a72b872e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:30:57",
+    "copy_data": {
+      "h1": "Ibu Bersalin: Pulih Cepat, Badan Kuat!",
+      "h2": "Suplemen semulajadi bantu pemulihan menyeluruh pasca bersalin.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 102,
+    "filename": "board_00102.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "a72b872e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:30:23",
+    "copy_data": {
+      "h1": "Ibu Bersalin: Pulih Cepat, Badan Kuat!",
+      "h2": "Suplemen semulajadi bantu pemulihan menyeluruh pasca bersalin.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 101,
+    "filename": "board_00101.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "e4962b10",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:28:03",
+    "copy_data": {
+      "h1": "Sendi Sihat, Hidup Aktif Tanpa Sakit!",
+      "h2": "Warisan 20 tahun, khasiat gamat premium untuk anda.",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 100,
+    "filename": "board_00100.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Gastric",
+    "quality": "draft",
+    "session_id": "664d0583",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:26:33",
+    "copy_data": {
+      "h1": "Gastrik Teruk? Jeli Gamat Penyelesaian Semulajadi.",
+      "h2": "Jeli Gamat 550ML: Sokong Kesihatan Saluran Pencernaan Anda.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan tisu keradangan",
+        "Bantu pulihkan tisu iritasi",
+        "Kurangkan keradangan dalam badan",
+        "Kekalkan kesihatan lapisan pencernaan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 99,
+    "filename": "board_00099.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "e00af631",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T18:18:42",
+    "copy_data": {
+      "h1": "Penyelesaian Sakit Sendi Terunggul Malaysia",
+      "h2": "20 Tahun Warisan Penyembuhan Semulajadi.",
+      "cta": "Alami Kesihatan Sendi Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine untuk tulang rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 98,
+    "filename": "board_00098.png",
+    "label": "Ad 5 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3d5016a3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:30:38",
+    "copy_data": {
+      "h1": "Sendi Kuat, Gerak Bebas Setiap Hari!",
+      "h2": "Warisan 20 Tahun Penyembuhan Semulajadi Terbaik.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine kesihatan rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 97,
+    "filename": "board_00097.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3d5016a3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:29:58",
+    "copy_data": {
+      "h1": "Sendi Kuat, Gerak Bebas Setiap Hari!",
+      "h2": "Warisan 20 Tahun Penyembuhan Semulajadi Terbaik.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine kesihatan rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 96,
+    "filename": "board_00096.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3d5016a3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:29:18",
+    "copy_data": {
+      "h1": "Sendi Kuat, Gerak Bebas Setiap Hari!",
+      "h2": "Warisan 20 Tahun Penyembuhan Semulajadi Terbaik.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine kesihatan rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 95,
+    "filename": "board_00095.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3d5016a3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:28:34",
+    "copy_data": {
+      "h1": "Sendi Kuat, Gerak Bebas Setiap Hari!",
+      "h2": "Warisan 20 Tahun Penyembuhan Semulajadi Terbaik.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine kesihatan rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 94,
+    "filename": "board_00094.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3d5016a3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:27:53",
+    "copy_data": {
+      "h1": "Sendi Kuat, Gerak Bebas Setiap Hari!",
+      "h2": "Warisan 20 Tahun Penyembuhan Semulajadi Terbaik.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis.",
+        "Merangsang pembentukan tulang rawan.",
+        "Tinggi glucosamine kesihatan rawan.",
+        "Kurangkan bengkak dan kesakitan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 93,
+    "filename": "board_00093.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "25283826",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:24:46",
+    "copy_data": {
+      "h1": "Redakan Sakit Sendi, Pulihkan Tulang Rawan!",
+      "h2": "Warisan Penyembuhan Semulajadi. Sendi Kuat, Tanpa Sakit.",
+      "cta": "Pilih Jeli Gamat Serigama.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine untuk tulang rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 92,
+    "filename": "board_00092.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "25283826",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:24:08",
+    "copy_data": {
+      "h1": "Redakan Sakit Sendi, Pulihkan Tulang Rawan!",
+      "h2": "Warisan Penyembuhan Semulajadi. Sendi Kuat, Tanpa Sakit.",
+      "cta": "Pilih Jeli Gamat Serigama.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine untuk tulang rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 91,
+    "filename": "board_00091.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "cc1ffbfc",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:14:19",
+    "copy_data": {
+      "h1": "Redakan Sakit Sendi, Pulih Tulang Rawan",
+      "h2": "Warisan 20 Tahun, Jutaan Pilihan Kesihatan",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 90,
+    "filename": "board_00090.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "cc1ffbfc",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T15:13:32",
+    "copy_data": {
+      "h1": "Redakan Sakit Sendi, Pulih Tulang Rawan",
+      "h2": "Warisan 20 Tahun, Jutaan Pilihan Kesihatan",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 89,
+    "filename": "board_00089.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "d69e09b9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T14:38:14",
+    "copy_data": {
+      "h1": "Sakit Sendi Mengganggu Hidup Anda?",
+      "h2": "Jeli Gamat Serigama: Solusi Semulajadi Kesihatan Sendi.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan, pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 88,
+    "filename": "board_00088.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "d69e09b9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T14:37:23",
+    "copy_data": {
+      "h1": "Sakit Sendi Mengganggu Hidup Anda?",
+      "h2": "Jeli Gamat Serigama: Solusi Semulajadi Kesihatan Sendi.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan, pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 87,
+    "filename": "board_00087.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "d69e09b9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T14:36:42",
+    "copy_data": {
+      "h1": "Sakit Sendi Mengganggu Hidup Anda?",
+      "h2": "Jeli Gamat Serigama: Solusi Semulajadi Kesihatan Sendi.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan, pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 86,
+    "filename": "board_00086.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "9a751bd5",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T14:34:30",
+    "copy_data": {
+      "h1": "Pemulihan Pantas Pasca Bersalin, Semulajadi!",
+      "h2": "Jeli Gamat Serigama: Pemulihan Menyeluruh Untuk Ibu.",
+      "cta": "Dapatkan Jeli Gamat Serigama Kini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Bantu pemulihan badan menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 85,
+    "filename": "board_00085.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "c4b1d131",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T14:29:59",
+    "copy_data": {
+      "h1": "Pulih Cepat Luka Bersalin Menyeluruh!",
+      "h2": "Jeli Gamat: Warisan 20 Tahun Penyembuhan Semulajadi.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Bantu pemulihan badan menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 81,
+    "filename": "board_00081.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "a995032c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T13:45:23",
+    "copy_data": {
+      "h1": "Penyembuhan Menyeluruh Selepas Bersalin Anda!",
+      "h2": "Jeli Gamat Serigama: Warisan Penyembuhan Semulajadi 20 Tahun.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Sokong pemulihan badan menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 77,
+    "filename": "board_00077.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "86adc0f4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T12:08:23",
+    "copy_data": {
+      "h1": "Pulih Bersalin Cepat, Lega Tanpa Risau!",
+      "h2": "Jeli Gamat 550ML: Sokongan Pemulihan Menyeluruh Ibu.",
+      "cta": "Dapatkan Jeli Gamat Sekarang",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Membantu pemulihan badan menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 76,
+    "filename": "board_00076.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "b8e6b0d0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T11:54:16",
+    "copy_data": {
+      "h1": "Sendi Lega, Hidup Ceria Kembali!",
+      "h2": "Rasa Bezanya Dengan Jeli Gamat Serigama.",
+      "cta": "Dapatkan Serigama Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 75,
+    "filename": "board_00075.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "614dca1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T11:18:38",
+    "copy_data": {
+      "h1": "Penyembuhan Pantas, Ibu Kembali Cergas!",
+      "h2": "Jeli Gamat: Sokongan Semulajadi Pascabedah Ibu Bersalin.",
+      "cta": "Pesan Sekarang untuk Pemulihan Pantas.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Membantu pemulihan badan secara menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 74,
+    "filename": "board_00074.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-partum",
+    "quality": "draft",
+    "session_id": "614dca1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T11:17:45",
+    "copy_data": {
+      "h1": "Penyembuhan Pantas, Ibu Kembali Cergas!",
+      "h2": "Jeli Gamat: Sokongan Semulajadi Pascabedah Ibu Bersalin.",
+      "cta": "Pesan Sekarang untuk Pemulihan Pantas.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mempercepatkan proses penyembuhan luka",
+        "Mengurangkan keradangan selepas pembedahan",
+        "Meningkatkan daya ketahanan badan",
+        "Membantu pemulihan badan secara menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 73,
+    "filename": "board_00073.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "5ca0ca5d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T11:15:22",
+    "copy_data": {
+      "h1": "Lega Sakit Sendi, Bergerak Bebas!",
+      "h2": "Pilihan Utama Untuk Kesihatan Sendi Menyeluruh Anda",
+      "cta": "Dapatkan Serigama Jeli Gamat Kini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 72,
+    "filename": "board_00072.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "20711e16",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:57:51",
+    "copy_data": {
+      "h1": "Legakan Sakit Sendi, Pulihkan Tulang Rawan!",
+      "h2": "Jeli Gamat Serigama: Warisan Penyembuhan Semula Jadi 2 Dekad.",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pemulihan tulang rawan",
+        "Tinggi glucosamine kesihatan rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 71,
+    "filename": "board_00071.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "4c15727d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:52:42",
+    "copy_data": {
+      "h1": "Redakan Sakit Sendi, Bergerak Bebas!",
+      "h2": "Ekstrak Gamat Premium Untuk Kesihatan Sendi Menyeluruh.",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan sakit akibat osteoarthritis",
+        "Rangsang pembentukan, pemulihan tulang rawan",
+        "Tinggi glukosamin kesihatan tulang rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 70,
+    "filename": "board_00070.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "4c15727d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:51:56",
+    "copy_data": {
+      "h1": "Redakan Sakit Sendi, Bergerak Bebas!",
+      "h2": "Ekstrak Gamat Premium Untuk Kesihatan Sendi Menyeluruh.",
+      "cta": "Dapatkan Jeli Gamat Serigama Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan sakit akibat osteoarthritis",
+        "Rangsang pembentukan, pemulihan tulang rawan",
+        "Tinggi glukosamin kesihatan tulang rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 69,
+    "filename": "board_00069.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "038d92af",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:44:27",
+    "copy_data": {
+      "h1": "Kesihatan Sendi Optimal, Kembali Aktif!",
+      "h2": "Serigama Jeli Gamat: Legasi 20 Tahun Untuk Sendi Sihat.",
+      "cta": "Alami Kesihatan Sendi Optimal!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 68,
+    "filename": "board_00068.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "038d92af",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:43:42",
+    "copy_data": {
+      "h1": "Kesihatan Sendi Optimal, Kembali Aktif!",
+      "h2": "Serigama Jeli Gamat: Legasi 20 Tahun Untuk Sendi Sihat.",
+      "cta": "Alami Kesihatan Sendi Optimal!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 67,
+    "filename": "board_00067.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "286299ee",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:32:47",
+    "copy_data": {
+      "h1": "Lega Sakit Sendi, Kembali Berdaya!",
+      "h2": "Warisan 20 tahun, penyembuhan semulajadi terunggul Malaysia.",
+      "cta": "Alami Kelegaan Sendi Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 66,
+    "filename": "board_00066.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "286299ee",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:32:32",
+    "copy_data": {
+      "h1": "Lega Sakit Sendi, Kembali Berdaya!",
+      "h2": "Warisan 20 tahun, penyembuhan semulajadi terunggul Malaysia.",
+      "cta": "Alami Kelegaan Sendi Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan dan pemulihan tulang rawan",
+        "Tinggi glucosamine untuk kesihatan tulang rawan",
+        "Kurangkan bengkak dan kesakitan pada sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 65,
+    "filename": "board_00065.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "7d8475f9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:16:47",
+    "copy_data": {
+      "h1": "Legakan Sakit Sendi, Bergerak Bebas!",
+      "h2": "Ekstrak gamat premium untuk sendi kuat sihat.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glukosamin untuk kesihatan rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 64,
+    "filename": "board_00064.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "7d8475f9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-11T10:16:31",
+    "copy_data": {
+      "h1": "Legakan Sakit Sendi, Bergerak Bebas!",
+      "h2": "Ekstrak gamat premium untuk sendi kuat sihat.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kurangkan sakit akibat osteoarthritis",
+        "Merangsang pembentukan tulang rawan",
+        "Tinggi glukosamin untuk kesihatan rawan",
+        "Kurangkan bengkak dan sakit sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 63,
     "filename": "board_00063.png",
     "label": "Ad 1 — Jeli Gamat 550ML",

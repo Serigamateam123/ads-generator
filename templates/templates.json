@@ -147,7 +147,69 @@
     "label": "Winning Ad #3",
     "section": "Product Details",
     "source": "Winning Ads.pdf",
-    "page": 0
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "Product box on the left, headline at top-center, brand logo top-center, and a vertical list of benefits/ingredients on the right. CTA button at the bottom-center.",
+        "product_placement": "Left-middle, standing on a light-colored, textured surface.",
+        "headline_placement": "Top-center, spanning horizontally above the product box and slightly to the left.",
+        "cta_placement": "Bottom center",
+        "negative_space": "Generous 40%+, especially on the right side and upper half."
+      },
+      "colors": {
+        "background": "#75736C (desaturated brown-grey)",
+        "background_description": "Photographic scene with a textured wall and a lighter textured table surface.",
+        "dominant_color": "#75736C",
+        "dominant_description": "The background wall and table surface.",
+        "accent_color": "#E8F1D2 (pale yellowish-green)",
+        "accent_description": "The product packaging. White text and CTA also serve as significant accents.",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF (for titles), #C0C0C0 (for descriptions)",
+        "cta_color": "#FFFFFF (button) with #365B33 (text)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "Title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "medium (for titles), regular (for descriptions)",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A calm, professional, and supportive brand aesthetic conveying health and wellness."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "A small, light blue sachet on the table in front of the product box.",
+        "product_style": "standing on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "The Postpartum Support Pack headline",
+        "second_attention": "The MOOM product box",
+        "third_attention": "The MOOM brand logo at the top",
+        "fourth_attention": "The list of ingredients/benefits on the right"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO bright, saturated background colors",
+        "NO cluttered layout",
+        "NO discount or sale badges",
+        "NO hard shadows or dramatic lighting",
+        "NO gradient on background",
+        "NO comic or playful fonts",
+        "NO certification badges on the main display area",
+        "NO speech bubbles"
+      ],
+      "size": "1080x1350 portrait"
+    }
   },
   {
     "id": 4,
@@ -302,7 +364,70 @@
     "label": "Winning Ad #7",
     "section": "Rage Bait",
     "source": "Winning Ads.pdf",
-    "page": 1
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right",
+        "product_placement": "Aeyla blanket on the left panel, centered vertically, above its feature list. Generic blanket on the right panel, centered vertically, above its drawback list.",
+        "headline_placement": "Top left for 'Aeyla.', top right for 'THEM'.",
+        "cta_placement": "none",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#F8DA36 (left panel), #FFFFFF (right panel)",
+        "background_description": "flat solid",
+        "dominant_color": "#F8DA36",
+        "dominant_description": "left background panel",
+        "accent_color": "#FFFFFF",
+        "accent_description": "right background panel",
+        "text_color_headline": "#333333",
+        "text_color_subheadline": "#333333",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case (Aeyla), uppercase (THEM)",
+        "headline_size": "large",
+        "font_style": "sans-serif (Aeyla and body text), serif (THEM)",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "regular (most), bold (bottom descriptions)",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio (for products), flat natural (for backgrounds)",
+        "overall_feel": "A confident and factual comparison emphasizing the superior quality and features of the Aeyla product against generic alternatives."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "green checkmark icons, red X icons",
+        "product_style": "standing on surface"
+      },
+      "visual_hierarchy": {
+        "first_attention": "The two blankets and their respective brand/category labels ('Aeyla.' and 'THEM').",
+        "second_attention": "The checkmark and 'X' icons next to the feature/drawback lists.",
+        "third_attention": "The descriptive text bullet points associated with the icons.",
+        "fourth_attention": "The concluding statements at the very bottom of each panel."
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO photographic background scene",
+        "NO gradients on the background",
+        "NO warm orange tones (beyond the brand's specific yellow)",
+        "NO cluttered layout",
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO complex illustrations",
+        "NO CTA button",
+        "NO pricing information"
+      ],
+      "size": "1080x1080 square"
+    }
   },
   {
     "id": 8,
@@ -310,7 +435,67 @@
     "label": "Winning Ad #8",
     "section": "Benefit Product",
     "source": "Winning Ads.pdf",
-    "page": 2
+    "page": 2,
+    "extracted_style": {
+      "layout": {
+        "structure": "headline at top, product box in bottom-center to mid-right, supporting information points distributed around the product",
+        "product_placement": "bottom-center to mid-right",
+        "headline_placement": "top-left to top-right",
+        "cta_placement": "implied CTA/value proposition 'AS LOW AS $2.50 PER BOWL!' is top-right, no explicit button",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#FFFFFF",
+        "background_description": "flat solid",
+        "dominant_color": "#F8A7D3",
+        "dominant_description": "cereal box",
+        "accent_color": "#ED258E",
+        "accent_description": "headline text and key nutritional data points",
+        "text_color_headline": "#ED258E",
+        "text_color_subheadline": "#ED258E (for numbers), #000000 (for secondary text like 'PER BOWL!', '5-STAR REVIEWS')",
+        "cta_color": "#E02747 (circle), #FFFFFF (text)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (2 lines)",
+        "subheadline_weight": "bold (for numbers), medium (for descriptions)",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "playful",
+        "energy_level": "medium",
+        "lighting": "bright studio",
+        "overall_feel": "A vibrant and fun brand that delivers a surprisingly healthy product without sacrificing taste, conveyed with playful illustrations and clear benefits."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "spilled colorful cereal pieces",
+        "product_style": "standing on surface with spilled contents"
+      },
+      "visual_hierarchy": {
+        "first_attention": "The large headline 'So good you'll forget it's actually healthy.'",
+        "second_attention": "The 'MAGIC SPOON' cereal box with its colorful illustrations.",
+        "third_attention": "Key nutritional benefits like '14g PROTEIN', '0g SUGAR', '140 CALORIES'.",
+        "fourth_attention": "The price point 'AS LOW AS $2.50 PER BOWL!' and '30k+ 5-STAR REVIEWS'."
+      },
+      "forbidden_elements": [
+        "NO realistic human photography",
+        "NO complex photographic background scene",
+        "NO dark or moody lighting",
+        "NO serif fonts",
+        "NO cluttered layout",
+        "NO certification badges on background",
+        "NO gradient on background"
+      ],
+      "size": "portrait"
+    }
   },
   {
     "id": 9,
@@ -318,7 +503,71 @@
     "label": "Winning Ad #9",
     "section": "Benefit Product",
     "source": "Winning Ads.pdf",
-    "page": 2
+    "page": 2,
+    "extracted_style": {
+      "layout": {
+        "structure": "headline at the top, horizontal category bar below, products displayed on a surface in the mid-ground, and a hand holding capsules in the foreground bottom left",
+        "product_placement": "three product bottles are centered in the mid-ground, with a human hand holding two capsules in the bottom-left foreground",
+        "headline_placement": "top 30% of the canvas, centered horizontally",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+, particularly in the sky background and around the products"
+      },
+      "colors": {
+        "background": "#C7E3F8",
+        "background_description": "gradient sky blue",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "headline text, brand logos, capsule contents",
+        "accent_color": "#3B3A6F",
+        "accent_description": "dark blue horizontal bar and one product container (HyaCera)",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (three lines)",
+        "subheadline_weight": "medium",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A clean, modern, and trustworthy brand presenting a comprehensive daily health system."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "standing on surface (bottles), held by hand (capsules)"
+      },
+      "graphic_elements": [
+        "dark blue horizontal bar with white vertical dividers, positioned below the main headline, containing white text category labels",
+        "white circular 'Ritual' brand logo with a horizontal line, appearing on each product and in the bottom left corner"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large white headline 'YOUR COMPLETE DAILY SYSTEM'",
+        "second_attention": "The three product bottles in the mid-ground",
+        "third_attention": "The human hand holding two capsules in the foreground",
+        "fourth_attention": "The category labels on the dark blue bar"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges (other than the brand's own logo)",
+        "NO warm orange or red tones in the background",
+        "NO cluttered layout or busy illustrations",
+        "NO urgent call to action buttons or discount text",
+        "NO complex real-world scene (beyond the gradient sky)"
+      ],
+      "size": "1080x1350 portrait"
+    }
   },
   {
     "id": 10,
@@ -404,6 +653,2032 @@
     "label": "Winning Ad #12",
     "section": "Testimonial",
     "source": "Winning Ads.pdf",
-    "page": 3
+    "page": 3,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with a large rounded rectangle overlay on the bottom left",
+        "product_placement": "bottom right, held by the human subject",
+        "headline_placement": "within the white rounded rectangle on the bottom left",
+        "cta_placement": "none",
+        "negative_space": "moderate, primarily on the top left and around the product/person"
+      },
+      "colors": {
+        "background": "#1D4144",
+        "background_description": "flat solid color",
+        "dominant_color": "#1D4144",
+        "dominant_description": "main background color and text color",
+        "accent_color": "#FFFFFF",
+        "accent_description": "review box background and product bottle",
+        "text_color_headline": "#1F4245",
+        "text_color_subheadline": "#1F4245",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case for sentences, then normal case",
+        "headline_size": "medium",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "similar to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A confident and trustworthy brand focused on men's well-being through natural, effective supplements, conveyed with a personal touch."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "solid color block",
+        "props": "product bottle, earring, nose ring",
+        "product_style": "held by hand"
+      },
+      "visual_hierarchy": {
+        "first_attention": "the smiling man's face",
+        "second_attention": "the white review box and 5 stars",
+        "third_attention": "the text within the review box",
+        "fourth_attention": "the product bottle"
+      },
+      "forbidden_elements": [
+        "NO busy patterns",
+        "NO aggressive colors",
+        "NO abstract shapes beyond rounded rectangle",
+        "NO complex background scenes",
+        "NO multiple products",
+        "NO explicit CTA button",
+        "NO overlay gradients",
+        "NO cluttered layout"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 13,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0013.png",
+    "label": "Winning Ad #13",
+    "section": "Product highlight",
+    "source": "Winning Ads (1).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "diagonal split background with products arranged in the bottom half, headline centered at the top",
+        "product_placement": "three cylindrical product containers positioned in the bottom half of the image, one on the left-center, one on the right-center, and one on the bottom-left",
+        "headline_placement": "centered at the top of the canvas",
+        "cta_placement": "centered below the subheadline, top-mid section",
+        "negative_space": "moderate, primarily in the top half around the headline and logo"
+      },
+      "colors": {
+        "background": "#FFFFFF (top-right diagonal), #FFC90E (mid-left diagonal), #2B2F6E (bottom-right diagonal)",
+        "background_description": "diagonal color block split with three distinct solid colors",
+        "dominant_color": "#FFC90E",
+        "dominant_description": "mid-left diagonal background section and main product branding",
+        "accent_color": "#2B2F6E",
+        "accent_description": "bottom-right diagonal background section and one product's branding",
+        "text_color_headline": "#262626 (for 'EXPERIENCE THE'), #FF8C00 (for 'MAGIC')",
+        "text_color_subheadline": "#262626",
+        "cta_color": "#FF8C00"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "headline is on one line with a color change for the last word, not stacked",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "premium",
+        "energy_level": "medium",
+        "lighting": "bright studio",
+        "overall_feel": "A modern and clean advertisement promoting health and wellness benefits through a range of coffee products."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "standing on implied surfaces created by the background color blocks"
+      },
+      "graphic_elements": [
+        "SKINNY COFFEE SUPERBOOST logo at the top-center",
+        "Diagonal color block separation throughout the background",
+        "Text callout 'BURN FAT FAST' to the right of the orange product, aligned with its top",
+        "Text callout 'STRONGER HAIR & NAILS' to the right of the blue product, spanning across background colors",
+        "Text callout 'LOSE WEIGHT & GET DEEP SLEEP' at the bottom-right, below the purple product",
+        "Small icons/badges integrated into each product's label (e.g., heart, checkmark, vegan, keto)"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The headline 'EXPERIENCE THE MAGIC'",
+        "second_attention": "The 'SKINNY COFFEE' product (orange container) and its benefit 'BURN FAT FAST'",
+        "third_attention": "The other two 'NIGHT COLLAGEN BURN' and 'COLLAGEN PROTEIN COFFEE' products and their associated benefits",
+        "fourth_attention": "The website URL 'shopskinnycoffee.com'"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex photographic background scenes",
+        "NO speech bubbles",
+        "NO external certification badges (only integrated into product labels)",
+        "NO busy or cluttered patterns",
+        "NO arrows or explicit pointers from text to product",
+        "NO gradient on background"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 14,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0014.png",
+    "label": "Winning Ad #14",
+    "section": "Product highlight",
+    "source": "Winning Ads (1).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with text on the left and products on shelves on the right, balanced by a plant on the bottom-left",
+        "product_placement": "Right side, occupying approximately 60% of the canvas width, stacked on two wooden shelves",
+        "headline_placement": "Top-left quadrant of the image",
+        "cta_placement": "Bottom-right corner for the website, bottom-left for the hashtag slogan",
+        "negative_space": "generous 40%+, primarily on the left side and top"
+      },
+      "colors": {
+        "background": "#30A7E5",
+        "background_description": "gradient blue, resembling a clear sky, transitioning slightly lighter towards the bottom",
+        "dominant_color": "#30A7E5",
+        "dominant_description": "background sky",
+        "accent_color": "#FFFFFF",
+        "accent_description": "product packaging, headline text, brand logos, and bottom text",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "#FFFFFF"
+      },
+      "typography": {
+        "headline_weight": "bold for keywords (Dryfruits, Nuts, Seeds), medium for connecting words",
+        "headline_case": "title case",
+        "headline_size": "very large for keywords, large for surrounding text",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines, wrapping naturally",
+        "subheadline_weight": "bold for '#ProNutrition', regular for 'www.provfoods.in'",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "premium, calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio, soft, even lighting on products and background",
+        "overall_feel": "A clean, natural, and premium feel for healthy food products, evoking freshness and quality."
+      },
+      "composition": {
+        "style": "balanced, with a visual weight on the right side from the products and a counter-balance on the left with text and plant",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "wooden shelves, a cactus plant in a woven basket",
+        "product_style": "standing on surface (wooden shelves)"
+      },
+      "graphic_elements": [
+        "ProV logo with green leaf, top-right corner",
+        "TM symbol, top-right corner",
+        "ProV logo with green leaf on each product package",
+        "Small square icons (e.g., 'RICH IN PROTEIN') at the bottom of each product package",
+        "Shopping bag icon, bottom-right before URL",
+        "Hashtag symbol, bottom-left before 'Pro Nutrition'",
+        "'OPEN POP SEAL' text on each product package, top",
+        "Small green square icon with a checkmark on each product package, top-left of logo",
+        "'PREMIUM' text on each product package, below logo",
+        "Ingredient illustration/photo on each product package",
+        "Color blocks on the side of each product package (brown, blue, orange, wood, yellow) for product identification"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The bold words 'Dryfruits, Nuts and Seeds' in the headline",
+        "second_attention": "The range of ProV products displayed on the wooden shelves",
+        "third_attention": "The ProV brand logo in the top-right corner",
+        "fourth_attention": "The call to action/brand slogan at the bottom (#ProNutrition and www.provfoods.in)"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO cluttered or busy photographic background (e.g., kitchen scene, market scene)",
+        "NO aggressive, urgent, or high-energy typography",
+        "NO bright, high-contrast, or neon color palette",
+        "NO discount badges, sale stickers, or promotional price callouts",
+        "NO speech bubbles, cartoon graphics, or abstract illustrations",
+        "NO busy patterns or textures on the background"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 15,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0015.png",
+    "label": "Winning Ad #15",
+    "section": "Product highlight",
+    "source": "Winning Ads (1).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "centered headline with products positioned at the bottom, angled",
+        "product_placement": "bottom-center, two product packages angled diagonally",
+        "headline_placement": "top-center of the canvas",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F4F4F1",
+        "background_description": "textured, light off-white paper-like background",
+        "dominant_color": "#337B42",
+        "dominant_description": "Greenies logo, 'SUPPLEMENTS' text, 'Healthy Joints Mean Happy Pups' text, product packaging background",
+        "accent_color": "#F48024",
+        "accent_description": "'CHICKEN FLAVOR' banner on product, small chews illustration, some icons",
+        "text_color_headline": "#31683E",
+        "text_color_subheadline": "#31683E",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "Greenies (title case, script), SUPPLEMENTS (uppercase), Healthy Joints Mean Happy Pups (title case)",
+        "headline_size": "very large for 'Greenies', large for 'Healthy Joints Mean Happy Pups'",
+        "font_style": "Greenies is script, other headlines are sans-serif",
+        "headline_line_breaks": "Healthy Joints on one line, Mean Happy Pups on a second line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad conveys a gentle and reliable approach to pet wellness, emphasizing natural care and happiness."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "textured solid color",
+        "overlay_style": "none",
+        "props": "green leaf illustrations",
+        "product_style": "standing on an implied surface with a clean-cut bottom edge, angled"
+      },
+      "graphic_elements": [
+        "Greenies script logo, top-center",
+        "'SUPPLEMENTS' text below the Greenies logo, top-center",
+        "two green leaf illustrations, top-left and top-right corners",
+        "two green leaf illustrations, bottom-left (partially visible)",
+        "'MADE IN THE USA' circular badge on product packaging, top-right of product",
+        "illustration of a dog with a highlighted blue hip/joint area on product packaging, bottom-left of product packaging",
+        "circular icon for 'Glucosamine 600 mg, Chondroitin 400 mg' on product packaging, center-right of dog illustration",
+        "circular icon for 'Supports Healthy Joints, Flexibility & Mobility' on product packaging, right of Glucosamine icon",
+        "illustration of two brown chew treats, top-right of the product packaging",
+        "blue circular badge with '30 CHEWS' on product packaging, bottom-right of product"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Greenies logo at the top",
+        "second_attention": "The headline 'Healthy Joints Mean Happy Pups'",
+        "third_attention": "The product packaging (Greenies Supplements Hip & Joint)",
+        "fourth_attention": "The 'MADE IN THE USA' badge and specific details on the product packaging (e.g., '30 CHEWS')"
+      },
+      "forbidden_elements": [
+        "NO human presence",
+        "NO busy or photographic background scene",
+        "NO explicit call-to-action button (e.g., 'Shop Now', 'Buy Now')",
+        "NO price information",
+        "NO dramatic or moody lighting",
+        "NO cluttered layout",
+        "NO gradient on the background"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 16,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0016.png",
+    "label": "Winning Ad #16",
+    "section": "Product highlight",
+    "source": "Winning Ads (1).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric with headline top-left and product/props bottom-right",
+        "product_placement": "Main product pouch is bottom-right, individual stick pack and mug are bottom-left.",
+        "headline_placement": "Top-left quadrant.",
+        "cta_placement": "none",
+        "negative_space": "moderate to generous"
+      },
+      "colors": {
+        "background": "#FDF4EB",
+        "background_description": "flat solid",
+        "dominant_color": "#FF6D2D",
+        "dominant_description": "product packaging (pouch and stick pack)",
+        "accent_color": "#000000",
+        "accent_description": "headline text",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#000000",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "warm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A bright, clean, and inviting feel promoting a natural and health-conscious product with a sense of wellness."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "ceramic mug, cinnamon stick, sliced green apples",
+        "product_style": "standing on surface and lying on surface"
+      },
+      "graphic_elements": [
+        "orange hand-drawn squiggly arrow pointing from top-left headline area towards the product elements in the bottom-center-right",
+        "thin orange underline below 'healthy' in the headline",
+        "small orange dash marks/sparkles near the top right of the pouch and above the apples"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The headline 'Feel healthy with this.'",
+        "second_attention": "The main product pouch 'Hydrant Hot Apple Cider'",
+        "third_attention": "The individual stick pack and mug",
+        "fourth_attention": "The sliced green apples"
+      },
+      "forbidden_elements": [
+        "NO human figures/models",
+        "NO complex photographic scene in the background",
+        "NO explicit CTA button",
+        "NO discount badges",
+        "NO speech bubbles",
+        "NO gradient on background",
+        "NO cluttered layout",
+        "NO busy patterns"
+      ],
+      "size": "1280x1479 portrait"
+    }
+  },
+  {
+    "id": 17,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0017.png",
+    "label": "Winning Ad #17",
+    "section": "Product highlight",
+    "source": "Winning Ads (1).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric, with headline top-center-left and product lower-center-right on a surface",
+        "product_placement": "lower center-right",
+        "headline_placement": "upper center-left",
+        "cta_placement": "none",
+        "negative_space": "moderate 30-40%"
+      },
+      "colors": {
+        "background": "#B9B9C5",
+        "background_description": "photographic scene, blurred muted greyish-lavender wall with warm wooden table",
+        "dominant_color": "#B9B9C5",
+        "dominant_description": "blurred background wall",
+        "accent_color": "#E1C4D1",
+        "accent_description": "lavender band on the product bottle",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "N/A",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "mixed (Title case for 'Nutrients to target', lowercase for 'skin, hair & nails')",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "N/A",
+        "subheadline_size": "N/A"
+      },
+      "mood": {
+        "tone": "calm, trustworthy, premium",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A calm and premium feel suggesting self-care and gentle effectiveness for beauty and wellness."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "soft pink/beige towel, blurred makeup brushes, blurred glass of water, blurred mirror, loose pills on wooden surface",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "curved arrow pointing from headline text (specifically from the asterisk after 'nails') to the product bottle, starting from top-center-right of the text block and curving down towards the product"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "headline text 'Nutrients to target skin, hair & nails'",
+        "second_attention": "the product bottle 'WELLOSOPHY SKIN, HAIR & NAIL NUTRICOMPLEX'",
+        "third_attention": "the loose pills on the table",
+        "fourth_attention": "the curved arrow"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO bright or overly saturated colors",
+        "NO hard lines or sharp angles in the primary elements",
+        "NO cluttered background",
+        "NO discount badges or urgent calls to action",
+        "NO flat solid color background",
+        "NO comic or playful font styles"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 18,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0018.png",
+    "label": "Winning Ad #18",
+    "section": "Sale",
+    "source": "Winning Ads (1).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with product on left and benefits on right",
+        "product_placement": "center-left, occupying approximately 40-50% of the canvas width",
+        "headline_placement": "on the product label itself, and also as benefit headlines on the right",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#FFFFFF",
+        "background_description": "flat solid",
+        "dominant_color": "#F98F1D",
+        "dominant_description": "product label, gummies, benefit icons and platform",
+        "accent_color": "#5A8F3F",
+        "accent_description": "small leaves/foliage in top right",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#000000",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium compared to product headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A clean, informative, and confidence-inspiring brand presenting a natural health supplement with clear benefits."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "floating gummies, small green leaves",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "orange circular badge '60 GUMMIES' top-left corner",
+        "four orange outline icons with corresponding benefit text on the right side (joint flexibility icon, head with lightning bolt icon, shield with gear icon, brain icon)",
+        "scattered orange gummies floating around the product bottle",
+        "small green leaves/foliage top-right corner",
+        "orange circular platform the product sits on, with a subtle shadow"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The product bottle (Jellybee Turmeric & Ginger) and the '60 GUMMIES' badge",
+        "second_attention": "The list of benefits (icons and text) on the right side",
+        "third_attention": "Smaller text details on the product label ('ORANGE FLAVOR GUMMIES', 'Supports Joint Health', 'Reduces Inflammation', 'Improves Brain Function')",
+        "fourth_attention": "Floating gummies and green leaves"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO photographic background scene",
+        "NO cluttered layout",
+        "NO complex patterns or textures on the background",
+        "NO strong gradients on the main background",
+        "NO busy typography",
+        "NO speech bubbles",
+        "NO dark or moody lighting"
+      ],
+      "size": "1080x1080 square"
+    }
+  },
+  {
+    "id": 19,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0019.png",
+    "label": "Winning Ad #19",
+    "section": "Sale",
+    "source": "Winning Ads (1).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with product on bottom-left and informational text on the right and top-left",
+        "product_placement": "bottom-left, held by a hand, tilted diagonally",
+        "headline_placement": "top-left quadrant of the image",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#FEE7ED",
+        "background_description": "flat solid",
+        "dominant_color": "#FEE7ED",
+        "dominant_description": "background color",
+        "accent_color": "#DD6E9F",
+        "accent_description": "product label text, strawberry graphic, line dividers on information section",
+        "text_color_headline": "#3A2F45",
+        "text_color_subheadline": "#3A2F45",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A gentle and health-focused brand image promoting kids' nutrition in a clear, easy-to-understand manner."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "three circular icons (shield with star, stomach, bones) aligned vertically on the right side, connected by vertical lines",
+        "horizontal lines extending from the vertical line to feature headlines on the right",
+        "small 'YUM!' banner/sticker on the product label",
+        "illustration of a strawberry drink in a glass on the product label",
+        "small product benefit icons (e.g., GF, DF) on the product label below 'Nuzest'"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "headline text 'Daily kids' nutrition, in one easy scoop'",
+        "second_attention": "product 'Nuzest Kids Good Stuff'",
+        "third_attention": "feature headlines (IMPROVED IMMUNITY, HAPPY TUMMIES, HEALTHY BONES)",
+        "fourth_attention": "detailed feature descriptions"
+      },
+      "forbidden_elements": [
+        "NO complex photographic background",
+        "NO aggressive or high-energy imagery",
+        "NO sunburst background",
+        "NO speech bubbles on main background",
+        "NO bold, contrasting borders",
+        "NO price callouts or discount badges"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 20,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0020.png",
+    "label": "Winning Ad #20",
+    "section": "Sale",
+    "source": "Winning Ads (1).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "top-heavy with headline and primary offer, grounded by a shopping cart with products at the bottom-right; overall asymmetric",
+        "product_placement": "One partially cropped bottle top-left, one floating top-right, three inside a wireframe shopping cart bottom-right",
+        "headline_placement": "Top-center of the image",
+        "cta_placement": "Primary CTA-like banner ('+ GET FREE SHIPPING') is horizontally centered below the headline; discount badge ('up to 20% OFF') is mid-left, overlapping the shopping cart",
+        "negative_space": "moderate to generous 40%+"
+      },
+      "colors": {
+        "background": "#E0EED4",
+        "background_description": "flat solid",
+        "dominant_color": "#E0EED4",
+        "dominant_description": "background",
+        "accent_color": "#9E74B7",
+        "accent_description": "CTA banner, discount badge, shopping cart outline",
+        "text_color_headline": "#374744",
+        "text_color_subheadline": "#374744",
+        "cta_color": "#9E74B7"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "bold",
+        "subheadline_size": "medium (for '+ GET FREE SHIPPING' and 'up to 20% OFF'), small (for disclaimer)"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A calm and confident offer for a wellness product, emphasizing savings and convenience with a clean aesthetic."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "wireframe shopping cart",
+        "product_style": "floating (top products), resting inside a wireframe shopping cart (bottom products)"
+      },
+      "graphic_elements": [
+        "Purple rectangular banner with rounded corners, containing '+ GET FREE SHIPPING', centered horizontally below the headline",
+        "Purple starburst/splat badge with 'up to 20% OFF' text, located on the mid-left, partially overlapping the shopping cart",
+        "Wireframe graphic of a shopping cart, positioned from bottom-middle to bottom-right, angled"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "BUNDLE & SAVE headline",
+        "second_attention": "+ GET FREE SHIPPING banner",
+        "third_attention": "up to 20% OFF discount badge",
+        "fourth_attention": "product bottles and shopping cart"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex or photographic background scenes",
+        "NO gradient background",
+        "NO bright or clashing color palette",
+        "NO speech bubbles",
+        "NO certification badges or seal graphics",
+        "NO busy or cluttered layout",
+        "NO overly dramatic lighting"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 21,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0021.png",
+    "label": "Winning Ad #21",
+    "section": "Sale",
+    "source": "Winning Ads (1).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "top-heavy, with text and CTA at the top, and product placed prominently in the bottom half, centered",
+        "product_placement": "bottom half of the canvas, centered horizontally within a shopping basket",
+        "headline_placement": "top center of the canvas",
+        "cta_placement": "centered below the subheadline and above the product",
+        "negative_space": "generous 40%+, particularly in the top corners and around the main product display"
+      },
+      "colors": {
+        "background": "#DDE7D3",
+        "background_description": "flat solid",
+        "dominant_color": "#DDE7D3",
+        "dominant_description": "the overall background of the ad",
+        "accent_color": "#A284B9",
+        "accent_description": "the 'ADD TO CART' button",
+        "text_color_headline": "#2C3529",
+        "text_color_subheadline": "#2C3529",
+        "cta_color": "#A284B9"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "serif",
+        "headline_line_breaks": "one long line, naturally split by question mark",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small, significantly smaller than the headline"
+      },
+      "mood": {
+        "tone": "calm, trustworthy, premium",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A serene and inviting brand experience that emphasizes wellness and ease of shopping in a clean, sophisticated manner."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "a metal wire shopping basket",
+        "product_style": "three product bottles are placed inside a metal wire shopping basket"
+      },
+      "graphic_elements": [
+        "mouse cursor icon pointing to the CTA button, top-center right",
+        "metal wire shopping basket, bottom-center"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the large headline 'What's in your cart?'",
+        "second_attention": "the 'ADD TO CART' button and mouse cursor",
+        "third_attention": "the three product bottles inside the basket",
+        "fourth_attention": "the subheadline 'FILL YOUR CART WITH NUEDAY & SAVE' and the brand name 'NUEDAY WELLNESS' at the bottom"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy or photographic background scenes",
+        "NO gradient on background",
+        "NO sunbursts or dramatic lighting",
+        "NO speech bubbles",
+        "NO certification badges or seals",
+        "NO warm orange or red accent colors",
+        "NO cluttered layout"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 22,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0022.png",
+    "label": "Winning Ad #22",
+    "section": "Product highlight",
+    "source": "Winning Ads (2).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with text on the left and products on the right",
+        "product_placement": "Top-center (hero product), mid-right, and bottom-right (supporting products), all floating",
+        "headline_placement": "Left side, vertically centered on the canvas",
+        "cta_placement": "Bottom-left corner, aligned with the text block",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#C3E9FA to #E7F6FC gradient",
+        "background_description": "gradient from light blue to a lighter, almost white blue",
+        "dominant_color": "#FDD76D",
+        "dominant_description": "product packaging (yellow)",
+        "accent_color": "#2D365F",
+        "accent_description": "headline text, subheadline text, and CTA outline/arrow",
+        "text_color_headline": "#2D365F",
+        "text_color_subheadline": "#2D365F",
+        "cta_color": "#2D365F (outline and arrow)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "sentence case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines, creating a block",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft, bright studio (for products)",
+        "overall_feel": "A calm, clean, and informative ad that subtly educates on a skincare routine while featuring a brightly lit product."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "floating, positioned at dynamic angles"
+      },
+      "graphic_elements": [
+        "rounded rectangle with an arrow as CTA button, bottom-left"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Headline: 'Do you really need to double cleanse?'",
+        "second_attention": "Hero product (top-center, with butter visible)",
+        "third_attention": "Subheadline: 'Short answer: yes. Here's why...'",
+        "fourth_attention": "CTA arrow"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO real-world photographic background scene",
+        "NO harsh shadows",
+        "NO price information",
+        "NO star ratings or review snippets",
+        "NO overly vibrant or clashing colors",
+        "NO complex patterns or textures in the background"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 23,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0023.png",
+    "label": "Winning Ad #23",
+    "section": "Product highlight",
+    "source": "Winning Ads (2).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The product is held by a hand, positioned diagonally across the lower-center, surrounded by floating information bubbles.",
+        "product_placement": "Lower-center, held by a human hand, angled slightly upwards to the right.",
+        "headline_placement": "Multiple information bubbles are scattered around the product, containing descriptive text. The product name 'DEBLOAT ME' is also prominent on the jar.",
+        "cta_placement": "none",
+        "negative_space": "Generous, approximately 40-50% of the image is open background space, particularly in the top and top-right sections."
+      },
+      "colors": {
+        "background": "#E6DED5",
+        "background_description": "photographic scene, appearing as a soft, light-colored textured surface like sand or concrete.",
+        "dominant_color": "#B2C3B2",
+        "dominant_description": "The product packaging (jar).",
+        "accent_color": "#9C82B0",
+        "accent_description": "The information bubbles/callouts.",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "medium",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line or stacked short lines within bubbles",
+        "subheadline_weight": "medium",
+        "subheadline_size": "same as headline"
+      },
+      "mood": {
+        "tone": "calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A gentle and natural approach to wellness, conveying ease and reliability."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "Purple oval text bubble 'Eases IBS Symptoms', top-left",
+        "Purple oval text bubble 'Helps you stay regular', top-right",
+        "Purple oval text bubble 'Reduces gas', mid-left",
+        "Purple oval text bubble 'Reduces bloating', mid-right",
+        "Purple oval text bubble 'Supports healthy digestion', bottom-center",
+        "Brand logo 'NUEDAY WELLNESS' at the very bottom-center."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The product jar, due to its central placement and distinct color.",
+        "second_attention": "The surrounding text bubbles, drawing attention to product benefits.",
+        "third_attention": "The primary brand and product name 'NUEDAY WELLNESS DEBLOAT ME' on the jar.",
+        "fourth_attention": "The brand logo 'NUEDAY WELLNESS' at the bottom of the frame."
+      },
+      "forbidden_elements": [
+        "NO harsh or overly vibrant colors",
+        "NO aggressive or urgent call-to-actions",
+        "NO busy or cluttered backgrounds",
+        "NO cartoonish or overly stylized illustrations",
+        "NO explicit price or discount information",
+        "NO celebrity endorsements",
+        "NO strong directional cues like arrows or pointers from text bubbles to the product"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 24,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0024.png",
+    "label": "Winning Ad #24",
+    "section": "Product highlight",
+    "source": "Winning Ads (2).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "left-aligned text and benefits stack, right-aligned human and product",
+        "product_placement": "bottom right, held by the human",
+        "headline_placement": "top left of the canvas",
+        "cta_placement": "none",
+        "negative_space": "moderate, especially around the text and on the right side of the human subject"
+      },
+      "colors": {
+        "background": "#F5F5F5",
+        "background_description": "photographic scene of a white tiled wall",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "background of text blocks, some background tiles",
+        "accent_color": "#F1C40F",
+        "accent_description": "woman's sweater",
+        "text_color_headline": "#2A486B",
+        "text_color_subheadline": "#333333",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A wholesome and natural brand promoting daily wellness in a serene, approachable manner."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "gold spoon with product, glass jar of sea moss gel",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "four rounded rectangular badges/blocks stacked vertically on the left side, each containing an icon and benefit text",
+        "shield icon with checkmark inside, top-left of the first benefit block",
+        "lightning bolt icon, top-left of the second benefit block",
+        "stylized head icon with leaves/hair, top-left of the third benefit block",
+        "wavy gut icon, top-left of the fourth benefit block",
+        "small circular badge on product jar with '92 Minerals' text"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Headline: 'Covering Your Daily Nutrition Gap'",
+        "second_attention": "Smiling woman and the product she's holding",
+        "third_attention": "Subheadline: 'Start every day fueled with Whole Wellness.'",
+        "fourth_attention": "The four benefit statements/badges"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO explicit CTA button",
+        "NO intense or dramatic lighting",
+        "NO cluttered layout",
+        "NO complex abstract patterns",
+        "NO price tags or discount badges not related to product features"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 25,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0025.png",
+    "label": "Winning Ad #25",
+    "section": "Product highlight",
+    "source": "Winning Ads (2).pdf",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "Product is centrally placed, held by a hand, with the main headline above, key features around it, and a CTA at the bottom.",
+        "product_placement": "Center-bottom, held by a human hand, angled slightly to the right.",
+        "headline_placement": "Top-middle, spanning across the width of the canvas.",
+        "cta_placement": "Bottom-center, a website URL.",
+        "negative_space": "Generous, particularly in the top and side areas, allowing the product and text to breathe."
+      },
+      "colors": {
+        "background": "#E6F0E6",
+        "background_description": "Soft light green gradient with a subtle textured finish.",
+        "dominant_color": "#000000",
+        "dominant_description": "Product bottle and primary text on the bottle label.",
+        "accent_color": "#1E6B34",
+        "accent_description": "Headline text, brand logo, feature callout lines, and feature descriptions.",
+        "text_color_headline": "#1E6B34",
+        "text_color_subheadline": "#1E6B34",
+        "cta_color": "#1E6B34"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "Mixed: partially uppercase (WHY CHOOSE), partially title case (MORA SHILAJIT EXTRACT?).",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines, two lines.",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "A trustworthy and health-focused brand promoting a natural supplement with clear, listed benefits."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "Mora logo (green mountains with text) top-right corner.",
+        "Mora logo (green mountains with text) on the product bottle label, top-center.",
+        "Pointer/callout lines (green) connecting listed features to the product bottle.",
+        "Small icons on the bottle label below '15000MG' for 'Energize', 'Protect', 'Revitalize', 'Renew'.",
+        "Small checkmark icon on the bottle label next to '60 Vegetarian Capsules'."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Headline 'WHY CHOOSE MORA SHILAJIT EXTRACT?'",
+        "second_attention": "The product bottle, specifically the brand 'MORA' and product name 'SHILAJIT' on the label.",
+        "third_attention": "The listed benefits/features surrounding the bottle.",
+        "fourth_attention": "The website URL at the bottom."
+      },
+      "forbidden_elements": [
+        "NO cluttered layout",
+        "NO bright, saturated, or warm background colors (cool green is used)",
+        "NO complex photographic background scenes",
+        "NO speech bubbles",
+        "NO discount badges or aggressive sales language",
+        "NO abstract shapes or patterns (other than subtle background texture)",
+        "NO stock images of full people (only a hand)"
+      ],
+      "size": "portrait aspect ratio"
+    }
+  },
+  {
+    "id": 26,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0026.png",
+    "label": "Winning Ad #26",
+    "section": "Us Vs Them",
+    "source": "Winning Ads (2).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout features the product held by hands in the bottom-center, with headline text placed in the upper-right quadrant. The brand logo is in the top-left, creating an asymmetric and dynamic composition.",
+        "product_placement": "Bottom-center, held by two hands.",
+        "headline_placement": "Upper-right quadrant.",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+, primarily in the upper-left and center of the sky background."
+      },
+      "colors": {
+        "background": "#92C1EC",
+        "background_description": "photographic scene of a clear blue sky with sparse white clouds.",
+        "dominant_color": "#0A3F9D",
+        "dominant_description": "The product bottle's distinct blue color.",
+        "accent_color": "#FFFFFF",
+        "accent_description": "Headline text, Karrwell logo, product cap, and clouds in the background.",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines, broken for readability across multiple lines.",
+        "subheadline_weight": "bold",
+        "subheadline_size": "medium, similar to the main headline but contained within a colored block."
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad conveys a sense of natural vitality and clear-headed wellness, presented cleanly against an open sky."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "solid color block (behind 'Your Health' text)",
+        "props": "none",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "Karrwell logo (KV icon + text) in the top-left corner.",
+        "Small Karrwell logo (KV icon) on the product bottle's label, vertical text 'Karrwell' on the side of the bottle.",
+        "Solid blue rectangular block behind the text '& Your Health' in the upper-right."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The product bottle, due to its central placement and contrasting color.",
+        "second_attention": "The main headline text 'Revitalize, repair, and re-energize your cells- & Your Health'.",
+        "third_attention": "The Karrwell brand logo in the top-left corner.",
+        "fourth_attention": "The detailed text on the product label."
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO gradient on background (it's a natural sky)",
+        "NO warm orange or red tones",
+        "NO cluttered layout",
+        "NO explicit CTA button or price information",
+        "NO dramatic studio lighting"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 27,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0027.png",
+    "label": "Winning Ad #27",
+    "section": "Us Vs Them",
+    "source": "Winning Ads (2).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "diagonal split with white upper-left and green lower-right, product bridging both sections",
+        "product_placement": "lower-left to center, extending into the green section",
+        "headline_placement": "upper-center, below the brand logo",
+        "cta_placement": "none",
+        "negative_space": "moderate, particularly in the upper-left white area and the lower-right green area"
+      },
+      "colors": {
+        "background": "#FFFFFF (white) and #3D963F (green)",
+        "background_description": "flat solid white and a large flat solid green block, with subtle plant texture overlays",
+        "dominant_color": "#3D963F",
+        "dominant_description": "large diagonal background block, text highlights, product accents",
+        "accent_color": "#231F20",
+        "accent_description": "main headline text and sub-headlines",
+        "text_color_headline": "#231F20",
+        "text_color_subheadline": "#231F20 (Moringa Powder, Super Food), #3D963F (Natural Nutrition), #FFFFFF (ONE SCOOP., side badges)",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clean, natural, and trustworthy brand promoting wellness and health through nature-derived products."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "flat solid color blocks with subtle illustrated leaf patterns",
+        "overlay_style": "none",
+        "props": "fresh moringa leaves (illustration), powdered moringa (on packaging and spoon), white spoon",
+        "product_style": "standing on an unseen surface, angled slightly"
+      },
+      "graphic_elements": [
+        "Greevera logo (leaf icon + text) at the top center",
+        "Moringa leaves illustration on the top-left background",
+        "Subtle faint leaf patterns on the white background area (top right and top left of product)",
+        "Three green horizontal bars with text 'DAILY', 'GENTLY', 'BEAUTIFULLY' below the main headline",
+        "Faint leaf patterns on the white product packaging",
+        "'NON GMO' icon with checkmark to the right of the product label",
+        "'NO ADDITIVES' icon with checkmark below 'NON GMO'",
+        "'MADE FROM FRESH MORINGA' icon with checkmark below 'NO ADDITIVES'",
+        "'Natural Product' badge/icon on the lower-left corner of the product packaging",
+        "Text 'ONE SCOOP. PURE NOURISHMENT.' rotated diagonally on the green background, upper right",
+        "White spoon with green powder, lower right corner",
+        "'NO SHORTCUTS JUST RESULTS' badge, rotated on the green background, upper right",
+        "'CHEMICALS FREE' badge, rotated on the green background, mid-right",
+        "'100% NATURAL' badge, rotated on the green background, lower-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Greevera logo and 'Let Nature Care for You' headline",
+        "second_attention": "The Moringa Powder product packaging",
+        "third_attention": "The spoon with powder and the rotated text 'ONE SCOOP. PURE NOURISHMENT.'",
+        "fourth_attention": "The small informational badges/icons"
+      },
+      "forbidden_elements": [
+        "NO aggressive red/orange colors",
+        "NO human models/faces",
+        "NO busy photographic background scene (like a jungle or farm)",
+        "NO complex gradients as the main background",
+        "NO speech bubbles",
+        "NO explicit price tags or discount percentages",
+        "NO cluttered layout",
+        "NO serif fonts for main text",
+        "NO strong shadows or dramatic lighting effects"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 28,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0028.png",
+    "label": "Winning Ad #28",
+    "section": "Us Vs Them",
+    "source": "Winning Ads (2).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "Asymmetric, with main text in the top-left quadrant and the product/action scene occupying the bottom-right and center-right.",
+        "product_placement": "The product pouch stands on a surface in the bottom-right, with a glass of water to its left. A hand with a spoon pours powder into the glass, positioned centrally.",
+        "headline_placement": "Top-left corner, stacked vertically.",
+        "cta_placement": "none",
+        "negative_space": "Moderate, providing breathing room around the text and in the top-right background, contributing to a calm aesthetic."
+      },
+      "colors": {
+        "background": "#f0f0ed",
+        "background_description": "Photographic scene featuring an indoor setting with a blurred window view showing a soft sunset glow (light orange/yellow) and a light grey/white wall.",
+        "dominant_color": "#4a773d",
+        "dominant_description": "Headline text, brand logo, product text, product illustration (Moringa leaves), and bottom utility icons.",
+        "accent_color": "#b18e38",
+        "accent_description": "The golden spoon, adding a touch of warmth and slight luxury.",
+        "text_color_headline": "#4a773d",
+        "text_color_subheadline": "#4a773d",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold for 'Energy Vibrance', regular for 'aur vibe ke liye'",
+        "headline_case": "Title Case for 'Energy Vibrance', lowercase for 'aur vibe ke liye'",
+        "headline_size": "very large for 'Energy Vibrance', large for 'aur vibe ke liye'",
+        "font_style": "sans-serif for 'Energy Vibrance', script for 'aur vibe ke liye'",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "medium (e.g., 'Moringa Powder') and regular (e.g., bottom icon descriptions)",
+        "subheadline_size": "small to medium, significantly smaller than the main headline block"
+      },
+      "mood": {
+        "tone": "calm, trustworthy, premium",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural light from a window, complemented by a soft sunset glow in the distance, creating a serene atmosphere.",
+        "overall_feel": "A natural and wholesome brand promoting vitality, health, and a sense of well-being through a gentle and inviting visual style."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "glass of water, golden spoon, green leaves (framing the foreground), product pouch.",
+        "product_style": "The product pouch is standing upright on a surface, the powder is being poured from a spoon held by a hand into a glass of water standing beside the pouch."
+      },
+      "graphic_elements": [
+        "Stylized lightning bolt icons in light green/white, top-center to top-right.",
+        "Greevera brand logo (leaf symbol) in green, top-right.",
+        "Subtle leaf pattern background on the product packaging.",
+        "Detailed illustration of a Moringa branch and powder on the product packaging, center-right.",
+        "Small square certification/dietary icons (e.g., FSSAI, Veg) on the product packaging.",
+        "Row of three descriptive icons at the bottom: a head with brain waves ('Reduces Anxiety', bottom-left), a running figure ('Boosts Energy', bottom-center), and a scale/hormone symbol ('Balances Hormones', bottom-right)."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large green text 'Energy Vibrance' in the top-left.",
+        "second_attention": "The hand pouring powder into the glass and the Greevera Moringa Powder pouch.",
+        "third_attention": "The 'aur vibe ke liye' text and the Greevera brand logo at the top-right.",
+        "fourth_attention": "The row of benefit icons at the very bottom."
+      },
+      "forbidden_elements": [
+        "NO aggressive or urgent call-to-action buttons.",
+        "NO abstract geometric backgrounds.",
+        "NO speech bubbles or cartoon characters.",
+        "NO cluttered or busy layout.",
+        "NO overly saturated or harsh colors.",
+        "NO bright studio lighting without natural elements.",
+        "NO explicit discount badges in a prominent position.",
+        "NO hard shadows or high contrast in the overall scene."
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 29,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0029.png",
+    "label": "Winning Ad #29",
+    "section": "Us Vs Them",
+    "source": "Winning Ads (2).pdf",
+    "page": 1,
+    "extracted_style": {
+      "layout": {
+        "structure": "centered product with circular surrounding elements, headline top, CTA bottom",
+        "product_placement": "center, held by a hand, slightly below the vertical midpoint",
+        "headline_placement": "top-center of the image",
+        "cta_placement": "bottom-center, above the disclaimer text",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F9F8F5",
+        "background_description": "textured flat solid color (light beige/off-white)",
+        "dominant_color": "#2A5A3D",
+        "dominant_description": "headline text, CTA button, and various graphic lines/icons",
+        "accent_color": "#C8E3C9",
+        "accent_description": "product bottle and circular icon backgrounds",
+        "text_color_headline": "#2A5A3D",
+        "text_color_subheadline": "#2A5A3D",
+        "cta_color": "#2A5A3D"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "serif for 'Hormone Support', script for 'made simple', sans-serif for others",
+        "headline_line_breaks": "stacked short lines (2 lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "calm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A natural, reassuring, and approachable brand promoting health and wellness through simple solutions."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "textured flat solid color",
+        "overlay_style": "none",
+        "props": "green leaves (pothos plant type)",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "H-E-B logo/badge top-right with 'Now at' text",
+        "circular infographics with icons and descriptive text surrounding the product, connected by a subtle circular line",
+        "molecule icon top-left, for 'All-in-one hormone support*'",
+        "person with battery icon mid-left, for 'Supports daily energy*'",
+        "hamburger icon bottom-left, for 'Helps curb occasional cravings*'",
+        "arm flex with sparkle icon top-right, for 'Supports metabolic health*'",
+        "face/skin icon mid-right, for 'Supports healthy skin*'",
+        "smiling face with sparkle icon bottom-right, for 'Supports mood balance*'",
+        "solid green rectangular CTA button at the bottom"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large headline 'Hormone Support made simple'",
+        "second_attention": "The product bottle held by the hand",
+        "third_attention": "The surrounding circular benefit icons and text",
+        "fourth_attention": "The 'Now at H-E-B' logo"
+      },
+      "forbidden_elements": [
+        "NO busy background patterns",
+        "NO bright, artificial colors (except H-E-B red)",
+        "NO aggressive or urgent language/graphics",
+        "NO cartoonish or overly complex illustrations",
+        "NO complex photographic scenes as the main background",
+        "NO gradient on background",
+        "NO price information",
+        "NO certification badges (other than store availability)"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 30,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0030.png",
+    "label": "Winning Ad #30",
+    "section": "Sale",
+    "source": "Winning Ads (2).pdf",
+    "page": 2,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right by a vertical line",
+        "product_placement": "right side, slightly below vertical center",
+        "headline_placement": "top left and top right sections",
+        "cta_placement": "none",
+        "negative_space": "generous 50%+"
+      },
+      "colors": {
+        "background": "#E8EBDD",
+        "background_description": "flat solid",
+        "dominant_color": "#E8EBDD",
+        "dominant_description": "background",
+        "accent_color": "#806A8F",
+        "accent_description": "speech bubbles and vertical divider line",
+        "text_color_headline": "#303B31",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clear, calm, and direct solution-oriented approach to common digestive problems."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "floating"
+      },
+      "graphic_elements": [
+        "four purple speech bubbles on the left side, containing problem statements",
+        "a single vertical purple dividing line in the center of the canvas"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "YOUR PROBLEMS / YOUR SOLUTION headlines",
+        "second_attention": "the product 'DEBLOAT ME'",
+        "third_attention": "the four problem statements in speech bubbles",
+        "fourth_attention": "smaller text on the product label"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy or photographic background scenes",
+        "NO sunburst or gradient background",
+        "NO bright, high-contrast, or warm orange/red colors",
+        "NO complex illustrations or intricate graphics",
+        "NO discount badges or urgent call-to-action buttons",
+        "NO certification badges in a prominent, attention-grabbing position",
+        "NO cluttered layout",
+        "NO serif fonts for headlines or subheadlines"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 31,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0031.png",
+    "label": "Winning Ad #31",
+    "section": "Sale",
+    "source": "Winning Ads (2).pdf",
+    "page": 2,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout is horizontally split, with product bottles and feature descriptions occupying the left and bottom-left, while a comparison chart with 'US' and 'THEM' columns dominates the right side.",
+        "product_placement": "Two larger Koia Elite bottles are positioned on the mid-left of the canvas. A smaller Koia Elite bottle is placed within the 'US' comparison column on the mid-right.",
+        "headline_placement": "The headlines 'US' and 'THEM' are at the top of their respective comparison columns on the right. Feature headlines 'MADE WITH AVOCADO OIL', 'NO SUCRALOSE', and 'NO CARRAGEENAN' are aligned vertically on the bottom-left.",
+        "cta_placement": "none",
+        "negative_space": "Moderate, with ample blue and dark blue background space, particularly in the top-left and bottom-left where text and products are placed."
+      },
+      "colors": {
+        "background": "#0093E1 (top-right) and #00376B (bottom-left)",
+        "background_description": "Angularly split solid colors creating a gradient effect, with a lighter blue in the top-right and a darker blue in the bottom-left.",
+        "dominant_color": "#0093E1",
+        "dominant_description": "The lighter blue background section and the 'US' comparison column.",
+        "accent_color": "#E0E0E0",
+        "accent_description": "The 'THEM' comparison column.",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "Large for 'US' and 'THEM', medium for feature descriptions.",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "Most headlines are single lines, with 'MADE WITH AVOCADO OIL' stacked on two lines.",
+        "subheadline_weight": "regular",
+        "subheadline_size": "The product label text is small relative to headlines."
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "The ad conveys a confident and fact-based approach, emphasizing product benefits through a clear visual comparison."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "Two main products are standing on an implied surface with slight shadow, while a smaller product within the comparison chart appears to be floating."
+      },
+      "graphic_elements": [
+        "Two vertical comparison columns on the right, labeled 'US' (blue) and 'THEM' (grey).",
+        "Three white checkmark icons in the 'US' column.",
+        "Three black 'X' mark icons in the 'THEM' column.",
+        "A white silhouette of a generic bottle in the 'THEM' column.",
+        "Horizontal lines separating the feature points and comparison rows."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The two large Koia Elite product bottles on the mid-left.",
+        "second_attention": "The 'US' and 'THEM' comparison columns, particularly the 'US' column with its small product image.",
+        "third_attention": "The feature descriptions 'MADE WITH AVOCADO OIL', 'NO SUCRALOSE', 'NO CARRAGEENAN' on the left.",
+        "fourth_attention": "The checkmark and 'X' icons in the comparison chart."
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex photographic background scene",
+        "NO busy or cluttered layout",
+        "NO bright, playful, or warm color tones like orange or yellow (beyond the product labels)",
+        "NO speech bubbles or cartoon elements",
+        "NO explicit discount or promotional language",
+        "NO certification badges or seals (beyond what's on the product label)",
+        "NO sunburst background",
+        "NO highly decorative or script fonts"
+      ],
+      "size": "1200x1500 portrait"
+    }
+  },
+  {
+    "id": 32,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0032.png",
+    "label": "Winning Ad #32",
+    "section": "Sale",
+    "source": "Winning Ads (2).pdf",
+    "page": 2,
+    "extracted_style": {
+      "layout": {
+        "structure": "angled product bottles in the background with a large, central white overlay box containing text",
+        "product_placement": "bottom-left and bottom-right, angled and partially obscured by the text overlay",
+        "headline_placement": "top-center of the white text overlay box",
+        "cta_placement": "none",
+        "negative_space": "moderate, primarily around the visible parts of the products and the top/bottom of the canvas"
+      },
+      "colors": {
+        "background": "#F0F0F0",
+        "background_description": "light grey, subtly textured photographic surface",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "the large rectangular text overlay",
+        "accent_color": "#1E5C4E",
+        "accent_description": "headline text and 'NUEDAY WELLNESS' logo text",
+        "text_color_headline": "#1E5C4E",
+        "text_color_subheadline": "#333333",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case with one word in uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (2 lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A confident and trustworthy brand testimonial conveying genuine product satisfaction."
+      },
+      "composition": {
+        "style": "balanced but visually dynamic due to angled products and central overlay",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "real photograph of a textured surface",
+        "overlay_style": "solid color block",
+        "props": "none",
+        "product_style": "standing on surface, angled, partially visible"
+      },
+      "graphic_elements": [
+        "five purple stars indicating a 5-star rating, centered below the headline",
+        "a green rounded rectangle with 'Jojo Verified buyer' text, positioned at the bottom-center of the white text overlay"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the large headline text 'I have never felt THIS good!'",
+        "second_attention": "the five purple stars",
+        "third_attention": "the main body of the testimonial text",
+        "fourth_attention": "the product bottles and brand logos"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO bright or saturated background colors",
+        "NO complex or outdoor background scenes",
+        "NO explicit call-to-action buttons",
+        "NO illustrations or cartoon elements",
+        "NO gradient backgrounds",
+        "NO speech bubbles",
+        "NO animated elements"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 33,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0033.png",
+    "label": "Winning Ad #33",
+    "section": "AI human",
+    "source": "Winning Ads (2).pdf",
+    "page": 3,
+    "extracted_style": {
+      "layout": {
+        "structure": "headline at the top, products centered in the lower half within a prop, and a website address at the bottom",
+        "product_placement": "Two product bottles are placed inside a green shopping cart, occupying the lower two-thirds of the image, slightly off-center to the right.",
+        "headline_placement": "Top-center of the image.",
+        "cta_placement": "The '1 CLICK BUY' phrase is part of the headline, and the Amazon logo functions as a call to action element. A website URL serves as a direct CTA at the very bottom-center.",
+        "negative_space": "Moderate, with significant breathing room at the top (approx. 20-25% of the canvas)."
+      },
+      "colors": {
+        "background": "#FDF8F2",
+        "background_description": "flat solid color",
+        "dominant_color": "#2F8D40",
+        "dominant_description": "MORA brand logo, shopping cart, 'WE'RE ON ON' text, and website URL.",
+        "accent_color": "#FF9900",
+        "accent_description": "'1 CLICK BUY' text and the Amazon smile swoosh.",
+        "text_color_headline": "'1 CLICK BUY' is orange (#FF9900), 'WE'RE ON ON' is green (#2F8D40), 'amazon' is black (#000000).",
+        "text_color_subheadline": "None explicitly, product names on bottles are typically black, red, or orange.",
+        "cta_color": "The Amazon logo text is black (#000000) with an orange (#FF9900) swoosh; the website URL text is green (#2F8D40)."
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase for '1 CLICK BUY' and 'WE'RE ON ON', lowercase for 'amazon'",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (three lines total)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small, significantly smaller than the headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "medium",
+        "lighting": "bright studio",
+        "overall_feel": "A clean, modern, and inviting advertisement promoting health supplements with easy accessibility through online retail."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "A dark green shopping cart",
+        "product_style": "standing on surface (within a shopping cart)"
+      },
+      "graphic_elements": [
+        "MORA brand logo (stylized mountain peak) top-right and repeated on each product label.",
+        "Amazon smile swoosh below the 'amazon' text, centered under the word.",
+        "A three-dimensional dark green wireframe shopping cart, forming the primary prop in the lower half."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large, bold headline '1 CLICK BUY WE'RE ON ON amazon'.",
+        "second_attention": "The two product bottles within the shopping cart.",
+        "third_attention": "The MORA brand logo at the top right.",
+        "fourth_attention": "The website address 'www.wellbeingmora.in' at the bottom."
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges as dominant visual elements (small logos on bottles are fine)",
+        "NO gradient on background",
+        "NO human models",
+        "NO price display",
+        "NO discount percentage banners",
+        "NO cluttered layout"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 34,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0034.png",
+    "label": "Winning Ad #34",
+    "section": "AI human",
+    "source": "Winning Ads (2).pdf",
+    "page": 3,
+    "extracted_style": {
+      "layout": {
+        "structure": "centered product with text stacked below",
+        "product_placement": "center, occupying the top half of the canvas",
+        "headline_placement": "below the product cluster, centered horizontally",
+        "cta_placement": "below the headline, centered horizontally",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#96D1FC to #E0EFFE gradient",
+        "background_description": "gradient",
+        "dominant_color": "#2C97F3",
+        "dominant_description": "shopping basket, product labels, background blue",
+        "accent_color": "#FFC220",
+        "accent_description": "Walmart spark logo",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "#FFFFFF"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "calm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "The ad conveys a clean, approachable, and trustworthy brand feel emphasizing accessibility through Walmart."
+      },
+      "composition": {
+        "style": "minimalist",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "blue shopping basket",
+        "product_style": "floating above a shopping basket"
+      },
+      "graphic_elements": [
+        "Walmart spark logo inside the shopping basket, bottom-right quadrant of basket",
+        "Walmart spark logo next to 'Walmart' in the subheadline"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the floating product bottles and the blue shopping basket",
+        "second_attention": "the headline 'Shop in store.'",
+        "third_attention": "the subheadline 'Now available at Walmart'",
+        "fourth_attention": "the specific product names on the bottles ('teen skin', 'natural outcome')"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy background scenes",
+        "NO urgent calls to action (e.g., 'Buy Now!')",
+        "NO complex graphics or overlays",
+        "NO testimonials or star ratings",
+        "NO price information",
+        "NO cluttered layout",
+        "NO speech bubbles"
+      ],
+      "size": "1350x1688 portrait"
+    }
+  },
+  {
+    "id": 35,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0035.png",
+    "label": "Winning Ad #35",
+    "section": "AI human",
+    "source": "Winning Ads (2).pdf",
+    "page": 3,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric with product top-right and text bottom-left",
+        "product_placement": "top-right quadrant, angled slightly",
+        "headline_placement": "bottom-left quadrant",
+        "cta_placement": "none",
+        "negative_space": "moderate, approximately 40-50%"
+      },
+      "colors": {
+        "background": "#9B7E66",
+        "background_description": "textured, photographic scene (wood grain)",
+        "dominant_color": "#9B7E66",
+        "dominant_description": "wooden table surface",
+        "accent_color": "#4B2E84",
+        "accent_description": "product packaging (deep purple)",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "mixed (title case for most words, uppercase for 'METABOLISM')",
+        "headline_size": "medium",
+        "font_style": "handwriting",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "medium",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A simple, direct, and clean presentation of a health supplement on a natural surface, conveying a sense of trustworthiness and practicality."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "one purple sticky note",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [],
+      "visual_hierarchy": {
+        "first_attention": "the product (AgeMate bottle)",
+        "second_attention": "the handwritten note",
+        "third_attention": "text on the product label ('Daily Longevity Blend')",
+        "fourth_attention": "none"
+      },
+      "forbidden_elements": [
+        "NO humans",
+        "NO complex backgrounds (other than textured wood)",
+        "NO busy layout",
+        "NO bright, highly saturated colors beyond product branding",
+        "NO speech bubbles",
+        "NO certification badges",
+        "NO arrows",
+        "NO gradient on background"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 36,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0036.png",
+    "label": "Winning Ad #36",
+    "section": "AI human",
+    "source": "Winning Ads (2).pdf",
+    "page": 4,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout is balanced and features a central focus on a happy elderly couple. The top portion is predominantly green with fragmented visuals of people experiencing discomfort, while the bottom half transitions into a grassy landscape where the product and headline text are prominently placed.",
+        "product_placement": "Bottom center, resting on a wooden log.",
+        "headline_placement": "Bottom center, below the product, split into three lines: 'SỨC KHỎE Vững bền', 'Xua tan nỗi lo', and 'Tuổi tác'.",
+        "cta_placement": "none",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "gradient of greens",
+        "background_description": "A gradient background transitioning from a darker green at the top to a lighter, more vibrant green, with a textured photographic grass scene at the bottom.",
+        "dominant_color": "#2E7D32",
+        "dominant_description": "Various shades of green are dominant, used for the background, product packaging, and natural elements like grass and leaves.",
+        "accent_color": "#E91E63",
+        "accent_description": "A vibrant pinkish-red used for prominent headline words like 'SỨC KHỎE' and 'Tuổi tác', and the product bottle cap.",
+        "text_color_headline": "#E91E63 (pinkish-red) and #C8E6C9 (light green/yellow)",
+        "text_color_subheadline": "#C8E6C9 (light green/yellow)",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold for 'SỨC KHỎE' and 'Tuổi tác', medium for 'Vững bền Xua tan nỗi lo'",
+        "headline_case": "Title case",
+        "headline_size": "very large for 'SỨC KHỎE' and 'Tuổi tác', large for 'Vững bền Xua tan nỗi lo'",
+        "font_style": "The main words 'SỨC KHỎE' and 'Tuổi tác' use a decorative sans-serif font, while 'Vững bền Xua tan nỗi lo' uses a script font.",
+        "headline_line_breaks": "stacked short lines ('SỨC KHỎE Vững bền' on one line, 'Xua tan nỗi lo' on another, 'Tuổi tác' on a third).",
+        "subheadline_weight": "regular",
+        "subheadline_size": "smaller than the main headline words but still prominent"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "The brand conveys a feeling of health, happiness, and peace of mind for the elderly, emphasizing natural well-being."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "A mix of gradient, photographic scene (fragmented symptom images), and illustrated (grass texture).",
+        "overlay_style": "none",
+        "props": "wooden log, mint leaves, honeydew melon pieces (implied ingredient), green grass",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "Green rectangular badge/logo top-left corner with brand name and a star rating icon.",
+        "Fragmented glass-like shards in the upper background, containing photographic inserts of people experiencing cough/cold symptoms.",
+        "Small floating green fruit/melon pieces around the product, some with a subtle glow.",
+        "Fresh green mint leaves surrounding the product on the wooden log.",
+        "Textured green grass covering the lower half of the image."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The happy elderly couple at the center.",
+        "second_attention": "The large, colored headline text 'SỨC KHỎE' and 'Tuổi tác' at the bottom center.",
+        "third_attention": "The product bottles and box on the wooden log.",
+        "fourth_attention": "The fragmented images of people with symptoms, and the brand logo at the top left."
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO abstract geometric patterns unrelated to nature/health",
+        "NO certification badges (beyond the existing logo)",
+        "NO cartoon characters",
+        "NO explicit discount badges or 'SALE' text",
+        "NO cluttered layout with too many small elements",
+        "NO harsh or high-contrast lighting"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 37,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0037.png",
+    "label": "Winning Ad #37",
+    "section": "AI human",
+    "source": "Winning Ads (2).pdf",
+    "page": 4,
+    "extracted_style": {
+      "layout": {
+        "structure": "A central headline area is placed at the top, with supporting image vignettes surrounding it. The main focus is a large family portrait occupying the bottom half of the image. The product is discreetly placed in the bottom right corner.",
+        "product_placement": "Bottom right corner, resting on a light-colored surface (table).",
+        "headline_placement": "Top center of the image, below the brand logo.",
+        "cta_placement": "none",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#009688",
+        "background_description": "Gradient from a darker teal-green at the top to a lighter, more vibrant green/cyan in the middle, fading to white/light grey at the bottom.",
+        "dominant_color": "#009688",
+        "dominant_description": "The upper background area.",
+        "accent_color": "#FFC107",
+        "accent_description": "Headline text (ĐÔI MẮT KHỎE) and the 'Wit' logo.",
+        "text_color_headline": "#FFFFFF, #FFC107",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (3 lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "A heartwarming and supportive brand image that emphasizes family well-being and the long-term benefits of eye health across different life stages."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "gradient with subtle grid pattern, transitioning to real photographs",
+        "overlay_style": "white translucent vignettes for supporting images",
+        "props": "none",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "Wit logo in white, top left",
+        "Subtle grid pattern on the green background in the top half",
+        "Three rounded rectangular/oval vignettes with photo inserts: one showing a man at work (top-left), one showing a boy studying (top-center), and one showing an elderly couple exercising (top-right).",
+        "Curved white text labels ('...sự nghiệp vững vàng', '...con khỏe tinh anh', '...tuổi già vui vẻ') acting as descriptors for the vignettes, with subtle connecting lines to the central headline theme.",
+        "Small green leaf and eye icon graphics on the product labels."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large yellow headline text 'ĐÔI MẮT KHỎE'",
+        "second_attention": "The main family photo at the bottom",
+        "third_attention": "The Wit brand logo and the product bottles",
+        "fourth_attention": "The three lifestyle vignettes and their associated text"
+      },
+      "forbidden_elements": [
+        "NO sunburst background",
+        "NO cartoon illustrations",
+        "NO hard shadows",
+        "NO bright red (except for incidental clothing)",
+        "NO cluttered layout (text or images)",
+        "NO certification badges",
+        "NO explicit CTA button with a strong call to action"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 38,
+    "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\templates\\tpl_0038.png",
+    "label": "Winning Ad #38",
+    "section": "AI human",
+    "source": "Winning Ads (2).pdf",
+    "page": 4,
+    "extracted_style": {
+      "layout": {
+        "structure": "central image framed like a social media post, with headline above and informational footer below",
+        "product_placement": "bottom center, slightly to the left, standing on a grassy surface",
+        "headline_placement": "top center, above the social media frame",
+        "cta_placement": "none (informational footer at bottom)",
+        "negative_space": "moderate, with significant blue gradient background around the central elements"
+      },
+      "colors": {
+        "background": "#3F9CEB to #2C6CB1 gradient",
+        "background_description": "gradient from a lighter blue at the top to a darker blue at the bottom",
+        "dominant_color": "#3F9CEB (top blue)",
+        "dominant_description": "background",
+        "accent_color": "#FFD700 (yellow)",
+        "accent_description": "headline highlight banner and product details",
+        "text_color_headline": "white for 'CHĂM SÓC SỨC KHOẺ', #00547A for 'Người thân yêu'",
+        "text_color_subheadline": "white for the informational footer",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold for 'CHĂM SÓC SỨC KHOẺ', script/medium for 'Người thân yêu'",
+        "headline_case": "uppercase for 'CHĂM SÓC SỨC KHOẺ', title case (script) for 'Người thân yêu'",
+        "headline_size": "very large",
+        "font_style": "sans-serif for 'CHĂM SÓC SỨC KHOẺ', script for 'Người thân yêu'",
+        "headline_line_breaks": "stacked short lines (two lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "warm, trustworthy, playful",
+        "energy_level": "medium",
+        "lighting": "flat natural (for the photo), gradient soft (for the overall background)",
+        "overall_feel": "A heartwarming and trustworthy brand feel, emphasizing family health and happiness through a friendly, social media-inspired visual."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph (within the frame), gradient (for the ad canvas)",
+        "overlay_style": "none (on the photograph), gradient on the surrounding canvas",
+        "props": "product can, glass of milk",
+        "product_style": "standing on a surface (grassy ground)"
+      },
+      "graphic_elements": [
+        "Lacsure logo, top-left corner",
+        "OPKO logo, top-right corner",
+        "Yellow rectangular banner behind 'CHĂM SÓC SỨC KHOẺ' headline, top center",
+        "White rounded rectangular frame (social media post style), slightly angled, in the central area",
+        "Three glossy red heart icons floating around the family within the frame",
+        "One flat red heart icon (like social media 'like' button) below the framed image, bottom-left",
+        "One flat red heart icon on the right side of the framed image, slightly below the center",
+        "Thumb-up icon (social media 'like'), bottom-left below the frame",
+        "Share icon, bottom-right below the frame",
+        "Small green checkmark in a circle on product label for 'Gluten-free'",
+        "Small white square icons with blue text for nutritional info (Prot, B, 24V/MM, Ca) on the product label",
+        "A yellow circular badge with '1' and 'Sữa bột dinh dưỡng' on the product label"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The family photo and the large script headline 'Người thân yêu'",
+        "second_attention": "The product can and the glass of milk",
+        "third_attention": "The bold headline 'CHĂM SÓC SỨC KHOẺ' and the brand logos (Lacsure, OPKO)",
+        "fourth_attention": "The social media 'likes' and 'shares' section, and the company information at the bottom"
+      },
+      "forbidden_elements": [
+        "NO cartoon characters",
+        "NO aggressive sales language or direct CTA buttons",
+        "NO complex patterns on background",
+        "NO dark or black dominant colors",
+        "NO cluttered text boxes or excessive text",
+        "NO certification badges other than what's on the product itself"
+      ],
+      "size": "1080x1080 square"
+    }
   }
 ]

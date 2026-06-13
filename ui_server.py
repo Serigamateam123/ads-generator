@@ -1,11 +1,11 @@
-"""
+﻿"""
 static-remix UI server
 Run: python ui_server.py
 Opens at: http://localhost:7373
 """
 import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap
 from pathlib import Path
-from flask import Flask, jsonify, request, send_from_directory, redirect
+from flask import Flask, jsonify, request, send_from_directory
 
 # ── Font paths ────────────────────────────────────────────────────────────────
 FONTS_DIR       = Path(__file__).parent / "fonts"
@@ -16,7 +16,7 @@ FONT_BOLD       = str(FONTS_DIR / "Poppins-Bold.ttf")
 FONT_FALLBACK   = "C:/Windows/Fonts/arialbd.ttf"                # always available on Windows
 
 PORT         = 7373
-MYR_RATE     = 4.47
+MYR_RATE     = 4.07
 COSTS        = {"draft": 0.01, "final": 0.04}
 DRAFT_MODEL  = "gemini-2.5-flash-image"           # cheap draft (~$0.01)
 DRAFT_FALL   = "gemini-3.1-flash-image-preview"   # fallback draft
@@ -177,29 +177,40 @@ def call_gemini_image(prompt, ref_paths, model,
 
     if winning_ad and os.path.exists(winning_ad):
         b64, mime = img_to_b64(winning_ad)
-        parts.append({"text": "=== IMAGE 1: WINNING AD — REPLICATE THIS VISUAL STYLE ==="})
+        parts.append({"text": "=== IMAGE 1: WINNING AD — CREATIVE DIRECTION REFERENCE ==="})
         parts.append({"inline_data": {"mime_type": mime, "data": b64}})
         parts.append({"text":
-            "This is the WINNING AD reference. Your output must look like this image "
-            "with a different product swapped in.\n\n"
-            "COPY from IMAGE 1:\n"
-            "- Background color, gradient, and texture (exact match)\n"
-            "- Product placement zone and scale on the canvas\n"
-            "- Overall composition, negative space, and layout structure\n"
-            "- Lighting mood and atmosphere\n\n"
-            "DO NOT copy from IMAGE 1:\n"
-            "- Do NOT copy or render any text, words, or numbers you see in it\n"
-            "- Do NOT copy the specific product shown in it (product will come from IMAGE 2)\n"
-            "- Treat all text in IMAGE 1 as invisible — background and layout only"})
+            "This is the WINNING AD. Treat it as a TEMPLATE to clone almost exactly — this is your primary creative reference.\n\n"
+            "REPLICATE EXACTLY from IMAGE 1, pixel-for-pixel as much as possible:\n"
+            "- Overall composition and layout structure (where everything sits, how much negative space, balance)\n"
+            "- Background — exact type, treatment (solid, gradient, textured, lifestyle scene), and color family\n"
+            "- Color palette — dominant and accent tones, exact same hues\n"
+            "- Lighting, shadows, and how the product is treated (floating, glowing, grounded, on a surface, etc.)\n"
+            "- Every graphic element: shapes, panels, dividers, badges, arrows, pointers, icons, decorative elements — "
+            "same shapes, same positions, same sizes, same styling\n"
+            "- Overall mood, energy, and visual confidence (busy vs minimal, centered vs asymmetric)\n\n"
+            "ONLY change these two things, nothing else:\n"
+            "1. The product → remove IMAGE 1's product completely and put IMAGE 2's product in the EXACT same "
+            "position, scale, angle, and role (e.g. if IMAGE 1's product is held by a hand, IMAGE 2's product is "
+            "held by that same hand in that same way; if it's standing on a surface, place IMAGE 2's product "
+            "standing on that same surface)\n"
+            "2. All text, words, and logos → replace with the new headline/subheadline/CTA copy provided "
+            "in the prompt below, in the SAME positions, sizes, fonts, and styles as IMAGE 1's text\n\n"
+            "Do NOT redesign, simplify, reinterpret, or 'inspire yourself' from IMAGE 1 — copy it as a template "
+            "and swap only the product and text. The result should look like the exact same ad, with only the "
+            "product and copy swapped."})
 
     if product_img and os.path.exists(product_img):
         b64, mime = img_to_b64(product_img)
-        parts.append({"text": "=== PRODUCT IMAGE — USE THIS EXACT PRODUCT AND NOTHING ELSE ==="})
+        parts.append({"text": "=== IMAGE 2: PRODUCT — USE THIS EXACT PRODUCT ==="})
         parts.append({"inline_data": {"mime_type": mime, "data": b64}})
-        parts.append({"text": "The image above is the PRODUCT TO USE. "
-                               "This is the ONLY product allowed in the output. "
-                               "Copy its exact shape, label, colors, and packaging. "
-                               "Do not hallucinate or substitute any other product."})
+        parts.append({"text":
+            "This is the ONLY product allowed in the output.\n\n"
+            "COPY exactly:\n"
+            "- Product shape, silhouette, and proportions\n"
+            "- Label design, colors, and packaging details\n"
+            "- Surface material and finish (matte, glossy, transparent, etc.)\n\n"
+            "DO NOT substitute, hallucinate, or blend with any other product."})
 
     parts.append({"text": "\n\n" + prompt})
 
@@ -288,6 +299,14 @@ Return ONLY a raw JSON object — no explanation, no markdown, no code blocks. J
     "props": "list any supporting props e.g. glass of water, leaves, none",
     "product_style": "how the product appears: floating, standing on surface, held by hand"
   },
+  "graphic_elements": [
+    "list every non-text/non-product graphic element visible, with its position",
+    "e.g. 'arrow pointing from headline to product, top-left to center'",
+    "e.g. 'circular badge/sticker top-right corner with discount text'",
+    "e.g. 'pointer/callout line connecting label to product feature'",
+    "e.g. 'icon row of checkmarks/bullets along the bottom'",
+    "if none, return an empty array"
+  ],
   "visual_hierarchy": {
     "first_attention": "what catches the eye first",
     "second_attention": "what the eye moves to second",
@@ -624,22 +643,44 @@ def _get_zone_text_color(img, x1, y1, x2, y2):
         return (20, 20, 20, 255), True
 
 
+def _zone_flatness(img, x1, y1, x2, y2):
+    """
+    Standard deviation of luminance in a region — LOW value means a flat/simple
+    area (good for placing text), HIGH value means busy/detailed (product, etc.).
+    """
+    try:
+        x1, y1 = max(0, int(x1)), max(0, int(y1))
+        x2, y2 = min(img.width, int(x2)), min(img.height, int(y2))
+        if x2 <= x1 or y2 <= y1:
+            return 999
+        region = img.crop((x1, y1, x2, y2)).convert("L")
+        pixels = list(region.getdata())
+        n = len(pixels)
+        if n == 0:
+            return 999
+        avg = sum(pixels) / n
+        var = sum((p - avg) ** 2 for p in pixels) / n
+        return var ** 0.5
+    except Exception:
+        return 999
+
+
 def apply_text_overlay(img_path: str, copy_data: dict, out_path: str,
-                       img_idx: int = 0, brand_colors: dict = None) -> bool:
+                       img_idx: int = 0, brand_colors: dict = None,
+                       layout_template: int = None, extracted_style: dict = None) -> bool:
     """
     PIL text overlay — single pass, zero duplicates.
 
-    Layout (all Y positions calculated dynamically using textbbox — no hardcoding):
-      TOP_PAD (40px)
-        H1  — Montserrat-Bold.ttf         ← starts at y=40
-        GAP (12-14px)
-        H2  — Poppins-SemiBold.ttf        ← h1_y + h1_height + 14
-        GAP (24px)
-        [product bottle zone — PIL untouched]
-        comparison columns
-        trust badges
-        Serigama logo (bottom-left, above CTA, 16px padding)
-        CTA full-width strip (bottom)
+    Text placement is chosen FREELY/DYNAMICALLY per image: PIL scans candidate
+    regions of the generated image and picks whichever is flattest/cleanest
+    (least busy) for the headline block, then picks the cleanest bottom corner
+    (or full bottom strip) for the CTA — so placement adapts to wherever Gemini
+    actually left empty space, instead of a fixed template.
+
+    Headline candidates:
+      0 — top_center:       centered headline top, CTA full-width bottom strip
+      1 — left_block:       left-aligned headline block, CTA pill bottom-left/right
+      2 — top_left_compact: compact top-left headline, CTA pill bottom-left/right
 
     Fonts: Montserrat-Bold for H1, Poppins for everything else.
     Colors: dark/black, auto-contrasted against Gemini background.
@@ -660,6 +701,32 @@ def apply_text_overlay(img_path: str, copy_data: dict, out_path: str,
 
     if not any([h1, h2, cta]):
         return False
+
+    # ── Pull text direction/style from the winning ad's extracted style ────────
+    headline_placement = ""
+    headline_case      = ""
+    headline_size_word = ""
+    h1_color_override  = None
+    if extracted_style:
+        layout_b = extracted_style.get("layout", {}) or {}
+        typo_b   = extracted_style.get("typography", {}) or {}
+        colors_b = extracted_style.get("colors", {}) or {}
+        headline_placement = (layout_b.get("headline_placement") or "").lower()
+        headline_case      = (typo_b.get("headline_case") or "").lower()
+        headline_size_word = (typo_b.get("headline_size") or "").lower()
+
+        hex_candidate = (colors_b.get("text_color_headline") or "").strip()
+        if re.fullmatch(r"#?[0-9a-fA-F]{6}", hex_candidate):
+            h1_color_override = hex_candidate if hex_candidate.startswith("#") else f"#{hex_candidate}"
+
+    if headline_case == "uppercase":
+        h1 = h1.upper()
+    elif headline_case == "lowercase":
+        h1 = h1.lower()
+
+    # Scale headline size to match the winning ad's relative headline size
+    SIZE_SCALE = {"small": 0.78, "medium": 0.9, "large": 1.0, "very large": 1.15}
+    h1_scale = next((v for k, v in SIZE_SCALE.items() if k in headline_size_word), 1.0)
 
     # ── Font loader — Montserrat-Bold for H1, Poppins for everything else ─────
     def fnt(path, size):
@@ -730,113 +797,134 @@ def apply_text_overlay(img_path: str, copy_data: dict, out_path: str,
     secondary_hex = bc.get("secondary_color", "#D94F00")
 
     # Even images → Primary (#F5A800 gold), Odd images → Secondary (#D94F00 red-orange)
-    h1_color = hex_to_rgba(primary_hex) if img_idx % 2 == 0 else hex_to_rgba(secondary_hex)
+    # If the winning ad's headline color was extracted as a real hex, prefer that.
+    if h1_color_override:
+        h1_color = hex_to_rgba(h1_color_override)
+    else:
+        h1_color = hex_to_rgba(primary_hex) if img_idx % 2 == 0 else hex_to_rgba(secondary_hex)
 
-    # H2 always dark for readability
-    c2, b2 = _get_zone_text_color(img, PAD, int(H*0.22), W - PAD, int(H * 0.32))
+    # ── Derive headline & CTA regions directly from the winning ad's layout
+    # description — no fixed top-center/left-block/top-left templates. ────────
+    cta_placement = ((extracted_style or {}).get("layout", {}) or {}).get("cta_placement", "").lower()
+
+    def region_from(desc, default_y_frac):
+        desc = desc or ""
+        if "bottom" in desc:
+            y_frac = 0.60
+        elif "middle" in desc or "centre" in desc or ("center" in desc and "top" not in desc and "bottom" not in desc):
+            y_frac = 0.38
+        else:
+            y_frac = default_y_frac
+        if "right" in desc:
+            align = "right"
+        elif "center" in desc or "centre" in desc:
+            align = "center"
+        else:
+            align = "left"
+        return y_frac, align
+
+    h_y_frac, h_align = region_from(headline_placement, default_y_frac=0.05)
+    TXT_W = (W - PAD * 2) if h_align == "center" else int(W * 0.56) - PAD
+
     print(f"[pil] Image #{img_idx+1} H1 color: "
-          f"{'Primary ' + primary_hex if img_idx % 2 == 0 else 'Secondary ' + secondary_hex}")
+          f"{'override ' + h1_color_override if h1_color_override else ('Primary ' + primary_hex if img_idx % 2 == 0 else 'Secondary ' + secondary_hex)} "
+          f"| headline_placement='{headline_placement}' -> y_frac={h_y_frac} align={h_align}")
 
-    # ── H1 — Montserrat-Bold.ttf ──────────────────────────────────────────────
-    # Y starts at TOP_PAD=40. Each next line = previous_y + textbbox height + 6px
-    cur_y = 40
-    h1_bottom = cur_y   # track where H1 ends for H2 positioning
+    def draw_pill(text_str, font, anchor_x, anchor_y, align="left",
+                   bg=(245, 168, 0, 248), fg=(18, 18, 18, 255), pad_h=22, pad_v=12):
+        """Draw a rounded-rect CTA pill. anchor_x/anchor_y = top-left if align='left',
+        or top-right corner (anchor_x = right edge) if align='right'."""
+        tw = text_width(font, text_str)
+        th = text_height(font, text_str)
+        bw = tw + pad_h * 2
+        bh = th + pad_v * 2
+        if align == "right":
+            x0 = anchor_x - bw
+        else:
+            x0 = anchor_x
+        y0 = anchor_y
+        d.rounded_rectangle([x0, y0, x0 + bw, y0 + bh], radius=bh // 2, fill=bg)
+        d.text((x0 + pad_h, y0 + pad_v), text_str, font=font, fill=fg)
+        return bw, bh
+
+    # ── Headline (H1) ──────────────────────────────────────────────────────────
+    cur_y = int(H * h_y_frac) + (4 if h_y_frac > 0.05 else 20)
+    h1_bottom = cur_y
     if h1:
-        sz_h1 = max(38, int(H * 0.064))
-        f_h1  = fnt(FONT_H1, sz_h1)   # FONT_H1 = Montserrat-Bold.ttf
-        lns   = wrap(h1, f_h1, W - PAD * 2)
-        for line in lns:
+        sz_h1 = max(30, int(H * 0.060 * h1_scale))
+        f_h1  = fnt(FONT_H1, sz_h1)
+        for line in wrap(h1, f_h1, TXT_W):
             lw = text_width(f_h1, line)
             lh = text_height(f_h1, line)
-            x  = (W - lw) // 2
-            # Drop shadow — drawn first, offset 3px, semi-transparent dark
+            if h_align == "center":
+                x = (W - lw) // 2
+            elif h_align == "right":
+                x = W - PAD - lw
+            else:
+                x = PAD
             shadow_offset = max(2, int(lh * 0.06))
-            d.text((x + shadow_offset, cur_y + shadow_offset), line,
-                   font=f_h1, fill=(0, 0, 0, 160))
-            # Actual text on top — brand color, no box
+            d.text((x + shadow_offset, cur_y + shadow_offset), line, font=f_h1, fill=(0, 0, 0, 160))
             d.text((x, cur_y), line, font=f_h1, fill=h1_color)
             cur_y += lh + 6
         h1_bottom = cur_y
 
-    # ── H2 — Poppins-SemiBold.ttf ─────────────────────────────────────────────
-    # Y = h1_bottom + 14px gap (never more, never less)
-    GAP_H1_H2 = 14
-    cur_y = h1_bottom + GAP_H1_H2
-    h2_bottom = cur_y
+    # ── Subheadline (H2) ─────────────────────────────────────────────────────
+    c2, _ = _get_zone_text_color(img, PAD, int(H * h_y_frac), W - PAD, min(H, h1_bottom + int(H * 0.18)))
+    cur_y = h1_bottom + 14
     if h2:
-        sz_h2 = max(22, int(H * 0.036))
-        f_h2  = fnt(FONT_BODY, sz_h2)  # Poppins-SemiBold
-        lns   = wrap(h2, f_h2, W - PAD * 2)
-        for line in lns:
+        sz_h2 = max(18, int(H * 0.032))
+        f_h2  = fnt(FONT_BODY, sz_h2)
+        for line in wrap(h2, f_h2, TXT_W):
             lw = text_width(f_h2, line)
             lh = text_height(f_h2, line)
-            x  = (W - lw) // 2
-            # Subtle shadow for H2
+            if h_align == "center":
+                x = (W - lw) // 2
+            elif h_align == "right":
+                x = W - PAD - lw
+            else:
+                x = PAD
             d.text((x + 2, cur_y + 2), line, font=f_h2, fill=(0, 0, 0, 120))
             d.text((x, cur_y), line, font=f_h2, fill=c2)
             cur_y += lh + 4
-        h2_bottom = cur_y
 
-    # ── ZONE: product bottle (h2_bottom + 24px → ~68% of H) ──────────────────
-    # PIL draws NOTHING here — Gemini placed the bottle, we leave it untouched.
-    # product_y = h2_bottom + 24  (documented for future reference)
-
-    # ── No bullets — PIL only renders H1, H2, CTA as requested ───────────────
-
-    # ── CTA strip — Poppins Bold, full width, gold background ─────────────────
-    CTA_H    = int(H * 0.115)
-    CTA_TOP  = H - CTA_H
+    # ── CTA — placement follows the winning ad's cta_placement ────────────────
+    CTA_H, CTA_TOP = int(H * 0.115), 0
     if cta:
-        sz_cta = max(26, int(H * 0.046))
+        sz_cta = max(22, int(H * 0.034))
         f_cta  = fnt(FONT_BOLD, sz_cta)
-        d.rectangle([0, CTA_TOP, W, H], fill=(245, 168, 0, 248))
-        cw_cta = text_width(f_cta, cta)
-        ch_cta = text_height(f_cta, cta)
-        cx = (W - cw_cta) // 2
-        cy = CTA_TOP + (CTA_H - ch_cta) // 2
-        d.text((cx, cy), cta, font=f_cta, fill=(18, 18, 18, 255))
+        if "right" in cta_placement:
+            draw_pill(cta, f_cta, W - PAD, H - int(H*0.10) - PAD, align="right")
+        elif any(k in cta_placement for k in ("center", "centre", "full", "bar", "strip", "bottom")) or not cta_placement:
+            CTA_H   = int(H * 0.115)
+            CTA_TOP = H - CTA_H
+            d.rectangle([0, CTA_TOP, W, H], fill=(245, 168, 0, 248))
+            cw_cta = text_width(f_cta, cta)
+            ch_cta = text_height(f_cta, cta)
+            d.text(((W - cw_cta) // 2, CTA_TOP + (CTA_H - ch_cta) // 2), cta, font=f_cta, fill=(18, 18, 18, 255))
+        else:
+            draw_pill(cta, f_cta, PAD, H - int(H*0.10) - PAD, align="left")
 
-    # ── Certifications — Poppins small, centred, 16px above CTA ──────────────
-    CERTS    = "HALAL JAKIM   |   KKM APPROVED   |   GMP CERTIFIED"
-    sz_cert  = max(12, int(H * 0.019))
-    f_cert   = fnt(FONT_REGULAR, sz_cert)
-    cert_w   = text_width(f_cert, CERTS)
-    cert_h   = text_height(f_cert, CERTS)
-    cert_x   = (W - cert_w) // 2
-    cert_y   = CTA_TOP - cert_h - 16
-    c_col, c_back = _get_zone_text_color(img, 0, cert_y, W, CTA_TOP)
-    d.text((cert_x, cert_y), CERTS, font=f_cert, fill=c_col)
-
-    # ── Serigama logo — bottom-left, above CTA, 16px padding ─────────────────
-    # Loaded from Brand Setup. Never regenerated by Gemini. Aspect ratio preserved.
+    # ── Logo — opposite corner from the headline ───────────────────────────────
     logo_path = _get_logo_path()
     if logo_path:
         try:
             logo = Image.open(logo_path).convert("RGBA")
-            # Target exactly 125px width as per design reference
-            target_w = 125
-            ratio    = target_w / logo.width
-            logo_w   = target_w
-            logo_h   = int(logo.height * ratio)
-            # Safety: never taller than the space between cert row and CTA
-            space    = CTA_TOP - cert_y - cert_h - 8   # pixels available
-            if space < logo_h and space > 20:
-                # Shrink proportionally to fit — but keep minimum 80px wide
-                scale  = space / logo_h
-                logo_h = space
-                logo_w = max(80, int(logo_w * scale))
-            logo   = logo.resize((logo_w, logo_h), Image.LANCZOS)
-            logo_x = 16                      # 16px from left edge
-            logo_y = CTA_TOP - logo_h - 10   # 10px above CTA strip
+            target_w = 110
+            ratio  = target_w / logo.width
+            logo_w, logo_h = target_w, int(logo.height * ratio)
+            logo = logo.resize((logo_w, logo_h), Image.LANCZOS)
+            logo_x = PAD if h_align == "right" else W - logo_w - 16
+            logo_y = 16
+            if CTA_TOP and (logo_y + logo_h) > CTA_TOP - 4:
+                logo_y = CTA_TOP - logo_h - 10
             cv.paste(logo, (logo_x, logo_y), logo)
-            print(f"[pil] Logo: {logo_w}x{logo_h}px at ({logo_x},{logo_y})")
         except Exception as e:
             print(f"[pil] Logo skipped: {e}")
 
     # ── Composite — called exactly ONCE ───────────────────────────────────────
     result = Image.alpha_composite(img, cv).convert("RGB")
     result.save(out_path, "PNG", optimize=True)
-    print(f"[pil] Done — H1={bool(h1)} H2={bool(h2)} CTA={bool(cta)} logo={bool(logo_path)}")
+    print(f"[pil] Done — H1={bool(h1)} H2={bool(h2)} CTA={bool(cta)} layout={layout_template}")
     return True
 
 
@@ -1050,7 +1138,7 @@ VIBE_MODIFIERS = [
 def build_prompt(layout_analysis, product_visual, problem, problem_ctx,
                  has_style_ref, has_product, brand,
                  copy_h1="", copy_h2="", copy_cta="", copy_data=None,
-                 vibe_idx=0, extracted_style=None, skip_overlay=False):
+                 vibe_idx=0, extracted_style=None, skip_overlay=False, tweak_instructions=""):
     """
     Replication brief: keep exact winning-ad layout, swap in the correct product + copy.
     product_visual = vision analysis of the product photo (describes bottle precisely).
@@ -1101,249 +1189,163 @@ LAYOUT RULES:
 
     # ── User copy — these override everything. User fills H1/H2/CTA → used verbatim.
     # If blank → use AI-generated copy_data. Either way, Gemini gets exact strings.
-    cd  = copy_data or {}
-    h1  = (copy_h1  or cd.get("h1",  "") or "").strip()
-    h2  = (copy_h2  or cd.get("h2",  "") or "").strip()
-    cta = (copy_cta or cd.get("cta", "") or "").strip()
-
-    # Bullets only from AI copy (user doesn't type these)
-    left_header   = cd.get("left_header",  "JENAMA LAIN")
-    right_header  = cd.get("right_header", brand.get("brand_name", "SERIGAMA"))
-    left_bullets  = [b.strip() for b in cd.get("left_bullets",  []) if b and b.strip()]
-    right_bullets = [b.strip() for b in cd.get("right_bullets", []) if b and b.strip()]
-
-    # ── Fixed certifications — always these 3, never price ──────────────────────
-    CERTS = "HALAL JAKIM  ·  KKM APPROVED  ·  GMP CERTIFIED"
-
     brand_name = brand.get("brand_name", "Serigama")
 
-    # Layout description based on detected framework
-    layout_descriptions = {
-        "US_VS_THEM":   "two-column comparison layout with left and right panels",
-        "BENEFIT":      "single-column product showcase with hero product and benefit section below",
-        "PROBLEM_HOOK": "bold single-column layout with large problem statement zone at top and product below",
-        "TESTIMONIAL":  "clean single-column layout with product hero and quote/review section",
-    }
-    layout_desc = layout_descriptions.get(copy_data.get("_framework", ""), layout_descriptions["BENEFIT"])
-
-    # ── STEP 4: Build style rules block from extracted style JSON ─────────────
-    style_rules_block = ""
-    if extracted_style:
-        L  = extracted_style.get("layout",           {})
-        C  = extracted_style.get("colors",            {})
-        T  = extracted_style.get("typography",        {})
-        M  = extracted_style.get("mood",              {})
-        CP = extracted_style.get("composition",       {})
-        VH = extracted_style.get("visual_hierarchy",  {})
-        FE = extracted_style.get("forbidden_elements", [])
-        sz = extracted_style.get("size",              "1080x1350")
-
-        # Build forbidden block
-        forbidden_block = ""
-        if FE:
-            forbidden_lines = "\n".join(f"- {f}" for f in FE if f)
-            forbidden_block = f"""
-FORBIDDEN — do NOT include any of these elements:
-{forbidden_lines}
-"""
-
-        style_rules_block = f"""
-━━━ STYLE RULES (extracted from winning ad — ALL mandatory) ━━━
-
-CANVAS SIZE: {sz}
-
-LAYOUT:
-- Overall structure: {L.get('structure','balanced')}
-- Negative space: {L.get('negative_space','moderate')}
-- Product placement: {L.get('product_placement','center')}
-- Headline placement: {L.get('headline_placement','top')}
-- CTA placement: {L.get('cta_placement','none')}
-
-COLORS (use these exactly — do not substitute):
-- Background: {C.get('background','#ffffff')} — {C.get('background_description','flat solid')}
-- Dominant color: {C.get('dominant_color','#ffffff')} ({C.get('dominant_description','')})
-- Accent color: {C.get('accent_color','#000000')} ({C.get('accent_description','')})
-- Headline text color: {C.get('text_color_headline', C.get('text_color','#000000'))}
-- Subheadline text color: {C.get('text_color_subheadline','#444444')}
-- CTA color: {C.get('cta_color','none')}
-
-TYPOGRAPHY:
-- Headline weight: {T.get('headline_weight','bold')}
-- Headline case: {T.get('headline_case','mixed')}
-- Headline size: {T.get('headline_size','large')}
-- Headline line breaks: {T.get('headline_line_breaks','natural')}
-- Font style: {T.get('font_style','sans-serif')}
-- Subheadline weight: {T.get('subheadline_weight','regular')}
-- Subheadline size: {T.get('subheadline_size','small')}
-
-MOOD:
-- Tone: {M.get('tone','premium')}
-- Energy level: {M.get('energy_level','low energy quiet confident')}
-- Lighting: {M.get('lighting','flat natural')}
-- Overall feel: {M.get('overall_feel','professional')}
-
-COMPOSITION:
-- Style: {CP.get('style','minimalist')}
-- Background type: {CP.get('background_type','flat solid color')}
-- Has person: {CP.get('has_human', False)}
-- Has scene: {CP.get('has_background_scene', False)}
-- Props: {CP.get('props','none')}
-- Product style: {CP.get('product_style','standing upright')}
-- Overlay: {CP.get('overlay_style','none')}
-
-VISUAL HIERARCHY (eye must travel in this order):
-1. {VH.get('first_attention','product')}
-2. {VH.get('second_attention','headline')}
-3. {VH.get('third_attention','CTA')}
-4. {VH.get('fourth_attention','none')}
-{forbidden_block}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-"""
-    elif has_style_ref:
-        # Fallback: no style extraction, use visual reference only
-        print("[build_prompt] No extracted style — using image reference only (fallback)")
-        style_rules_block = ""
-
-    # ── Variation axis — subtle per-image difference to keep batch coherent ────
-    # All images share the same composition; only ONE small element changes per slot.
+    # ── Simple per-slot variation phrase — just enough for batch variety ──────
     VARIATION_AXES = [
-        "product faces straight-on, camera at eye level",
-        "product angled 15° clockwise, camera slightly above (bird's eye tilt)",
-        "product angled 15° counter-clockwise, warm side-lighting from the left",
-        "product faces straight-on, cooler front lighting, slight shadow on right",
-        "product angled 10° backward, overhead lighting creating a soft halo",
-        "product angled 10° forward (slight lean toward camera), warm bottom rim light",
+        "straight-on, eye-level angle",
+        "slightly from the left, eye-level angle",
+        "slightly from the right, eye-level angle",
+        "slightly from above",
+        "slightly closer / zoomed in",
+        "slightly further / zoomed out",
     ]
     variation_note = VARIATION_AXES[vibe_idx % len(VARIATION_AXES)]
 
-    # ── Human/AI-person handling ──────────────────────────────────────────────
-    # If the winning ad features a person, instruct Gemini to keep a person in
-    # the same role/pose — otherwise explicitly forbid adding one.
-    human_block = ""
-    if extracted_style:
-        CP_h = extracted_style.get("composition", {})
-        if CP_h.get("has_human"):
-            product_style = CP_h.get("product_style", "held by hand")
-            human_block = f"""
-PERSON IN THE AD:
-- IMAGE 1 features a person — KEEP a person in the output, in the same role and pose
-- The person should be {('holding/using the product naturally — ' + product_style) if 'hold' in product_style.lower() or 'hand' in product_style.lower() else 'positioned the same way as in IMAGE 1 relative to the product'}
-- Match the same framing (close-up / half-body / full-body), camera angle, and setting as IMAGE 1
-- The person's appearance, ethnicity, age range, and styling should feel natural for a Malaysian health/wellness ad audience
-- The person must be holding/interacting with the PRODUCT FROM IMAGE 2 (not the original product)
-- Keep the person photorealistic and consistent with the lighting/mood of the rest of the scene
-"""
-        else:
-            human_block = "\nNo person in this ad — product-only shot, matching IMAGE 1.\n"
+    LAYOUT_VARIATIONS = [
+        "product placed center, balanced negative space around it",
+        "product placed slightly left, more breathing room on the right",
+        "product placed slightly right, more breathing room on the left",
+        "product placed lower in frame, open space above",
+        "product placed upper-frame, grounded shadow below",
+        "product placed off-center on a diagonal, dynamic negative space",
+    ]
+    layout_note = LAYOUT_VARIATIONS[vibe_idx % len(LAYOUT_VARIATIONS)]
 
-    # ── Speech-bubble / shape elements — only relevant when text overlay is OFF ──
-    # When skip_overlay=True, the user wants Gemini's output to be the FINAL image
-    # (no PIL text added later). In that case, preserve graphical shapes like
-    # speech bubbles / callout boxes from IMAGE 1 — but EMPTY (no text inside).
-    # If skip_overlay=False, PIL will add its own H1/H2/CTA — so suppress all
-    # extra shapes/bubbles to avoid clutter behind the PIL text.
-    bubble_block = ""
+    # ── Copy block — Gemini renders this text directly onto the ad ───────────
+    h1  = copy_h1  or (copy_data or {}).get("h1", "")
+    h2  = copy_h2  or (copy_data or {}).get("h2", "")
+    cta = copy_cta or (copy_data or {}).get("cta", "")
+    copy_lines = []
+    if h1:
+        copy_lines.append(f'- HEADLINE (large, bold, most prominent): "{h1}"')
+    if h2:
+        copy_lines.append(f'- SUBHEADLINE (smaller, below headline): "{h2}"')
+    if cta:
+        copy_lines.append(f'- CTA (button or pill, high contrast): "{cta}"')
+    copy_block = ""
+    if copy_lines:
+        copy_block = (
+            "\n\nTEXT TO RENDER ON THE AD (in Bahasa Malaysia, exactly as written, no spelling changes):\n"
+            + "\n".join(copy_lines) +
+            "\n\nTEXT STYLING:\n"
+            "- Use clean, legible, modern sans-serif typography\n"
+            "- Place the headline, subheadline, and CTA following IMAGE 1's text placement and hierarchy "
+            "(same regions, alignment, and relative sizing as the winning ad)\n"
+            "- Ensure strong contrast between text and background (add a subtle shadow, scrim, or solid panel behind text if needed for readability)\n"
+            "- The CTA should look like a tappable button/pill with a solid background color from the brand palette"
+        )
+
+    color_block  = ""
+    layout_block = ""
+    human_block  = ""
     if extracted_style:
-        L_b = extracted_style.get("layout", {})
-        CP_b = extracted_style.get("composition", {})
-        overlay_style = (CP_b.get("overlay_style") or "").lower()
-        structure     = (L_b.get("structure") or "").lower()
-        has_bubbles   = ("bubble" in overlay_style or "bubble" in structure
-                         or "callout" in overlay_style or "callout" in structure
-                         or "speech" in overlay_style or "speech" in structure)
-        if skip_overlay:
-            if has_bubbles:
-                bubble_block = """
-GRAPHICAL SHAPES (speech bubbles / callout boxes):
-- IMAGE 1 contains speech-bubble or callout-box shapes — KEEP these shapes in the output
-- Reproduce them in the SAME positions, sizes, and shapes (e.g. rounded rectangles with pointer tails)
-- Leave them COMPLETELY EMPTY — no text, letters, or words inside them
-- Match their fill color / border style from IMAGE 1
-"""
-            else:
-                bubble_block = """
-GRAPHICAL SHAPES:
-- IMAGE 1 has NO speech bubbles or callout boxes — do NOT add any
-- Do not invent decorative shape elements that aren't in IMAGE 1
-"""
-        else:
-            bubble_block = """
-GRAPHICAL SHAPES:
-- Do NOT draw speech bubbles, callout boxes, or text-shaped placeholders
-- Text will be added separately afterward — keep the background clean of shape clutter
-"""
+        colors = extracted_style.get("colors", {}) or {}
+        mood   = extracted_style.get("mood", {}) or {}
+        comp   = extracted_style.get("composition", {}) or {}
+        lay    = extracted_style.get("layout", {}) or {}
+        color_bits = []
+        if colors.get("background_description"):
+            color_bits.append(f"background feel: {colors['background_description']}")
+        if colors.get("dominant_color"):
+            color_bits.append(f"dominant tone: {colors['dominant_color']}")
+        if colors.get("accent_color"):
+            color_bits.append(f"accent tone: {colors['accent_color']}")
+        if mood.get("lighting"):
+            color_bits.append(f"lighting: {mood['lighting']}")
+        if mood.get("tone"):
+            color_bits.append(f"overall tone: {mood['tone']}")
+        if color_bits:
+            color_block = "\n\nCOLOR & LIGHTING (match IMAGE 1 closely):\n- " + "\n- ".join(color_bits)
+
+        layout_bits = []
+        if lay.get("structure"):
+            layout_bits.append(f"overall structure: {lay['structure']}")
+        if lay.get("product_placement"):
+            layout_bits.append(f"product placement: {lay['product_placement']}")
+        if lay.get("negative_space"):
+            layout_bits.append(f"negative space: {lay['negative_space']}")
+        if comp.get("style"):
+            layout_bits.append(f"composition style: {comp['style']}")
+        if comp.get("background_type"):
+            layout_bits.append(f"background type: {comp['background_type']}")
+        if comp.get("product_style"):
+            layout_bits.append(f"product treatment: {comp['product_style']}")
+        graphics = extracted_style.get("graphic_elements") or []
+        if graphics:
+            layout_bits.append("graphic elements to recreate: " + "; ".join(graphics))
+
+        if layout_bits:
+            layout_block = "\n\nLAYOUT — REPLICATE FROM IMAGE 1:\n- " + "\n- ".join(layout_bits)
+            if graphics:
+                layout_block += ("\n\nIMPORTANT: IMAGE 1 contains graphic elements (arrows, pointers, badges, "
+                                  "callouts, icons) listed above — recreate these same elements in the same "
+                                  "positions, adapted to point at / highlight the new product and copy.")
+
+        if comp.get("has_human"):
+            human_block = ("\n\nHUMAN ELEMENT: IMAGE 1 features a person interacting with the product. "
+                           "You MAY include a person in a similar role (e.g. holding/using the product), "
+                           "but do not copy their identity, face, or outfit — generate a new person that "
+                           "fits the same vibe.")
+
+    problem_block = ""
+    if problem_ctx:
+        problem_block = f"\n\nTARGET PROBLEM / ANGLE FOR THIS AD: {problem_ctx}\nUse this to inform mood, imagery cues, and the copy's emotional angle — the ad should feel relevant to someone facing this problem."
+
+    tweak_block = ""
+    if tweak_instructions:
+        tweak_block = f"""
+
+━━━ USER REQUESTED EDIT — HIGHEST PRIORITY ━━━
+The attached IMAGE 1 is the ad to fix/edit. Keep everything about it the same EXCEPT for the
+following requested change. This instruction overrides any conflicting guidance above:
+{tweak_instructions}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
     if has_style_ref and has_product:
-        # ── Full style replication brief ────────────────────────────────────────
-        # style_rules_block has ALL extracted style details (colors, layout, typography,
-        # composition, forbidden elements). Include it verbatim so Gemini matches exactly.
-        if style_rules_block:
-            return f"""Create a 4:5 advertisement image that is a NEAR-EXACT VISUAL REPLICA of IMAGE 1 (the winning ad).
+        return f"""Generate a 4:5 advertisement image.
 
-CORE TASK:
-1. BACKGROUND + LAYOUT — Reproduce IMAGE 1 as faithfully as possible:
-   - Match the background color, gradient, and texture exactly
-   - Match the product placement zone (position on canvas) exactly
-   - Match the overall composition (how much negative space, where elements sit)
-   - Match the lighting mood and atmosphere
-2. PRODUCT — Swap the product in IMAGE 1 → replace with the product from IMAGE 2
-   - Place the product in the SAME ZONE and at the SAME SCALE as IMAGE 1
-   - Render the product bottle exactly as it appears in IMAGE 2
-3. NO TEXT anywhere in the output — strip all text from the design
-{human_block}{bubble_block}
-{style_rules_block}
+{brand_block}{problem_block}
 
-VARIATION FOR THIS SLOT (apply subtly — keep everything else identical):
-{variation_note}
+CREATIVE DIRECTION: Clone IMAGE 1 as a template — same composition, layout, background, color palette, lighting,
+and every graphic element (panels, badges, arrows, icons, dividers) in the same positions and styling.
+This must look like the EXACT same ad as IMAGE 1, with ONLY the product and text swapped.{color_block}{layout_block}
 
-ABSOLUTE RULES:
-- NO letters, words, numbers, or typography anywhere in the output
-- Do NOT render text you see in IMAGE 1 — ignore all text in IMAGE 1
-- Do NOT change background color — use EXACT colors from IMAGE 1
-- Do NOT substitute a different product — only the product from IMAGE 2
-- Do NOT add logos, badges, watermarks, speech bubbles, or icons
-- The output must look like IMAGE 1 with a different product bottle swapped in"""
-        else:
-            # No extracted style — still send IMAGE 1 as visual anchor
-            return f"""Create a 4:5 advertisement image that is a NEAR-EXACT VISUAL REPLICA of IMAGE 1 (the winning ad).
+PRODUCT: Completely remove IMAGE 1's product and replace it with IMAGE 2's product, in the exact same position,
+scale, angle, and role that IMAGE 1's product occupied (same surface, same hand, same framing). Render IMAGE 2's
+product faithfully with correct shape, label, and packaging.
 
-CORE TASK:
-1. BACKGROUND + LAYOUT — Reproduce IMAGE 1 faithfully:
-   - Match the background color, gradient, texture, and lighting exactly
-   - Match the product placement (position, scale, zone on canvas)
-   - Match the overall composition and negative space
-2. PRODUCT — Replace the product shown in IMAGE 1 with the product from IMAGE 2
-   - Same position, same scale as IMAGE 1
-   - Render the product from IMAGE 2 exactly as photographed
-3. NO TEXT anywhere in the output
-{human_block}{bubble_block}
-VARIATION FOR THIS SLOT (apply subtly):
-{variation_note}
+LAYOUT VARIATION FOR THIS SLOT (apply on top of the above, keep it subtle): {layout_note}
 
-ABSOLUTE RULES:
-- NO letters, words, numbers anywhere
-- Do NOT change background style — copy it from IMAGE 1
-- Use ONLY the product from IMAGE 2
-- No logos, badges, icons, or certification marks"""
+CAMERA ANGLE: {variation_note}{human_block}{copy_block}
+
+OUTPUT RULES:
+- No watermarks or signatures
+- No invented text other than the headline, subheadline, and CTA specified above
+- Clean, professional ad quality
+- 4:5 aspect ratio{tweak_block}"""
 
     elif has_product:
         return f"""Create a 4:5 advertisement image.
+
+{brand_block}{problem_block}
 
 PRODUCT: Feature only the product from the PRODUCT image. Do not change or replace it.
 BACKGROUND: Clean soft gradient, professional health product style.
 PRODUCT PLACEMENT: centered, large, clear hero shot.
 
-Variation for this slot: {variation_note}
+Variation for this slot: {variation_note}{copy_block}
 
 Rules:
 - Product centered and clearly visible
-- No text or words anywhere
-- Clean, professional ad quality"""
+- Clean, professional ad quality{tweak_block}"""
 
     else:
         return f"""Create a clean 4:5 advertisement background for {brand_name}.
-Professional health product style, soft gradient.
-No text."""
+
+{brand_block}{problem_block}
+
+Professional health product style, soft gradient.{copy_block}{tweak_block}"""
 
 # ── Routes ────────────────────────────────────────────────────────────────────
 @app.route("/")
@@ -1713,117 +1715,6 @@ def delete_all_templates():
     save_templates([])
     return jsonify({"ok": True})
 
-# ── Suggest copy from Brand Knowledge Base ───────────────────────────────────
-@app.route("/api/suggest-copy", methods=["POST"])
-def api_suggest_copy():
-    """
-    Generate H1 / H2 / CTA suggestions from the active product's knowledge base.
-    Called when the user clicks 'Suggest Copy' in the sidebar.
-    Returns 3 suggestion sets so the user can pick a favourite.
-    """
-    data              = request.json or {}
-    problem           = data.get("problem", "Post-partum")
-    active_product_id = data.get("active_product_id", None)
-    template_ids      = data.get("template_ids", [])   # to detect framework
-
-    brand = load_brand()
-
-    # Merge active product knowledge (same logic as generate-one)
-    if active_product_id is not None:
-        try: active_product_id = int(active_product_id)
-        except Exception: active_product_id = None
-    if active_product_id is None:
-        active_product_id = brand.get("active_product_id")
-        if active_product_id:
-            active_product_id = int(active_product_id)
-
-    if active_product_id is not None:
-        products    = brand.get("products", [])
-        active_prod = next((p for p in products if p.get("id") == active_product_id), None)
-        if active_prod:
-            if active_prod.get("product_url"): brand["product_url"] = active_prod["product_url"]
-            if active_prod.get("knowledge"):   brand["knowledge"]   = active_prod["knowledge"]
-            brand["_active_product_name"] = active_prod.get("name", "")
-
-    # Detect framework from selected templates
-    detected_framework = "BENEFIT"
-    if template_ids:
-        tpls = load_templates()
-        sel_tpl = next((t for t in tpls if t.get("id") == template_ids[0]), None)
-        if sel_tpl:
-            section = (sel_tpl.get("section") or "").lower()
-            if any(k in section for k in ["us vs them", "versus", "compare"]):
-                detected_framework = "US_VS_THEM"
-            elif any(k in section for k in ["testimonial", "review"]):
-                detected_framework = "TESTIMONIAL"
-            elif any(k in section for k in ["rage", "problem", "hook"]):
-                detected_framework = "PROBLEM_HOOK"
-
-    # Fetch live product facts
-    product_url   = brand.get("product_url", "") or ""
-    product_facts = fetch_product_facts(product_url) if product_url else ""
-    problem_ctx   = PROBLEM_CONTEXT.get(problem, problem)
-
-    api_key = os.environ.get("GEMINI_API_KEY", "")
-    if not api_key:
-        return jsonify({"error": "GEMINI_API_KEY not set"}), 500
-
-    product_name = brand.get("_active_product_name") or brand.get("brand_name") or "produk ini"
-    brand_name   = brand.get("brand_name") or product_name
-    kb           = brand.get("knowledge", {})
-    benefits_txt = (kb.get("benefits") or "")[:600]
-    product_txt  = (kb.get("product")  or "")[:400]
-    certs        = ", ".join(brand.get("certifications", [])) or "Halal JAKIM, KKM Approved, GMP Certified"
-
-    prompt = f"""You are a top Malaysian direct-response copywriter specialising in health products.
-
-PRODUCT: {product_name} by {brand_name}
-TARGET PROBLEM: {problem} — {problem_ctx}
-CERTIFICATIONS: {certs}
-PRODUCT KNOWLEDGE: {product_txt or '(not set)'}
-BENEFITS for {problem}: {benefits_txt or '(not set)'}
-{f"LIVE PRODUCT FACTS: {product_facts}" if product_facts else ""}
-
-TASK: Write 3 different sets of ad copy for a static social media ad.
-Each set must have H1 (headline), H2 (subheadline), and CTA.
-
-RULES:
-1. Bahasa Malaysia — correct spelling, natural phrasing
-2. H1: max 7 words, bold benefit or problem-statement
-3. H2: max 10 words, supporting fact or proof point
-4. CTA: max 5 words, action-oriented (no price, no RM)
-5. Each set must have a different angle (e.g. one pain-focused, one benefit-focused, one proof-focused)
-6. Use ONLY real facts from the knowledge above — never invent
-7. Make it punchy and scroll-stopping
-
-Return ONLY raw JSON, no explanation, no markdown fences:
-[
-  {{"angle": "Pain-focused", "h1": "...", "h2": "...", "cta": "..."}},
-  {{"angle": "Benefit-focused", "h1": "...", "h2": "...", "cta": "..."}},
-  {{"angle": "Proof-focused", "h1": "...", "h2": "...", "cta": "..."}}
-]"""
-
-    try:
-        url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
-               f"{VISION_MODEL}:generateContent?key={api_key}")
-        payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode()
-        req = urllib.request.Request(url, data=payload,
-              headers={"Content-Type": "application/json"}, method="POST")
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            body = json.loads(resp.read())
-        parts = body.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-        raw   = next((p["text"] for p in parts if "text" in p), "")
-        raw   = re.sub(r"^```(?:json)?\s*", "", raw.strip())
-        raw   = re.sub(r"\s*```$", "",          raw.strip())
-        suggestions = json.loads(raw)
-        if not isinstance(suggestions, list):
-            raise ValueError("Expected list")
-        return jsonify({"ok": True, "suggestions": suggestions[:3]})
-    except Exception as e:
-        print(f"[suggest-copy] Error: {e}")
-        return jsonify({"error": f"Suggestion failed: {e}"}), 500
-
-
 # ── Updated generate-one: accept template_ids ─────────────────────────────────
 @app.route("/api/generate-one", methods=["POST"])
 def api_generate_one():
@@ -2060,6 +1951,11 @@ def api_generate_one():
                 if extracted_style:
                     selected_tpl["extracted_style"] = extracted_style
                     save_templates(tpls)
+        else:
+            # Session-uploaded winning ad (not in Template Library) — extract style
+            # directly so the vibe (colors/mood/layout) still gets locked in.
+            print(f"[StyleExtract] Running on-demand for session-uploaded winning ad")
+            extracted_style = extract_winning_ad_style(style_ref[0])
 
     # ── Step 4: Build prompt with extracted style ────────────────────────────────
     prompt = build_prompt(layout_analysis, product_visual, problem, problem_ctx,
@@ -2074,10 +1970,18 @@ def api_generate_one():
     winning_ad_img  = style_ref[0] if style_ref else None
     product_img_ref = product_ref if product_ref else None
 
-    if quality == "final":
+    # NOTE: gemini-2.5-flash-image (DRAFT_MODEL) frequently ignores the winning-ad
+    # reference image entirely for style transfer. nano-banana-pro-preview handles
+    # multi-image composition / style replication far more reliably, so use it
+    # for ALL generations (not just "final") whenever a winning ad is provided.
+    if quality == "final" or winning_ad_img:
         img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
                                            winning_ad_path=winning_ad_img,
                                            product_image_path=product_img_ref)
+        if err:
+            img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
+                                               winning_ad_path=winning_ad_img,
+                                               product_image_path=product_img_ref)
     else:
         img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                            winning_ad_path=winning_ad_img,
@@ -2100,12 +2004,10 @@ def api_generate_one():
     bg_path = session_dir / bg_name
     shutil.copy2(str(out_path), str(bg_path))
 
-    # ── PIL text overlay — skipped if user unchecked "Add text overlay" ──────────
-    has_copy = (not skip_overlay) and isinstance(copy_data, dict) and any(
-        copy_data.get(k) for k in ("h1", "h2", "cta")
-    )
-    if skip_overlay:
-        print("[pil] Text overlay SKIPPED — user selected no copy overlay")
+    # ── PIL text overlay — text content from product knowledge (copy_data),
+    # placement/size/color/case biased toward the winning ad's extracted_style ─
+    # Gemini renders headline/subheadline/CTA directly into the image now.
+    has_copy = False
     if has_copy:
         text_path = str(out_path).replace(".png", "_t.png")
         ok = apply_text_overlay(str(out_path), copy_data, text_path,
@@ -2113,7 +2015,9 @@ def api_generate_one():
                                 brand_colors={
                                     "primary_color":   brand.get("primary_color",   "#F5A800"),
                                     "secondary_color": brand.get("secondary_color", "#D94F00"),
-                                })
+                                },
+                                layout_template=(idx - 1) % 3,
+                                extracted_style=extracted_style)
         if ok and os.path.exists(text_path):
             shutil.move(text_path, str(out_path))
             print(f"[pil] Text rendered onto image — zero duplicates guaranteed")
@@ -2297,113 +2201,154 @@ def board_delete():
 def board_image(filename):
     return send_from_directory(BOARD_DIR, filename)
 
-def board_save_canva_url():
-    """Save Canva design URL back to the board entry (called by Claude after MCP creation)."""
-    data      = request.json or {}
-    board_id  = int(data.get("id", 0))
-    canva_url = data.get("canva_url", "")
-    board     = load_board()
-    item      = next((b for b in board if b["id"] == board_id), None)
+@app.route("/api/board/variants/<int:board_id>")
+def board_variants(board_id):
+    """List previously generated tweak-variant files for a board item."""
+    board = load_board()
+    item  = next((b for b in board if b["id"] == board_id), None)
     if not item:
-        return jsonify({"error": "Not found"}), 404
-    item["canva_url"] = canva_url
-    item["canva_pending"] = False
-    save_board(board)
+        return jsonify({"items": []})
+    stem = Path(item["filename"]).stem
+    files = sorted(BOARD_DIR.glob(f"{stem}_v*.png"))
+    items = [{"filename": f.name, "board_url": f"/api/board/image/{f.name}"} for f in files]
+    return jsonify({"items": items})
+
+@app.route("/api/board/regenerate", methods=["POST"])
+def board_regenerate():
+    """Take an existing board image + a user 'tweak' instruction and ask Gemini
+    to produce new variation(s) that fix/adjust it accordingly."""
+    data     = request.json or {}
+    board_id = int(data.get("id", 0))
+    tweak    = (data.get("tweak") or "").strip()
+    count    = max(1, min(int(data.get("count", 1)), 4))
+    quality  = data.get("quality", "draft")
+
+    if not tweak:
+        return jsonify({"error": "Please describe what to change"}), 400
+
+    board = load_board()
+    item  = next((b for b in board if b["id"] == board_id), None)
+    if not item:
+        return jsonify({"error": "Board item not found"}), 404
+
+    src_path = BOARD_DIR / item["filename"]
+    if not src_path.exists():
+        return jsonify({"error": "Source image not found"}), 404
+
+    brand = load_brand()
+    active_product_id = brand.get("active_product_id")
+    if active_product_id is not None:
+        active_product_id = int(active_product_id)
+    all_products = brand.get("products", [])
+    if active_product_id is not None:
+        active_prod = next((p for p in all_products if p.get("id") == active_product_id), None)
+        if active_prod:
+            if active_prod.get("product_url"): brand["product_url"] = active_prod["product_url"]
+            if active_prod.get("knowledge"):   brand["knowledge"]   = active_prod["knowledge"]
+            brand["_active_product_name"] = active_prod.get("name", "")
+
+    # Resolve product photo (per-product first, then any product, then global pool)
+    brand_product_photos = [p for p in brand.get("product_photos", []) if os.path.exists(p)]
+    if active_product_id is not None:
+        active_prod = next((p for p in all_products if p.get("id") == active_product_id), None)
+        if active_prod and active_prod.get("photos"):
+            cand = [p for p in active_prod["photos"] if os.path.exists(p)]
+            if cand:
+                brand_product_photos = cand
+    if not brand_product_photos:
+        for prod in all_products:
+            cand = [p for p in prod.get("photos", []) if os.path.exists(p)]
+            if cand:
+                brand_product_photos = cand
+                break
+    product_ref = (max(brand_product_photos, key=lambda p: os.path.getsize(p))
+                   if brand_product_photos else "")
+
+    problem     = item.get("problem", "Post-partum")
+    problem_ctx = PROBLEM_CONTEXT.get(problem, problem)
+    copy_data   = item.get("copy_data") or {}
+
+    ref_images = [str(src_path)]
+    if product_ref and os.path.exists(product_ref):
+        ref_images.append(product_ref)
+
+    brand_block = brand_to_prompt_block(brand)
+    product_clause = ""
+    if product_ref and os.path.exists(product_ref):
+        product_clause = (
+            "\n\nPRODUCT REFERENCE (IMAGE 2): If the product bottle/packaging is visible in the ad, "
+            "it MUST match IMAGE 2 exactly — same label, colors, text, cap, and bottle shape. "
+            "Do not invent or substitute a different product."
+        )
+
+    prompt = f"""The attached IMAGE 1 is a contact sheet showing several ad concepts arranged in a grid.
+It is a REFERENCE ONLY for style, vibe, background, colors, product placement, and tone.
+
+{brand_block}
+
+━━━ YOUR TASK ━━━
+Create ONE brand-new advertisement image (a single visual, NOT a grid, NOT a collage, NOT multiple
+panels) that matches the same overall style/vibe/colors/background/product placement as the concepts
+in IMAGE 1, but is a fresh variation per this instruction:
+{tweak}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{product_clause}
+
+OUTPUT RULES:
+- Output is exactly ONE advertisement visual — a single scene, single headline, single CTA
+- Do NOT reproduce IMAGE 1's grid/panel structure — that is reference material only, not the layout to copy
+- 4:5 aspect ratio
+- No watermarks or signatures
+- Write any on-image text in Bahasa Malaysia, clean and legible"""
+
+    results = []
+    for _ in range(count):
+        if quality == "final":
+            img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
+                                                winning_ad_path=str(src_path),
+                                                product_image_path=product_ref or None)
+            if err:
+                img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
+                                                    winning_ad_path=str(src_path),
+                                                    product_image_path=product_ref or None)
+        else:
+            img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
+                                                winning_ad_path=str(src_path),
+                                                product_image_path=product_ref or None)
+            if err:
+                img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_FALL,
+                                                    winning_ad_path=str(src_path),
+                                                    product_image_path=product_ref or None)
+        if err or not img_bytes:
+            continue
+
+        # Save as a variant file alongside the original — NOT added to the
+        # main board grid, so the original board item stays unchanged.
+        variant_idx = len(list(BOARD_DIR.glob(f"{src_path.stem}_v*.png"))) + 1
+        v_filename  = f"{src_path.stem}_v{variant_idx}.png"
+        with open(BOARD_DIR / v_filename, "wb") as fp:
+            fp.write(img_bytes)
+
+        results.append({"filename": v_filename,
+                         "board_url": f"/api/board/image/{v_filename}",
+                         "label": (item.get("label", "Ad") + " (edit)")})
+
+    if not results:
+        return jsonify({"error": "Generation failed — please try again"}), 500
+    cost_usd = round(COSTS.get(quality, COSTS["draft"]) * len(results), 2)
+    return jsonify({"ok": True, "items": results,
+                     "cost_usd": cost_usd, "cost_myr": round(cost_usd * MYR_RATE, 2)})
+
+@app.route("/api/board/delete-variant", methods=["POST"])
+def board_delete_variant():
+    """Delete a generated tweak-variant image file (not a real board entry)."""
+    data     = request.json or {}
+    filename = (data.get("filename") or "").strip()
+    if not filename or "/" in filename or "\\" in filename:
+        return jsonify({"error": "Invalid filename"}), 400
+    path = BOARD_DIR / filename
+    if path.exists():
+        path.unlink()
     return jsonify({"ok": True})
-
-def board_request_canva(board_id):
-    """
-    Step 1: Upload image to catbox → mark as pending Canva creation.
-    Claude's background loop picks this up and calls Canva MCP to create the design.
-    """
-    board = load_board()
-    item  = next((b for b in board if b["id"] == board_id), None)
-    if not item:
-        return jsonify({"error": "Not found"}), 404
-
-    # If already has a Canva URL, just return it
-    if item.get("canva_url", "").startswith("https://www.canva.com"):
-        return jsonify({"ok": True, "status": "ready", "canva_url": item["canva_url"]})
-
-    def _catbox_upload(file_path: str, fname: str) -> str:
-        """Upload a local file to catbox.moe and return the public HTTPS URL."""
-        boundary = "----catboxboundary" + uuid.uuid4().hex[:12]
-        with open(file_path, "rb") as f:
-            data = f.read()
-        body = (
-            f"--{boundary}\r\nContent-Disposition: form-data; name=\"reqtype\"\r\n\r\nfileupload\r\n"
-            f"--{boundary}\r\nContent-Disposition: form-data; name=\"fileToUpload\"; "
-            f"filename=\"{fname}\"\r\nContent-Type: image/png\r\n\r\n"
-        ).encode() + data + f"\r\n--{boundary}--\r\n".encode()
-        req = urllib.request.Request(
-            "https://catbox.moe/user/api.php", data=body,
-            headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
-            method="POST"
-        )
-        with urllib.request.urlopen(req, timeout=40) as resp:
-            url = resp.read().decode().strip()
-        return url if url.startswith("https://") else ""
-
-    # Upload the NO-TEXT background version to catbox (used as Canva background)
-    if not item.get("bg_public_url", "").startswith("https://"):
-        bg_path = item.get("bg_path", "")
-        # bg_path may not exist for older board items — fall back to main image
-        src = bg_path if bg_path and os.path.exists(bg_path) else str(BOARD_DIR / item["filename"])
-        if not os.path.exists(src):
-            return jsonify({"error": "Image file not found"}), 404
-        try:
-            url = _catbox_upload(src, "bg_" + item["filename"])
-            if url:
-                item["bg_public_url"] = url
-                item["public_url"]    = url  # keep for backwards compat
-                print(f"[canva] Uploaded BG for board_{board_id} -> {url}")
-        except Exception as e:
-            return jsonify({"error": f"Upload failed: {e}"}), 500
-
-    # Mark as pending for Claude's background loop to process
-    item["canva_pending"] = True
-    save_board(board)
-
-    return jsonify({
-        "ok":         True,
-        "status":     "pending",
-        "public_url": item.get("public_url",""),
-        "copy_data":  item.get("copy_data", {}),
-        "label":      item.get("label",""),
-        "problem":    item.get("problem",""),
-    })
-
-def board_canva_status(board_id):
-    """Poll endpoint — returns canva_url when ready, or pending status."""
-    board = load_board()
-    item  = next((b for b in board if b["id"] == board_id), None)
-    if not item:
-        return jsonify({"error": "Not found"}), 404
-    canva_url = item.get("canva_url", "")
-    return jsonify({
-        "status":    "ready" if canva_url.startswith("https://www.canva.com") else "pending",
-        "canva_url": canva_url,
-        "pending":   bool(item.get("canva_pending", False)),
-    })
-
-def canva_pending_list():
-    """Claude's background loop calls this to find boards waiting for Canva design creation."""
-    board   = load_board()
-    pending = [
-        {"id": b["id"],
-         "bg_public_url": b.get("bg_public_url", b.get("public_url","")),
-         "public_url":    b.get("public_url",""),
-         "copy_data":     b.get("copy_data",{}),
-         "label":         b.get("label",""),
-         "problem":       b.get("problem","")}
-        for b in board
-        if b.get("canva_pending") and (
-            b.get("bg_public_url","").startswith("https://") or
-            b.get("public_url","").startswith("https://")
-        )
-        and not b.get("canva_url","").startswith("https://www.canva.com")
-    ]
-    return jsonify(pending)
 
 # ── Product management ────────────────────────────────────────────────────────
 @app.route("/api/brand-kit/products", methods=["GET"])
@@ -2496,186 +2441,27 @@ def key_status():
     key = os.environ.get("GEMINI_API_KEY", "")
     return jsonify({"set": bool(key), "hint": (key[:8] + "…") if key else ""})
 
-CANVA_API          = "https://api.canva.com/rest/v1"
-CANVA_AUTH_URL     = "https://www.canva.com/api/oauth/authorize"
-CANVA_TOKEN_URL    = "https://api.canva.com/rest/v1/oauth/token"
-CANVA_REDIRECT_URI = "http://127.0.0.1:7373/auth/canva/callback"
-CANVA_SCOPES       = "asset:read asset:write"
-
-# In-memory PKCE state (single-user local app — fine here)
-_oauth_pkce: dict = {}
-
-# ── OAuth helpers ──────────────────────────────────────────────────────────────
-
-def _canva_client_id() -> str:
-    return os.environ.get("CANVA_CLIENT_ID", "").strip()
-
-def _canva_client_secret() -> str:
-    return os.environ.get("CANVA_CLIENT_SECRET", "").strip()
-
-def _save_canva_tokens(access_token: str, refresh_token: str = ""):
-    env_path = Path(__file__).parent / ".env"
-    lines = []
-    if env_path.exists():
-        with open(env_path, encoding="utf-8") as f:
-            lines = [l for l in f.readlines()
-                     if not l.startswith("CANVA_ACCESS_TOKEN")
-                     and not l.startswith("CANVA_REFRESH_TOKEN")]
-    lines.append(f"CANVA_ACCESS_TOKEN={access_token}\n")
-    if refresh_token:
-        lines.append(f"CANVA_REFRESH_TOKEN={refresh_token}\n")
-    with open(env_path, "w", encoding="utf-8") as f:
-        f.writelines(lines)
-    os.environ["CANVA_ACCESS_TOKEN"]  = access_token
-    if refresh_token:
-        os.environ["CANVA_REFRESH_TOKEN"] = refresh_token
-
-def _refresh_canva_token() -> str:
-    """Try to refresh the access token using the stored refresh token."""
-    import base64 as _b64, urllib.parse as _up
-    refresh_token = os.environ.get("CANVA_REFRESH_TOKEN", "").strip()
-    client_id     = _canva_client_id()
-    client_secret = _canva_client_secret()
-    if not refresh_token or not client_id:
-        return ""
-    auth = _b64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
-    body = _up.urlencode({"grant_type": "refresh_token", "refresh_token": refresh_token}).encode()
-    try:
-        req = urllib.request.Request(
-            CANVA_TOKEN_URL, data=body,
-            headers={"Authorization": f"Basic {auth}",
-                     "Content-Type": "application/x-www-form-urlencoded"})
-        with urllib.request.urlopen(req, timeout=15) as r:
-            d = json.loads(r.read())
-        new_access  = d.get("access_token", "")
-        new_refresh = d.get("refresh_token", refresh_token)
-        if new_access:
-            _save_canva_tokens(new_access, new_refresh)
-            return new_access
-    except Exception as e:
-        print(f"[canva] Token refresh failed: {e}")
-    return ""
-
-# ── OAuth routes ───────────────────────────────────────────────────────────────
-
-@app.route("/auth/canva")
-def auth_canva_start():
-    """Start Canva OAuth 2.0 PKCE flow — browser is redirected here."""
-    import hashlib as _hl, base64 as _b64, secrets as _sec, urllib.parse as _up
-    code_verifier  = _b64.urlsafe_b64encode(_sec.token_bytes(32)).rstrip(b"=").decode()
-    code_challenge = _b64.urlsafe_b64encode(
-        _hl.sha256(code_verifier.encode()).digest()
-    ).rstrip(b"=").decode()
-    state = _sec.token_urlsafe(16)
-    _oauth_pkce["verifier"] = code_verifier
-    _oauth_pkce["state"]    = state
-
-    params = _up.urlencode({
-        "client_id":             _canva_client_id(),
-        "redirect_uri":          CANVA_REDIRECT_URI,
-        "response_type":         "code",
-        "code_challenge":        code_challenge,
-        "code_challenge_method": "s256",
-        "scope":                 CANVA_SCOPES,
-        "state":                 state,
-    })
-    return redirect(f"{CANVA_AUTH_URL}?{params}")
-
-@app.route("/auth/canva/callback")
-def auth_canva_callback():
-    """Canva redirects here with ?code=... after user approves."""
-    import base64 as _b64, urllib.parse as _up
-    error = request.args.get("error", "")
-    code  = request.args.get("code",  "")
-    state = request.args.get("state", "")
-
-    if error:
-        return f"""<html><body style="font-family:sans-serif;text-align:center;padding:60px">
-        <h1>❌ Canva Error</h1><p>{error}</p>
-        <p><a href="http://localhost:7373">Back to app</a></p></body></html>""", 400
-
-    if state != _oauth_pkce.get("state", "INVALID"):
-        return """<html><body style="font-family:sans-serif;text-align:center;padding:60px">
-        <h1>❌ State mismatch</h1><p>Please try connecting again.</p>
-        <p><a href="http://localhost:7373">Back to app</a></p></body></html>""", 400
-
-    client_id     = _canva_client_id()
-    client_secret = _canva_client_secret()
-    code_verifier = _oauth_pkce.get("verifier", "")
-    auth = _b64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
-
-    body = _up.urlencode({
-        "grant_type":    "authorization_code",
-        "code":          code,
-        "redirect_uri":  CANVA_REDIRECT_URI,
-        "code_verifier": code_verifier,
-    }).encode()
-
-    try:
-        req = urllib.request.Request(
-            CANVA_TOKEN_URL, data=body,
-            headers={"Authorization": f"Basic {auth}",
-                     "Content-Type": "application/x-www-form-urlencoded"})
-        with urllib.request.urlopen(req, timeout=20) as r:
-            token_data = json.loads(r.read())
-    except urllib.error.HTTPError as e:
-        err = e.read().decode()
-        return f"""<html><body style="font-family:sans-serif;text-align:center;padding:60px">
-        <h1>❌ Token exchange failed ({e.code})</h1><pre>{err}</pre>
-        <p><a href="http://localhost:7373">Back to app</a></p></body></html>""", 500
-
-    access_token  = token_data.get("access_token",  "")
-    refresh_token = token_data.get("refresh_token", "")
-    if not access_token:
-        return f"""<html><body style="font-family:sans-serif;text-align:center;padding:60px">
-        <h1>❌ No access token</h1><pre>{token_data}</pre></body></html>""", 500
-
-    _save_canva_tokens(access_token, refresh_token)
-    _oauth_pkce.clear()
-
-    return """<html><body style="font-family:sans-serif;text-align:center;padding:60px;background:#f0fdf4">
-    <div style="max-width:420px;margin:0 auto;background:#fff;border-radius:16px;padding:40px;box-shadow:0 4px 24px rgba(0,0,0,.08)">
-      <div style="font-size:56px;margin-bottom:16px">✅</div>
-      <h1 style="font-size:22px;font-weight:700;color:#111;margin-bottom:10px">Canva Connected!</h1>
-      <p style="color:#555;font-size:14px;line-height:1.6">Your Canva Pro account is now permanently linked to the Serigama Ads Generator.<br><br>Every <strong>🎨 Canva</strong> button now uploads directly — no more extra steps.</p>
-      <p style="margin-top:24px;font-size:13px;color:#999">This window will close in 3 seconds…</p>
-    </div>
-    <script>setTimeout(()=>{ try{window.opener&&window.opener.postMessage('canva_connected','*')}catch(e){} window.close(); }, 3000);</script>
-    </body></html>"""
+# ── Canva Connect API (Personal Access Token) ───────────────────────────────────
+CANVA_API = "https://api.canva.com/rest/v1"
 
 def _get_canva_token() -> str:
-    """Return stored Canva token — checks env var first, then .env file."""
-    token = os.environ.get("CANVA_ACCESS_TOKEN", "").strip()
+    """Return stored Canva PAT — checks env var first, then .env file."""
+    token = os.environ.get("CANVA_API_TOKEN", "").strip()
     if not token:
         env_path = Path(__file__).parent / ".env"
         if env_path.exists():
             with open(env_path, encoding="utf-8") as f:
                 for line in f:
                     line = line.strip()
-                    if line.startswith("CANVA_ACCESS_TOKEN="):
+                    if line.startswith("CANVA_API_TOKEN="):
                         token = line.split("=", 1)[1].strip()
-                        os.environ["CANVA_ACCESS_TOKEN"] = token
+                        os.environ["CANVA_API_TOKEN"] = token
                         break
     return token
 
-@app.route("/api/canva-token", methods=["DELETE"])
-def api_delete_canva_token():
-    """Remove stored Canva token (disconnect)."""
-    env_path = Path(__file__).parent / ".env"
-    if env_path.exists():
-        with open(env_path, encoding="utf-8") as f:
-            lines = [l for l in f.readlines()
-                     if not l.startswith("CANVA_ACCESS_TOKEN")
-                     and not l.startswith("CANVA_REFRESH_TOKEN")]
-        with open(env_path, "w", encoding="utf-8") as f:
-            f.writelines(lines)
-    os.environ.pop("CANVA_ACCESS_TOKEN",  None)
-    os.environ.pop("CANVA_REFRESH_TOKEN", None)
-    return jsonify({"ok": True})
-
 @app.route("/api/canva-token", methods=["POST"])
 def api_set_canva_token():
-    """Save Canva Personal Access Token to .env and env var."""
+    """Save a Canva Connect API Personal Access Token to .env and env var."""
     token = (request.json or {}).get("token", "").strip()
     if not token:
         return jsonify({"error": "Token is empty"}), 400
@@ -2683,20 +2469,31 @@ def api_set_canva_token():
     lines = []
     if env_path.exists():
         with open(env_path, encoding="utf-8") as f:
-            lines = [l for l in f.readlines() if not l.startswith("CANVA_ACCESS_TOKEN")]
-    lines.append(f"CANVA_ACCESS_TOKEN={token}\n")
+            lines = [l for l in f.readlines() if not l.startswith("CANVA_API_TOKEN")]
+    lines.append(f"CANVA_API_TOKEN={token}\n")
     with open(env_path, "w", encoding="utf-8") as f:
         f.writelines(lines)
-    os.environ["CANVA_ACCESS_TOKEN"] = token
+    os.environ["CANVA_API_TOKEN"] = token
     return jsonify({"ok": True, "hint": token[:10] + "…"})
 
+@app.route("/api/canva-token", methods=["DELETE"])
+def api_delete_canva_token():
+    """Remove the stored Canva PAT (disconnect)."""
+    env_path = Path(__file__).parent / ".env"
+    if env_path.exists():
+        with open(env_path, encoding="utf-8") as f:
+            lines = [l for l in f.readlines() if not l.startswith("CANVA_API_TOKEN")]
+        with open(env_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+    os.environ.pop("CANVA_API_TOKEN", None)
+    return jsonify({"ok": True})
+
 @app.route("/api/canva-token-status")
-def api_canva_token_status_check():
-    """Check if Canva token is stored and valid."""
+def api_canva_token_status():
+    """Check if a Canva PAT is stored and currently valid."""
     token = _get_canva_token()
     if not token:
         return jsonify({"connected": False})
-    # Quick validation: call Canva users/me
     try:
         req = urllib.request.Request(
             f"{CANVA_API}/users/me",
@@ -2704,268 +2501,94 @@ def api_canva_token_status_check():
         )
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
-        display = (data.get("user", {}).get("display_name")
+        display = (data.get("team_user", {}).get("user_id")
                    or data.get("display_name")
                    or token[:8] + "…")
         return jsonify({"connected": True, "display": display, "hint": token[:10] + "…"})
     except urllib.error.HTTPError as e:
         if e.code == 401:
             return jsonify({"connected": False, "error": "Token expired or invalid"})
-        return jsonify({"connected": True, "hint": token[:10] + "…"})   # other errors = token OK
-    except Exception as e:
-        return jsonify({"connected": True, "hint": token[:10] + "…"})   # network hiccup = assume OK
+        return jsonify({"connected": True, "hint": token[:10] + "…"})
+    except Exception:
+        return jsonify({"connected": True, "hint": token[:10] + "…"})
 
 @app.route("/api/canva-queue", methods=["POST"])
 def api_canva_queue():
-    """
-    Upload a generated image directly to Canva using the OAuth token.
-    Strategy (in order):
-      1. POST /v1/asset-uploads  — direct binary upload (no external host needed)
-         Header: Asset-Upload-Metadata: {"name_base64": base64(name)}
-         Body:   raw bytes (application/octet-stream)
-      2. Fallback: catbox.moe → POST /v1/url-asset-uploads (preview API)
-    Both are async jobs; we poll up to 10 s for the result.
-    """
-    import datetime as _dt, subprocess, ssl as _ssl, base64 as _b64, time as _time
+    """Upload a generated image to the connected Canva account's asset library."""
+    import base64 as _b64, time as _time
 
     data       = request.json or {}
     session_id = data.get("session_id", "").strip()
     filename   = data.get("filename",   "").strip()
     label      = (data.get("label", filename) or "Serigama Ad").strip()[:50]
 
-    if not session_id or not filename:
-        return jsonify({"error": "Missing session_id or filename"}), 400
+    if not filename:
+        return jsonify({"error": "Missing filename"}), 400
 
-    img_path = SESSIONS_DIR / session_id / filename
-    if not img_path.exists():
+    img_path = SESSIONS_DIR / session_id / filename if session_id else None
+    if not img_path or not img_path.exists():
         img_path = BOARD_DIR / filename
         if not img_path.exists():
             return jsonify({"error": f"Image not found: {filename}"}), 404
 
-    with open(img_path, "rb") as f:
-        img_bytes = f.read()
-
     token = _get_canva_token()
     if not token:
         return jsonify({
-            "error": "Canva not connected. Go to Brand Setup → Brand tab → click 'Connect Canva'."
+            "error": "Canva not connected. Go to Brand Setup → Brand tab → paste your Canva Connect API token."
         }), 400
 
-    ctx = _ssl.create_default_context()
+    with open(img_path, "rb") as f:
+        img_bytes = f.read()
 
-    def _poll_job(poll_url: str, max_secs: int = 10) -> dict:
-        """Poll an async Canva job until success/failed or timeout."""
-        deadline = _time.time() + max_secs
-        while _time.time() < deadline:
-            try:
-                r = urllib.request.Request(poll_url,
-                    headers={"Authorization": f"Bearer {token}"})
-                with urllib.request.urlopen(r, context=ctx, timeout=8) as resp:
-                    d = json.loads(resp.read())
-                job = d.get("job", d)
-                status = job.get("status", "")
-                if status in ("success", "failed"):
-                    return job
-                _time.sleep(1.5)
-            except Exception:
-                break
-        return {}
-
-    def _handle_token_error(e):
-        """On 401, try refresh token."""
-        nonlocal token
-        if e.code == 401:
-            new = _refresh_canva_token()
-            if new:
-                token = new
-                os.environ["CANVA_ACCESS_TOKEN"] = token
-                return True
-        return False
-
-    # ── Strategy 1: Direct binary upload ──────────────────────────────────────
+    name_b64 = _b64.b64encode(label.encode()).decode()
+    metadata = json.dumps({"name_base64": name_b64})
+    req = urllib.request.Request(
+        f"{CANVA_API}/asset-uploads",
+        data=img_bytes,
+        method="POST",
+        headers={
+            "Authorization":         f"Bearer {token}",
+            "Content-Type":          "application/octet-stream",
+            "Asset-Upload-Metadata": metadata,
+        },
+    )
     try:
-        name_b64 = _b64.b64encode(label.encode()).decode()
-        metadata = json.dumps({"name_base64": name_b64})
-        req = urllib.request.Request(
-            f"{CANVA_API}/asset-uploads",
-            data=img_bytes,
-            method="POST",
-            headers={
-                "Authorization":       f"Bearer {token}",
-                "Content-Type":        "application/octet-stream",
-                "Asset-Upload-Metadata": metadata,
-            },
-        )
-        with urllib.request.urlopen(req, context=ctx, timeout=30) as r:
+        with urllib.request.urlopen(req, timeout=30) as r:
             job_data = json.loads(r.read())
-
-        job    = job_data.get("job", job_data)
-        job_id = job.get("id", "")
-        status = job.get("status", "")
-
-        # Poll if still in_progress
-        if status not in ("success", "failed") and job_id:
-            job = _poll_job(f"{CANVA_API}/asset-uploads/{job_id}") or job
-            status = job.get("status", status)
-
-        if status == "success" or job_id:   # treat any job_id as success
-            _log_canva_upload(job_id, label, filename, session_id, "direct_binary")
-            return jsonify({
-                "ok": True, "job_id": job_id, "label": label,
-                "message": f"✅ '{label}' is now in your Canva library!",
-            })
-
     except urllib.error.HTTPError as e:
         body = e.read().decode(errors="replace")
-        print(f"[canva] Binary upload failed ({e.code}): {body[:300]}")
-        _handle_token_error(e)
-    except Exception as exc:
-        print(f"[canva] Binary upload error: {exc}")
-
-    # ── Strategy 2: catbox.moe → /v1/url-asset-uploads ───────────────────────
-    try:
-        result = subprocess.run(
-            ["curl", "-s", "--max-time", "30",
-             "-F", "reqtype=fileupload",
-             "-F", f"fileToUpload=@{img_path}",
-             "https://catbox.moe/user/api.php"],
-            capture_output=True, text=True, timeout=35
-        )
-        temp_url = (result.stdout or "").strip()
-        if not temp_url.startswith("https://"):
-            return jsonify({"error": f"Fallback upload failed: {temp_url or result.stderr}"}), 500
-
-        imp_body = json.dumps({"name": label, "url": temp_url}).encode()
-        imp_req  = urllib.request.Request(
-            f"{CANVA_API}/url-asset-uploads",
-            data=imp_body,
-            method="POST",
-            headers={"Authorization": f"Bearer {token}",
-                     "Content-Type": "application/json"},
-        )
-        with urllib.request.urlopen(imp_req, context=ctx, timeout=30) as r:
-            imp_data = json.loads(r.read())
-
-        job    = imp_data.get("job", imp_data)
-        job_id = job.get("id", "")
-        status = job.get("status", "")
-
-        if status not in ("success", "failed") and job_id:
-            job = _poll_job(f"{CANVA_API}/url-asset-uploads/{job_id}") or job
-            status = job.get("status", status)
-
-        _log_canva_upload(job_id, label, filename, session_id, "url_catbox")
-        return jsonify({
-            "ok": True, "job_id": job_id, "label": label,
-            "message": f"✅ '{label}' is now in your Canva library!",
-        })
-
-    except urllib.error.HTTPError as e:
-        body = e.read().decode(errors="replace")
-        return jsonify({"error": f"Canva upload failed ({e.code}): {body}"}), 500
+        if e.code == 401:
+            return jsonify({"error": "Canva token expired or invalid. Reconnect in Brand Setup."}), 401
+        return jsonify({"error": f"Canva upload failed ({e.code}): {body[:300]}"}), 500
     except Exception as exc:
         return jsonify({"error": f"Upload failed: {exc}"}), 500
 
+    job    = job_data.get("job", job_data)
+    job_id = job.get("id", "")
+    status = job.get("status", "")
 
-def _log_canva_upload(job_id, label, filename, session_id, method):
-    import datetime as _dt
-    queue_path = SKILLS_DIR / "canva_queue.json"
-    queue: list = []
-    if queue_path.exists():
+    # Poll briefly if still in progress
+    deadline = _time.time() + 10
+    while status not in ("success", "failed") and job_id and _time.time() < deadline:
         try:
-            with open(queue_path, encoding="utf-8") as f:
-                queue = json.load(f)
+            r = urllib.request.Request(f"{CANVA_API}/asset-uploads/{job_id}",
+                                        headers={"Authorization": f"Bearer {token}"})
+            with urllib.request.urlopen(r, timeout=8) as resp:
+                job = json.loads(resp.read()).get("job", job)
+            status = job.get("status", status)
+            if status in ("success", "failed"):
+                break
         except Exception:
-            queue = []
-    queue.append({
-        "id": job_id or str(uuid.uuid4())[:8],
-        "label": label, "filename": filename, "session_id": session_id,
-        "method": method, "status": "uploaded",
-        "uploaded_at": _dt.datetime.now().isoformat(),
+            break
+        _time.sleep(1.5)
+
+    if status == "failed":
+        return jsonify({"error": f"Canva upload failed: {job.get('error', {})}"}), 500
+
+    return jsonify({
+        "ok": True, "job_id": job_id, "label": label,
+        "message": f"✅ '{label}' is now in your Canva library!",
     })
-    with open(queue_path, "w", encoding="utf-8") as f:
-        json.dump(queue[-50:], f, indent=2, ensure_ascii=False)
-
-
-@app.route("/api/canva-push", methods=["POST"])
-def api_canva_push():
-    """
-    Use the Claude CLI to call the Canva MCP and upload the image.
-    The catbox.moe URL is already public — Claude just calls upload-asset-from-url.
-    """
-    import subprocess, shutil
-    data     = request.json or {}
-    temp_url = data.get("temp_url", "").strip()
-    label    = data.get("label", "Serigama Ad").strip()
-    entry_id = data.get("id", "")
-
-    if not temp_url:
-        return jsonify({"error": "No temp_url provided"}), 400
-
-    # Find claude CLI
-    claude_bin = shutil.which("claude") or r"C:\Users\haliza.LUXOR\AppData\Local\AnthropicClaude\claude.exe"
-    if not claude_bin or not os.path.exists(claude_bin):
-        # Fallback: queue it — Claude Code will process on next interaction
-        _update_queue_status(entry_id, "pending_canva")
-        return jsonify({
-            "ok":      True,
-            "queued":  True,
-            "message": f"Queued! Tell Claude: 'upload Canva queue' to push '{label}' to your library.",
-        })
-
-    prompt = (
-        f"Use the Canva MCP tool upload-asset-from-url to upload this image to the user's Canva library. "
-        f"URL: {temp_url}  Name: {label}  "
-        f"After uploading, update the canva_queue.json entry with id '{entry_id}' status to 'uploaded'. "
-        f"Reply with only: DONE or ERROR:<reason>"
-    )
-    try:
-        result = subprocess.run(
-            [claude_bin, "--print", "--no-permission-prompts", prompt],
-            capture_output=True, text=True, timeout=60,
-            cwd=str(SKILLS_DIR)
-        )
-        output = (result.stdout or "").strip()
-        if "DONE" in output or "success" in output.lower():
-            _update_queue_status(entry_id, "uploaded")
-            return jsonify({"ok": True, "message": f"✅ '{label}' is now in your Canva library!"})
-        else:
-            _update_queue_status(entry_id, "pending_canva")
-            return jsonify({"ok": True, "queued": True,
-                            "message": f"Queued! Tell Claude: 'upload Canva queue' to finish."})
-    except Exception as exc:
-        _update_queue_status(entry_id, "pending_canva")
-        return jsonify({"ok": True, "queued": True,
-                        "message": f"Queued! Tell Claude: 'upload Canva queue' to push to Canva."})
-
-
-def _update_queue_status(entry_id: str, status: str):
-    """Update a queue entry's status."""
-    queue_path = SKILLS_DIR / "canva_queue.json"
-    if not queue_path.exists():
-        return
-    try:
-        with open(queue_path, encoding="utf-8") as f:
-            queue = json.load(f)
-        for entry in queue:
-            if entry.get("id") == entry_id:
-                entry["status"] = status
-        with open(queue_path, "w", encoding="utf-8") as f:
-            json.dump(queue, f, indent=2, ensure_ascii=False)
-    except Exception:
-        pass
-
-
-def set_canva_token():
-    token = (request.json or {}).get("token", "").strip()
-    if not token:
-        return jsonify({"error": "Empty token"}), 400
-    os.environ["CANVA_API_TOKEN"] = token
-    return jsonify({"ok": True, "hint": token[:8] + "…"})
-
-def canva_token_status():
-    token = os.environ.get("CANVA_API_TOKEN", "")
-    return jsonify({"set": bool(token), "hint": (token[:8] + "…") if token else ""})
 
 if __name__ == "__main__":
     import webbrowser, threading
@@ -2984,30 +2607,6 @@ if __name__ == "__main__":
 
     if not os.environ.get("GEMINI_API_KEY"):
         print("WARNING: GEMINI_API_KEY not set")
-
-    # ── Also start HTTPS on port 7374 for Canva MCP uploads ─────────────────
-    # Canva MCP requires HTTPS URLs. We serve images over https://localhost:7374
-    # using a self-signed cert — the MCP client runs locally so SSL errors are fine.
-    HTTPS_PORT  = 7374
-    cert_path   = Path(__file__).parent / "localhost.crt"
-    key_path    = Path(__file__).parent / "localhost.key"
-
-    if cert_path.exists() and key_path.exists():
-        import ssl as _ssl
-        ssl_ctx = _ssl.SSLContext(_ssl.PROTOCOL_TLS_SERVER)
-        ssl_ctx.load_cert_chain(str(cert_path), str(key_path))
-
-        def run_https():
-            import logging
-            log = logging.getLogger("werkzeug")
-            log.setLevel(logging.ERROR)   # silence HTTPS access logs
-            app.run(host="0.0.0.0", port=HTTPS_PORT, debug=False, ssl_context=ssl_ctx, use_reloader=False)
-
-        https_thread = threading.Thread(target=run_https, daemon=True)
-        https_thread.start()
-        print(f"  HTTPS (Canva)    ->  https://localhost:{HTTPS_PORT}  [self-signed]\n")
-    else:
-        print(f"  HTTPS cert not found — Canva direct upload via MCP will be limited\n")
 
     print(f"\n  static-remix UI  ->  http://localhost:{PORT}\n")
     threading.Timer(1.2, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()

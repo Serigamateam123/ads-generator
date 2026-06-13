@@ -107,28 +107,6 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 
 .field-label{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;
   display:flex;align-items:center;justify-content:space-between}
-.copy-counter{font-size:10px;font-weight:500;color:var(--muted2)}
-
-/* Copy suggestion cards */
-.copy-sug-card{
-  border:1.5px solid var(--border);border-radius:9px;padding:10px 11px;
-  margin-bottom:8px;cursor:pointer;transition:border-color .15s,box-shadow .15s;
-  background:var(--white);position:relative;
-}
-.copy-sug-card:hover{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-.copy-sug-card.active{border-color:#7c3aed;background:#faf5ff}
-.copy-sug-angle{font-size:9px;font-weight:700;color:#7c3aed;text-transform:uppercase;
-  letter-spacing:.5px;margin-bottom:5px}
-.copy-sug-h1{font-size:12px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:3px}
-.copy-sug-h2{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:3px}
-.copy-sug-cta{font-size:10px;font-weight:600;color:#059669;background:#ecfdf5;
-  display:inline-block;padding:2px 7px;border-radius:5px}
-.copy-sug-use{position:absolute;right:9px;top:50%;transform:translateY(-50%);
-  font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;
-  border:none;border-radius:5px;padding:3px 8px;cursor:pointer;opacity:0;transition:opacity .15s}
-.copy-sug-card:hover .copy-sug-use{opacity:1}
-
-
 .req{font-size:10px;font-weight:600;color:#dc2626;background:#fef2f2;
   padding:1px 5px;border-radius:3px}
 
@@ -239,7 +217,7 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-persona{font-size:11px;color:var(--muted)}
 
-.card-footer{padding:0 12px 10px;display:flex;justify-content:space-between;align-items:center}
+.card-footer{padding:0 12px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .btn-canva{font-size:11px;padding:4px 10px;border:1.5px solid #7c3aed;border-radius:5px;
   background:#fff;cursor:pointer;color:#7c3aed;display:none;transition:all .15s;font-weight:600}
 .btn-canva.show{display:block}
@@ -275,10 +253,6 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 .btn-board-dl{padding:6px 16px;background:var(--text);color:#fff;border:none;
   border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
 .btn-board-dl:hover{background:#333}
-.btn-board-canva{padding:6px 16px;background:#7c3aed;color:#fff;border:none;
-  border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
-.btn-board-canva:hover{background:#6d28d9}
-.btn-board-canva.loading{opacity:.6;cursor:wait;pointer-events:none}
 .btn-board-del{padding:6px 16px;background:#fff;color:#dc2626;
   border:1px solid #fca5a5;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
 .btn-board-del:hover{background:#fef2f2}
@@ -335,6 +309,75 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 .board-card-label{font-size:12px;font-weight:600;color:var(--text);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .board-card-meta{font-size:10px;color:var(--muted);margin-top:2px;display:flex;gap:6px;align-items:center}
+/* ── Board detail / tweak modal ── */
+.board-modal-overlay{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:20px;
+}
+.board-modal-overlay.show{display:flex}
+.board-modal{
+  background:var(--white);border-radius:14px;max-width:920px;width:100%;
+  max-height:90vh;overflow:auto;display:flex;gap:0;position:relative;
+}
+.board-modal-close{
+  position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;
+  border-radius:50%;border:none;background:rgba(0,0,0,.5);color:#fff;
+  font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.board-modal-img{flex:1 1 50%;background:var(--bg);display:flex;align-items:center;justify-content:center;min-width:0}
+.board-modal-img img{width:100%;height:100%;object-fit:contain;display:block}
+.board-modal-side{flex:1 1 50%;padding:24px;display:flex;flex-direction:column;gap:10px;min-width:280px}
+.board-modal-label{font-size:15px;font-weight:700;color:var(--text)}
+.board-modal-section-title{font-size:13px;font-weight:700;color:var(--text);margin-top:8px}
+.board-modal-hint{font-size:12px;color:var(--muted);margin:0}
+#board-modal-tweak{
+  width:100%;min-height:90px;resize:vertical;padding:10px;border-radius:8px;
+  border:1.5px solid var(--border);font-size:13px;font-family:inherit;
+}
+.board-modal-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text)}
+.board-modal-row select{padding:4px 8px;border-radius:6px;border:1.5px solid var(--border);font-size:12px}
+.btn-board-generate{
+  background:var(--brand);color:#fff;border:none;border-radius:8px;
+  padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:background .12s;
+}
+.btn-board-generate:hover{background:#d99200}
+.btn-board-generate:disabled{opacity:.6;cursor:wait}
+.btn-board-generate.pulsing{animation:bgPulse 1.1s ease-in-out infinite}
+@keyframes bgPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(245,168,0,.55)}
+  50%{box-shadow:0 0 0 10px rgba(245,168,0,0)}
+}
+.board-modal-status{font-size:12px;color:var(--muted)}
+.board-modal-cost{font-size:11px;color:var(--muted2);margin-top:-4px}
+.board-modal-results{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.board-modal-result{position:relative}
+.board-modal-results img{width:100%;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;display:block}
+.board-modal-result-del{
+  position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;
+  border:none;background:rgba(0,0,0,.6);color:#fff;font-size:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.board-modal-result-del:hover{background:#dc2626}
+.board-modal-result-actions{
+  position:absolute;bottom:0;left:0;right:0;display:flex;gap:6px;padding:6px;
+  background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 100%);
+  opacity:0;transition:opacity .18s;pointer-events:none;
+}
+.board-modal-result:hover .board-modal-result-actions{opacity:1;pointer-events:auto}
+.board-modal-result-actions .bca-btn{
+  flex:1;padding:5px 0;font-size:11px;font-weight:700;border:none;
+  border-radius:6px;cursor:pointer;transition:background .12s;
+}
+
+.variant-lightbox-overlay{
+  display:none;position:fixed;inset:0;z-index:1100;
+  background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:30px;
+}
+.variant-lightbox-overlay.show{display:flex}
+.variant-lightbox-overlay img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.variant-lightbox-overlay .board-modal-close{background:rgba(255,255,255,.15)}
+@media (max-width:720px){.board-modal{flex-direction:column}}
+
 .board-quality-badge{
   font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;text-transform:uppercase;
 }
@@ -774,66 +817,6 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <button class="prob-pill" onclick="selectProblem(this,'Gout')">🦶 Gout</button>
       </div>
 
-      <!-- Copy overlay toggle -->
-      <div style="margin-top:12px;padding:10px 12px;background:#f9fafb;
-        border:1px solid var(--border);border-radius:8px;display:flex;
-        align-items:center;gap:10px;cursor:pointer"
-        onclick="toggleCopyOverlay()">
-        <input type="checkbox" id="copy-overlay-toggle" checked
-          style="width:16px;height:16px;cursor:pointer;accent-color:var(--text)"
-          onclick="event.stopPropagation();toggleCopyOverlay()">
-        <div>
-          <div style="font-size:12px;font-weight:700;color:var(--text)">Add text overlay (H1, H2, CTA)</div>
-          <div style="font-size:10px;color:var(--muted2);margin-top:1px">
-            Uncheck when winning ad already has the right visual copy
-          </div>
-        </div>
-      </div>
-
-      <!-- H1 & H2 copy inputs — hidden when overlay disabled -->
-      <div id="copy-fields-wrap" style="margin-top:12px">
-
-        <!-- Suggest Copy button -->
-        <button id="btn-suggest-copy" onclick="suggestCopy()"
-          style="width:100%;padding:7px 12px;margin-bottom:12px;
-                 background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;
-                 border:none;border-radius:8px;font-size:12px;font-weight:700;
-                 cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
-                 transition:opacity .15s">
-          ✨ Suggest Copy from Brand Knowledge
-        </button>
-
-        <!-- Suggestion cards — shown after AI generates them -->
-        <div id="copy-suggestions" style="display:none;margin-bottom:12px"></div>
-
-        <div class="field-label">
-          H1 — Main Headline
-          <span class="copy-counter" id="h1-counter">0 / 60</span>
-        </div>
-        <input class="form-input" id="copy-h1" maxlength="60"
-          placeholder="e.g. Sembuh Lebih Cepat. Dijamin Halal."
-          oninput="updateCopyCounter('h1-counter','copy-h1',60)">
-
-        <div class="field-label" style="margin-top:10px">
-          H2 — Subheadline
-          <span class="copy-counter" id="h2-counter">0 / 80</span>
-        </div>
-        <input class="form-input" id="copy-h2" maxlength="80"
-          placeholder="e.g. 3.48g gamat per 10ml • Halal JAKIM • KKM Approved"
-          oninput="updateCopyCounter('h2-counter','copy-h2',80)">
-
-        <div class="field-label" style="margin-top:10px">
-          CTA — Call to Action
-          <span class="copy-counter" id="cta-counter">0 / 30</span>
-        </div>
-        <input class="form-input" id="copy-cta" maxlength="30"
-          placeholder="e.g. Order Sekarang • Free Shipping"
-          oninput="updateCopyCounter('cta-counter','copy-cta',30)">
-
-        <p style="font-size:10px;color:var(--muted2);margin-top:6px;line-height:1.5">
-          Leave blank to let AI write copy. Fill in to use your exact words — no typos.
-        </p>
-      </div>
     </div>
 
     <!-- Step 3 -->
@@ -962,7 +945,6 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
       <div class="board-toolbar-btns">
         <button class="btn-board-sel-all" onclick="boardSelectAll()">Select All</button>
         <button class="btn-board-dl" onclick="boardDownloadSelected()">⬇ Download</button>
-        <button class="btn-board-canva" id="btn-board-canva" onclick="boardSendToCanva()">🎨 Send to Canva</button>
         <button class="btn-board-del" onclick="boardDeleteSelected()">🗑 Delete</button>
       </div>
     </div>
@@ -980,6 +962,47 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
     </div>
 
   </div><!-- /board-panel -->
+
+  <!-- ── Variant Lightbox ── -->
+  <div class="variant-lightbox-overlay" id="variant-lightbox-overlay" onclick="if(event.target===this) closeVariantLightbox()">
+    <button class="board-modal-close" onclick="closeVariantLightbox()">✕</button>
+    <img id="variant-lightbox-img" src="" alt="">
+  </div>
+
+  <!-- ── Board Detail / Tweak Modal ── -->
+  <div class="board-modal-overlay" id="board-modal-overlay" onclick="if(event.target===this) closeBoardModal()">
+    <div class="board-modal">
+      <button class="board-modal-close" onclick="closeBoardModal()">✕</button>
+      <div class="board-modal-img">
+        <img id="board-modal-img" src="" alt="">
+      </div>
+      <div class="board-modal-side">
+        <div class="board-modal-label" id="board-modal-label"></div>
+        <div class="board-modal-section-title">Tweak this visual</div>
+        <p class="board-modal-hint">Describe what's wrong or what to change — Gemini will generate new versions based on this image.</p>
+        <textarea id="board-modal-tweak" placeholder="e.g. make the headline bigger, change background to white, fix the bottle cap color..."></textarea>
+        <div class="board-modal-row">
+          <label for="board-modal-count">Variations:</label>
+          <select id="board-modal-count">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div class="board-modal-row">
+          <label for="board-modal-quality">Quality:</label>
+          <select id="board-modal-quality">
+            <option value="draft" selected>Draft (~RM0.04/img — cheaper, faster)</option>
+            <option value="final">Final (~RM0.16/img — higher quality)</option>
+          </select>
+        </div>
+        <button class="btn-board-generate" id="board-modal-generate" onclick="boardModalGenerate()">✨ Generate</button>
+        <div class="board-modal-cost" id="board-modal-estimate"></div>
+        <div class="board-modal-status" id="board-modal-status"></div>
+        <div class="board-modal-results" id="board-modal-results"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- ── Templates Panel ── -->
   <div class="tpl-panel" id="tpl-panel">
@@ -1133,28 +1156,26 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
           </div>
         </div>
 
-        <!-- Canva Integration -->
+        <!-- Canva Connect API -->
         <div class="bp-card" id="canva-integration-card">
-          <h3>🔗 Canva Integration</h3>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Connect your Canva Pro account — then every <strong>🎨 Canva</strong> button uploads directly to your library in one click.</p>
+          <h3>🔗 Canva Connect API</h3>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
+            Paste a Personal Access Token from
+            <a href="https://www.canva.com/developers/" target="_blank" rel="noopener">Canva Developer Portal</a>
+            (create an integration → generate token with <code>asset:write</code> scope) to send generated ads
+            straight to that account's library via the 🎨 Canva button.
+          </p>
 
-          <!-- Connected state -->
-          <div id="canva-status-connected" style="display:none;background:#f0fdf4;border:1.5px solid #86efac;border-radius:9px;padding:12px 16px;margin-bottom:12px">
-            <div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:4px">✅ Canva Pro Connected</div>
+          <div id="canva-status-connected" style="display:none;background:#f0fdf4;border:1.5px solid #86efac;border-radius:9px;padding:10px 14px;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:4px">✅ Canva Connected</div>
             <div id="canva-status-detail" style="font-size:12px;color:#4ade80"></div>
-            <button onclick="disconnectCanva()" style="margin-top:10px;font-size:11px;padding:4px 12px;border:1px solid #86efac;border-radius:5px;background:#fff;color:#166534;cursor:pointer">Disconnect</button>
+            <button onclick="disconnectCanva()" style="margin-top:8px;font-size:11px;padding:4px 12px;border:1px solid #86efac;border-radius:5px;background:#fff;color:#166534;cursor:pointer">Disconnect</button>
           </div>
 
-          <!-- Disconnected state -->
-          <div id="canva-status-disconnected">
-            <div style="background:#f5f3ff;border:1.5px solid #c4b5fd;border-radius:9px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#5b21b6;line-height:1.7">
-              Click the button below — a Canva login window will open.<br>
-              Approve access → window closes → you're connected. That's it.
-            </div>
-            <button onclick="connectCanva()" id="btn-connect-canva"
-                    style="width:100%;padding:11px;background:#7c3aed;color:#fff;border:none;border-radius:9px;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s">
-              🔗 Connect Canva Pro
-            </button>
+          <div id="canva-status-disconnected" style="display:flex;gap:8px">
+            <input class="form-input" id="canva-token-input" type="password"
+                   placeholder="Paste Canva Personal Access Token…" style="flex:1">
+            <button onclick="saveCanvaToken()" style="padding:0 16px;background:#7c3aed;color:#fff;border:none;border-radius:9px;cursor:pointer;font-size:13px;font-weight:700">Connect</button>
           </div>
         </div>
 
@@ -1306,7 +1327,7 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
   onchange="onProdPhotoInputChange(this.files)">
 
 <script>
-const MYR = 4.47, COST_PER = 0.01;
+const MYR = 4.07, COST_PER = 0.04;
 let state = { adsFiles:[], productFile:null, problem:'Post-partum', totalUsd:0 };
 let allCreatives = [];   // { id, num, angle, persona, imageUrl, filename, ts, isNew }
 let activeTag = 'all';
@@ -1360,95 +1381,6 @@ function selectProblem(btn, p) {
   document.querySelectorAll('.prob-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active'); state.problem = p;
 }
-function toggleCopyOverlay() {
-  const cb   = document.getElementById('copy-overlay-toggle');
-  const wrap = document.getElementById('copy-fields-wrap');
-  const on   = cb.checked;
-  wrap.style.display    = on ? 'block' : 'none';
-  wrap.style.opacity    = on ? '1' : '0.4';
-  wrap.style.pointerEvents = on ? '' : 'none';
-}
-
-// ── Suggest Copy from Brand Knowledge ────────────────────────────────────────
-async function suggestCopy() {
-  const btn = document.getElementById('btn-suggest-copy');
-  const box = document.getElementById('copy-suggestions');
-  btn.disabled = true;
-  btn.innerHTML = '⏳ Thinking from your Brand Knowledge…';
-
-  const problem = state.problem || 'Post-partum';
-
-  try {
-    const r = await fetch('/api/suggest-copy', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        problem,
-        active_product_id: activeProductId,
-        template_ids: [...selectedTplIds]
-      })
-    });
-    const d = await r.json();
-    if (d.error) throw new Error(d.error);
-
-    // Render suggestion cards
-    box.style.display = 'block';
-    box.innerHTML = `<div style="font-size:10px;font-weight:700;color:var(--muted);
-      text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">
-      ✨ AI Copy Suggestions — click any to use
-    </div>` + d.suggestions.map((s, i) => `
-      <div class="copy-sug-card" id="copy-sug-${i}" onclick="applySuggestion(${i})">
-        <div class="copy-sug-angle">${s.angle || 'Option ' + (i+1)}</div>
-        <div class="copy-sug-h1">${s.h1}</div>
-        <div class="copy-sug-h2">${s.h2}</div>
-        <div class="copy-sug-cta">${s.cta}</div>
-        <button class="copy-sug-use" onclick="event.stopPropagation();applySuggestion(${i})">Use this →</button>
-      </div>
-    `).join('');
-
-    // Store suggestions for later
-    window._copySuggestions = d.suggestions;
-
-  } catch(err) {
-    toast('❌ Could not generate suggestions: ' + err.message);
-    box.style.display = 'none';
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = '✨ Suggest Copy from Brand Knowledge';
-}
-
-function applySuggestion(idx) {
-  const s = (window._copySuggestions || [])[idx];
-  if (!s) return;
-
-  // Fill the input fields
-  const h1  = document.getElementById('copy-h1');
-  const h2  = document.getElementById('copy-h2');
-  const cta = document.getElementById('copy-cta');
-  h1.value  = s.h1  || '';
-  h2.value  = s.h2  || '';
-  cta.value = s.cta || '';
-
-  // Update counters
-  updateCopyCounter('h1-counter',  'copy-h1',  60);
-  updateCopyCounter('h2-counter',  'copy-h2',  80);
-  updateCopyCounter('cta-counter', 'copy-cta', 30);
-
-  // Highlight selected card
-  document.querySelectorAll('.copy-sug-card').forEach((c, i) =>
-    c.classList.toggle('active', i === idx));
-
-  toast(`✅ Copy applied — "${s.h1}"`);
-}
-
-function updateCopyCounter(counterId, inputId, max) {
-  const len = document.getElementById(inputId).value.length;
-  const el  = document.getElementById(counterId);
-  el.textContent = `${len} / ${max}`;
-  el.className = 'copy-counter' + (len >= max ? ' full' : len >= max * 0.85 ? ' warn' : '');
-}
-
 function updateCostNote() {
   const n = parseInt(document.getElementById('vol-input').value)||6;
   document.getElementById('cost-note').textContent =
@@ -1558,11 +1490,6 @@ async function generate() {
   // Re-run product change to ensure kit preview is current
   if (selProd && selProd.value) onSidebarProductChange();
 
-  // Read copy fields fresh
-  const freshH1  = (document.getElementById('copy-h1')  || {value:''}).value.trim();
-  const freshH2  = (document.getElementById('copy-h2')  || {value:''}).value.trim();
-  const freshCta = (document.getElementById('copy-cta') || {value:''}).value.trim();
-
   const hasStyleRef = state.adsFiles.length > 0 || selectedTplIds.size > 0;
   if (!hasStyleRef) { toast('Please upload a winning ad or select templates from the Template Library.'); return; }
   // Product: session upload OR per-product brand kit photos OR global brand kit photos
@@ -1628,10 +1555,7 @@ async function generate() {
           campaign_id:      activeCampaign ? activeCampaign.id   : null,
           campaign_name:    activeCampaign ? activeCampaign.name : '',
           active_product_id: activeProductId,
-          skip_overlay: !document.getElementById('copy-overlay-toggle').checked,
-          copy_h1:  freshH1,
-          copy_h2:  freshH2,
-          copy_cta: freshCta
+          skip_overlay: false
         })
       });
       const d = await r.json();
@@ -1675,6 +1599,65 @@ function saveImage(e, filename, url) {
   const a=document.createElement('a'); a.href=url; a.download=filename||'ad.png'; a.click();
 }
 
+function toast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── Canva Connect API ───────────────────────────────────────────────────────
+function showCanvaConnected(detail) {
+  const disc = document.getElementById('canva-status-disconnected');
+  const conn = document.getElementById('canva-status-connected');
+  const det  = document.getElementById('canva-status-detail');
+  if (disc) disc.style.display = 'none';
+  if (conn) conn.style.display = 'block';
+  if (det)  det.textContent    = detail;
+}
+
+function showCanvaDisconnected() {
+  const disc = document.getElementById('canva-status-disconnected');
+  const conn = document.getElementById('canva-status-connected');
+  if (disc) disc.style.display = 'flex';
+  if (conn) conn.style.display = 'none';
+}
+
+async function loadCanvaStatus() {
+  try {
+    const r = await fetch('/api/canva-token-status');
+    const d = await r.json();
+    if (d.connected) showCanvaConnected(d.display || d.hint || 'Connected ✓');
+    else showCanvaDisconnected();
+  } catch(e) { /* silent */ }
+}
+
+async function saveCanvaToken() {
+  const input = document.getElementById('canva-token-input');
+  const token = (input.value || '').trim();
+  if (!token) { toast('Paste a Canva token first.'); return; }
+  try {
+    const r = await fetch('/api/canva-token', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ token })
+    });
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    input.value = '';
+    await loadCanvaStatus();
+    toast('✅ Canva connected!');
+  } catch(err) {
+    toast('Connect failed: ' + err.message);
+  }
+}
+
+async function disconnectCanva() {
+  if (!confirm('Disconnect Canva? You can reconnect anytime with a new token.')) return;
+  await fetch('/api/canva-token', { method: 'DELETE' });
+  showCanvaDisconnected();
+  toast('Canva disconnected.');
+}
+
 async function sendToCanva(e, cardId) {
   e.stopPropagation();
   const btn = document.getElementById('canva-btn-' + cardId);
@@ -1686,9 +1669,7 @@ async function sendToCanva(e, cardId) {
 
   btn.classList.add('loading');
   btn.textContent = '⏳ Uploading…';
-
   try {
-    // Step 1: Upload image to public CDN (catbox.moe) — server does this
     const r = await fetch('/api/canva-queue', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -1696,7 +1677,6 @@ async function sendToCanva(e, cardId) {
     });
     const d = await r.json();
     if (d.error) throw new Error(d.error);
-
     btn.classList.remove('loading');
     btn.classList.add('done');
     btn.textContent = '✓ In Canva';
@@ -1708,88 +1688,35 @@ async function sendToCanva(e, cardId) {
   }
 }
 
-// ── Canva OAuth connection ────────────────────────────────────────────────────
-function connectCanva() {
-  const btn = document.getElementById('btn-connect-canva');
-  if (btn) { btn.textContent = '⏳ Opening Canva login…'; btn.disabled = true; }
-
-  // Open OAuth popup
-  const popup = window.open(
-    'http://localhost:7373/auth/canva',
-    'canva_oauth',
-    'width=600,height=700,left=' + (screen.width/2 - 300) + ',top=' + (screen.height/2 - 350)
-  );
-
-  // Listen for success message from the callback page
-  const handler = (e) => {
-    if (e.data === 'canva_connected') {
-      window.removeEventListener('message', handler);
-      clearInterval(pollTimer);
-      showCanvaConnected('Connected ✓');
-      toast('✅ Canva Pro connected! Click 🎨 Canva on any image to upload directly.');
-      if (btn) { btn.textContent = '🔗 Connect Canva Pro'; btn.disabled = false; }
-    }
-  };
-  window.addEventListener('message', handler);
-
-  // Fallback poll: check token-status every 2s in case postMessage doesn't fire
-  const pollTimer = setInterval(async () => {
-    try {
-      const r = await fetch('/api/canva-token-status');
-      const d = await r.json();
-      if (d.connected) {
-        clearInterval(pollTimer);
-        window.removeEventListener('message', handler);
-        showCanvaConnected(d.display || 'Connected ✓');
-        toast('✅ Canva Pro connected!');
-        if (btn) { btn.textContent = '🔗 Connect Canva Pro'; btn.disabled = false; }
-      }
-    } catch(e) {}
-  }, 2000);
-
-  // Stop polling after 3 minutes
-  setTimeout(() => {
-    clearInterval(pollTimer);
-    window.removeEventListener('message', handler);
-    if (btn) { btn.textContent = '🔗 Connect Canva Pro'; btn.disabled = false; }
-  }, 180000);
-}
-
-function showCanvaConnected(detail) {
-  const disc = document.getElementById('canva-status-disconnected');
-  const conn = document.getElementById('canva-status-connected');
-  const det  = document.getElementById('canva-status-detail');
-  if (disc) disc.style.display = 'none';
-  if (conn) conn.style.display = 'block';
-  if (det)  det.textContent    = detail;
-}
-
-async function disconnectCanva() {
-  if (!confirm('Disconnect Canva? You can reconnect anytime.')) return;
-  await fetch('/api/canva-token', { method: 'DELETE' });
-  document.getElementById('canva-status-connected').style.display = 'none';
-  document.getElementById('canva-status-disconnected').style.display = 'block';
-  toast('Canva disconnected.');
-}
-
-async function loadCanvaStatus() {
+async function boardCardCanva(e, boardId, filename, label) {
+  e.stopPropagation();
+  const btn = document.getElementById('bca-cv-' + boardId);
+  if (!btn || btn.classList.contains('loading')) return;
+  btn.classList.add('loading');
+  btn.textContent = '⏳…';
   try {
-    const r = await fetch('/api/canva-token-status');
+    const r = await fetch('/api/canva-queue', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ session_id: '', filename, label })
+    });
     const d = await r.json();
-    if (d.connected) {
-      showCanvaConnected(d.display || '');
-    }
-  } catch(e) { /* silent */ }
-}
-
-function toast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3500);
+    if (d.error) throw new Error(d.error);
+    btn.classList.remove('loading');
+    btn.classList.add('done');
+    btn.textContent = '✓ In Canva';
+    toast('✅ ' + (d.message || `"${label}" sent to Canva!`));
+  } catch(err) {
+    btn.classList.remove('loading');
+    btn.textContent = '🎨 Canva';
+    toast('❌ ' + err.message);
+  }
 }
 
 updateCostNote();
 loadCanvaStatus();
+document.getElementById('board-modal-count').addEventListener('change', updateBoardModalEstimate);
+document.getElementById('board-modal-quality').addEventListener('change', updateBoardModalEstimate);
 
 // ── Campaigns ─────────────────────────────────────────────────────────────────
 let allCampaigns   = [];
@@ -2045,7 +1972,11 @@ function renderBoard() {
           ${date ? `<span style="margin-left:auto;color:var(--muted2)">${date}</span>` : ''}
         </div>
       </div>`;
-    card.addEventListener('click', () => boardToggleSelect(b.id));
+    card.querySelector('.board-card-check').addEventListener('click', (e) => {
+      e.stopPropagation();
+      boardToggleSelect(b.id);
+    });
+    card.addEventListener('click', () => openBoardModal(b.id));
     grid.appendChild(card);
   });
 
@@ -2063,6 +1994,161 @@ function boardToggleSelect(id) {
     card.querySelector('.board-card-check').textContent = sel ? '✓' : '';
   });
   updateBoardToolbar();
+}
+
+let boardModalId = null;
+const VARIANT_COST_USD = {draft: 0.01, final: 0.04};
+const MYR_RATE = 4.07;
+
+function updateBoardModalEstimate() {
+  const count   = parseInt(document.getElementById('board-modal-count').value);
+  const quality = document.getElementById('board-modal-quality').value;
+  const usd = VARIANT_COST_USD[quality] * count;
+  const myr = usd * MYR_RATE;
+  document.getElementById('board-modal-estimate').textContent =
+    `Estimated cost: RM${myr.toFixed(2)} for ${count} image${count>1?'s':''}`;
+}
+
+let variantBtnSeq = 0;
+
+function addBoardModalResult(it) {
+  const results = document.getElementById('board-modal-results');
+  const wrap = document.createElement('div');
+  wrap.className = 'board-modal-result';
+  const uid = ++variantBtnSeq;
+
+  const img = document.createElement('img');
+  img.src = it.board_url + `?t=${Date.now()}`;
+  img.title = it.label || '';
+  img.addEventListener('click', () => openVariantLightbox(img.src));
+
+  const del = document.createElement('button');
+  del.className = 'board-modal-result-del';
+  del.title = 'Delete';
+  del.textContent = '✕';
+  del.addEventListener('click', () => deleteBoardVariant(it.filename, wrap));
+
+  const safeLabel = (it.label || 'Ad').replace(/"/g,'&quot;');
+  const actions = document.createElement('div');
+  actions.className = 'board-modal-result-actions';
+  actions.innerHTML = `
+    <button class="bca-btn bca-dl" title="Download">⬇ Download</button>
+    <button class="bca-btn bca-cv" id="bca-cv-variant-${uid}" title="Send to Canva">🎨 Canva</button>`;
+  actions.querySelector('.bca-dl').addEventListener('click', (e) => boardCardDownload(e, it.filename, safeLabel));
+  actions.querySelector('.bca-cv').addEventListener('click', (e) => variantSendToCanva(e, uid, it.filename, safeLabel));
+
+  wrap.appendChild(img);
+  wrap.appendChild(del);
+  wrap.appendChild(actions);
+  results.appendChild(wrap);
+}
+
+async function variantSendToCanva(e, uid, filename, label) {
+  e.stopPropagation();
+  const btn = document.getElementById('bca-cv-variant-' + uid);
+  if (!btn || btn.classList.contains('loading')) return;
+  btn.classList.add('loading');
+  btn.textContent = '⏳…';
+  try {
+    const r = await fetch('/api/canva-queue', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ session_id: '', filename, label })
+    });
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    btn.classList.remove('loading');
+    btn.classList.add('done');
+    btn.textContent = '✓ Sent';
+    setTimeout(() => { btn.classList.remove('done'); btn.textContent = '🎨 Canva'; }, 2500);
+  } catch (err) {
+    btn.classList.remove('loading');
+    btn.textContent = '⚠ ' + err.message;
+    setTimeout(() => { btn.textContent = '🎨 Canva'; }, 3000);
+  }
+}
+
+async function openBoardModal(id) {
+  const item = boardItems.find(b => b.id === id);
+  if (!item) return;
+  boardModalId = id;
+  document.getElementById('board-modal-img').src = `/api/board/image/${item.filename}?t=${Date.now()}`;
+  document.getElementById('board-modal-label').textContent = item.label || 'Ad';
+  document.getElementById('board-modal-tweak').value = '';
+  document.getElementById('board-modal-status').textContent = '';
+  document.getElementById('board-modal-results').innerHTML = '';
+  document.getElementById('board-modal-overlay').classList.add('show');
+  updateBoardModalEstimate();
+
+  try {
+    const res = await fetch(`/api/board/variants/${id}`);
+    const data = await res.json();
+    (data.items || []).forEach(it => addBoardModalResult({...it, label: (item.label||'Ad') + ' (edit)'}));
+  } catch (e) {}
+}
+
+function closeBoardModal() {
+  document.getElementById('board-modal-overlay').classList.remove('show');
+  boardModalId = null;
+}
+
+async function boardModalGenerate() {
+  if (!boardModalId) return;
+  const tweak = document.getElementById('board-modal-tweak').value.trim();
+  if (!tweak) {
+    document.getElementById('board-modal-status').textContent = 'Please describe what to change.';
+    return;
+  }
+  const count   = parseInt(document.getElementById('board-modal-count').value);
+  const quality = document.getElementById('board-modal-quality').value;
+  const btn   = document.getElementById('board-modal-generate');
+  const status= document.getElementById('board-modal-status');
+  btn.disabled = true;
+  btn.classList.add('pulsing');
+  status.textContent = `Generating ${count} variation${count>1?'s':''}… this may take a minute.`;
+
+  try {
+    const res = await fetch('/api/board/regenerate', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({id: boardModalId, tweak, count, quality})
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      status.textContent = '⚠ ' + (data.error || 'Generation failed');
+    } else {
+      status.innerHTML = `✅ Generated ${data.items.length} new version${data.items.length>1?'s':''} below. ` +
+        `<span class="board-modal-cost">($${data.cost_usd.toFixed(2)} / RM${data.cost_myr.toFixed(2)})</span>`;
+      data.items.forEach(it => addBoardModalResult(it));
+    }
+  } catch (e) {
+    status.textContent = '⚠ ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('pulsing');
+  }
+}
+
+function openVariantLightbox(src) {
+  document.getElementById('variant-lightbox-img').src = src;
+  document.getElementById('variant-lightbox-overlay').classList.add('show');
+}
+
+function closeVariantLightbox() {
+  document.getElementById('variant-lightbox-overlay').classList.remove('show');
+  document.getElementById('variant-lightbox-img').src = '';
+}
+
+async function deleteBoardVariant(filename, wrapEl) {
+  if (!confirm('Delete this generated image? This action cannot be undone.')) return;
+  try {
+    await fetch('/api/board/delete-variant', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({filename})
+    });
+  } catch (e) {}
+  wrapEl.remove();
 }
 
 function boardSelectAll() {
@@ -2105,66 +2191,6 @@ function boardCardDownload(e, filename, label) {
   a.href     = `/api/board/image/${filename}`;
   a.download = label.replace(/[^a-zA-Z0-9_-]/g,'_') + '.png';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
-
-// ── Board: per-card Canva upload ───────────────────────────────────────────────
-async function boardCardCanva(e, boardId, filename, label) {
-  e.stopPropagation();
-  const btn = document.getElementById('bca-cv-' + boardId);
-  if (!btn || btn.classList.contains('loading')) return;
-  btn.classList.add('loading');
-  btn.textContent = '⏳…';
-  try {
-    const r = await fetch('/api/canva-queue', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ session_id: '', filename, label })
-    });
-    const d = await r.json();
-    if (d.error) throw new Error(d.error);
-    btn.classList.remove('loading');
-    btn.classList.add('done');
-    btn.textContent = '✓ In Canva';
-    toast('✅ ' + (d.message || `"${label}" sent to Canva!`));
-  } catch(err) {
-    btn.classList.remove('loading');
-    btn.textContent = '🎨 Canva';
-    toast('❌ ' + err.message);
-  }
-}
-
-// ── Board: bulk Canva upload (toolbar button) ──────────────────────────────────
-async function boardSendToCanva() {
-  if (!boardSelected.size) return;
-  const btn = document.getElementById('btn-board-canva');
-  btn.classList.add('loading');
-  btn.textContent = `⏳ Uploading 0 / ${boardSelected.size}…`;
-  let done = 0, failed = 0;
-  for (const id of boardSelected) {
-    const b = boardItems.find(x => x.id === id);
-    if (!b) continue;
-    try {
-      const r = await fetch('/api/canva-queue', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ session_id: '', filename: b.filename, label: b.label || 'Serigama Ad' })
-      });
-      const d = await r.json();
-      if (d.error) throw new Error(d.error);
-      done++;
-      // Update per-card button if visible
-      const cardBtn = document.getElementById('bca-cv-' + id);
-      if (cardBtn) { cardBtn.classList.add('done'); cardBtn.textContent = '✓ In Canva'; }
-    } catch(err) {
-      failed++;
-    }
-    btn.textContent = `⏳ Uploading ${done} / ${boardSelected.size}…`;
-    await new Promise(r => setTimeout(r, 400)); // brief pause between uploads
-  }
-  btn.classList.remove('loading');
-  btn.textContent = '🎨 Send to Canva';
-  if (failed === 0) toast(`✅ ${done} image${done>1?'s':''} sent to Canva library!`);
-  else toast(`✅ ${done} sent, ❌ ${failed} failed. Check Canva connection.`);
 }
 
 async function boardDeleteSelected() {
@@ -2981,9 +3007,6 @@ function dropAsset(e, type) {
   else if (type === 'product' || type === 'product-photos') uploadProductPhotos(files);
   else if (type === 'creatives')      uploadCreatives(files);
 }
-
-// ── Canva token ───────────────────────────────────────────────────────────────
-
 
 // ── API key ───────────────────────────────────────────────────────────────────
 async function saveApiKey() {
