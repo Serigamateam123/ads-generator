@@ -24,9 +24,11 @@ FINAL_MODEL  = "nano-banana-pro-preview"          # Nano Banana Pro — highest 
 VISION_MODEL = "gemini-2.5-flash"                 # vision analysis (text only, cheap)
 
 SKILLS_DIR    = Path(__file__).parent
-SESSIONS_DIR  = SKILLS_DIR / "sessions"
+import sys as _sys
+_TMP          = Path("/tmp") if _sys.platform != "win32" else SKILLS_DIR
+SESSIONS_DIR  = _TMP / "sessions"
 BRAND_DIR     = SKILLS_DIR / "brand_kit"
-BRAND_JSON    = BRAND_DIR  / "brand_kit.json"
+BRAND_JSON    = _TMP / "brand_kit.json"
 TEMPLATES_DIR = SKILLS_DIR / "templates"
 TEMPLATES_JSON= TEMPLATES_DIR / "templates.json"
 for d in (SESSIONS_DIR, BRAND_DIR, TEMPLATES_DIR):
@@ -2072,7 +2074,7 @@ def api_generate_one():
     })
 
 # ── Campaigns ────────────────────────────────────────────────────────────────
-CAMPAIGNS_JSON = SKILLS_DIR / "campaigns.json"
+CAMPAIGNS_JSON = _TMP / "campaigns.json"
 
 def load_campaigns() -> list:
     if CAMPAIGNS_JSON.exists():
@@ -2129,7 +2131,7 @@ def delete_campaign():
     return jsonify({"ok": True})
 
 # ── Board — persistent creative storage ──────────────────────────────────────
-BOARD_DIR  = SKILLS_DIR / "board"
+BOARD_DIR  = _TMP / "board"
 BOARD_JSON = BOARD_DIR  / "board.json"
 BOARD_DIR.mkdir(exist_ok=True)
 
