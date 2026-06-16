@@ -1,2 +1,5 @@
 flask
 cryptography
+pymupdf
+Pillow
+google-generativeai

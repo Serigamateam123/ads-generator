@@ -13,9 +13,9 @@ FONT_H1         = str(FONTS_DIR / "Montserrat-Bold.ttf")        # Bold for H1 he
 FONT_BODY       = str(FONTS_DIR / "Poppins-SemiBold.ttf")       # for bullets / subheads
 FONT_REGULAR    = str(FONTS_DIR / "Poppins-Regular.ttf")
 FONT_BOLD       = str(FONTS_DIR / "Poppins-Bold.ttf")
-FONT_FALLBACK   = "C:/Windows/Fonts/arialbd.ttf"                # always available on Windows
+FONT_FALLBACK   = str(FONTS_DIR / "Poppins-Bold.ttf")
 
-PORT         = 7373
+PORT         = int(os.environ.get("PORT", 7373))
 MYR_RATE     = 4.07
 COSTS        = {"draft": 0.01, "final": 0.04}
 DRAFT_MODEL  = "gemini-2.5-flash-image"           # cheap draft (~$0.01)
