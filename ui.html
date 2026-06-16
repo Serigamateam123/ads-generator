@@ -3078,5 +3078,9 @@ async function checkKeyStatus() {
   } catch(e) { state.brandHasProduct = false; }
 })();
 </script>
+<script>
+// Keep-alive ping every 25 minutes so server stays warm for 30 min sessions
+setInterval(() => fetch('/api/ping', {method:'GET'}).catch(()=>{}), 25 * 60 * 1000);
+</script>
 </body>
 </html>

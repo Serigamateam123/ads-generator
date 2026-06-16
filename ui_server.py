@@ -1354,6 +1354,10 @@ Professional health product style, soft gradient.{copy_block}{tweak_block}"""
 def index():
     return send_from_directory(SKILLS_DIR, "ui.html")
 
+@app.route("/api/ping")
+def ping():
+    return jsonify({"ok": True})
+
 # ── Brand kit endpoints ───────────────────────────────────────────────────────
 @app.route("/api/brand-kit", methods=["GET"])
 def get_brand_kit():
