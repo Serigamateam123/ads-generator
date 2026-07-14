@@ -1,0 +1,44 @@
+{
+  "problem_agitate": {
+    "label": "Problem Agitate",
+    "psychology": "Fear of loss / urgency",
+    "copy_instruction": "Make the audience fully realize the impact of their problem and the cost of doing nothing. Expand the consequences of the problem without exaggeration.\nSTRUCTURE — h1 states or intensifies the pain itself (NOT the solution or relief) — make the cost of inaction felt, urgent. h2 deepens the specific consequence — what keeps getting worse or what's being lost the longer this goes unaddressed. cta uses urgent, act-now language. Do not mention relief, results, or resolution anywhere except the CTA.",
+    "visual_treatment": "Depict the specific moment of frustration or difficulty from the persona's story — visible tension, unresolved struggle, before any relief. Facial expression and body language should show the weight of the problem, not calm or ease."
+  },
+  "contrarian": {
+    "label": "Contrarian Truth",
+    "psychology": "Surprise / pattern interruption",
+    "copy_instruction": "Challenge a common belief and replace it with a different perspective. Formula: Everyone believes X. Actually, Y.\nSTRUCTURE — h1 must follow a myth-vs-truth contrast formula, e.g. 'Ramai sangka [common belief]... Sebenarnya [surprising truth]' — never a plain claim or benefit statement. h2 backs the surprising truth with one real product fact from BENEFITS/DESCRIPTION above. cta invites them to discover or experience the real approach, not a generic 'buy now'.",
+    "visual_treatment": "Frame the scene with an unexpected visual twist or contrast — something that visually interrupts the expected pattern for this persona's situation, prompting a second look."
+  },
+  "social_proof": {
+    "label": "Social Proof",
+    "psychology": "Trust / belonging",
+    "copy_instruction": "Show that other people already trust or use the product. Use customer stories, long brand history, testimonials, repeat buyers.\nSTRUCTURE — h1 opens with a trust/social-validation signal (years trusted, widely used, real-customer phrasing) — NOT a product benefit or feature claim. h2 reinforces with one specific, concrete trust detail (a number, a heritage fact, a certification tied to trust — pull only from CERTIFICATIONS/DESCRIPTION above, never invent a statistic). cta uses join-the-community framing ('sertai jutaan yang...', 'seperti keluarga lain yang...').",
+    "visual_treatment": "Testimonial-style composition — the person could be mid-conversation or recommending to someone else, or the scene could include a review/rating visual element. Emphasize trust and shared experience over a solitary moment."
+  },
+  "authority": {
+    "label": "Authority / Expertise",
+    "psychology": "Credibility / certainty",
+    "copy_instruction": "Use credible facts instead of opinions. Use ingredients, certifications, experience, research, manufacturing quality.\nSTRUCTURE — h1 leads with a credible fact, certification, ingredient, or heritage claim — NO emotional hook, fact-first tone. h2 briefly explains the mechanism/evidence — why or how it works, pulled only from DESCRIPTION/CERTIFICATIONS above. cta is confident and credibility-based ('Formula terbukti', 'Dipercayai...') — not urgent or emotional.",
+    "visual_treatment": "Cleaner, more credential-forward framing — closer focus on product/ingredient detail, less busy lifestyle scene, a more clinical and confident composition."
+  },
+  "curiosity": {
+    "label": "Curiosity",
+    "psychology": "Information gap",
+    "copy_instruction": "Create an information gap that makes people want to know more. Ask questions or tease an unexpected fact without clickbait.\nSTRUCTURE — h1 poses a genuine question or teases an unexpected fact about the problem/product — it must NOT resolve the problem or reveal the solution yet. h2 deepens the intrigue with one more detail, still without fully answering it. cta uses discover/find-out framing ('Ketahui sebabnya', 'Terokai rahsianya') — not a hard sell.",
+    "visual_treatment": "Mysterious or intriguing framing — partial reveal, a tighter crop, product held with a questioning or curious expression. Leave something visually unresolved."
+  },
+  "comparison": {
+    "label": "Comparison",
+    "psychology": "Relative value",
+    "copy_instruction": "Help people understand value by comparing two options. Compare old vs new, difficult vs easy, capsules vs jelly, before vs today.\nSTRUCTURE — h1 is a direct comparison statement naming both sides of the contrast in one line (old way vs new way / with vs without / difficult vs easy). h2 names the ONE specific point that makes the new/better side clearly superior, from BENEFITS above. cta uses switch/upgrade framing ('Beralih sekarang', 'Rasai bezanya').",
+    "visual_treatment": "Split-screen or before/after style composition contrasting two states — old vs new, difficult vs easy — within the same frame."
+  },
+  "transformation": {
+    "label": "Transformation",
+    "psychology": "Aspiration",
+    "copy_instruction": "Sell the desired outcome rather than the product itself. Focus on life before and after solving the problem.\nSTRUCTURE — h1 frames the arc from struggle to relief in one line — name the DESTINATION (the outcome), not just the problem. h2 names the specific transformation/outcome achieved, concrete not vague. cta uses aspirational, start-the-journey framing ('Mulakan perubahan anda').",
+    "visual_treatment": "Explicit before-to-after visual arc — show the persona's transition from struggle to relief within the composition, emphasizing the outcome/aspiration rather than the problem."
+  }
+}

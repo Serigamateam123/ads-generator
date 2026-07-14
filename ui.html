@@ -10,7 +10,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --sidebar-w:240px;
+  --sidebar-w:290px;
   --topbar-h:48px;
   --brand:#F5A800;--brand2:#D94F00;
   --text:#111;--muted:#666;--muted2:#999;
@@ -92,48 +92,80 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
   width:var(--sidebar-w);background:var(--white);border-right:1px solid var(--border);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0
 }
-.sb-section{padding:14px 16px;border-bottom:1px solid var(--border)}
-.sb-title{font-size:13px;font-weight:700;margin-bottom:10px}
+.sb-section{padding:18px 20px;border-bottom:1px solid var(--border)}
+.sb-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px}
 .btn-new-campaign{
-  width:100%;padding:8px;border-radius:7px;background:var(--text);color:var(--white);
-  border:none;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:0
+  width:100%;padding:10px;border-radius:8px;background:var(--text);color:var(--white);
+  border:none;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.01em
 }
 .btn-new-campaign:hover{background:#333}
 
-.sb-step-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.sb-step-title{font-size:12px;font-weight:700;color:var(--text)}
-.sb-clear{font-size:11px;color:var(--brand2);cursor:pointer;background:none;border:none}
-.sb-clear:hover{text-decoration:underline}
+.sb-step-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sb-step-num{display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;background:var(--text);color:var(--white);
+  font-size:10px;font-weight:700;flex-shrink:0;margin-right:8px}
+.sb-step-title{font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center}
+.sb-clear{font-size:11px;color:var(--muted2);cursor:pointer;background:none;border:none;
+  padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
+.sb-clear:hover{color:var(--text);border-color:var(--muted)}
 
-.field-label{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;
-  display:flex;align-items:center;justify-content:space-between}
-.req{font-size:10px;font-weight:600;color:#dc2626;background:#fef2f2;
-  padding:1px 5px;border-radius:3px}
+.field-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.field-helper{font-size:11px;color:var(--muted2);margin-top:-4px;margin-bottom:10px;line-height:1.4}
+.req{font-size:9px;font-weight:700;color:#dc2626;background:#fef2f2;letter-spacing:.04em;
+  padding:2px 6px;border-radius:3px;text-transform:uppercase}
+
+/* Compact auto-mode strip (replaces dashed upload zone when no file selected) */
+.ref-auto-strip{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:8px;cursor:default}
+.ref-auto-icon{font-size:18px;flex-shrink:0}
+.ref-auto-text{font-size:12px;color:var(--muted2);line-height:1.35}
+.ref-auto-text strong{color:var(--text);font-weight:600;display:block;font-size:12px}
 
 .upload-zone{
   background:var(--bg);border:1.5px dashed var(--border);border-radius:8px;
-  min-height:60px;display:flex;align-items:center;justify-content:center;
+  min-height:56px;display:flex;align-items:center;justify-content:center;
   font-size:12px;color:var(--muted2);margin-bottom:8px;cursor:pointer;
   position:relative;overflow:hidden;flex-direction:column;gap:4px;padding:10px;text-align:center
 }
 .upload-zone:hover,.upload-zone.drag{border-color:var(--brand);background:#fffbf0}
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .upload-zone-thumbs{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
-.upload-zone-thumbs img{width:40px;height:40px;object-fit:cover;border-radius:5px}
+.upload-zone-thumbs img{width:44px;height:44px;object-fit:cover;border-radius:6px}
+
+/* Product kit chip — compact single line */
+.prod-kit-chip{display:flex;align-items:center;gap:8px;padding:8px 10px;
+  background:#f0fdf4;border:1px solid #86efac;border-radius:7px;margin-bottom:8px}
+.prod-kit-chip-thumbs{display:flex;gap:4px;flex-shrink:0}
+.prod-kit-chip-thumbs img{width:28px;height:28px;object-fit:cover;border-radius:4px;
+  border:1.5px solid #86efac}
+.prod-kit-chip-text{font-size:11px;color:#166534;line-height:1.35;flex:1;min-width:0}
+.prod-kit-chip-text strong{font-weight:700;display:block;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
 
 .sb-btn-row{display:flex;gap:6px;margin-bottom:14px}
-.sb-btn{flex:1;padding:6px 4px;font-size:12px;font-weight:500;border-radius:6px;
+.sb-btn{flex:1;padding:7px 4px;font-size:12px;font-weight:500;border-radius:7px;
   border:1px solid var(--border);background:var(--white);cursor:pointer;text-align:center}
 .sb-btn:hover{background:var(--bg)}
 .sb-btn.primary{background:var(--text);color:var(--white);border-color:var(--text)}
 .sb-btn.primary:hover{background:#333}
 
-/* Problem pills in sidebar */
-.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:0}
-.prob-pill{padding:5px 4px;font-size:11px;font-weight:500;border-radius:6px;
-  border:1.5px solid var(--border);background:var(--white);cursor:pointer;text-align:center}
-.prob-pill:hover{border-color:var(--brand)}
-.prob-pill.active{background:var(--brand);border-color:var(--brand);color:var(--white);font-weight:600}
+/* Persona pills — multi-select */
+.persona-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:0}
+.persona-pill{display:flex;align-items:center;gap:8px;padding:9px 10px;font-size:12.5px;font-weight:500;
+  border-radius:8px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;text-align:left}
+.persona-pill:hover{border-color:var(--brand)}
+.persona-pill.active{background:var(--brand);border-color:var(--brand);color:var(--white)}
+.persona-pill .persona-emoji{font-size:18px;flex:0 0 auto}
+.persona-pill .persona-text{display:flex;flex-direction:column;gap:1px;line-height:1.25}
+.persona-pill .persona-name{font-weight:600}
+.persona-pill .persona-sub{font-size:10.5px;opacity:.75;font-weight:400}
+.persona-pill.active .persona-sub{opacity:.9}
+.persona-hint{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+.angle-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.angle-pill{padding:8px 10px}
 
 /* Volume */
 .vol-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
@@ -148,6 +180,11 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 .btn-preview-plan:disabled{opacity:.45;cursor:not-allowed}
 
 .cost-note{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+.spend-note{font-size:10.5px;color:var(--muted);text-align:center;margin-top:4px;cursor:help}
+.spend-note strong{color:var(--text);font-weight:700}
+.vary-copy-row{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;
+  margin-bottom:8px;cursor:pointer;user-select:none}
+.vary-copy-row input{cursor:pointer}
 
 /* Progress bar */
 .progress-wrap{display:none;margin-top:8px}
@@ -213,9 +250,11 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 .spin-label{font-size:11px;color:var(--muted)}
 
 .ad-card-info{padding:10px 12px}
-.card-angle{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;
+.card-usecase{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-persona{font-size:11px;color:var(--muted)}
+.card-persona{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-angle{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-style{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .card-footer{padding:0 12px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .btn-canva{font-size:11px;padding:4px 10px;border:1.5px solid #7c3aed;border-radius:5px;
@@ -383,6 +422,18 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 }
 .board-quality-badge.draft{background:#fef3c7;color:#92400e}
 .board-quality-badge.final{background:#d1fae5;color:#065f46}
+.board-persona-badge{
+  font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;
+  background:#fce7f3;color:#9d174d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;
+}
+.board-angle-badge{
+  font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;
+  background:#ede9fe;color:#5b21b6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;
+}
+.board-style-badge{
+  font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;
+  background:#dbeafe;color:#1e40af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;
+}
 
 
 /* Board filter bar */
@@ -405,13 +456,15 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 .tpl-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
 
 .tpl-upload-zone{border:2px dashed var(--border);border-radius:12px;padding:28px;
-  text-align:center;cursor:pointer;position:relative;transition:border-color .2s;
+  text-align:center;cursor:pointer;position:relative;transition:border-color .2s,background .2s;
   background:var(--white);margin-bottom:20px}
 .tpl-upload-zone:hover,.tpl-upload-zone.drag{border-color:var(--brand);background:#fffbf0}
+.tpl-upload-zone.drag{box-shadow:0 0 0 4px rgba(245,168,0,.15)}
 .tpl-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .tpl-upload-icon{font-size:32px;margin-bottom:8px}
 .tpl-upload-title{font-size:15px;font-weight:600;margin-bottom:4px}
 .tpl-upload-sub{font-size:13px;color:var(--muted)}
+.tpl-paste-hint{font-size:11.5px;color:var(--brand);margin-top:6px;font-weight:500}
 
 .tpl-extract-bar{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
   padding:12px 16px;font-size:13px;color:#1d4ed8;display:none;margin-bottom:16px;
@@ -487,6 +540,22 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
 /* ── Brand Setup panel ── */
 .brand-panel{flex:1;overflow-y:auto;padding:28px 32px 80px;display:none}
 .brand-panel.active{display:block}
+.personas-panel{flex:1;overflow-y:auto;padding:28px 32px 80px;display:none}
+.personas-panel.active{display:block}
+.pa-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.pa-item:last-child{border-bottom:none}
+.pa-item-emoji{font-size:20px;flex:0 0 auto}
+.pa-item-body{flex:1;min-width:0}
+.pa-item-label{font-size:13px;font-weight:600;color:var(--text)}
+.pa-item-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.pa-item-text{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pa-item-btns{display:flex;gap:6px;flex:0 0 auto}
+.pa-item-btns button{font-size:11px;padding:4px 9px;border:1px solid var(--border);border-radius:5px;
+  background:var(--white);cursor:pointer}
+.pa-usecase-chip{padding:5px 10px;font-size:11px;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--white);cursor:pointer}
+.pa-usecase-chip.active{background:var(--brand);border-color:var(--brand);color:var(--white)}
 .workspace.hidden{display:none}
 
 .bp-header{margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
@@ -701,6 +770,7 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
     <button class="ttab active">Campaigns</button>
     <button class="ttab">Templates</button>
     <button class="ttab">Brand Setup</button>
+    <button class="ttab">Personas</button>
     <button class="ttab">Board</button>
   </div>
 </div>
@@ -720,15 +790,13 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
     <!-- Step 1 -->
     <div class="sb-section">
       <div class="sb-step-header">
-        <span class="sb-step-title">1. Reference + Product Inputs</span>
+        <span class="sb-step-title"><span class="sb-step-num">1</span>Reference + Product</span>
         <button class="sb-clear" onclick="clearInputs()">Clear</button>
       </div>
 
-      <div class="field-label">
-        Winning Style Reference <span class="req">Required</span>
-      </div>
+      <div class="field-label">Winning Style Reference</div>
 
-      <!-- From-templates strip (shown when templates are selected) -->
+      <!-- From-templates strip (shown when templates are manually selected) -->
       <div class="from-tpl-strip" id="from-tpl-strip">
         <div class="from-tpl-strip-row">
           <span class="from-tpl-strip-label">📌 FROM TEMPLATE LIBRARY</span>
@@ -737,52 +805,58 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <div class="from-tpl-thumbs" id="from-tpl-thumbs"></div>
       </div>
 
-      <div class="upload-zone" id="zone-ads"
+      <!-- Auto-mode strip (visible when no file uploaded) -->
+      <div class="ref-auto-strip" id="ref-auto-strip">
+        <div class="ref-auto-icon">🤖</div>
+        <div class="ref-auto-text">
+          <strong>Auto-select</strong>
+          Cycles through Template Library each image
+        </div>
+      </div>
+
+      <!-- Upload zone — shown when user wants to override with a specific file -->
+      <div class="upload-zone" id="zone-ads" style="display:none"
         ondragover="drag(event,'ads')" ondragleave="undrag('ads')" ondrop="drop(event,'ads')">
         <input type="file" id="input-ads" accept="image/*,.pdf" multiple
           onchange="handleFiles('ads',this.files)">
         <div id="ads-placeholder">
-          <div style="font-size:18px;margin-bottom:2px">🏆</div>
-          <div>No winning reference selected</div>
+          <div style="font-size:16px;margin-bottom:2px">🏆</div>
+          <div>Drop ad image or PDF here</div>
         </div>
         <div class="upload-zone-thumbs" id="thumbs-ads"></div>
       </div>
+
       <div class="sb-btn-row">
         <button class="sb-btn" onclick="showTab('Templates')">Templates</button>
-        <button class="sb-btn primary" onclick="document.getElementById('input-ads').click()">Upload</button>
+        <button class="sb-btn" onclick="toggleAdsUploadZone()">Upload Specific</button>
       </div>
 
-      <div class="field-label">Active Product <span style="font-weight:400;color:var(--muted2)">(Gemini reads its knowledge)</span></div>
-      <select id="sidebar-product-select" class="form-input" style="margin-bottom:4px;font-size:12px"
+      <div class="field-label" style="margin-top:4px">Active Product</div>
+      <select id="sidebar-product-select" class="form-input" style="margin-bottom:6px;font-size:12px"
         onchange="onSidebarProductChange()">
         <option value="">— select product —</option>
       </select>
-      <div id="prod-knowledge-status" style="font-size:10px;margin-bottom:10px;padding:4px 8px;
-        border-radius:5px;background:#f0fdf4;color:#166534;display:none">
+      <div id="prod-knowledge-status" style="font-size:10.5px;margin-bottom:12px;padding:5px 8px;
+        border-radius:6px;background:#f0fdf4;color:#166534;display:none">
         ✓ <span id="prod-knowledge-detail"></span>
       </div>
 
-      <div class="field-label">
-        Product Identity Image <span class="req">Required</span>
-      </div>
+      <div class="field-label">Product Image</div>
 
       <!-- Warning: selected product has no photos -->
       <div id="prod-no-photo-warn" style="display:none;margin-bottom:8px;
-        background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:8px 12px;
+        background:#fef2f2;border:1px solid #fca5a5;border-radius:7px;padding:8px 12px;
         font-size:11px;font-weight:600;color:#dc2626">
-        ⚠ <span id="prod-warn-name"></span> has no photos yet.<br>
-        <span style="font-weight:400">Go to Brand Setup → Assets → upload photos for this product.</span>
+        ⚠ <span id="prod-warn-name"></span> has no photos yet.
+        <span style="font-weight:400;display:block;margin-top:2px">Add photos in Brand Setup → Assets.</span>
       </div>
 
-      <!-- Brand kit photos for selected product (auto-populated) -->
-      <div id="prod-kit-preview" style="display:none;margin-bottom:8px;
-        background:#fefce8;border:1px solid #fde047;border-radius:8px;padding:10px 12px">
-        <div style="font-size:11px;font-weight:700;color:#854d0e;margin-bottom:6px">
-          ✓ Using brand kit photos for <span id="prod-kit-name" style="font-style:italic"></span>
-        </div>
-        <div id="prod-kit-thumbs" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-        <div style="font-size:10px;color:#a16207;margin-top:5px">
-          Upload below to override for this session only
+      <!-- Brand kit chip (compact) -->
+      <div class="prod-kit-chip" id="prod-kit-preview" style="display:none">
+        <div class="prod-kit-chip-thumbs" id="prod-kit-thumbs"></div>
+        <div class="prod-kit-chip-text">
+          <strong id="prod-kit-name"></strong>
+          Brand kit photo in use
         </div>
       </div>
 
@@ -791,8 +865,8 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <input type="file" id="input-product" accept="image/*"
           onchange="handleFiles('product',this.files)">
         <div id="product-placeholder">
-          <div style="font-size:18px;margin-bottom:2px">📦</div>
-          <div>No product identity image selected</div>
+          <div style="font-size:16px;margin-bottom:2px">📦</div>
+          <div>Override product image</div>
         </div>
         <div class="upload-zone-thumbs" id="thumbs-product"></div>
       </div>
@@ -805,34 +879,40 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
     <!-- Step 2 -->
     <div class="sb-section">
       <div class="sb-step-header">
-        <span class="sb-step-title">2. Campaign Brief</span>
+        <span class="sb-step-title"><span class="sb-step-num">2</span>Campaign Brief</span>
       </div>
-      <div class="field-label">Target Problem</div>
-      <div class="prob-grid">
-        <button class="prob-pill active" onclick="selectProblem(this,'Post-partum')">🤱 Post-partum</button>
-        <button class="prob-pill" onclick="selectProblem(this,'Joint Pain')">🦵 Joint Pain</button>
-        <button class="prob-pill" onclick="selectProblem(this,'Accident')">🚑 Accident</button>
-        <button class="prob-pill" onclick="selectProblem(this,'Gastric')">🫃 Gastric</button>
-        <button class="prob-pill" onclick="selectProblem(this,'Post-Op')">🏥 Post-Op</button>
-        <button class="prob-pill" onclick="selectProblem(this,'Gout')">🦶 Gout</button>
-      </div>
+      <div class="field-label">Customer Persona <span id="prob-product-label" style="font-weight:400;color:var(--muted)"></span></div>
+      <div class="field-helper">Pick one or more — each persona drives its own use case and copy voice.</div>
+      <div class="persona-grid" id="persona-grid"><!-- populated by loadPersonas() --></div>
+
+      <div class="field-label" style="margin-top:14px">Persuasion Angle</div>
+      <div class="field-helper">Optional. Controls how the copy is framed. Gemini cycles every persona × angle combo.</div>
+      <div class="persona-grid angle-grid" id="angle-grid"><!-- populated by loadAngles() --></div>
+
 
     </div>
 
     <!-- Step 3 -->
     <div class="sb-section">
       <div class="sb-step-header">
-        <span class="sb-step-title">3. Output Volume</span>
+        <span class="sb-step-title"><span class="sb-step-num">3</span>Output Volume</span>
       </div>
       <div class="vol-row">
         <input type="number" class="vol-input" id="vol-input" value="6" min="1" max="24"
           oninput="updateCostNote()">
         <span class="vol-label">images</span>
       </div>
+      <label class="vary-copy-row" title="When on, every image gets its own freshly-written headline/copy instead of reusing the same one across the batch — slower (~10-20s extra per image) but each visual gets distinct wording too.">
+        <input type="checkbox" id="vary-copy-toggle">
+        🔀 Vary copy across batch <span style="font-weight:400;color:var(--muted)">(slower)</span>
+      </label>
       <button class="btn-preview-plan" id="btn-gen" onclick="generate()">
         Generate Images
       </button>
       <div class="cost-note" id="cost-note">~$0.06 / RM 0.27 estimated</div>
+      <div class="spend-note" id="spend-note" title="Gemini's API has no balance/credits endpoint — this tracks total real spend across all sessions, computed from actual generations.">
+        💳 Total spent so far: <strong id="spend-note-val">loading…</strong>
+      </div>
       <div class="progress-wrap" id="progress-wrap">
         <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
         <div class="progress-txt" id="progress-txt">0 / 6</div>
@@ -992,8 +1072,8 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <div class="board-modal-row">
           <label for="board-modal-quality">Quality:</label>
           <select id="board-modal-quality">
-            <option value="draft" selected>Draft (~RM0.04/img — cheaper, faster)</option>
-            <option value="final">Final (~RM0.16/img — higher quality)</option>
+            <option value="draft" selected>Draft (~RM0.16/img — cheaper, faster)</option>
+            <option value="final">Final (~RM0.55/img — higher quality)</option>
           </select>
         </div>
         <button class="btn-board-generate" id="board-modal-generate" onclick="boardModalGenerate()">✨ Generate</button>
@@ -1029,9 +1109,10 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
       ondrop="dropTpl(event)">
       <input type="file" id="tpl-file-input" accept=".pdf,image/*" multiple
         onchange="handleTplUpload(this.files)">
-      <div class="tpl-upload-icon">📄</div>
-      <div class="tpl-upload-title">Upload Winning Ads Document or Images</div>
-      <div class="tpl-upload-sub">PDF (auto-extracts every ad) · or drag individual images · multiple files OK</div>
+      <div class="tpl-upload-icon">🖼️</div>
+      <div class="tpl-upload-title">Drag & Drop Winning Ads Here</div>
+      <div class="tpl-upload-sub">Drag from file explorer · click to browse · PDF auto-extracts every page</div>
+      <div class="tpl-paste-hint">📋 Or copy image from Word/PDF/WhatsApp → Ctrl+V to paste here</div>
     </div>
 
     <!-- Extraction progress bar -->
@@ -1317,6 +1398,117 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
 
   </div><!-- /brand-panel -->
 
+  <!-- ── Personas & Angles Panel ── -->
+  <div class="personas-panel" id="personas-panel">
+    <div class="bp-header">
+      <div class="bp-header-text">
+        <h1>Personas &amp; Angles</h1>
+        <p>Add, edit, or delete customer personas and persuasion angles — changes apply to the Campaign Brief picker immediately, no restart needed.</p>
+      </div>
+    </div>
+
+    <div class="bp-grid">
+      <div class="bp-card" style="grid-column:1/-1">
+        <h3>👤 Customer Personas</h3>
+        <div id="pa-persona-list"></div>
+        <button class="sb-btn primary" style="margin-top:10px" onclick="openPersonaForm(null)">+ Add Persona</button>
+        <div id="pa-persona-form" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <input type="hidden" id="pa-persona-id">
+          <div class="form-row">
+            <label class="form-label">Emoji</label>
+            <input class="form-input" id="pa-persona-emoji" placeholder="🙂" style="width:70px">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Label</label>
+            <input class="form-input" id="pa-persona-label" placeholder="e.g. Sakit Lutut (Knee Pain)">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Subtitle</label>
+            <input class="form-input" id="pa-persona-subtitle" placeholder="e.g. 60yo, stiff knees, wants dignity back">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Customer Story (narrative)</label>
+            <textarea class="form-input" id="pa-persona-narrative" rows="4"
+              placeholder="Raw decision-situation story — Gemini infers casting and copy voice directly from this. This is the only field that really matters."></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Applies to Use Case(s)</label>
+            <div id="pa-persona-usecases" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+            <div style="font-size:10.5px;color:var(--muted);margin-top:4px">
+              Switch the active product in Campaign Brief first to see that product's use cases here.
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="sb-btn primary" onclick="savePersonaForm()">Save</button>
+            <button class="sb-btn" onclick="closePersonaForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bp-card" style="grid-column:1/-1">
+        <h3>🎯 Persuasion Angles</h3>
+        <div id="pa-angle-list"></div>
+        <button class="sb-btn primary" style="margin-top:10px" onclick="openAngleForm(null)">+ Add Angle</button>
+        <div id="pa-angle-form" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <input type="hidden" id="pa-angle-id">
+          <div class="form-row">
+            <label class="form-label">Label</label>
+            <input class="form-input" id="pa-angle-label" placeholder="e.g. Curiosity">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Psychology</label>
+            <input class="form-input" id="pa-angle-psychology" placeholder="e.g. Information gap">
+          </div>
+          <div class="form-row">
+            <label class="form-label">How it Works (copy instruction)</label>
+            <textarea class="form-input" id="pa-angle-instruction" rows="3"
+              placeholder="Plain-language instruction for how the copy should read, e.g. 'Ask questions or tease an unexpected fact without clickbait.'"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Visual Scene/Treatment <span style="font-weight:400;color:var(--muted)">(image, not copy)</span></label>
+            <textarea class="form-input" id="pa-angle-visual" rows="3"
+              placeholder="How the generated scene/composition should differ for this angle, e.g. 'Mysterious framing — partial reveal, tighter crop.' The persona's identity (age, look, wardrobe) always stays locked; only the scene/moment varies."></textarea>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="sb-btn primary" onclick="saveAngleForm()">Save</button>
+            <button class="sb-btn" onclick="closeAngleForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bp-card" style="grid-column:1/-1">
+        <h3>🎬 Creative Styles</h3>
+        <div id="pa-style-list"></div>
+        <button class="sb-btn primary" style="margin-top:10px" onclick="openStyleForm(null)">+ Add Style</button>
+        <div id="pa-style-form" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <input type="hidden" id="pa-style-id">
+          <div class="form-row">
+            <label class="form-label">Label</label>
+            <input class="form-input" id="pa-style-label" placeholder="e.g. Clarity">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Subtitle</label>
+            <input class="form-input" id="pa-style-subtitle" placeholder="e.g. Obvious ad, instant understanding">
+          </div>
+          <div class="form-row">
+            <label class="form-label">How Copy Should Read</label>
+            <textarea class="form-input" id="pa-style-instruction" rows="3"
+              placeholder="How directly/opaquely the copy should present the message, e.g. 'Make the offer completely clear within seconds' or 'Deliberately withhold what's being sold.'"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Visual Scene/Treatment <span style="font-weight:400;color:var(--muted)">(image, not copy)</span></label>
+            <textarea class="form-input" id="pa-style-visual" rows="3"
+              placeholder="How the overall ad execution should look, e.g. 'Loud, obviously an ad' vs 'Native, blends into the feed.'"></textarea>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="sb-btn primary" onclick="saveStyleForm()">Save</button>
+            <button class="sb-btn" onclick="closeStyleForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /personas-panel -->
+
 </div><!-- /body-wrap -->
 
 <div class="toast" id="toast"></div>
@@ -1327,19 +1519,35 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
   onchange="onProdPhotoInputChange(this.files)">
 
 <script>
-const MYR = 4.07, COST_PER = 0.04;
-let state = { adsFiles:[], productFile:null, problem:'Post-partum', totalUsd:0 };
-let allCreatives = [];   // { id, num, angle, persona, imageUrl, filename, ts, isNew }
+// Real Gemini per-image price: this panel always ends up using the Final model
+// (nano-banana-pro-preview) whenever a winning ad reference is provided, which is
+// the normal case here — so estimate at the Final rate, not the cheaper Draft rate.
+const MYR = 4.07, COST_PER = 0.134;
+let state = { adsFiles:[], productFile:null, problem:'Selepas Bersalin', problemIds:[], totalUsd:0, personaIds:[], angleIds:[], styleIds:[], selectedProductPhotoPath:null, selectedTexturePhotoPath:null };
+let _lastPhotoInitProductId = undefined; // tracks which product's saved defaults were last applied
+let allCreatives = [];   // { id, num, useCase, persona, angle, imageUrl, filename, ts, isNew }
 let activeTag = 'all';
 let cardCounter = 0;
 
 // ── File handling ─────────────────────────────────────────────────────────────
+function toggleAdsUploadZone() {
+  const zone = document.getElementById('zone-ads');
+  const strip = document.getElementById('ref-auto-strip');
+  const visible = zone.style.display !== 'none';
+  zone.style.display = visible ? 'none' : 'block';
+  strip.style.display = visible ? 'flex' : 'none';
+}
 function handleFiles(zone, files) {
   if (zone === 'ads') {
     state.adsFiles = Array.from(files);
     document.getElementById('ads-placeholder').style.display =
       state.adsFiles.length ? 'none' : 'block';
     renderThumbs('ads', state.adsFiles);
+    // Show zone, hide auto strip when files loaded
+    if (state.adsFiles.length) {
+      document.getElementById('zone-ads').style.display = 'block';
+      document.getElementById('ref-auto-strip').style.display = 'none';
+    }
   } else {
     state.productFile = files[0] || null;
     document.getElementById('product-placeholder').style.display =
@@ -1373,18 +1581,372 @@ function clearInputs(){
     document.getElementById(z+'-placeholder').style.display='block';
     document.getElementById('zone-'+z).classList.remove('drag');
   });
+  // Restore auto-strip for ads zone
+  document.getElementById('zone-ads').style.display='none';
+  document.getElementById('ref-auto-strip').style.display='flex';
   updateCostNote();
 }
 
-// ── Problem / volume ──────────────────────────────────────────────────────────
-function selectProblem(btn, p) {
-  document.querySelectorAll('.prob-pill').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); state.problem = p;
+// ── Use cases — fetched silently per active product (no visible picker; the
+// Target Use Case step was removed as a duplicate of Customer Persona, since
+// every persona already carries its own use_cases). Still needed for: scoping
+// which personas are relevant to the active product, and as the fallback
+// problem/problem_ctx when no persona is selected. ──────────────────────────
+let allUseCases = [];
+async function loadUseCases(productName) {
+  const label = document.getElementById('prob-product-label');
+  try {
+    allUseCases = await (await fetch('/api/use-cases?product_name=' + encodeURIComponent(productName||''))).json();
+  } catch(e) { allUseCases = []; }
+  if (label) label.textContent = productName ? `(${productName})` : '';
+  recomputeProblemFromPersonas();
+}
+
+// ── Customer personas — multi-select; Gemini casts/styles the depicted person.
+// Selecting a persona also determines the use case/problem for that image (each
+// persona already carries its own use_cases) — no separate use-case step needed.
+// Angle is a fully independent axis (see loadAngles below) — persona never
+// auto-derives an angle, and vice versa.
+let allPersonas = [];
+async function loadPersonas() {
+  try {
+    allPersonas = await (await fetch('/api/personas')).json();
+  } catch(e) { allPersonas = []; }
+  renderPersonaPills();
+}
+function renderPersonaPills() {
+  const grid = document.getElementById('persona-grid');
+  if (!grid) return;
+  // Scope to personas relevant to the active product (their use_cases intersect
+  // this product's use cases). If nothing matches (e.g. a non-Jeli product), fall
+  // back to showing all — better than an empty picker.
+  const productUseCases = allUseCases.map(u => u.label);
+  let visible = allPersonas;
+  if (productUseCases.length) {
+    const filtered = allPersonas.filter(p =>
+      (p.use_cases||[]).some(uc => productUseCases.includes(uc)));
+    if (filtered.length) visible = filtered;
+  }
+  // Drop selections that are no longer visible so state stays consistent with the UI.
+  state.personaIds = state.personaIds.filter(id => visible.some(p => p.id === id));
+  grid.innerHTML = visible.map(p => `
+    <button class="persona-pill${state.personaIds.includes(p.id)?' active':''}" data-persona="${p.id}" onclick="togglePersona(this,'${p.id}')">
+      <span class="persona-emoji">${p.emoji||'👤'}</span>
+      <span class="persona-text">
+        <span class="persona-name">${p.label}</span>
+        <span class="persona-sub">${p.subtitle||''}</span>
+      </span>
+    </button>`).join('');
+}
+function togglePersona(btn, id) {
+  btn.classList.toggle('active');
+  if (state.personaIds.includes(id)) {
+    state.personaIds = state.personaIds.filter(x => x !== id);
+  } else {
+    state.personaIds.push(id);
+  }
+  recomputeProblemFromPersonas();
+}
+// Derives state.problemIds/state.problem from the use_cases of whichever
+// personas are currently selected — replaces the old manual Target Use Case
+// picker. Falls back to the active product's first use case when no persona
+// is selected (or a persona has no use_cases of its own).
+function recomputeProblemFromPersonas() {
+  const selected = allPersonas.filter(p => state.personaIds.includes(p.id));
+  const union = [...new Set(selected.flatMap(p => p.use_cases || []))];
+  state.problemIds = union;
+  state.problem = union[0] || (allUseCases[0] && allUseCases[0].label) || 'Selepas Bersalin';
+}
+
+// ── Persuasion angles — multi-select, fully independent of persona/use case ────
+let allAngles = [];
+async function loadAngles() {
+  try {
+    allAngles = await (await fetch('/api/angles')).json();
+  } catch(e) { allAngles = []; }
+  const grid = document.getElementById('angle-grid');
+  if (!grid) return;
+  // Drop selections that no longer exist (e.g. deleted from the management tab),
+  // and re-render with the 'active' class restored from state — otherwise a
+  // refresh (which happens after every persona/angle CRUD save) would visually
+  // desync the picker from state.angleIds without the user touching anything.
+  state.angleIds = state.angleIds.filter(id => allAngles.some(a => a.id === id));
+  grid.innerHTML = allAngles.map(a => `
+    <button class="persona-pill angle-pill${state.angleIds.includes(a.id)?' active':''}" data-angle="${a.id}" onclick="toggleAngle(this,'${a.id}')">
+      <span class="persona-text">
+        <span class="persona-name">${a.label}</span>
+        <span class="persona-sub">${a.psychology||''}</span>
+      </span>
+    </button>`).join('');
+}
+function toggleAngle(btn, id) {
+  btn.classList.toggle('active');
+  if (state.angleIds.includes(id)) {
+    state.angleIds = state.angleIds.filter(x => x !== id);
+  } else {
+    state.angleIds.push(id);
+  }
+}
+
+// ── Creative Style — Clarity vs Curiosity Gap. Independent of persona/angle;
+// controls how directly the ad presents itself (obvious ad vs native/blend-in).
+let allStyles = [];
+async function loadStyles() {
+  try {
+    allStyles = await (await fetch('/api/styles')).json();
+  } catch(e) { allStyles = []; }
+  const grid = document.getElementById('style-grid');
+  if (!grid) return;
+  state.styleIds = state.styleIds.filter(id => allStyles.some(s => s.id === id));
+  grid.innerHTML = allStyles.map(s => `
+    <button class="persona-pill angle-pill${state.styleIds.includes(s.id)?' active':''}" data-style="${s.id}" onclick="toggleStyle(this,'${s.id}')">
+      <span class="persona-text">
+        <span class="persona-name">${s.label}</span>
+        <span class="persona-sub">${s.subtitle||''}</span>
+      </span>
+    </button>`).join('');
+}
+function toggleStyle(btn, id) {
+  btn.classList.toggle('active');
+  if (state.styleIds.includes(id)) {
+    state.styleIds = state.styleIds.filter(x => x !== id);
+  } else {
+    state.styleIds.push(id);
+  }
+}
+
+// ── Personas & Angles management tab — full CRUD, no code/restart ever needed ──
+let paSelectedUseCases = [];
+
+async function loadPersonasPanel() {
+  // Refresh from server (not the cached allPersonas/allAngles/allStyles, which may
+  // be stale relative to another browser tab) so the management list is always current.
+  try { allPersonas = await (await fetch('/api/personas')).json(); } catch(e) { allPersonas = []; }
+  try { allAngles   = await (await fetch('/api/angles')).json();   } catch(e) { allAngles   = []; }
+  try { allStyles   = await (await fetch('/api/styles')).json();   } catch(e) { allStyles   = []; }
+  renderPersonaAdminList();
+  renderAngleAdminList();
+  renderStyleAdminList();
+}
+
+function renderPersonaAdminList() {
+  const wrap = document.getElementById('pa-persona-list');
+  if (!wrap) return;
+  wrap.innerHTML = allPersonas.map(p => `
+    <div class="pa-item">
+      <div class="pa-item-emoji">${p.emoji||'🙂'}</div>
+      <div class="pa-item-body">
+        <div class="pa-item-label">${p.label}</div>
+        <div class="pa-item-sub">${p.subtitle||''}${(p.use_cases&&p.use_cases.length) ? ' · ' + p.use_cases.join(', ') : ''}</div>
+        <div class="pa-item-text">${p.narrative||''}</div>
+      </div>
+      <div class="pa-item-btns">
+        <button onclick="openPersonaForm('${p.id}')">Edit</button>
+        <button onclick="deletePersonaItem('${p.id}','${(p.label||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div>
+    </div>`).join('') || `<div style="font-size:12px;color:var(--muted);padding:8px 0">No personas yet.</div>`;
+}
+
+function openPersonaForm(id) {
+  const form = document.getElementById('pa-persona-form');
+  form.style.display = 'block';
+  const p = id ? allPersonas.find(x => x.id === id) : null;
+  document.getElementById('pa-persona-id').value        = id || '';
+  document.getElementById('pa-persona-emoji').value      = p ? (p.emoji||'') : '';
+  document.getElementById('pa-persona-label').value      = p ? (p.label||'') : '';
+  document.getElementById('pa-persona-subtitle').value   = p ? (p.subtitle||'') : '';
+  document.getElementById('pa-persona-narrative').value  = p ? (p.narrative||'') : '';
+  paSelectedUseCases = p ? [...(p.use_cases||[])] : [];
+  renderPaUseCaseChips();
+  form.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function closePersonaForm() {
+  document.getElementById('pa-persona-form').style.display = 'none';
+}
+function renderPaUseCaseChips() {
+  const wrap = document.getElementById('pa-persona-usecases');
+  // allUseCases reflects whichever product is currently active in Campaign Brief.
+  const options = allUseCases.length ? allUseCases.map(u => u.label) : paSelectedUseCases;
+  wrap.innerHTML = options.map(label => `
+    <div class="pa-usecase-chip${paSelectedUseCases.includes(label)?' active':''}"
+         onclick="togglePaUseCase(this,'${label.replace(/'/g,"\\'")}')">${label}</div>`).join('');
+}
+function togglePaUseCase(el, label) {
+  el.classList.toggle('active');
+  if (paSelectedUseCases.includes(label)) {
+    paSelectedUseCases = paSelectedUseCases.filter(x => x !== label);
+  } else {
+    paSelectedUseCases.push(label);
+  }
+}
+async function savePersonaForm() {
+  const body = {
+    id:        document.getElementById('pa-persona-id').value || undefined,
+    emoji:     document.getElementById('pa-persona-emoji').value.trim(),
+    label:     document.getElementById('pa-persona-label').value.trim(),
+    subtitle:  document.getElementById('pa-persona-subtitle').value.trim(),
+    narrative: document.getElementById('pa-persona-narrative').value.trim(),
+    use_cases: paSelectedUseCases,
+  };
+  if (!body.label || !body.narrative) { toast('Label and customer story are required.'); return; }
+  try {
+    const r = await fetch('/api/personas', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    closePersonaForm();
+    await loadPersonasPanel();
+    await loadPersonas();   // refresh the Campaign Brief picker immediately
+    toast('✓ Persona saved');
+  } catch(e) { toast('Save failed: ' + e.message); }
+}
+async function deletePersonaItem(id, label) {
+  if (!confirm(`Delete persona "${label}"?`)) return;
+  try {
+    await fetch('/api/personas/delete', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id})});
+    await loadPersonasPanel();
+    await loadPersonas();
+    toast('Persona deleted');
+  } catch(e) { toast('Delete failed: ' + e.message); }
+}
+
+function renderAngleAdminList() {
+  const wrap = document.getElementById('pa-angle-list');
+  if (!wrap) return;
+  wrap.innerHTML = allAngles.map(a => `
+    <div class="pa-item">
+      <div class="pa-item-body">
+        <div class="pa-item-label">${a.label}</div>
+        <div class="pa-item-sub">${a.psychology||''}</div>
+        <div class="pa-item-text">📝 ${a.copy_instruction||''}</div>
+        ${a.visual_treatment ? `<div class="pa-item-text">🎬 ${a.visual_treatment}</div>` : ''}
+      </div>
+      <div class="pa-item-btns">
+        <button onclick="openAngleForm('${a.id}')">Edit</button>
+        <button onclick="deleteAngleItem('${a.id}','${(a.label||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div>
+    </div>`).join('') || `<div style="font-size:12px;color:var(--muted);padding:8px 0">No angles yet.</div>`;
+}
+function openAngleForm(id) {
+  const form = document.getElementById('pa-angle-form');
+  form.style.display = 'block';
+  const a = id ? allAngles.find(x => x.id === id) : null;
+  document.getElementById('pa-angle-id').value          = id || '';
+  document.getElementById('pa-angle-label').value       = a ? (a.label||'') : '';
+  document.getElementById('pa-angle-psychology').value  = a ? (a.psychology||'') : '';
+  document.getElementById('pa-angle-instruction').value = a ? (a.copy_instruction||'') : '';
+  document.getElementById('pa-angle-visual').value      = a ? (a.visual_treatment||'') : '';
+  form.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function closeAngleForm() {
+  document.getElementById('pa-angle-form').style.display = 'none';
+}
+async function saveAngleForm() {
+  const body = {
+    id:                document.getElementById('pa-angle-id').value || undefined,
+    label:             document.getElementById('pa-angle-label').value.trim(),
+    psychology:        document.getElementById('pa-angle-psychology').value.trim(),
+    copy_instruction:  document.getElementById('pa-angle-instruction').value.trim(),
+    visual_treatment:  document.getElementById('pa-angle-visual').value.trim(),
+  };
+  if (!body.label || !body.copy_instruction) { toast('Label and how-it-works are required.'); return; }
+  try {
+    const r = await fetch('/api/angles', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    closeAngleForm();
+    await loadPersonasPanel();
+    await loadAngles();   // refresh the Campaign Brief picker immediately
+    toast('✓ Angle saved');
+  } catch(e) { toast('Save failed: ' + e.message); }
+}
+async function deleteAngleItem(id, label) {
+  if (!confirm(`Delete angle "${label}"?`)) return;
+  try {
+    await fetch('/api/angles/delete', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id})});
+    await loadPersonasPanel();
+    await loadAngles();
+    toast('Angle deleted');
+  } catch(e) { toast('Delete failed: ' + e.message); }
+}
+
+function renderStyleAdminList() {
+  const wrap = document.getElementById('pa-style-list');
+  if (!wrap) return;
+  wrap.innerHTML = allStyles.map(s => `
+    <div class="pa-item">
+      <div class="pa-item-body">
+        <div class="pa-item-label">${s.label}</div>
+        <div class="pa-item-sub">${s.subtitle||''}</div>
+        <div class="pa-item-text">📝 ${s.copy_instruction||''}</div>
+        ${s.visual_treatment ? `<div class="pa-item-text">🎬 ${s.visual_treatment}</div>` : ''}
+      </div>
+      <div class="pa-item-btns">
+        <button onclick="openStyleForm('${s.id}')">Edit</button>
+        <button onclick="deleteStyleItem('${s.id}','${(s.label||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div>
+    </div>`).join('') || `<div style="font-size:12px;color:var(--muted);padding:8px 0">No styles yet.</div>`;
+}
+function openStyleForm(id) {
+  const form = document.getElementById('pa-style-form');
+  form.style.display = 'block';
+  const s = id ? allStyles.find(x => x.id === id) : null;
+  document.getElementById('pa-style-id').value          = id || '';
+  document.getElementById('pa-style-label').value       = s ? (s.label||'') : '';
+  document.getElementById('pa-style-subtitle').value    = s ? (s.subtitle||'') : '';
+  document.getElementById('pa-style-instruction').value = s ? (s.copy_instruction||'') : '';
+  document.getElementById('pa-style-visual').value      = s ? (s.visual_treatment||'') : '';
+  form.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function closeStyleForm() {
+  document.getElementById('pa-style-form').style.display = 'none';
+}
+async function saveStyleForm() {
+  const body = {
+    id:                document.getElementById('pa-style-id').value || undefined,
+    label:             document.getElementById('pa-style-label').value.trim(),
+    subtitle:          document.getElementById('pa-style-subtitle').value.trim(),
+    copy_instruction:  document.getElementById('pa-style-instruction').value.trim(),
+    visual_treatment:  document.getElementById('pa-style-visual').value.trim(),
+  };
+  if (!body.label || !body.copy_instruction) { toast('Label and copy guidance are required.'); return; }
+  try {
+    const r = await fetch('/api/styles', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    closeStyleForm();
+    await loadPersonasPanel();
+    await loadStyles();   // refresh the Campaign Brief picker immediately
+    toast('✓ Style saved');
+  } catch(e) { toast('Save failed: ' + e.message); }
+}
+async function deleteStyleItem(id, label) {
+  if (!confirm(`Delete style "${label}"?`)) return;
+  try {
+    await fetch('/api/styles/delete', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id})});
+    await loadPersonasPanel();
+    await loadStyles();
+    toast('Style deleted');
+  } catch(e) { toast('Delete failed: ' + e.message); }
 }
 function updateCostNote() {
   const n = parseInt(document.getElementById('vol-input').value)||6;
   document.getElementById('cost-note').textContent =
     `~$${(n*COST_PER).toFixed(2)} / RM ${(n*COST_PER*MYR).toFixed(2)} estimated`;
+}
+
+// ── Cumulative spend tracker ────────────────────────────────────────────────────
+// Gemini's API has no balance/credits endpoint for an API key — there is no way to
+// query "how much is left." This instead shows total real $ spent so far across all
+// sessions, computed server-side from the actual model used per generation.
+async function refreshSpend() {
+  const el = document.getElementById('spend-note-val');
+  if (!el) return;
+  try {
+    const d = await (await fetch('/api/spend', {cache:'no-store'})).json();
+    el.textContent = `$${d.total_usd.toFixed(2)} / RM ${d.total_myr.toFixed(2)}`;
+  } catch(e) {
+    el.textContent = 'unavailable';
+  }
 }
 
 // ── Tag bar ───────────────────────────────────────────────────────────────────
@@ -1407,8 +1969,9 @@ function selectTag(el, tag) {
 function renderCards() {
   const q = document.getElementById('ws-search').value.toLowerCase();
   let items = allCreatives.filter(c=>{
-    const matchTag = activeTag==='all' || c.angle===activeTag || c.persona===activeTag;
-    const matchQ   = !q || c.angle.toLowerCase().includes(q) || c.persona.toLowerCase().includes(q);
+    const matchTag = activeTag==='all' || c.useCase===activeTag || c.persona===activeTag || c.angle===activeTag || c.style===activeTag;
+    const hay = [c.useCase, c.persona, c.angle, c.style].filter(Boolean).join(' ').toLowerCase();
+    const matchQ   = !q || hay.includes(q);
     return matchTag && matchQ;
   });
 
@@ -1435,7 +1998,7 @@ function renderCards() {
     card.innerHTML = `
       <div class="ad-card-img">
         ${c.imageUrl
-          ? `<img src="${c.imageUrl}" alt="${c.angle}" loading="lazy">`
+          ? `<img src="${c.imageUrl}" alt="${c.useCase}" loading="lazy">`
           : `<div class="placeholder" id="spin-wrap-${c.id}">
                <div class="card-spinner on" id="spin-${c.id}">
                  <div class="spin"></div>
@@ -1452,10 +2015,18 @@ function renderCards() {
             border-radius:10px;z-index:3">
             ${c.matchScore >= 7 ? '✓' : '⚠'} ${c.matchScore}/10
           </div>` : ''}
+        ${c.costMyr != null ? `
+          <div style="position:absolute;bottom:8px;left:8px;
+            background:rgba(0,0,0,.65);color:#fff;font-size:10px;font-weight:700;
+            padding:3px 8px;border-radius:10px;z-index:3">
+            RM ${c.costMyr.toFixed(2)}
+          </div>` : ''}
       </div>
       <div class="ad-card-info">
-        <div class="card-angle">${c.angle}</div>
-        <div class="card-persona">${c.persona}</div>
+        <div class="card-usecase">${c.useCase||c.label}</div>
+        ${c.persona ? `<div class="card-persona">👤 ${c.persona}</div>` : ''}
+        ${c.angle   ? `<div class="card-angle">🎯 ${c.angle}</div>` : ''}
+        ${c.style   ? `<div class="card-style">🎬 ${c.style}</div>` : ''}
         ${c.mismatch && c.matchScore < 4 ? `
           <div style="font-size:10px;color:#d97706;margin-top:3px;line-height:1.3">
             Style note: ${c.mismatch}
@@ -1466,7 +2037,7 @@ function renderCards() {
                 id="canva-btn-${c.id}"
                 data-sid="${c.imageUrl ? c.imageUrl.split('?')[0].split('/').slice(-2,-1)[0] : ''}"
                 data-fname="${c.filename}"
-                data-label="${(c.angle||'').replace(/"/g,'&quot;')}"
+                data-label="${(c.label||'').replace(/"/g,'&quot;')}"
                 onclick="sendToCanva(event,'${c.id}')">
           🎨 Canva
         </button>
@@ -1490,8 +2061,8 @@ async function generate() {
   // Re-run product change to ensure kit preview is current
   if (selProd && selProd.value) onSidebarProductChange();
 
-  const hasStyleRef = state.adsFiles.length > 0 || selectedTplIds.size > 0;
-  if (!hasStyleRef) { toast('Please upload a winning ad or select templates from the Template Library.'); return; }
+  const hasStyleRef = state.adsFiles.length > 0 || selectedTplIds.size > 0 || allTemplates.length > 0;
+  if (!hasStyleRef) { toast('Please upload at least one winning ad in the Template Library first.'); return; }
   // Product: session upload OR per-product brand kit photos OR global brand kit photos
   if (!state.productFile && !state.brandHasProduct) {
     toast('Please upload your product photo, or add photos in Brand Setup → Assets first.'); return;
@@ -1505,11 +2076,22 @@ async function generate() {
   document.getElementById('progress-fill').style.width = '0%';
   document.getElementById('progress-txt').textContent = `0 / ${count}`;
 
+  // Use case is now derived from whichever personas are selected (no separate
+  // use-case picker) — recompute fresh here so this never runs on stale state.
+  recomputeProblemFromPersonas();
+  const _selectedProblemIds = state.problemIds;
+  const _effectiveProblem   = state.problem;
+
   // Upload files
   const fd = new FormData();
   state.adsFiles.forEach(f=>fd.append('ads',f));
   if (state.productFile) fd.append('product', state.productFile); // only if manually uploaded
-  fd.append('problem', state.problem);
+  // If no session-upload override, tell the backend exactly which brand-kit photo
+  // to use as the product reference (defaults to the first/primary one, but the
+  // user can click a different thumbnail in the sidebar to pick another).
+  else if (state.selectedProductPhotoPath) fd.append('product_photo_path', state.selectedProductPhotoPath);
+  if (state.selectedTexturePhotoPath) fd.append('texture_photo_path', state.selectedTexturePhotoPath);
+  fd.append('problem', _effectiveProblem);
   fd.append('count', count);
 
   let uploadResp;
@@ -1529,13 +2111,15 @@ async function generate() {
     cardCounter++;
     const ph = {
       id: `c${cardCounter}`, num: cardCounter,
-      angle:'Generating…', persona: state.problem,
+      label:'Generating…', useCase: _effectiveProblem, persona:'', angle:'', style:'',
       imageUrl:'', filename:'', ts:Date.now(), isNew:true
     };
     placeholders.push(ph);
     allCreatives.unshift(ph);
   }
   renderCards();
+
+  const batchNonce = Math.random().toString(36).slice(2) + Date.now().toString(36);
 
   // Generate one by one
   let done=0;
@@ -1547,11 +2131,17 @@ async function generate() {
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
           session_id:    uploadResp.session_id,
+          batch_nonce:   batchNonce,
           index:         i,
           quality:       'draft',
-          problem:       state.problem,
+          problem:       _effectiveProblem,
+          problem_ids:   _selectedProblemIds,
           count:         count,
           template_ids:  [...selectedTplIds],
+          persona_ids:   state.personaIds,
+          angle_ids:     state.angleIds,
+          style_ids:     state.styleIds,
+          vary_copy:     document.getElementById('vary-copy-toggle').checked,
           campaign_id:      activeCampaign ? activeCampaign.id   : null,
           campaign_name:    activeCampaign ? activeCampaign.name : '',
           active_product_id: activeProductId,
@@ -1561,7 +2151,11 @@ async function generate() {
       const d = await r.json();
       if (d.error) throw new Error(d.error);
 
-      ph.angle      = d.label||'Ad '+i;
+      ph.label      = d.label||'Ad '+i;
+      ph.useCase    = d.use_case||_effectiveProblem;
+      ph.persona    = d.persona||'';
+      ph.angle      = d.angle||'';
+      ph.style      = d.style||'';
       ph.imageUrl   = d.image_url+'?t='+Date.now();
       ph.filename   = d.filename||('img_'+String(i).padStart(2,'0')+'_draft.png');
       ph.isNew      = true;
@@ -1569,14 +2163,24 @@ async function generate() {
       ph.matchScore = d.match_score || null;
       ph.mismatch   = d.mismatch   || null;
       ph.verdict    = d.verdict    || null;
+      ph.costMyr    = typeof d.cost_myr === 'number' ? d.cost_myr : null;
 
       state.totalUsd += d.cost_usd||COST_PER;
       document.getElementById('session-cost').textContent =
         `$${state.totalUsd.toFixed(2)} / RM ${(state.totalUsd*MYR).toFixed(2)}`;
 
-      addTag(ph.angle);
+      // Update the cumulative spend tracker directly from this response (avoids an
+      // extra round trip); falls back to a fresh fetch if the server didn't send it.
+      if (typeof d.total_spend_usd === 'number') {
+        const el = document.getElementById('spend-note-val');
+        if (el) el.textContent = `$${d.total_spend_usd.toFixed(2)} / RM ${d.total_spend_myr.toFixed(2)}`;
+      } else {
+        refreshSpend();
+      }
+
+      [ph.useCase, ph.persona, ph.angle, ph.style].forEach(v => { if (v) addTag(v); });
     } catch(e) {
-      ph.angle = 'Generation failed';
+      ph.label = 'Generation failed';
     }
     done++;
     const pct = Math.round(done/count*100);
@@ -1715,6 +2319,11 @@ async function boardCardCanva(e, boardId, filename, label) {
 
 updateCostNote();
 loadCanvaStatus();
+loadPersonas();
+loadAngles();
+loadStyles();
+refreshSpend();
+loadTemplateLibrary(); // pre-load so auto-mode works without visiting Templates tab
 document.getElementById('board-modal-count').addEventListener('change', updateBoardModalEstimate);
 document.getElementById('board-modal-quality').addEventListener('change', updateBoardModalEstimate);
 
@@ -1844,6 +2453,7 @@ function showTab(name) {
   document.getElementById('brand-panel').classList.toggle('active', name === 'Brand Setup');
   document.getElementById('tpl-panel').classList.toggle('active',   name === 'Templates');
   document.getElementById('board-panel').classList.toggle('active', name === 'Board');
+  document.getElementById('personas-panel').classList.toggle('active', name === 'Personas');
   if (name === 'Brand Setup') {
     // Always reload from server — never trust stale in-memory state
     loadBrandKit();
@@ -1855,6 +2465,7 @@ function showTab(name) {
   }
   if (name === 'Templates')    loadTemplateLibrary();
   if (name === 'Board')        loadBoard();
+  if (name === 'Personas')     loadPersonasPanel();
 }
 document.querySelectorAll('.ttab').forEach(tab =>
   tab.addEventListener('click', () => showTab(tab.textContent.trim())));
@@ -1926,6 +2537,9 @@ function renderBoard() {
     const matchCamp   = boardCampFilter === 'all' || String(b.campaign_id) === boardCampFilter;
     const matchQ      = !q || b.label.toLowerCase().includes(q)
                            || (b.problem||'').toLowerCase().includes(q)
+                           || (b.persona||'').toLowerCase().includes(q)
+                           || (b.angle||'').toLowerCase().includes(q)
+                           || (b.style||'').toLowerCase().includes(q)
                            || (b.campaign_name||'').toLowerCase().includes(q);
     return matchFilter && matchCamp && matchQ;
   });
@@ -1968,6 +2582,9 @@ function renderBoard() {
         <div class="board-card-label">${b.label}</div>
         <div class="board-card-meta">
           <span class="board-quality-badge ${b.quality}">${b.quality}</span>
+          ${b.persona ? `<span class="board-persona-badge" title="Customer persona">👤 ${b.persona}</span>` : ''}
+          ${b.angle ? `<span class="board-angle-badge" title="Persuasion angle">🎯 ${b.angle}</span>` : ''}
+          ${b.style ? `<span class="board-style-badge" title="Creative style">🎬 ${b.style}</span>` : ''}
           ${b.campaign_name ? `<span style="color:#7c3aed;font-weight:600">📁 ${b.campaign_name}</span>` : ''}
           ${date ? `<span style="margin-left:auto;color:var(--muted2)">${date}</span>` : ''}
         </div>
@@ -1997,7 +2614,7 @@ function boardToggleSelect(id) {
 }
 
 let boardModalId = null;
-const VARIANT_COST_USD = {draft: 0.01, final: 0.04};
+const VARIANT_COST_USD = {draft: 0.039, final: 0.134};
 const MYR_RATE = 4.07;
 
 function updateBoardModalEstimate() {
@@ -2120,6 +2737,12 @@ async function boardModalGenerate() {
       status.innerHTML = `✅ Generated ${data.items.length} new version${data.items.length>1?'s':''} below. ` +
         `<span class="board-modal-cost">($${data.cost_usd.toFixed(2)} / RM${data.cost_myr.toFixed(2)})</span>`;
       data.items.forEach(it => addBoardModalResult(it));
+      if (typeof data.total_spend_usd === 'number') {
+        const el = document.getElementById('spend-note-val');
+        if (el) el.textContent = `$${data.total_spend_usd.toFixed(2)} / RM ${data.total_spend_myr.toFixed(2)}`;
+      } else {
+        refreshSpend();
+      }
     }
   } catch (e) {
     status.textContent = '⚠ ' + e.message;
@@ -2231,25 +2854,26 @@ function renderTemplateLibrary() {
     return;
   }
 
-  // Group by section
-  const sections = {};
-  allTemplates.forEach(t => {
-    const sec = t.section || 'Winning Ads';
-    if (!sections[sec]) sections[sec] = [];
-    sections[sec].push(t);
-  });
+  const uploaded = [...allTemplates].filter(t => (t.section||'') === 'Uploaded').sort((a,b) => b.id - a.id);
+  const rest     = [...allTemplates].filter(t => (t.section||'') !== 'Uploaded').sort((a,b) => b.id - a.id);
 
-  Object.entries(sections).forEach(([secName, items]) => {
+  if (uploaded.length) {
     const secLabel = document.createElement('div');
     secLabel.className = 'tpl-section-label';
-    secLabel.textContent = `${secName} (${items.length})`;
+    secLabel.textContent = `Latest Upload (${uploaded.length})`;
     wrap.appendChild(secLabel);
-
     const grid = document.createElement('div');
     grid.className = 'tpl-grid';
-    items.forEach(t => grid.appendChild(buildTplCard(t)));
+    uploaded.forEach(t => grid.appendChild(buildTplCard(t)));
     wrap.appendChild(grid);
-  });
+  }
+
+  if (rest.length) {
+    const grid = document.createElement('div');
+    grid.className = 'tpl-grid';
+    rest.forEach(t => grid.appendChild(buildTplCard(t)));
+    wrap.appendChild(grid);
+  }
 
   updateTplSelBar();
 }
@@ -2285,21 +2909,26 @@ function toggleTplSelect(id) {
 }
 
 function updateTplSelBar() {
-  const bar    = document.getElementById('tpl-sel-bar');
-  const count  = selectedTplIds.size;
-  bar.classList.toggle('show', count > 0);
-  document.getElementById('tpl-sel-count').textContent =
-    count + ' ad' + (count !== 1 ? 's' : '') + ' selected';
+  const bar   = document.getElementById('tpl-sel-bar');
+  const count = selectedTplIds.size;
+  bar.classList.add('show');
 
-  // Thumbnails
   const wrap = document.getElementById('tpl-sel-thumbs');
   wrap.innerHTML = '';
-  [...selectedTplIds].slice(0, 8).forEach(id => {
-    const t = allTemplates.find(x => x.id === id);
-    if (!t) return;
-    const img = document.createElement('img');
-    img.src = t.url; wrap.appendChild(img);
-  });
+
+  if (count > 0) {
+    document.getElementById('tpl-sel-count').textContent =
+      count + ' ad' + (count !== 1 ? 's' : '') + ' selected';
+    [...selectedTplIds].slice(0, 8).forEach(id => {
+      const t = allTemplates.find(x => x.id === id);
+      if (!t) return;
+      const img = document.createElement('img');
+      img.src = t.url; wrap.appendChild(img);
+    });
+  } else {
+    document.getElementById('tpl-sel-count').textContent =
+      `Auto — cycling all ${allTemplates.length} ads`;
+  }
 }
 
 function selectAllTemplates() {
@@ -2366,9 +2995,63 @@ async function handleTplUpload(files) {
   }
 }
 
-function dropTpl(e) {
+// ── Paste handler — copy image from Word/PDF/WhatsApp then Ctrl+V anywhere ──
+document.addEventListener('paste', async (e) => {
+  const items = [...(e.clipboardData?.items || [])];
+  const imageItems = items.filter(it => it.kind === 'file' && it.type.startsWith('image/'));
+  if (imageItems.length === 0) return;
+  e.preventDefault();
+  const files = imageItems.map(it => it.getAsFile()).filter(Boolean);
+  if (files.length > 0) {
+    document.getElementById('tpl-upload-zone').classList.add('drag');
+    setTimeout(() => document.getElementById('tpl-upload-zone').classList.remove('drag'), 600);
+    handleTplUpload(files);
+  }
+});
+
+async function dropTpl(e) {
   e.preventDefault(); undrag('tpl-upload-zone');
-  handleTplUpload(e.dataTransfer.files);
+
+  // 1. Files dragged from OS file explorer / desktop
+  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    handleTplUpload(e.dataTransfer.files);
+    return;
+  }
+
+  // 2. Images dragged from a web page or browser tab (arrive as URL, not File)
+  const uriList = e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('text/plain');
+  if (uriList) {
+    const urls = uriList.split(/\r?\n/).map(u => u.trim()).filter(u => u && !u.startsWith('#'));
+    if (urls.length === 0) return;
+    const bar = document.getElementById('tpl-extract-bar');
+    const msg = document.getElementById('tpl-extract-msg');
+    bar.classList.add('show');
+    msg.textContent = `Fetching ${urls.length} image(s)…`;
+    try {
+      for (const url of urls) {
+        const fd = new FormData();
+        fd.append('image_url', url);
+        const r = await fetch('/api/templates/upload-url', { method: 'POST', body: fd });
+        const d = await r.json();
+        if (d.error) { toast('Could not fetch image: ' + d.error); continue; }
+        if (d.templates) allTemplates.unshift(...d.templates);
+      }
+      renderTemplateLibrary();
+      toast(`${urls.length} image(s) added to library.`);
+    } catch(err) {
+      toast('Fetch failed: ' + err.message);
+    } finally {
+      bar.classList.remove('show');
+    }
+    return;
+  }
+
+  // 3. Inline image data dragged from browser (items API)
+  const items = [...(e.dataTransfer.items || [])];
+  const imageItems = items.filter(it => it.kind === 'file' && it.type.startsWith('image/'));
+  if (imageItems.length > 0) {
+    handleTplUpload(imageItems.map(it => it.getAsFile()));
+  }
 }
 
 async function renameTpl(id, label) {
@@ -2497,9 +3180,15 @@ function deleteActiveProduct() {
 }
 
 function selectProduct(id) {
-  // Flush current edits to memory AND save to server before switching products
-  flushProductEditor();
-  if (brandDirty) saveBrandKit();   // immediate save — never lose data when switching products
+  // Flush current edits to memory AND save to server before switching products.
+  // Only flush if we're actually switching AWAY from a different, already-displayed
+  // product — flushing when activeProductId === id (e.g. the initial auto-select on
+  // page load) would push the empty/placeholder DOM textareas into the product we're
+  // about to display, wiping its real data before it's ever shown.
+  if (activeProductId !== null && activeProductId !== id) {
+    flushProductEditor();
+    if (brandDirty) saveBrandKit();   // immediate save — never lose data when switching products
+  }
   activeProductId = id;
   const prod = allProducts.find(p => p.id === id);
   if (!prod) return;
@@ -2619,16 +3308,71 @@ function onSidebarProductChange() {
   }
 
   if (prod && (prod.photos || []).length > 0) {
-    // ✓ Product has photos — show them as active reference
+    // ✓ Product has photos — show them as active reference, clickable to pick
+    // which exact photo Gemini should use. Defaults to this product's SAVED
+    // default (persists across sessions — set once, used every time after) or
+    // the first photo if nothing was ever saved. Only re-applies the saved
+    // default when the active product actually changes, not on every re-render
+    // (otherwise clicking to toggle the texture pick off would immediately
+    // snap back to the saved default within the same click).
     kitName.textContent  = prod.name;
     kitThumbs.innerHTML  = '';
-    prod.photos.slice(0, 5).forEach(p => {
+    const productChanged = _lastPhotoInitProductId !== prod.id;
+    if (productChanged) {
+      state.selectedProductPhotoPath =
+        (prod.default_photo_path && prod.photos.includes(prod.default_photo_path))
+          ? prod.default_photo_path : prod.photos[0];
+      state.selectedTexturePhotoPath =
+        (prod.default_texture_path && prod.photos.includes(prod.default_texture_path))
+          ? prod.default_texture_path : null;
+      _lastPhotoInitProductId = prod.id;
+    } else if (!state.selectedProductPhotoPath || !prod.photos.includes(state.selectedProductPhotoPath)) {
+      state.selectedProductPhotoPath = prod.photos[0];
+    }
+    prod.photos.slice(0, 8).forEach(p => {
       const fn  = p.split(/[/\\]/).pop();
+      const isSel = p === state.selectedProductPhotoPath;
+      const isTexture = p === state.selectedTexturePhotoPath;
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;cursor:pointer';
+      wrap.title = isSel ? 'Currently used as the product reference'
+                 : isTexture ? 'Currently used as the texture/contents reference'
+                 : 'Click to use as product reference · 🧪 to use as texture reference';
       const img = document.createElement('img');
       img.src   = `/api/brand-kit/asset/${fn}?t=${Date.now()}`;
-      img.style.cssText = 'width:44px;height:44px;object-fit:cover;border-radius:6px;border:1px solid #fde047';
-      img.onerror = () => img.style.display = 'none';
-      kitThumbs.appendChild(img);
+      img.style.cssText = `width:44px;height:44px;object-fit:cover;border-radius:6px;border:2px solid ${isSel ? '#16a34a' : isTexture ? '#0ea5e9' : '#d1d5db'}`;
+      img.onerror = () => wrap.style.display = 'none';
+      img.onclick = () => {
+        state.selectedProductPhotoPath = p;
+        onSidebarProductChange();
+        saveDefaultPhotos(prod.id, {default_photo_path: p});
+      };
+      if (isSel) {
+        const badge = document.createElement('div');
+        badge.textContent = '✓';
+        badge.style.cssText = 'position:absolute;top:-4px;right:-4px;background:#16a34a;color:#fff;' +
+          'font-size:10px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;' +
+          'align-items:center;justify-content:center;line-height:1';
+        wrap.appendChild(badge);
+      }
+      // 🧪 texture-reference toggle — independent of the identity-photo selection
+      // above. Shows the product's actual contents (liquid/jelly) when poured or
+      // exposed, since the identity photo is often a sealed bottle that can't.
+      const texBtn = document.createElement('div');
+      texBtn.textContent = '🧪';
+      texBtn.title = 'Use as texture/contents reference';
+      texBtn.style.cssText = `position:absolute;bottom:-4px;right:-4px;background:${isTexture ? '#0ea5e9' : '#fff'};` +
+        'border:1px solid #0ea5e9;font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;' +
+        'align-items:center;justify-content:center;line-height:1;cursor:pointer';
+      texBtn.onclick = (e) => {
+        e.stopPropagation();
+        state.selectedTexturePhotoPath = isTexture ? null : p;
+        onSidebarProductChange();
+        saveDefaultPhotos(prod.id, {default_texture_path: state.selectedTexturePhotoPath || ''});
+      };
+      wrap.appendChild(img);
+      wrap.appendChild(texBtn);
+      kitThumbs.appendChild(wrap);
     });
     kitPreview.style.display  = 'block';
     warnEl.style.display      = 'none';
@@ -2643,8 +3387,53 @@ function onSidebarProductChange() {
     warnEl.style.display      = 'none';
     state.brandHasProduct     = checkBrandHasProduct();
   }
+
+  // Refresh use cases + re-scope the Persona picker for whichever product is now active
+  loadUseCases(prod ? prod.name : '').then(renderPersonaPills);
 }
 
+// Persist a product's identity/texture photo pick server-side so it becomes the
+// default for every future session, not just the current browser tab.
+async function saveDefaultPhotos(productId, fields) {
+  try {
+    await fetch(`/api/brand-kit/products/${productId}/default-photos`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(fields)
+    });
+    // Keep the in-memory product list in sync so re-renders see the saved default
+    const prod = allProducts.find(p => p.id === productId);
+    if (prod) Object.assign(prod, fields);
+  } catch (e) { console.error('Failed to save default photo:', e); }
+}
+
+// ── Brand persistence helpers ─────────────────────────────────────────────────
+// Three-layer approach so data NEVER gets lost:
+//   1. localStorage  — written instantly on every keystroke (survives browser refresh)
+//   2. debounce save — server POST fires 1.5s after user stops typing
+//   3. beforeunload beacon — fires navigator.sendBeacon on page close/refresh
+const LS_KEY = 'serigama_brand_draft';
+
+function _brandPayload() {
+  const certs = [];
+  document.querySelectorAll('.cert-toggle.on').forEach(b => certs.push(b.dataset.cert));
+  flushProductEditor();
+  return {
+    brand_name:      document.getElementById('bk-name').value,
+    tagline:         document.getElementById('bk-tagline').value,
+    brand_voice:     document.getElementById('bk-voice').value,
+    extra_notes:     document.getElementById('bk-notes').value,
+    products:        allProducts,
+    active_product_id: activeProductId,
+    primary_color:   document.getElementById('bk-primary').value,
+    secondary_color: document.getElementById('bk-secondary').value,
+    accent_color:    document.getElementById('bk-accent').value,
+    certifications:  certs,
+    key_claims:      tagLists.claims,
+  };
+}
+
+let _brandAutoSaveTimer = null;
 function markDirty() {
   brandDirty = true;
   const btn = document.getElementById('btn-save-brand');
@@ -2652,7 +3441,12 @@ function markDirty() {
   const msg = document.getElementById('bp-save-msg');
   btn.classList.add('dirty');
   bar.classList.remove('saved'); bar.classList.add('dirty');
-  msg.textContent = '● Unsaved changes — click Save Brand Kit to keep them';
+  msg.textContent = '● Saving…';
+  // Layer 1: write to localStorage immediately (survives refresh)
+  try { localStorage.setItem(LS_KEY, JSON.stringify(_brandPayload())); } catch(e) {}
+  // Layer 2: debounced server save 1.5s after user stops typing
+  clearTimeout(_brandAutoSaveTimer);
+  _brandAutoSaveTimer = setTimeout(() => { if (brandDirty) saveBrandKit(); }, 1500);
 }
 function markSaved() {
   brandDirty = false;
@@ -2662,16 +3456,61 @@ function markSaved() {
   btn.classList.remove('dirty');
   bar.classList.remove('dirty'); bar.classList.add('saved');
   msg.textContent = '✓ All changes saved';
+  // Clear localStorage draft — server is now authoritative
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
 }
 
+// Layer 3: sendBeacon on page close/refresh — fires even on hard refresh
+window.addEventListener('beforeunload', () => {
+  if (!brandDirty) return;
+  try {
+    const blob = new Blob([JSON.stringify(_brandPayload())], {type:'application/json'});
+    navigator.sendBeacon('/api/brand-kit', blob);
+  } catch(e) {}
+});
+
 async function loadBrandKit() {
-  const brand = await (await fetch('/api/brand-kit')).json();
+  let brand = await (await fetch('/api/brand-kit', {cache: 'no-store'})).json();
+
+  // The server is always authoritative. A localStorage draft is ONLY used to fill
+  // in fields the server has NOTHING for (e.g. browser closed before the 1.5s
+  // autosave fired) — it can never overwrite real server data, even partially,
+  // even if counts happen to match. This prevents a stale/blank draft from ever
+  // clobbering good data on reload.
+  try {
+    const draft = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if (draft) {
+      const textFields = ['brand_name','tagline','brand_voice','extra_notes',
+                          'primary_color','secondary_color','accent_color',
+                          'certifications','key_claims'];
+      let usedDraft = false;
+      textFields.forEach(k => {
+        const serverEmpty = !brand[k] || (Array.isArray(brand[k]) && brand[k].length === 0);
+        const draftHasIt  = draft[k] !== undefined && draft[k] !== '' &&
+                            !(Array.isArray(draft[k]) && draft[k].length === 0);
+        if (serverEmpty && draftHasIt) { brand[k] = draft[k]; usedDraft = true; }
+      });
+      // Products: only restore from draft if server has ZERO products at all —
+      // never touch products if the server already has any (even just one).
+      if ((brand.products||[]).length === 0 && draft.products && draft.products.length > 0) {
+        brand.products = draft.products;
+        brand.active_product_id = draft.active_product_id;
+        usedDraft = true;
+      }
+      if (usedDraft) {
+        console.log('[brand] Restored fields the server had nothing for, from local draft');
+      } else {
+        // Server already has everything the draft would have provided — discard it
+        localStorage.removeItem(LS_KEY);
+      }
+    }
+  } catch(e) {}
+
   document.getElementById('bk-name').value     = brand.brand_name    || '';
   document.getElementById('bk-tagline').value  = brand.tagline       || '';
   document.getElementById('bk-voice').value    = brand.brand_voice   || '';
   document.getElementById('bk-notes').value    = brand.extra_notes   || '';
 
-  // Products (photos are stored inside each product object)
   allProducts     = brand.products || [];
   activeProductId = brand.active_product_id || null;
   renderProductList();
@@ -2683,64 +3522,54 @@ async function loadBrandKit() {
   setColorField('secondary', brand.secondary_color || '#D94F00');
   setColorField('accent',    brand.accent_color    || '#FFF8E7');
 
-  // Certifications
   document.querySelectorAll('.cert-toggle').forEach(btn => {
     btn.classList.toggle('on', (brand.certifications||[]).includes(btn.dataset.cert));
   });
 
-  // Claims
   tagLists.claims = brand.key_claims || [];
   renderTags('claims');
 
-  // Logo
   if (brand.logo_path) {
     const fn = brand.logo_path.split(/[/\\]/).pop();
     const lp = document.getElementById('logo-preview');
     lp.src = `/api/brand-kit/asset/${fn}`; lp.classList.add('show');
   }
 
-  // Product photos
   renderAssetGrid('product-photos-grid', brand.product_photos||[], 'product');
-
-  // Creatives
   renderAssetGrid('creatives-grid', brand.creative_refs||[], 'creative');
 
-  // Badge
-  const hasBrand = !!(brand.brand_name || (brand.product_photos||[]).length);
+  const hasBrand = !!(brand.brand_name || (brand.product_photos||[]).length ||
+                      (brand.products||[]).some(p => (p.photos||[]).length));
   document.getElementById('brand-aware-badge').style.display = hasBrand ? 'inline-flex' : 'none';
 
-  markSaved();
-  brandKitLoaded = true;  // mark as loaded — don't reload on next tab switch
+  // If there's a localStorage draft, save it to server immediately
+  const hasDraft = !!localStorage.getItem(LS_KEY);
+  if (hasDraft) {
+    await saveBrandKit();   // flush draft to server on load
+  } else {
+    markSaved();
+  }
+  brandKitLoaded = true;
 }
 
 async function saveBrandKit() {
-  const certs = [];
-  document.querySelectorAll('.cert-toggle.on').forEach(b => certs.push(b.dataset.cert));
-  const payload = {
-    brand_name:      document.getElementById('bk-name').value,
-    tagline:         document.getElementById('bk-tagline').value,
-    brand_voice:     document.getElementById('bk-voice').value,
-    extra_notes:     document.getElementById('bk-notes').value,
-    products:          (flushProductEditor(), allProducts),
-    active_product_id: activeProductId,
-    primary_color:   document.getElementById('bk-primary').value,
-    secondary_color: document.getElementById('bk-secondary').value,
-    accent_color:    document.getElementById('bk-accent').value,
-    certifications:  certs,
-    key_claims:      tagLists.claims,
-  };
-  const r = await fetch('/api/brand-kit', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  });
-  const d = await r.json();
-  if (d.ok) {
-    markSaved();
-    brandKitLoaded = true;   // data now matches server — safe to stay in memory
-    toast('✓ Brand kit saved! All future generations will use this.');
-    document.getElementById('brand-aware-badge').style.display = 'inline-flex';
-  } else {
-    toast('Save failed: ' + (d.error||'unknown'));
+  const payload = _brandPayload();
+  try {
+    const r = await fetch('/api/brand-kit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const d = await r.json();
+    if (d.ok) {
+      markSaved();
+      brandKitLoaded = true;
+      toast('✓ Brand kit saved!');
+      document.getElementById('brand-aware-badge').style.display = 'inline-flex';
+    } else {
+      toast('Save failed: ' + (d.error||'unknown'));
+    }
+  } catch(e) {
+    toast('Save failed — check connection');
   }
 }
 

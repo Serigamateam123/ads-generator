@@ -1,0 +1,14 @@
+{
+  "clarity": {
+    "label": "Clarity",
+    "subtitle": "Obvious ad, instant understanding",
+    "copy_instruction": "Make the angle, offer, and who this is for completely clear within 3-4 seconds. Use direct, unambiguous language — state the product/brand plainly, make the CTA obvious. This should clearly read as an advertisement. Do not hide, delay, or soften the message.",
+    "visual_treatment": "Pattern-interrupt execution — loud, bold, and unmistakably an ad. Product/brand clearly visible, bold typography, strong contrast, obvious commercial styling. The viewer should immediately recognize this as paid advertising, not organic content."
+  },
+  "curiosity_gap": {
+    "label": "Curiosity Gap",
+    "subtitle": "Native, doesn't look like an ad",
+    "copy_instruction": "Deliberately withhold what's being sold — the copy should create a gap the reader wants resolved, not reveal the product/brand/offer upfront. Write like native platform content (a personal note, a screenshot-style message, a repost) rather than typical ad copy. The reader should not immediately register this as an advertisement.",
+    "visual_treatment": "Native, blend-into-the-feed execution — mimic organic platform content (e.g. a notes-app screenshot, a text-message thread, a reposted social post) rather than a polished product ad. Keep branding minimal or absent. If the product appears at all, keep it ambiguous or partially obscured rather than a clean hero shot — it should not register as an ad at first glance."
+  }
+}

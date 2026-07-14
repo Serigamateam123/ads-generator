@@ -1,5 +1,2928 @@
 [
   {
+    "id": 214,
+    "filename": "board_00214.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Curiosity",
+    "style": "",
+    "quality": "draft",
+    "session_id": "797f55f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T18:11:25",
+    "copy_data": {
+      "h1": "Tubuh ada kuasa penyembuhan dalaman?",
+      "h2": "Ketahui bagaimana nutrien marin menyokongnya.",
+      "cta": "Ketahui lebih lanjut.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu saluran penghadaman.",
+        "Bantu pembaharuan sel.",
+        "Sokong penghasilan kolagen.",
+        "Bekal nutrien ketika badan pulih."
+      ],
+      "_framework": "PROBLEM_HOOK"
+    }
+  },
+  {
+    "id": 213,
+    "filename": "board_00213.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "draft",
+    "session_id": "797f55f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T18:10:32",
+    "copy_data": {
+      "h1": "Dulu Solat Sukar, Kini Selesa Kembali",
+      "h2": "Sokong tindak balas keradangan yang normal.",
+      "cta": "Rasai kelonggaran sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong tindak balas keradangan normal.",
+        "Kekal keanjalan tisu sendi.",
+        "Bantu baiki tisu sendi.",
+        "Kekal ligamen dan tendon kuat."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 212,
+    "filename": "board_00212.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "draft",
+    "session_id": "797f55f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T18:09:32",
+    "copy_data": {
+      "h1": "Dulu keluh gastrik, kini makan bahagia.",
+      "h2": "Sokong pembaharuan tisu saluran penghadaman.",
+      "cta": "Rasai bezanya hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Bantu baiki tisu badan.",
+        "Sokong penghasilan kolagen.",
+        "Bekal nutrien ketika badan pulih.",
+        "Sokong pembaharuan tisu saluran penghadaman."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 211,
+    "filename": "board_00211.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Curiosity",
+    "style": "",
+    "quality": "draft",
+    "session_id": "797f55f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T18:07:00",
+    "copy_data": {
+      "h1": "Mengapa lutut terasa tua sebelum usia?",
+      "h2": "Mungkinkah ada rahsia lama yang dilupakan?",
+      "cta": "Terokai rahsia gamat sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Bantu baiki tisu sendi.",
+        "Sokong struktur sendi sihat.",
+        "Bekal nutrien bina tisu.",
+        "Bantu bina rawan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 210,
+    "filename": "board_00210.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Social Proof",
+    "style": "",
+    "quality": "draft",
+    "session_id": "98c7447d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T18:01:37",
+    "copy_data": {
+      "h1": "Dipercayai ribuan keluarga Malaysia untuk kesihatan.",
+      "h2": "Diperakui Halal JAKIM, KKM Approved dan GMP Certified.",
+      "cta": "Sertai keluarga Malaysia yang mempercayai.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong penghasilan kolagen.",
+        "Bantu pembaharuan sel.",
+        "Sokong pembaharuan tisu penghadaman.",
+        "Bantu baiki tisu badan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 209,
+    "filename": "board_00209.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "quality": "draft",
+    "session_id": "98c7447d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T18:00:38",
+    "copy_data": {
+      "h1": "Diperakui Halal JAKIM & KKM Approved.",
+      "h2": "Bioaktif marin bantu anti-radang dan penyembuhan sendi.",
+      "cta": "Amalkan Formula Terbukti Hari Ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembentukan tisu badan.",
+        "Kurang geseran antara sendi.",
+        "Bantu bina semula rawan sendi.",
+        "Bantu baiki tisu sendi.",
+        "Sokong struktur sendi yang sihat."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 208,
+    "filename": "board_00208.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "quality": "draft",
+    "session_id": "98c7447d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T17:59:50",
+    "copy_data": {
+      "h1": "Jeli Gamat: KKM Approved, Halal JAKIM.",
+      "h2": "Gamat mengandungi kolagen, saponin. Dikaitkan antioksidan, anti-radang.",
+      "cta": "Terbukti Berkesan, GMP Certified.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien ketika badan pulih.",
+        "Sokong pembaharuan tisu saluran penghadaman."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 207,
+    "filename": "board_00207.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Problem Agitate",
+    "style": "",
+    "quality": "draft",
+    "session_id": "fb50349c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T17:40:41",
+    "copy_data": {
+      "h1": "Lutut Sakit, Maruah Makin Hilang?",
+      "h2": "Solat, cucu, hidup berkeluarga kini terjejas teruk.",
+      "cta": "Bertindak Sekarang Sebelum Terlambat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Bekal nutrien bina tisu baharu.",
+        "Kekal selesa ketika bergerak.",
+        "Kurang geseran antara sendi.",
+        "Bantu bina semula rawan sendi.",
+        "Bantu baiki tisu sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 206,
+    "filename": "board_00206.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Contrarian Truth",
+    "style": "",
+    "quality": "draft",
+    "session_id": "fb50349c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T17:39:50",
+    "copy_data": {
+      "h1": "Ramai sangka sendi uzur... Sebenarnya, boleh sokong pulih.",
+      "h2": "Gamat bantu pemulihan & penjagaan sendi.",
+      "cta": "Ketahui rahsia kekuatan gamat.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong kesihatan sendi harian.",
+        "Bantu baiki tisu sendi.",
+        "Kekal keanjalan tisu sendi.",
+        "Kekal ligamen dan tendon kuat."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 205,
+    "filename": "board_00205.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Problem Agitate",
+    "style": "",
+    "quality": "draft",
+    "session_id": "fb50349c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T17:38:53",
+    "copy_data": {
+      "h1": "Gastrik suami: Kehilangan setiap santapan bersama.",
+      "h2": "Suasana romantis pudar, kemesraan hilang setiap kali makan.",
+      "cta": "Jangan biarkan ia berlarutan!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Bekal nutrien ketika badan pulih",
+        "Kekalkan kesihatan lapisan perut",
+        "Sokong kesihatan badan",
+        "Sokong penghasilan kolagen"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 204,
+    "filename": "board_00204.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Problem Agitate",
+    "style": "",
+    "quality": "draft",
+    "session_id": "ebe2f7cb",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T15:29:57",
+    "copy_data": {
+      "h1": "Anak Czer tak pulih, urusan rumah terabai.",
+      "h2": "Melihat anak merana, rumah makin kalut.",
+      "cta": "Dapatkan sekarang sebelum terlambat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Bantu baiki tisu badan.",
+        "Sokong pemulihan selepas bersalin.",
+        "Bantu hasil kolagen semula jadi.",
+        "Bantu bina tisu baharu."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 203,
+    "filename": "board_00203.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "draft",
+    "session_id": "7280930e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T14:57:16",
+    "copy_data": {
+      "h1": "Pemulihan Czer perlahan vs Cergas urus bayi.",
+      "h2": "Jeli Gamat sokong proses pemulihan badan.",
+      "cta": "Rasai Bezanya Sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong proses pemulihan badan.",
+        "Bantu baiki tisu badan.",
+        "Sokong pemulihan luka.",
+        "Sokong pemulihan selepas bersalin."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 202,
+    "filename": "board_00202.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Transformation",
+    "style": "",
+    "quality": "draft",
+    "session_id": "7280930e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T14:56:09",
+    "copy_data": {
+      "h1": "Saksikan anak pulih pantas, rumah kembali berseri!",
+      "h2": "Bantu anak bangkit aktif, urus si kecil tanpa risau.",
+      "cta": "Mulakan perubahan hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Kekalkan keanjalan kulit.",
+        "Sokong pemulihan selepas bersalin.",
+        "Sokong pembaikan tisu.",
+        "Sokong pemulihan luka.",
+        "Bantu hasil kolagen semula jadi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 201,
+    "filename": "board_00201.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Curiosity",
+    "style": "Curiosity Gap",
+    "quality": "draft",
+    "session_id": "057d5b28",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T14:54:06",
+    "copy_data": {
+      "h1": "Mengapa pemulihan Czer anak lambat?",
+      "h2": "Mungkin jawapan ada pada rahsia lautan.",
+      "cta": "Ketahui rahsia ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan luka.",
+        "Sokong pemulihan kulit.",
+        "Sokong proses pemulihan badan.",
+        "Bantu bina tisu baharu."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 200,
+    "filename": "board_00200.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "quality": "draft",
+    "session_id": "a638afdc",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T14:52:17",
+    "copy_data": {
+      "h1": "Jeli Gamat: Halal JAKIM, KKM Approved.",
+      "h2": "Kolagen, saponin gamat bantu sokong penyembuhan dalaman.",
+      "cta": "Pilih Formula Pemulihan Dipercayai.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan selepas bersalin.",
+        "Bantu bina tisu baharu.",
+        "Sokong proses pemulihan badan.",
+        "Sokong pemulihan kulit."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 199,
+    "filename": "board_00199.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Social Proof",
+    "style": "",
+    "quality": "draft",
+    "session_id": "a23e68d1",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T14:50:52",
+    "copy_data": {
+      "h1": "Kepercayaan Turun-Temurun Ibu-ibu Bersalin.",
+      "h2": "Diperakui Halal JAKIM, KKM, GMP.",
+      "cta": "Sertai ibu pulih hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong proses pemulihan badan.",
+        "Bantu hasil kolagen semula jadi.",
+        "Bantu bina tisu baharu.",
+        "Sokong pemulihan selepas bersalin.",
+        "Sokong pemulihan luka."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 198,
+    "filename": "board_00198.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Contrarian Truth",
+    "style": "",
+    "quality": "draft",
+    "session_id": "f81f3932",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T14:37:13",
+    "copy_data": {
+      "h1": "Ramai sangka pemulihan Czer lambat... Sebenarnya ia boleh disokong.",
+      "h2": "Ekstrak gamat bantu sokong pemulihan dalaman.",
+      "cta": "Alami sokongan pemulihan sebenar.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Bantu bina sel baharu.",
+        "Bantu baiki tisu badan.",
+        "Sokong pemulihan kulit.",
+        "Sokong proses pemulihan badan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 196,
+    "filename": "board_00196.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Transformation",
+    "style": "",
+    "quality": "draft",
+    "session_id": "33132094",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T13:04:32",
+    "copy_data": {
+      "h1": "Anak ceria, perut selesa semula.",
+      "h2": "Tamatkan derita gastrik anak, kembalikan keceriaan hariannya.",
+      "cta": "Mulakan perubahan hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien untuk pemulihan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 195,
+    "filename": "board_00195.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "draft",
+    "session_id": "a4ab46d7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T12:35:32",
+    "copy_data": {
+      "h1": "Perit gastrik atau perut anak tenang?",
+      "h2": "Sokong pembaharuan tisu saluran penghadaman.",
+      "cta": "Beralih kepada Jeli Gamat.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu saluran penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien ketika pulih."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 194,
+    "filename": "board_00194.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Curiosity",
+    "style": "",
+    "quality": "draft",
+    "session_id": "ff0b906d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T12:30:19",
+    "copy_data": {
+      "h1": "Apa rahsia perut anak kembali selesa?",
+      "h2": "Bukan ubat biasa, bukan paksaan diet.",
+      "cta": "Terokai jalan penyelesaiannya.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal sihat lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien untuk pemulihan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 193,
+    "filename": "board_00193.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "quality": "draft",
+    "session_id": "882e12bb",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T12:28:15",
+    "copy_data": {
+      "h1": "Gamat: Disahkan KKM, Halal JAKIM.",
+      "h2": "Bioaktif marin bantu penyembuhan dalaman, kaya kolagen.",
+      "cta": "Formula Kesihatan Terbukti.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien ketika pulih."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 192,
+    "filename": "board_00192.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Social Proof",
+    "style": "",
+    "quality": "draft",
+    "session_id": "48cab5f6",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T12:02:48",
+    "copy_data": {
+      "h1": "Generasi ibu percaya Gamat untuk anak.",
+      "h2": "Resipi tradisional disahkan Halal JAKIM dan KKM.",
+      "cta": "Sertai keluarga lega hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien ketika badan pulih.",
+        "Sokong penghasilan kolagen."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 191,
+    "filename": "board_00191.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Contrarian Truth",
+    "style": "",
+    "quality": "draft",
+    "session_id": "84f7bb2c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T12:00:53",
+    "copy_data": {
+      "h1": "Ramai sangka gastrik anak hanya ubat... Sebenarnya, sokongan semula jadi.",
+      "h2": "Ekstrak gamat bantu sokong pembaharuan tisu saluran penghadaman.",
+      "cta": "Temui keselesaan anak kembali.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien ketika badan pulih."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 190,
+    "filename": "board_00190.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Contrarian Truth",
+    "style": "",
+    "quality": "draft",
+    "session_id": "2b0314f5",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T11:46:36",
+    "copy_data": {
+      "h1": "Ramai sangka susah? Sebenarnya, ada bantuan harian.",
+      "h2": "Jeli Gamat sokong pembaharuan tisu saluran penghadaman.",
+      "cta": "Dapatkan keselesaan harian anak.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien ketika pulih."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 189,
+    "filename": "board_00189.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Problem Agitate",
+    "style": "",
+    "quality": "draft",
+    "session_id": "176be70a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-14T11:16:50",
+    "copy_data": {
+      "h1": "Anak makin lesu, derita gastrik berulang?",
+      "h2": "Melihatnya menderita setiap hari menghancurkan hati ibu.",
+      "cta": "Jangan biarkan anak terus merana.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu baiki tisu badan.",
+        "Bekal nutrien badan pulih."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 188,
+    "filename": "board_00188.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "draft",
+    "session_id": "9113ce44",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T18:05:45",
+    "copy_data": {
+      "h1": "Pergerakan Terhad vs. Pulih Cepat Berdikari.",
+      "h2": "Membantu proses pemulihan badan selepas kemalangan.",
+      "cta": "Beralih Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu kekalkan pergerakan aktif"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 187,
+    "filename": "board_00187.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Transformation",
+    "style": "",
+    "quality": "draft",
+    "session_id": "14f383d3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T17:44:04",
+    "copy_data": {
+      "h1": "Gerak bebas, kembali jadi tulang belakang keluarga.",
+      "h2": "Pulih cepat, sendi selesa, bebas bergerak seperti dulu.",
+      "cta": "Mulakan perubahan anda hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 185,
+    "filename": "board_00185.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "draft",
+    "session_id": "c669e208",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T16:16:49",
+    "copy_data": {
+      "h1": "Terus bergantung vs Kembali kerja?",
+      "h2": "Jeli Gamat bantu badan anda pulih lebih pantas.",
+      "cta": "Amalkan Jeli Gamat sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 184,
+    "filename": "board_00184.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Curiosity",
+    "style": "",
+    "quality": "draft",
+    "session_id": "cbff5050",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T15:53:35",
+    "copy_data": {
+      "h1": "Sukar bergerak selepas kemalangan?",
+      "h2": "Bagaimana untuk pulih pantas dan aktif semula?",
+      "cta": "Terokai rahsia pemulihan.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 183,
+    "filename": "board_00183.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "quality": "draft",
+    "session_id": "46058947",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T15:51:32",
+    "copy_data": {
+      "h1": "Gamat, warisan perubatan Melayu terbukti.",
+      "h2": "Kolagen, saponin bantu pemulihan, kurangkan radang.",
+      "cta": "Amalkan formula terbukti.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sesuai diamalkan selepas kemalangan.",
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu kekalkan pergerakan aktif."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 182,
+    "filename": "board_00182.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Social Proof",
+    "style": "",
+    "quality": "draft",
+    "session_id": "2a357576",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T15:49:28",
+    "copy_data": {
+      "h1": "Pilihan pemulihan yang dipercayai ramai.",
+      "h2": "Disahkan Halal JAKIM & KKM Approved.",
+      "cta": "Sertai keluarga Serigama hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu kekalkan pergerakan aktif.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu proses pemulihan badan.",
+        "Membantu menjaga keselesaan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 181,
+    "filename": "board_00181.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Contrarian Truth",
+    "style": "",
+    "quality": "draft",
+    "session_id": "9ee2f7bc",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T15:21:14",
+    "copy_data": {
+      "h1": "Ingat pulih lambat? Tidak, anda boleh percepatkan!",
+      "h2": "Gamat bantu pemulihan badan, pembaikan tisu.",
+      "cta": "Rasai semula kecergasan anda!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 180,
+    "filename": "board_00180.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Problem Agitate",
+    "style": "",
+    "quality": "draft",
+    "session_id": "04594acb",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T15:19:32",
+    "copy_data": {
+      "h1": "Kemalangan: keluarga terus menanggung beban?",
+      "h2": "Gerak terbatas, pendapatan terjejas tanpa tindakan.",
+      "cta": "Bertindak sekarang, jangan berlengah!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 179,
+    "filename": "board_00179.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "style": "Clarity",
+    "quality": "draft",
+    "session_id": "755e30e4",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T15:13:07",
+    "copy_data": {
+      "h1": "Serigama Jeli Gamat: KKM & Halal Certified",
+      "h2": "Ekstrak gamat kaya kolagen, saponin, menyokong penjagaan sendi.",
+      "cta": "Formula Gamat Terbukti Dipercayai.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Mengekalkan pergerakan aktif.",
+        "Menjaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Menyokong struktur sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 178,
+    "filename": "board_00178.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Kemalangan",
+    "persona": "Accident Recovery",
+    "angle": "Problem Agitate",
+    "style": "Clarity",
+    "quality": "draft",
+    "session_id": "2587de89",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T14:11:27",
+    "copy_data": {
+      "h1": "Tak boleh kerja? Keluarga menunggu!",
+      "h2": "Setiap hari berlalu, keluarga makin menanti, diri terbeban.",
+      "cta": "Ambil tindakan SEGERA!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Membantu kekalkan pergerakan aktif",
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong pembaikan tisu badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 177,
+    "filename": "board_00177.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "style": "Curiosity Gap",
+    "quality": "draft",
+    "session_id": "ad00525f",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T10:36:30",
+    "copy_data": {
+      "h1": "Gamat: Ramuan Semulajadi Untuk Kesihatan Menyeluruh.",
+      "h2": "Kaya kolagen, saponin bantu sendi, pemulihan badan.",
+      "cta": "Diperakui Halal, KKM.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Membantu kekalkan pergerakan aktif.",
+        "Menyokong pembaikan tisu badan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 176,
+    "filename": "board_00176.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "style": "Clarity",
+    "quality": "draft",
+    "session_id": "c9a5fc8a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T10:32:34",
+    "copy_data": {
+      "h1": "Jeli Gamat: Halal JAKIM, KKM Approved.",
+      "h2": "Gamat kaya kolagen, saponin; bantu pulihkan sendi dan badan.",
+      "cta": "Formula Terbukti: Jeli Gamat.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 175,
+    "filename": "board_00175.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "style": "Curiosity Gap",
+    "quality": "draft",
+    "session_id": "c9a5fc8a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-13T10:31:32",
+    "copy_data": {
+      "h1": "Gamat: Warisan Pemulihan Tradisional Melayu.",
+      "h2": "Komponen bioaktif menyokong kesihatan sendi dan pemulihan.",
+      "cta": "Dipercayai KKM dan Halal JAKIM.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 174,
+    "filename": "board_00174.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Social Proof",
+    "quality": "draft",
+    "session_id": "cd733361",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:29:59",
+    "copy_data": {
+      "h1": "Pilihan keluarga Malaysia yang diyakini.",
+      "h2": "Diperakui Halal JAKIM & KKM. Warisan tradisi.",
+      "cta": "Sertai keluarga aktif hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Membantu kekalkan pergerakan aktif.",
+        "Menyokong kesihatan badan menyeluruh."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 173,
+    "filename": "board_00173.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "quality": "draft",
+    "session_id": "cd733361",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:29:05",
+    "copy_data": {
+      "h1": "Gamat: Warisan Perubatan Melayu Terbukti",
+      "h2": "Kolagen, Saponin bantu antioksidan, anti-radang badan.",
+      "cta": "Pilih Jeli Gamat Dipercayai.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong fungsi tulang rawan",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 172,
+    "filename": "board_00172.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Contrarian Truth",
+    "quality": "draft",
+    "session_id": "cd733361",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:28:05",
+    "copy_data": {
+      "h1": "Ramai sangka uzur sendi... Sebenarnya ada sokongan semula jadi.",
+      "h2": "Jeli Gamat kaya kolagen semula jadi dan bioaktif marin.",
+      "cta": "Temui semula kecergasan anda.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Menjaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Kekalkan pergerakan aktif.",
+        "Menyokong struktur sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 171,
+    "filename": "board_00171.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Curiosity",
+    "quality": "draft",
+    "session_id": "cd733361",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:27:11",
+    "copy_data": {
+      "h1": "Sendi kaku bukan takdir?",
+      "h2": "Adakah penyelesaiannya datang dari laut dalam?",
+      "cta": "Terokai rahsia alam.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 170,
+    "filename": "board_00170.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Problem Agitate",
+    "quality": "draft",
+    "session_id": "043ceaf3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:13:53",
+    "copy_data": {
+      "h1": "Lutut Sakit, Solat Terganggu, Cucu Menjauh?",
+      "h2": "Setiap langkah terasa perit, hilang ceria hidup harian.",
+      "cta": "Miliki semula ketenangan hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 169,
+    "filename": "board_00169.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Transformation",
+    "quality": "draft",
+    "session_id": "043ceaf3",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:13:14",
+    "copy_data": {
+      "h1": "Lutut kaku, solat terganggu, rasa terpinggir?",
+      "h2": "Menaiki tangga, mengejar cucu tak semudah dulu?",
+      "cta": "Dapatkan semula keselesaan sendi!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan",
+        "Membantu kekalkan kecergasan harian"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 168,
+    "filename": "board_00168.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Authority / Expertise",
+    "quality": "draft",
+    "session_id": "25c0e37e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:10:14",
+    "copy_data": {
+      "h1": "Lutut sengal, solat terhalang, cucu menjauh?",
+      "h2": "Jangan biarkan kekakuan lutut meragut maruah dan kebahagiaan keluarga.",
+      "cta": "Amal hari ini, kembali aktif.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan",
+        "Membantu mengekalkan kecergasan harian"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 167,
+    "filename": "board_00167.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "persona": "Sakit Lutut (Knee Pain)",
+    "angle": "Curiosity",
+    "quality": "draft",
+    "session_id": "25c0e37e",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T17:09:33",
+    "copy_data": {
+      "h1": "Lutut sakit, solat sukar, cucu menjauh?",
+      "h2": "Adakah ini pengakhiran pergerakan aktif anda?",
+      "cta": "Kembali aktif, berbakti sempurna.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong pembaikan tisu badan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 166,
+    "filename": "board_00166.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Social Proof",
+    "quality": "draft",
+    "session_id": "07d4986d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T16:16:54",
+    "copy_data": {
+      "h1": "Bosan Kenduri Singkat, Makan Terganggu?",
+      "h2": "Kembalikan Kehangatan Meja Makan Bersamanya.",
+      "cta": "Dapatkan Kembali Saat Bersama!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu mengekalkan kecergasan",
+        "Menyokong kesihatan badan secara menyeluruh"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 165,
+    "filename": "board_00165.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Social Proof",
+    "quality": "draft",
+    "session_id": "eadeb375",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T16:04:53",
+    "copy_data": {
+      "h1": "Gastrik hilang, nikmati semula hidangan!",
+      "h2": "Resepi tradisional diyakini ramai, hidup tanpa kerisauan.",
+      "cta": "Rasai Bezanya, Amalkan Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong kesihatan badan menyeluruh",
+        "Membantu mengekalkan kecergasan",
+        "Mudah diminum setiap hari"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 164,
+    "filename": "board_00164.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Curiosity",
+    "quality": "draft",
+    "session_id": "eadeb375",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T16:03:53",
+    "copy_data": {
+      "h1": "Anak Selesa, Ibu Tersenyum Kembali.",
+      "h2": "Rahsia alam bantu pemulihan dalaman?",
+      "cta": "Ketahui rahsianya hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu melindungi sel daripada tekanan oksidatif",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 163,
+    "filename": "board_00163.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Husband)",
+    "angle": "Curiosity",
+    "quality": "draft",
+    "session_id": "eadeb375",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T16:02:55",
+    "copy_data": {
+      "h1": "Gastrik Suami Hilang, Kembali Bahagia?",
+      "h2": "Temui rahsia alam kembalikan keselesaan perutnya kini.",
+      "cta": "Terokai solusi gamat hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Membantu proses pemulihan badan",
+        "Membantu mengekalkan kesihatan kulit",
+        "Membantu melindungi sel antioksidan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 162,
+    "filename": "board_00162.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Child)",
+    "angle": "Social Proof",
+    "quality": "draft",
+    "session_id": "eadeb375",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-09T16:02:01",
+    "copy_data": {
+      "h1": "Gastrik Anak Tenang, Ibu Lega.",
+      "h2": "Resepi Tradisi & Dipercayai, Bantu Anak Selesa Setiap Hari.",
+      "cta": "Alami Kesenangan Anak Hari Ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Melindungi sel daripada tekanan oksidatif",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 161,
+    "filename": "board_00161.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "246e22d5",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-05T00:08:54",
+    "copy_data": {
+      "h1": "Pemulihan Caesar: Rahsia Mak Turun-Temurun",
+      "h2": "Mak dah guna bertahun-tahun, kini giliranmu sayang.",
+      "cta": "Amalan baikmu bermula sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 160,
+    "filename": "board_00160.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "7885b471",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-05T00:05:45",
+    "copy_data": {
+      "h1": "Pemulihan Selepas Bersalin Caesar, Warisan Ibu.",
+      "h2": "Dulu mak pun guna, kini giliranmu pulih sempurna.",
+      "cta": "Amalkan Jeli Gamat hari ini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 159,
+    "filename": "board_00159.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "c082aef2",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-05T00:00:54",
+    "copy_data": {
+      "h1": "Pulih C-section, Mak tahu terbaik!",
+      "h2": "Jeli Gamat Serigama, tradisi keluarga jaga dalaman.",
+      "cta": "Amalkan untuk dirimu, sayang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 158,
+    "filename": "board_00158.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "b4b01cc9",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-04T23:45:53",
+    "copy_data": {
+      "h1": "Pemulihan Caesar: Warisan Ibu Tercinta.",
+      "h2": "Pengalaman Mak, Jeli Gamat bantu pemulihan bersalin Caesar.",
+      "cta": "Sayangi diri, amalkan Jeli Gamat.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Membantu menjaga keselesaan sendi.",
+        "Membantu mengekalkan kesihatan kulit.",
+        "Membantu melindungi sel dari tekanan oksidatif."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 157,
+    "filename": "board_00157.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "781e10ff",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-04T23:30:53",
+    "copy_data": {
+      "h1": "Pemulihan Bersalin Caesar, Warisan Ibu.",
+      "h2": "Jeli Gamat Serigama, pilihan mak turun-temurun.",
+      "cta": "Mula amalkan sekarang, sayang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu melindungi sel daripada tekanan oksidatif"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 156,
+    "filename": "board_00156.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "e3fccb5c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T16:34:47",
+    "copy_data": {
+      "h1": "Anakku, Serigama Bantu Pemulihan Lepas Bersalin.",
+      "h2": "Rahsia Mak turun-temurun, untuk pemulihan sendi dan dalaman.",
+      "cta": "Mula Amalkan Sekarang, Sayang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu kekalkan pergerakan aktif"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 155,
+    "filename": "board_00155.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "3c35db87",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T16:33:07",
+    "copy_data": {
+      "h1": "Rahsia Pemulihan Bersalin Caesar Turun-Temurun",
+      "h2": "Untuk pemulihan bersalin caesar, Mak yakin Serigama.",
+      "cta": "Amalkan Jeli Gamat Serigama kini.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu menjaga keselesaan sendi.",
+        "Membantu mengekalkan kecergasan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 154,
+    "filename": "board_00154.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "cb2d817d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T16:28:34",
+    "copy_data": {
+      "h1": "Mama Betul! Pemulihan Bersalin Jadi Mudah",
+      "h2": "Jeli Gamat Serigama, sokongan ibu berpantang moden.",
+      "cta": "Dapatkan Jeli Gamat sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 153,
+    "filename": "board_00153.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "82fc94c5",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T16:26:50",
+    "copy_data": {
+      "h1": "Pulih selepas bersalin, mak tahu cara.",
+      "h2": "Dulu mak amalkan, kini giliran kamu.",
+      "cta": "Rasai sendiri khasiatnya, sayang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu jaga keselesaan sendi.",
+        "Membantu kekalkan pergerakan aktif."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 152,
+    "filename": "board_00152.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Sakit Sendi / Keradangan",
+    "quality": "draft",
+    "session_id": "1028ecb7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T14:52:27",
+    "copy_data": {
+      "h1": "Jaga Sendi Awal, Macam Mak Dulu",
+      "h2": "Amalan Mak bertahun, sendi sihat kekal muda.",
+      "cta": "Mula jaga sendi anda sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 151,
+    "filename": "board_00151.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "9e9a2667",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T14:40:13",
+    "copy_data": {
+      "h1": "Pulih Bersalin Caesar? Mak Tahu!",
+      "h2": "Jeli Gamat Serigama, Rahsia Tradisi Keluarga.",
+      "cta": "Mula Amalkan Sekarang, Sayang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu menjaga keselesaan sendi.",
+        "Membantu mengekalkan kesihatan kulit."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 150,
+    "filename": "board_00150.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "0d74b28f",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T14:30:47",
+    "copy_data": {
+      "h1": "Warisan Mak untuk pemulihan sempurna.",
+      "h2": "Jeli Gamat Serigama, rahsia Mak sejak dulu.",
+      "cta": "Amalkan demi kesihatanmu, nak.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu melindungi sel daripada tekanan oksidatif"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 149,
+    "filename": "board_00149.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "e8626882",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T14:24:01",
+    "copy_data": {
+      "h1": "Pulih Cergas Selepas Caesar, Macam Mak Dulu.",
+      "h2": "Jaga Kesihatan Diri, Ini Hadiah Untukmu Sayang.",
+      "cta": "Amalkan Untuk Kesihatanmu Sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit",
+        "Membantu melindungi sel daripada tekanan oksidatif"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 148,
+    "filename": "board_00148.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "ceb93a94",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-02T11:55:18",
+    "copy_data": {
+      "h1": "Anakku, Mak jaga pemulihan bersalinmu.",
+      "h2": "Rahsia pemulihan Mak sejak dulu, kini giliranmu.",
+      "cta": "Amalkanlah untuk kesihatanmu.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Menjaga keselesaan sendi.",
+        "Mengekalkan kesihatan kulit."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 147,
+    "filename": "board_00147.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "aed40c9b",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T17:49:10",
+    "copy_data": {
+      "h1": "Pulih Cepat Selepas Bersalin Caesar",
+      "h2": "Jeli Gamat menyokong pemulihan dalaman dan sendi anda.",
+      "cta": "Amalkan Jeli Gamat Hari Ini",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu jaga keselesaan sendi",
+        "Membantu kekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 146,
+    "filename": "board_00146.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "65310d48",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T17:47:39",
+    "copy_data": {
+      "h1": "Pulih Cergas Selepas Caesar, Cepat!",
+      "h2": "Sokongan menyeluruh untuk ibu selepas bersalin Caesar.",
+      "cta": "Amalkan Jeli Gamat hari ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 145,
+    "filename": "board_00145.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "4f8747d8",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T17:46:07",
+    "copy_data": {
+      "h1": "Pemulihan Optimal Selepas Caesar Kini Mudah",
+      "h2": "Sokongan Penyembuhan Dalaman, Sendi & Kulit Terbaik.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu mengekalkan kesihatan kulit",
+        "Membantu menjaga keselesaan sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 144,
+    "filename": "board_00144.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "d831e8f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T17:33:02",
+    "copy_data": {
+      "h1": "Pulih Optimal Selepas Caesar, Cergas Semula!",
+      "h2": "Sokong pemulihan dalaman, sendi, dan kulit anda.",
+      "cta": "Amalkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu mengekalkan kesihatan kulit",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 143,
+    "filename": "board_00143.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "quality": "draft",
+    "session_id": "d831e8f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T17:32:09",
+    "copy_data": {
+      "h1": "Pulih Pantas Selepas Bersalin Caesar!",
+      "h2": "Jeli Gamat: Sokongan Pemulihan Optimal Ibu Caesar.",
+      "cta": "Amalkan Jeli Gamat Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 142,
+    "filename": "board_00142.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "0dfaa89c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T16:29:29",
+    "copy_data": {
+      "h1": "Pulih Cepat Selepas Bersalin Czer!",
+      "h2": "Jeli Gamat: Sokongan Pemulihan Dalaman Ibu.",
+      "cta": "Dapatkan Jeli Gamat Anda Sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu kekalkan kesihatan kulit.",
+        "Membantu menjaga keselesaan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 141,
+    "filename": "board_00141.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "0dfaa89c",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-25T16:28:45",
+    "copy_data": {
+      "h1": "Pulih Cepat Selepas Bersalin Czer!",
+      "h2": "Jeli Gamat: Sokongan Pemulihan Dalaman Ibu.",
+      "cta": "Dapatkan Jeli Gamat Anda Sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan.",
+        "Menyokong pembaikan tisu badan.",
+        "Membantu kekalkan kesihatan kulit.",
+        "Membantu menjaga keselesaan sendi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 140,
+    "filename": "board_00140.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "73c40929",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-24T17:38:40",
+    "copy_data": {
+      "h1": "Pemulihan Pantas Selepas Bersalin Lebih Mudah.",
+      "h2": "Jeli Gamat: Sokongan Semulajadi Ibu Selepas Bersalin.",
+      "cta": "Dapatkan Jeli Gamat Anda Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 139,
+    "filename": "board_00139.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "73c40929",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-24T17:37:42",
+    "copy_data": {
+      "h1": "Pemulihan Pantas Selepas Bersalin Lebih Mudah.",
+      "h2": "Jeli Gamat: Sokongan Semulajadi Ibu Selepas Bersalin.",
+      "cta": "Dapatkan Jeli Gamat Anda Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 138,
+    "filename": "board_00138.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "73c40929",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-24T17:36:57",
+    "copy_data": {
+      "h1": "Pemulihan Pantas Selepas Bersalin Lebih Mudah.",
+      "h2": "Jeli Gamat: Sokongan Semulajadi Ibu Selepas Bersalin.",
+      "cta": "Dapatkan Jeli Gamat Anda Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 137,
+    "filename": "board_00137.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "73c40929",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-24T17:36:06",
+    "copy_data": {
+      "h1": "Pemulihan Pantas Selepas Bersalin Lebih Mudah.",
+      "h2": "Jeli Gamat: Sokongan Semulajadi Ibu Selepas Bersalin.",
+      "cta": "Dapatkan Jeli Gamat Anda Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu menjaga keselesaan sendi",
+        "Membantu mengekalkan kesihatan kulit"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 136,
+    "filename": "board_00136.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Post-Caesarean Recovery",
+    "quality": "draft",
+    "session_id": "1d0cc97b",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-24T17:35:04",
+    "copy_data": {
+      "h1": "Pemulihan Ibu Selepas Caesarean Lebih Cepat!",
+      "h2": "Jeli Gamat: Kolagen, antioksidan sokong pemulihan badan.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu proses pemulihan badan",
+        "Menyokong pembaikan tisu badan",
+        "Membantu mengekalkan kesihatan kulit",
+        "Membantu mengekalkan kecergasan"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 135,
+    "filename": "board_00135.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "f6e166e7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T13:40:02",
+    "copy_data": {
+      "h1": "Ucapkan Selamat Tinggal Sakit Sendi!",
+      "h2": "Saya kembali aktif dengan sokongan Jeli Gamat.",
+      "cta": "Cuba Jeli Gamat sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 134,
+    "filename": "board_00134.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "f6e166e7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T13:39:15",
+    "copy_data": {
+      "h1": "Ucapkan Selamat Tinggal Sakit Sendi!",
+      "h2": "Saya kembali aktif dengan sokongan Jeli Gamat.",
+      "cta": "Cuba Jeli Gamat sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 133,
+    "filename": "board_00133.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "f6e166e7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T13:38:23",
+    "copy_data": {
+      "h1": "Ucapkan Selamat Tinggal Sakit Sendi!",
+      "h2": "Saya kembali aktif dengan sokongan Jeli Gamat.",
+      "cta": "Cuba Jeli Gamat sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 132,
+    "filename": "board_00132.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "f6e166e7",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T13:37:37",
+    "copy_data": {
+      "h1": "Ucapkan Selamat Tinggal Sakit Sendi!",
+      "h2": "Saya kembali aktif dengan sokongan Jeli Gamat.",
+      "cta": "Cuba Jeli Gamat sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 131,
+    "filename": "board_00131.png",
+    "label": "Ad 7 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:27:07",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 130,
+    "filename": "board_00130.png",
+    "label": "Ad 6 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:26:11",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 129,
+    "filename": "board_00129.png",
+    "label": "Ad 5 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:25:14",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 128,
+    "filename": "board_00128.png",
+    "label": "Ad 4 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:24:02",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 127,
+    "filename": "board_00127.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:23:08",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 126,
+    "filename": "board_00126.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:22:14",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 125,
+    "filename": "board_00125.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "0e8de740",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T12:21:13",
+    "copy_data": {
+      "h1": "Akhiri Sakit Sendi, Nikmati Hidup Aktif!",
+      "h2": "Formulasi gamat tradisional untuk keselesaan sendi berpanjangan.",
+      "cta": "Amalkan Untuk Sendi Sihat!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 124,
+    "filename": "board_00124.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3b5c3e6a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T11:50:25",
+    "copy_data": {
+      "h1": "Bebas Sakit Sendi, Bergerak Aktif!",
+      "h2": "Jeli Gamat: Sokongan Semulajadi untuk Kesihatan Sendi Anda.",
+      "cta": "Dapatkan Jeli Gamat Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 123,
+    "filename": "board_00123.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3b5c3e6a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T11:49:01",
+    "copy_data": {
+      "h1": "Bebas Sakit Sendi, Bergerak Aktif!",
+      "h2": "Jeli Gamat: Sokongan Semulajadi untuk Kesihatan Sendi Anda.",
+      "cta": "Dapatkan Jeli Gamat Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 122,
+    "filename": "board_00122.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "3b5c3e6a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T11:48:21",
+    "copy_data": {
+      "h1": "Bebas Sakit Sendi, Bergerak Aktif!",
+      "h2": "Jeli Gamat: Sokongan Semulajadi untuk Kesihatan Sendi Anda.",
+      "cta": "Dapatkan Jeli Gamat Hari Ini!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 121,
+    "filename": "board_00121.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "beeb9d1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:52:40",
+    "copy_data": {
+      "h1": "Sendi Sihat, Pergerakan Aktif Semula!",
+      "h2": "Ekstrak Gamat Semula Jadi untuk Kesihatan Sendi Menyeluruh.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 120,
+    "filename": "board_00120.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "beeb9d1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:52:01",
+    "copy_data": {
+      "h1": "Sendi Sihat, Pergerakan Aktif Semula!",
+      "h2": "Ekstrak Gamat Semula Jadi untuk Kesihatan Sendi Menyeluruh.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 119,
+    "filename": "board_00119.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "beeb9d1a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:51:16",
+    "copy_data": {
+      "h1": "Sendi Sihat, Pergerakan Aktif Semula!",
+      "h2": "Ekstrak Gamat Semula Jadi untuk Kesihatan Sendi Menyeluruh.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 118,
+    "filename": "board_00118.png",
+    "label": "Ad 3 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "df7e5ce1",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:12:13",
+    "copy_data": {
+      "h1": "Sendi Selesa, Hidup Lebih Aktif!",
+      "h2": "Kisah kejayaan Aisyah: Kembali bergerak bebas tanpa risau sendi.",
+      "cta": "Amalkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Menjaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Mengekalkan pergerakan aktif.",
+        "Menyokong struktur sendi."
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 117,
+    "filename": "board_00117.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "df7e5ce1",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:11:27",
+    "copy_data": {
+      "h1": "Sendi Selesa, Hidup Lebih Aktif!",
+      "h2": "Kisah kejayaan Aisyah: Kembali bergerak bebas tanpa risau sendi.",
+      "cta": "Amalkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Menjaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Mengekalkan pergerakan aktif.",
+        "Menyokong struktur sendi."
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 116,
+    "filename": "board_00116.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "df7e5ce1",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:10:34",
+    "copy_data": {
+      "h1": "Sendi Selesa, Hidup Lebih Aktif!",
+      "h2": "Kisah kejayaan Aisyah: Kembali bergerak bebas tanpa risau sendi.",
+      "cta": "Amalkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Menjaga keselesaan sendi.",
+        "Menyokong fungsi tulang rawan.",
+        "Mengekalkan pergerakan aktif.",
+        "Menyokong struktur sendi."
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 115,
+    "filename": "board_00115.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "26a14951",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-18T10:02:47",
+    "copy_data": {
+      "h1": "Akhirnya Sendi Kembali Selesa!",
+      "h2": "Jeli Gamat bantu sendi aktif semula.",
+      "cta": "Cuba Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Membantu proses pemulihan badan"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 114,
+    "filename": "board_00114.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "c69a6bfc",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-16T18:00:50",
+    "copy_data": {
+      "h1": "Sendi Selesa, Bergerak Bebas Semula!",
+      "h2": "Jeli Gamat 550ML bantu sendi anda kekal aktif.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "TESTIMONIAL"
+    }
+  },
+  {
+    "id": 113,
+    "filename": "board_00113.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "74ed3381",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-16T16:39:28",
+    "copy_data": {
+      "h1": "Legakan Sakit Sendi, Kekal Aktif!",
+      "h2": "Sokongan Sendi Semulajadi, Gerak Bebas.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 112,
+    "filename": "board_00112.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "bbf1d0f0",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-16T16:19:03",
+    "copy_data": {
+      "h1": "Sendi Kuat, Hidup Lebih Aktif!",
+      "h2": "Jeli Gamat 550ML: Sokongan Sendi Optimum Setiap Hari.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu jaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekal pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 111,
+    "filename": "board_00111.png",
+    "label": "Ad 2 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "a72531e1",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-16T16:14:46",
+    "copy_data": {
+      "h1": "Kembalikan Keselesaan Sendi, Gerak Aktif!",
+      "h2": "Formulasi Gamat bantu sokong kesihatan sendi anda.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
+    "id": 110,
+    "filename": "board_00110.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Joint Pain",
+    "quality": "draft",
+    "session_id": "a72531e1",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-06-16T16:14:03",
+    "copy_data": {
+      "h1": "Kembalikan Keselesaan Sendi, Gerak Aktif!",
+      "h2": "Formulasi Gamat bantu sokong kesihatan sendi anda.",
+      "cta": "Dapatkan Jeli Gamat Sekarang!",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Membantu menjaga keselesaan sendi",
+        "Menyokong fungsi tulang rawan",
+        "Membantu kekalkan pergerakan aktif",
+        "Menyokong struktur sendi"
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 109,
     "filename": "board_00109.png",
     "label": "Ad 1 — Jeli Gamat 550ML",

@@ -14,12 +14,13 @@ echo  ==========================================
 echo   Static Ads Generator  ^|  localhost:7373
 echo  ==========================================
 echo.
-echo  Opening browser in 3 seconds...
+echo  Browser will open automatically once the server is ready.
 echo  Press Ctrl+C to stop the server.
 echo.
 
-:: Open browser after 3 second delay (in background)
-start "" cmd /c "timeout /t 3 /nobreak >nul && start http://localhost:7373"
+:: NOTE: ui_server.py itself opens the browser tab once the server is ready
+:: (see threading.Timer(...).start() in its __main__ block). Do NOT also call
+:: `start http://localhost:7373` here — that was opening a second, redundant tab.
 
 :: Start Flask server
 "C:\Users\haliza.LUXOR\AppData\Local\Programs\Python\Python312\python.exe" ui_server.py

@@ -1,0 +1,52 @@
+{
+  "csection": {
+    "label": "C-Section Recovery",
+    "emoji": "🤱",
+    "subtitle": "Ibu 56 tahun, anak lepas Caesar",
+    "narrative": "Ibu 56 tahun, anak baru lepas bersalin Czer, proses pemulihan perlahan, anak sukar bergerak untuk menguruskan baby dan menyebabkan seisi rumah tidak terurus.",
+    "use_cases": [
+      "Pemulihan Selepas Bersalin Caesar"
+    ],
+    "style_cues": "Warm, believable Malaysian home setting. Natural, soft lighting — window light or warm indoor lamp light, never cold or clinical. Gold/amber undertones consistent with the brand's heritage identity. The mood is a moment of relief or connection, not a staged product demonstration."
+  },
+  "knee": {
+    "label": "Sakit Lutut (Knee Pain)",
+    "emoji": "🦵",
+    "subtitle": "60yo, stiff knees, wants dignity back",
+    "narrative": "A 60 year old whose stiff, aching knees makes stairs, solat and keeping up with grand-children hard and he has quietly began to feel useless — he isn't after miracle, he just wants his dignity, his prayers performed properly and his place back in family life.",
+    "use_cases": [
+      "Sakit Sendi / Keradangan"
+    ],
+    "style_cues": "Warm, believable Malaysian home setting. Natural, soft lighting — window light or warm indoor lamp light, never cold or clinical. Gold/amber undertones consistent with the brand's heritage identity. The mood is a moment of relief or connection, not a staged product demonstration."
+  },
+  "gastric_child": {
+    "label": "Gastrik (Child)",
+    "emoji": "🧒",
+    "subtitle": "Mother, 35-40, child's gastric issues",
+    "narrative": "A 35 to 40 years old mother whose child battles gastric that wracked his focus and appetite — she's tried 6 things, torn between forcing him off his favourite food and watching him hurt — she wants a gentle, trusted daily helper so her child can just be comfortable again.",
+    "use_cases": [
+      "Lega Gastrik / Refluks Asid"
+    ],
+    "style_cues": "Warm, believable Malaysian home setting. Natural, soft lighting — window light or warm indoor lamp light, never cold or clinical. Gold/amber undertones consistent with the brand's heritage identity. The mood is a moment of relief or connection, not a staged product demonstration."
+  },
+  "gastric_husband": {
+    "label": "Gastrik (Husband)",
+    "emoji": "🍽️",
+    "subtitle": "Wife, 35, husband's gastric cuts meals short",
+    "narrative": "A 35 year old wife whose husband's gastric cuts every kenduri and every meal short and has quietly drained the ease and romance of the marriage, she's exhausted by the complaints and early exits and wants back the food-loving partnership that used to be there.",
+    "use_cases": [
+      "Lega Gastrik / Refluks Asid"
+    ],
+    "style_cues": "Warm, believable Malaysian home setting. Natural, soft lighting — window light or warm indoor lamp light, never cold or clinical. Gold/amber undertones consistent with the brand's heritage identity. The mood is a moment of relief or connection, not a staged product demonstration."
+  },
+  "accident": {
+    "label": "Accident Recovery",
+    "emoji": "🏍️",
+    "subtitle": "Delivery rider, 30, recovering from accident",
+    "narrative": "Delivery rider, 30 years old, baru alami kemalangan, pergerakan terhad sehingga rasa menyusahkan sebab terlalu bergantung dengan isteri — mahu pulih secepat mungkin dan kembali kerja untuk sara keluarga.",
+    "use_cases": [
+      "Pemulihan Selepas Kemalangan"
+    ],
+    "style_cues": "Warm, believable Malaysian home setting. Natural, soft lighting — window light or warm indoor lamp light, never cold or clinical. Gold/amber undertones consistent with the brand's heritage identity. The mood is a moment of relief or connection, not a staged product demonstration."
+  }
+}

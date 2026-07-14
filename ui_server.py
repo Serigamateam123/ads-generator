@@ -3,7 +3,8 @@ static-remix UI server
 Run: python ui_server.py
 Opens at: http://localhost:7373
 """
-import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap
+import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap, random
+import concurrent.futures
 from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
 
@@ -17,7 +18,10 @@ FONT_FALLBACK   = str(FONTS_DIR / "Poppins-Bold.ttf")
 
 PORT         = int(os.environ.get("PORT", 7373))
 MYR_RATE     = 4.07
-COSTS        = {"draft": 0.01, "final": 0.04}
+# Real Gemini API per-image prices (verified against https://ai.google.dev/gemini-api/docs/pricing):
+#   gemini-2.5-flash-image ("draft")              = $0.039/image
+#   nano-banana-pro-preview ("final"), 1K/2K output = $0.134/image (4K tier is $0.24, not used here)
+COSTS        = {"draft": 0.039, "final": 0.134}
 DRAFT_MODEL  = "gemini-2.5-flash-image"           # cheap draft (~$0.01)
 DRAFT_FALL   = "gemini-3.1-flash-image-preview"   # fallback draft
 FINAL_MODEL  = "nano-banana-pro-preview"          # Nano Banana Pro — highest quality, accepts ref images
@@ -29,19 +33,599 @@ _TMP          = Path("/tmp") if _sys.platform != "win32" else SKILLS_DIR
 SESSIONS_DIR  = _TMP / "sessions"
 BRAND_DIR     = SKILLS_DIR / "brand_kit"
 BRAND_JSON    = _TMP / "brand_kit.json"
+SPEND_JSON    = _TMP / "spend_ledger.json"   # cumulative real $ spent — NOT a Gemini "balance"
+                                              # (Gemini API has no balance/credits endpoint;
+                                              # this is a local running total of actual generations)
+PERSONAS_JSON = _TMP / "personas.json"       # editable in-app via the Personas & Angles tab
+ANGLES_JSON   = _TMP / "angles.json"         # editable in-app via the Personas & Angles tab
+STYLES_JSON   = _TMP / "styles.json"         # editable in-app via the Personas & Angles tab
+BENEFITS_JSON = _TMP / "product_benefits.json"  # authored per-segment benefit bullets (from user's source docs)
 TEMPLATES_DIR = SKILLS_DIR / "templates"
 TEMPLATES_JSON= TEMPLATES_DIR / "templates.json"
 for d in (SESSIONS_DIR, BRAND_DIR, TEMPLATES_DIR):
     d.mkdir(exist_ok=True)
 
-PROBLEM_CONTEXT = {
-    "Post-partum":   "new mothers recovering after childbirth — wound healing, uterus recovery, energy restoration",
-    "Joint Pain":    "people with joint/knee pain or arthritis needing natural anti-inflammatory relief",
-    "Accident":      "people recovering from accidents or fractures needing faster natural healing",
-    "Gastric":       "people with gastric problems, stomach ulcers, or acid reflux needing gut lining repair",
-    "Post-Op":       "patients after surgery needing faster wound healing and immune support",
-    "Gout":          "people with gout or high uric acid needing natural inflammation reduction",
+# ── Use cases per product — from 10_customers/use_cases.md ─────────────────────
+# Only confidence-rated ✅ use cases are included (Primary/Strong/Common/Documented).
+# Anecdotal/off-label use cases (acne, stretch marks, hair gel, pet use, old scars) are
+# deliberately excluded — the source doc flags these as "must not appear in marketing"
+# or "not a marketing lever" under the MAB claims framework.
+PRODUCT_USE_CASES = {
+    # benefit_keywords: lowercase substrings to match against this product's actual
+    # Brand Setup benefit bullets — explicit, since use-case labels are in English
+    # but the user's benefit text is largely in Malay (generic NLP matching fails).
+    "jeli gamat": [
+        {"label": "Pemulihan Selepas Bersalin Caesar", "emoji": "🤱",
+         "context": "new mothers recovering after a caesarean delivery — wound healing, uterus recovery, "
+                     "confinement (pantang) period support; the single highest-intent, culturally-embedded use case",
+         "benefit_keywords": ["pemulihan", "kemalangan", "tisu badan"]},
+        {"label": "Pemulihan Luka Selepas Pembedahan", "emoji": "🏥",
+         "context": "patients recovering after surgery needing oral/internal support for faster wound healing — "
+                     "many customers report a noticeable difference within ~1 week",
+         "benefit_keywords": ["pemulihan", "tisu badan", "kemalangan"]},
+        {"label": "Lega Gastrik / Refluks Asid", "emoji": "🫃",
+         "context": "people with gastric problems, stomach ulcers, or acid reflux needing gut lining repair — "
+                     "a chronic, repeat-purchase use case, often noticeable within ~1 week",
+         "benefit_keywords": ["kesihatan badan", "kecergasan", "harian"]},
+        {"label": "Sakit Sendi / Keradangan", "emoji": "🦵",
+         "context": "people with joint pain, stiffness, or inflammation needing natural anti-inflammatory relief — "
+                     "results highly variable by severity, age, and concurrent conditions",
+         "benefit_keywords": ["sendi", "tulang rawan", "pergerakan"]},
+        {"label": "Kesihatan & Kecergasan Umum", "emoji": "💪",
+         "context": "people wanting general health maintenance, energy, and vitality support through daily use — "
+                     "a cumulative, long-term benefit",
+         "benefit_keywords": ["kecergasan", "konsisten", "harian", "setiap hari"]},
+        {"label": "Pemulihan Selepas Kemalangan", "emoji": "🚑",
+         "context": "people recovering from accidents or physical trauma needing faster natural healing and "
+                     "immune-cell recovery support",
+         "benefit_keywords": ["kemalangan", "pemulihan", "tisu badan"]},
+    ],
+    "gel gamat": [
+        {"label": "Luka (Ringan & Serius)", "emoji": "🩹",
+         "context": "people with minor or severe wounds needing topical healing support — the #1 reason "
+                     "customers buy this product; safe on open wounds and under bandages, visible difference "
+                     "typically within a few days",
+         "benefit_keywords": ["wound"]},
+        {"label": "Melecur", "emoji": "🔥",
+         "context": "people with burns needing a calming topical gel that supports the skin's healing process",
+         "benefit_keywords": ["burn"]},
+        {"label": "Ekzema", "emoji": "🌿",
+         "context": "people with eczema needing a gel that calms and hydrates irritated, inflamed skin",
+         "benefit_keywords": ["eczema"]},
+        {"label": "Elak Parut Luka Baharu", "emoji": "✨",
+         "context": "people with fresh wounds wanting to minimise scarring during the early healing phase",
+         "benefit_keywords": ["scar", "fresh-wound"]},
+        {"label": "Pelembap Kulit", "emoji": "🧴",
+         "context": "people using the gel as a gentle, everyday moisturiser for face and hands",
+         "benefit_keywords": ["moisturiser", "moisturizer", "face and hands"]},
+        {"label": "Untuk Kanak-Kanak", "emoji": "👶",
+         "context": "parents looking for a gentle, safe topical gel for babies and children's minor cuts and "
+                     "skin irritation",
+         "benefit_keywords": ["wound"]},   # no dedicated pediatric bullet exists yet — safest available fallback
+    ],
+    "minyak urut": [
+        {"label": "Otot Lenguh Selepas Aktiviti", "emoji": "💪",
+         "context": "people with sore, fatigued muscles after physical activity needing a gentle, non-warming "
+                     "aromatherapy massage oil",
+         "benefit_keywords": ["otot lenguh", "keletihan"]},
+        {"label": "Sakit & Kaku Sendi", "emoji": "🦵",
+         "context": "people with joint pain or stiffness needing a gentle massage oil for relief, without the "
+                     "harsh heat sensation of traditional warming oils",
+         "benefit_keywords": ["sendi", "kekejangan"]},
+        {"label": "Lega Otot Selepas Bersenam", "emoji": "🏋️",
+         "context": "active people and athletes needing post-workout muscle relief through massage",
+         "benefit_keywords": ["otot lenguh", "aktiviti fizikal"]},
+        {"label": "Sakit Kepala (Urut Dahi)", "emoji": "🤕",
+         "context": "people with headaches using gentle temple massage with an aromatic, non-warming oil for relief",
+         "benefit_keywords": ["sakit kepala", "dahi"]},
+        {"label": "Sakit Perut Kanak-Kanak", "emoji": "🍼",
+         "context": "parents treating children's stomach discomfort with a traditional Malay remedy — the "
+                     "gentle, non-warming formulation is appropriate for children",
+         "benefit_keywords": ["lembut", "sensitif"]},   # no dedicated bullet — closest gentle/non-warming fallback
+        {"label": "Urutan Badan", "emoji": "💆",
+         "context": "people wanting a general relaxing body massage with a clean, aromatic, roller-ball "
+                     "applied oil",
+         "benefit_keywords": ["mengurut", "aroma", "roller-ball"]},
+    ],
 }
+
+# Fallback generic list — used only when the active product's name doesn't match
+# any known product above (e.g. no product selected yet).
+DEFAULT_USE_CASES = [
+    {"label": "Selepas Bersalin", "emoji": "🤱", "context": "new mothers recovering after childbirth — wound healing, uterus recovery, energy restoration"},
+    {"label": "Sakit Sendi",      "emoji": "🦵", "context": "people with joint/knee pain or arthritis needing natural anti-inflammatory relief"},
+    {"label": "Kemalangan",       "emoji": "🚑", "context": "people recovering from accidents or fractures needing faster natural healing"},
+    {"label": "Gastrik",          "emoji": "🫃", "context": "people with gastric problems, stomach ulcers, or acid reflux needing gut lining repair"},
+    {"label": "Selepas Pembedahan", "emoji": "🏥", "context": "patients after surgery needing faster wound healing and immune support"},
+]
+
+def _product_key(product_name: str) -> str:
+    """Normalize a free-text product name to the PRODUCT_USE_CASES/PRODUCT_BENEFITS key."""
+    name = (product_name or "").lower()
+    if "jeli" in name:
+        return "jeli gamat"
+    if "minyak" in name:
+        return "minyak urut"
+    if "gel" in name and "gamat" in name:
+        return "gel gamat"
+    return ""
+
+def get_use_cases_for_product(product_name: str) -> list:
+    return PRODUCT_USE_CASES.get(_product_key(product_name), DEFAULT_USE_CASES)
+
+def get_benefit_keywords(product_name: str, problem_label: str) -> list:
+    """Look up the explicit benefit-matching keywords for a given product + use case."""
+    for uc in get_use_cases_for_product(product_name):
+        if uc["label"] == problem_label:
+            return uc.get("benefit_keywords", [])
+    return []
+
+def get_other_benefit_keywords(product_name: str, problem_label: str) -> list:
+    """All OTHER use cases' benefit_keywords for this product (excluding the current
+    one) — used so the benefits fallback never pads a use case that has no
+    dedicated block of its own with bullets that clearly belong to a DIFFERENT,
+    specific use case (e.g. accident-recovery bullets bleeding into a gastric ad
+    just because gastric's own keywords are too generic to hit 3 direct matches)."""
+    others = []
+    for uc in get_use_cases_for_product(product_name):
+        if uc["label"] != problem_label:
+            others.extend(uc.get("benefit_keywords", []))
+    return others
+
+# Hand-curated, UNAMBIGUOUS condition-specific nouns — deliberately much narrower
+# than benefit_keywords above. benefit_keywords includes generic process words
+# (pemulihan, tisu badan, harian) that are legitimately shared across many use
+# cases, so they're unsafe to blindly delete from free-form text. These terms are
+# only included when they unambiguously name ONE specific condition, safe to strip
+# out of a DIFFERENT use case's copy-generation context (e.g. "sendi" never belongs
+# in a C-section ad's background text, even though it's a valid general product fact).
+CONDITION_TERMS = {
+    "Pemulihan Selepas Bersalin Caesar": ["bersalin", "caesar", "czer", "cesarean"],
+    "Pemulihan Luka Selepas Pembedahan": ["pembedahan"],
+    "Lega Gastrik / Refluks Asid": ["gastrik", "refluks asid", "gerd"],
+    "Sakit Sendi / Keradangan": ["sendi", "tulang rawan", "keradangan", "sakit lutut"],
+    "Pemulihan Selepas Kemalangan": ["kemalangan"],
+    "Melecur": ["melecur"],
+    "Ekzema": ["ekzema"],
+    "Elak Parut Luka Baharu": ["parut luka"],
+    "Otot Lenguh Selepas Aktiviti": ["otot lenguh"],
+    "Sakit & Kaku Sendi": ["sendi", "kaku sendi"],
+    "Sakit Kepala (Urut Dahi)": ["sakit kepala"],
+    "Sakit Perut Kanak-Kanak": ["sakit perut kanak-kanak"],
+}
+
+def redact_other_conditions(text: str, product_name: str, problem_label: str) -> str:
+    """Strip mentions of OTHER use cases' specific conditions (e.g. 'sendi') out of
+    general background text (Product description, Proof, Competitors) before it
+    reaches copy generation. A 'stay on topic' instruction alone wasn't reliable
+    enough against a condition named prominently in the source text itself — this
+    removes the temptation at the source instead of relying on the model to resist it."""
+    if not text:
+        return text
+    for uc in get_use_cases_for_product(product_name):
+        if uc["label"] == problem_label:
+            continue
+        for term in CONDITION_TERMS.get(uc["label"], []):
+            text = re.sub(re.escape(term), "", text, flags=re.IGNORECASE)
+    # Clean up artifacts left behind by removed words
+    text = re.sub(r",\s*,", ",", text)
+    text = re.sub(r",\s*\.", ".", text)
+    text = re.sub(r"\s+,", ",", text)
+    text = re.sub(r"\s{2,}", " ", text)
+    return text.strip()
+
+# Flat label → context lookup used by build_prompt — merges every product's use
+# cases plus the fallback list, since labels are unique across the whole set.
+PROBLEM_CONTEXT = {}
+for _uc_list in list(PRODUCT_USE_CASES.values()) + [DEFAULT_USE_CASES]:
+    for _uc in _uc_list:
+        PROBLEM_CONTEXT[_uc["label"]] = _uc["context"]
+
+# ── Authored per-segment benefit bullets — user-supplied source docs (e.g.
+# Manfaat_Jeli_Gamat_Meta_Ads.docx), verbatim, no AI involved. When a use case
+# has authored bullets here, they are used DIRECTLY as ground truth instead of
+# fuzzy-keyword-matching the general Brand Setup text — eliminates the
+# cross-use-case contamination risk that keyword matching is prone to.
+DEFAULT_PRODUCT_BENEFITS = {
+    "jeli gamat": {
+        "Sakit Sendi / Keradangan": [
+            "Bantu bina semula rawan sendi.",
+            "Sokong struktur sendi yang sihat.",
+            "Kekal ligamen dan tendon yang kuat.",
+            "Kurang geseran antara sendi.",
+            "Kekal keanjalan tisu sendi.",
+            "Sokong tindak balas keradangan yang normal.",
+            "Kekal keselesaan ketika bergerak.",
+            "Sokong kesihatan sendi harian.",
+            "Bantu baiki tisu sendi.",
+            "Bekal nutrien untuk bina tisu baharu.",
+            "Bantu hasil kolagen semula jadi.",
+            "Sokong pembentukan tisu badan.",
+        ],
+        "Lega Gastrik / Refluks Asid": [
+            "Sokong pembaharuan tisu saluran penghadaman.",
+            "Kekal kesihatan lapisan perut.",
+            "Bantu baiki tisu badan.",
+            "Bekal nutrien ketika badan pulih.",
+            "Sokong penghasilan kolagen.",
+            "Bantu pembaharuan sel.",
+            "Sokong kesihatan badan.",
+            "Bekal sebatian bioaktif semula jadi.",
+        ],
+        "Pemulihan Selepas Bersalin Caesar": [
+            "Bantu bina tisu baharu.",
+            "Sokong pemulihan kulit.",
+            "Bantu hasil kolagen semula jadi.",
+            "Kekal keanjalan kulit.",
+            "Sokong pemulihan luka.",
+            "Bantu baiki tisu badan.",
+            "Sokong pemulihan selepas bersalin.",
+            "Bantu bina sel baharu.",
+            "Sokong pembaikan tisu.",
+            "Sokong proses pemulihan badan.",
+        ],
+        "Pemulihan Selepas Kemalangan": [
+            "Bantu bina tisu baharu.",
+            "Sokong pembinaan semula kulit.",
+            "Kekal keanjalan kulit.",
+            "Sokong pemulihan tisu.",
+            "Bantu baiki tisu cedera.",
+            "Sokong pemulihan badan.",
+            "Bantu regenerasi tisu.",
+            "Sokong penghasilan kolagen.",
+            "Sokong proses pemulihan badan.",
+        ],
+        "Pemulihan Luka Selepas Pembedahan": [
+            "Bantu bina tisu baharu.",
+            "Sokong pemulihan kulit.",
+            "Bantu hasil kolagen badan.",
+            "Kekal kekuatan tisu.",
+            "Bantu baiki tisu badan.",
+            "Sokong pemulihan selepas pembedahan.",
+            "Bantu bina sel baharu.",
+            "Sokong pembaikan tisu.",
+            "Sokong proses pemulihan badan.",
+        ],
+    },
+}
+
+def load_product_benefits() -> dict:
+    if BENEFITS_JSON.exists():
+        with open(BENEFITS_JSON, encoding="utf-8") as f:
+            return json.load(f)
+    save_product_benefits(DEFAULT_PRODUCT_BENEFITS)
+    return {k: dict(v) for k, v in DEFAULT_PRODUCT_BENEFITS.items()}
+
+def save_product_benefits(benefits: dict):
+    with open(BENEFITS_JSON, "w", encoding="utf-8") as f:
+        json.dump(benefits, f, indent=2, ensure_ascii=False)
+
+PRODUCT_BENEFITS = load_product_benefits()
+
+def get_authored_benefits(product_name: str, problem_label: str) -> list:
+    """Ground-truth benefit bullets authored by the user for this exact product +
+    use case (e.g. from a supplied Word doc) — returns [] if none were provided,
+    in which case the caller should fall back to keyword-matching Brand Setup text."""
+    return PRODUCT_BENEFITS.get(_product_key(product_name), {}).get(problem_label, [])
+
+# ── Customer personas & persuasion angles — editable in-app via the Personas & ─
+# Angles tab, persisted to personas.json / angles.json (same pattern as brand_kit.json).
+# Persona shapes WHO appears in the ad + the emotional voice of the copy.
+# Angle shapes HOW the copy is framed (persuasion style) — fully independent of persona.
+def _persona_prompt_from_narrative(narrative: str) -> str:
+    """Wrap a raw persona story into a Gemini casting instruction. Gemini infers
+    ethnicity/age/wardrobe/hijab/setting from the story itself — never hand-authored."""
+    return (
+        "Cast the person (or people) described in this real customer story. Infer appropriate, "
+        "brand-consistent Malaysian casting — ethnicity, age, wardrobe, hijab/tudung if a Malay woman, "
+        "and setting — directly from the story below. Show a believable moment tied to this exact "
+        "situation; favour a moment of relief or returning normalcy over visible pain or illness.\n"
+        f"CUSTOMER STORY: {narrative}"
+    )
+
+def _persona_copy_voice_from_narrative(narrative: str) -> str:
+    """Wrap a raw persona story into ad-copy voice guidance."""
+    return (
+        "Write for this exact person and their emotional situation — speak to their specific worry, "
+        "hope, and daily reality, not a generic customer:\n"
+        f"{narrative}"
+    )
+
+DEFAULT_PERSONA_STYLE_CUES = (
+    "Warm, believable Malaysian home setting. Natural, soft lighting — window light or warm indoor "
+    "lamp light, never cold or clinical. Gold/amber undertones consistent with the brand's heritage "
+    "identity. The mood is a moment of relief or connection, not a staged product demonstration."
+)
+
+DEFAULT_PERSONAS = {
+    "csection": {
+        "label": "C-Section Recovery",
+        "emoji": "🤱",
+        "subtitle": "Ibu 56 tahun, anak lepas Caesar",
+        "narrative": (
+            "Ibu 56 tahun, anak baru lepas bersalin Czer, proses pemulihan perlahan, anak sukar bergerak "
+            "untuk menguruskan baby dan menyebabkan seisi rumah tidak terurus."
+        ),
+        "use_cases": ["Pemulihan Selepas Bersalin Caesar"],
+        "style_cues": DEFAULT_PERSONA_STYLE_CUES,
+    },
+    "knee": {
+        "label": "Sakit Lutut (Knee Pain)",
+        "emoji": "🦵",
+        "subtitle": "60yo, stiff knees, wants dignity back",
+        "narrative": (
+            "A 60 year old whose stiff, aching knees makes stairs, solat and keeping up with "
+            "grand-children hard and he has quietly began to feel useless — he isn't after miracle, "
+            "he just wants his dignity, his prayers performed properly and his place back in family life."
+        ),
+        "use_cases": ["Sakit Sendi / Keradangan"],
+        "style_cues": DEFAULT_PERSONA_STYLE_CUES,
+    },
+    "gastric_child": {
+        "label": "Gastrik (Child)",
+        "emoji": "🧒",
+        "subtitle": "Mother, 35-40, child's gastric issues",
+        "narrative": (
+            "A 35 to 40 years old mother whose child battles gastric that wracked his focus and "
+            "appetite — she's tried 6 things, torn between forcing him off his favourite food and "
+            "watching him hurt — she wants a gentle, trusted daily helper so her child can just be "
+            "comfortable again."
+        ),
+        "use_cases": ["Lega Gastrik / Refluks Asid"],
+        "style_cues": DEFAULT_PERSONA_STYLE_CUES,
+    },
+    "gastric_husband": {
+        "label": "Gastrik (Husband)",
+        "emoji": "🍽️",
+        "subtitle": "Wife, 35, husband's gastric cuts meals short",
+        "narrative": (
+            "A 35 year old wife whose husband's gastric cuts every kenduri and every meal short and "
+            "has quietly drained the ease and romance of the marriage, she's exhausted by the "
+            "complaints and early exits and wants back the food-loving partnership that used to be there."
+        ),
+        "use_cases": ["Lega Gastrik / Refluks Asid"],
+        "style_cues": DEFAULT_PERSONA_STYLE_CUES,
+    },
+    "accident": {
+        "label": "Accident Recovery",
+        "emoji": "🏍️",
+        "subtitle": "Delivery rider, 30, recovering from accident",
+        "narrative": (
+            "Delivery rider, 30 years old, baru alami kemalangan, pergerakan terhad sehingga rasa "
+            "menyusahkan sebab terlalu bergantung dengan isteri — mahu pulih secepat mungkin dan "
+            "kembali kerja untuk sara keluarga."
+        ),
+        "use_cases": ["Pemulihan Selepas Kemalangan"],
+        "style_cues": DEFAULT_PERSONA_STYLE_CUES,
+    },
+}
+
+DEFAULT_ANGLES = {
+    "problem_agitate": {
+        "label": "Problem Agitate",
+        "psychology": "Fear of loss / urgency",
+        "copy_instruction": (
+            "Make the audience fully realize the impact of their problem and the cost of doing nothing. "
+            "Expand the consequences of the problem without exaggeration.\n"
+            "STRUCTURE — h1 states or intensifies the pain itself (NOT the solution or relief) — make the "
+            "cost of inaction felt, urgent. h2 deepens the specific consequence — what keeps getting worse "
+            "or what's being lost the longer this goes unaddressed. cta uses urgent, act-now language. Do "
+            "not mention relief, results, or resolution anywhere except the CTA."
+        ),
+        "visual_treatment": (
+            "Depict the specific moment of frustration or difficulty from the persona's story — visible "
+            "tension, unresolved struggle, before any relief. Facial expression and body language should "
+            "show the weight of the problem, not calm or ease."
+        ),
+    },
+    "contrarian": {
+        "label": "Contrarian Truth",
+        "psychology": "Surprise / pattern interruption",
+        "copy_instruction": (
+            "Challenge a common belief and replace it with a different perspective. "
+            "Formula: Everyone believes X. Actually, Y.\n"
+            "STRUCTURE — h1 must follow a myth-vs-truth contrast formula, e.g. 'Ramai sangka [common belief]... "
+            "Sebenarnya [surprising truth]' — never a plain claim or benefit statement. h2 backs the "
+            "surprising truth with one real product fact from BENEFITS/DESCRIPTION above. cta invites them to "
+            "discover or experience the real approach, not a generic 'buy now'."
+        ),
+        "visual_treatment": (
+            "Frame the scene with an unexpected visual twist or contrast — something that visually "
+            "interrupts the expected pattern for this persona's situation, prompting a second look."
+        ),
+    },
+    "social_proof": {
+        "label": "Social Proof",
+        "psychology": "Trust / belonging",
+        "copy_instruction": (
+            "Show that other people already trust or use the product. "
+            "Use customer stories, long brand history, testimonials, repeat buyers.\n"
+            "STRUCTURE — h1 opens with a trust/social-validation signal (years trusted, widely used, "
+            "real-customer phrasing) — NOT a product benefit or feature claim. h2 reinforces with one "
+            "specific, concrete trust detail (a number, a heritage fact, a certification tied to trust — "
+            "pull only from CERTIFICATIONS/DESCRIPTION above, never invent a statistic). cta uses "
+            "join-the-community framing ('sertai jutaan yang...', 'seperti keluarga lain yang...')."
+        ),
+        "visual_treatment": (
+            "Testimonial-style composition — the person could be mid-conversation or recommending to "
+            "someone else, or the scene could include a review/rating visual element. Emphasize trust and "
+            "shared experience over a solitary moment."
+        ),
+    },
+    "authority": {
+        "label": "Authority / Expertise",
+        "psychology": "Credibility / certainty",
+        "copy_instruction": (
+            "Use credible facts instead of opinions. "
+            "Use ingredients, certifications, experience, research, manufacturing quality.\n"
+            "STRUCTURE — h1 leads with a credible fact, certification, ingredient, or heritage claim — NO "
+            "emotional hook, fact-first tone. h2 briefly explains the mechanism/evidence — why or how it "
+            "works, pulled only from DESCRIPTION/CERTIFICATIONS above. cta is confident and "
+            "credibility-based ('Formula terbukti', 'Dipercayai...') — not urgent or emotional."
+        ),
+        "visual_treatment": (
+            "Cleaner, more credential-forward framing — closer focus on product/ingredient detail, less "
+            "busy lifestyle scene, a more clinical and confident composition."
+        ),
+    },
+    "curiosity": {
+        "label": "Curiosity",
+        "psychology": "Information gap",
+        "copy_instruction": (
+            "Create an information gap that makes people want to know more. "
+            "Ask questions or tease an unexpected fact without clickbait.\n"
+            "STRUCTURE — h1 poses a genuine question or teases an unexpected fact about the problem/product — "
+            "it must NOT resolve the problem or reveal the solution yet. h2 deepens the intrigue with one "
+            "more detail, still without fully answering it. cta uses discover/find-out framing ('Ketahui "
+            "sebabnya', 'Terokai rahsianya') — not a hard sell."
+        ),
+        "visual_treatment": (
+            "Mysterious or intriguing framing — partial reveal, a tighter crop, product held with a "
+            "questioning or curious expression. Leave something visually unresolved."
+        ),
+    },
+    "comparison": {
+        "label": "Comparison",
+        "psychology": "Relative value",
+        "copy_instruction": (
+            "Help people understand value by comparing two options. "
+            "Compare old vs new, difficult vs easy, capsules vs jelly, before vs today.\n"
+            "STRUCTURE — h1 is a direct comparison statement naming both sides of the contrast in one line "
+            "(old way vs new way / with vs without / difficult vs easy). h2 names the ONE specific point "
+            "that makes the new/better side clearly superior, from BENEFITS above. cta uses switch/upgrade "
+            "framing ('Beralih sekarang', 'Rasai bezanya')."
+        ),
+        "visual_treatment": (
+            "Split-screen or before/after style composition contrasting two states — old vs new, "
+            "difficult vs easy — within the same frame."
+        ),
+    },
+    "transformation": {
+        "label": "Transformation",
+        "psychology": "Aspiration",
+        "copy_instruction": (
+            "Sell the desired outcome rather than the product itself. "
+            "Focus on life before and after solving the problem.\n"
+            "STRUCTURE — h1 frames the arc from struggle to relief in one line — name the DESTINATION "
+            "(the outcome), not just the problem. h2 names the specific transformation/outcome achieved, "
+            "concrete not vague. cta uses aspirational, start-the-journey framing ('Mulakan perubahan anda')."
+        ),
+        "visual_treatment": (
+            "Explicit before-to-after visual arc — show the persona's transition from struggle to relief "
+            "within the composition, emphasizing the outcome/aspiration rather than the problem."
+        ),
+    },
+}
+
+# ── Creative Style — Clarity vs Curiosity Gap ───────────────────────────────
+# From the "Static Ads That Scale" field manual: the losing ads sit in the
+# middle of this spectrum (too vague to be clear, too obvious to build
+# curiosity). Every generated ad should commit to ONE lane. This is a separate
+# axis from Angle — Angle is the persuasive content of the message; Style is
+# how directly or opaquely that message is presented (does it read as an
+# obvious ad, or does it not even register as one).
+DEFAULT_STYLES = {
+    "clarity": {
+        "label": "Clarity",
+        "subtitle": "Obvious ad, instant understanding",
+        "copy_instruction": (
+            "Make the angle, offer, and who this is for completely clear within 3-4 seconds. Use direct, "
+            "unambiguous language — state the product/brand plainly, make the CTA obvious. This should "
+            "clearly read as an advertisement. Do not hide, delay, or soften the message."
+        ),
+        "visual_treatment": (
+            "Pattern-interrupt execution — loud, bold, and unmistakably an ad. Product/brand clearly "
+            "visible, bold typography, strong contrast, obvious commercial styling. The viewer should "
+            "immediately recognize this as paid advertising, not organic content."
+        ),
+    },
+    "curiosity_gap": {
+        "label": "Curiosity Gap",
+        "subtitle": "Native, doesn't look like an ad",
+        "copy_instruction": (
+            "Deliberately withhold what's being sold — the copy should create a gap the reader wants "
+            "resolved, not reveal the product/brand/offer upfront. Write like native platform content (a "
+            "personal note, a screenshot-style message, a repost) rather than typical ad copy. The reader "
+            "should not immediately register this as an advertisement."
+        ),
+        "visual_treatment": (
+            "Native, blend-into-the-feed execution — mimic organic platform content (e.g. a notes-app "
+            "screenshot, a text-message thread, a reposted social post) rather than a polished product ad. "
+            "Keep branding minimal or absent. If the product appears at all, keep it ambiguous or partially "
+            "obscured rather than a clean hero shot — it should not register as an ad at first glance."
+        ),
+    },
+}
+
+def _hydrate_persona(p: dict) -> dict:
+    """Auto-derive the Gemini-facing prompt/copy_voice fields from the editable
+    narrative, so the management UI never needs to touch prompt-engineering text."""
+    narrative = p.get("narrative", "")
+    p["prompt"]     = _persona_prompt_from_narrative(narrative)
+    p["copy_voice"] = _persona_copy_voice_from_narrative(narrative)
+    p.setdefault("style_cues", DEFAULT_PERSONA_STYLE_CUES)
+    p.setdefault("emoji", "🙂")
+    p.setdefault("use_cases", [])
+    return p
+
+def load_personas() -> dict:
+    if PERSONAS_JSON.exists():
+        with open(PERSONAS_JSON, encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        data = {k: dict(v) for k, v in DEFAULT_PERSONAS.items()}
+        save_personas(data)
+    return {k: _hydrate_persona(dict(v)) for k, v in data.items()}
+
+def save_personas(personas: dict):
+    # Persist only the editable fields — prompt/copy_voice are derived on load.
+    slim = {}
+    for k, v in personas.items():
+        slim[k] = {kk: vv for kk, vv in v.items() if kk not in ("prompt", "copy_voice")}
+    with open(PERSONAS_JSON, "w", encoding="utf-8") as f:
+        json.dump(slim, f, indent=2, ensure_ascii=False)
+
+def load_angles() -> dict:
+    if ANGLES_JSON.exists():
+        with open(ANGLES_JSON, encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        data = {k: dict(v) for k, v in DEFAULT_ANGLES.items()}
+        save_angles(data)
+    # Backfill visual_treatment for angles.json files written before this field
+    # existed — from the matching default if this is one of the original 7,
+    # otherwise a generic fallback so custom angles still vary the scene a little.
+    for k, v in data.items():
+        if not v.get("visual_treatment"):
+            v["visual_treatment"] = DEFAULT_ANGLES.get(k, {}).get(
+                "visual_treatment",
+                "Vary the specific scene, framing, or composition from a default static portrait."
+            )
+    return data
+
+def save_angles(angles: dict):
+    with open(ANGLES_JSON, "w", encoding="utf-8") as f:
+        json.dump(angles, f, indent=2, ensure_ascii=False)
+
+def load_styles() -> dict:
+    if STYLES_JSON.exists():
+        with open(STYLES_JSON, encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        data = {k: dict(v) for k, v in DEFAULT_STYLES.items()}
+        save_styles(data)
+    for k, v in data.items():
+        if not v.get("visual_treatment"):
+            v["visual_treatment"] = DEFAULT_STYLES.get(k, {}).get("visual_treatment", "")
+    return data
+
+def save_styles(styles: dict):
+    with open(STYLES_JSON, "w", encoding="utf-8") as f:
+        json.dump(styles, f, indent=2, ensure_ascii=False)
+
+PERSONAS = load_personas()
+ANGLES   = load_angles()
+STYLES   = load_styles()
 
 AD_FRAMEWORKS = [
     ("Us Vs Them",      "Two-column split. Left = generic competitor with red ✗ problems. Right = this brand with green ✓ wins. Header: 'US VS THEM'."),
@@ -88,6 +672,26 @@ def save_brand(data: dict):
     with open(BRAND_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
+# ── Cumulative spend ledger ──────────────────────────────────────────────────
+# Gemini's API does not expose a balance/remaining-credits endpoint for a given
+# API key (verified against the official pricing docs) — there is no way to query
+# "how much is left." This ledger instead tracks total REAL dollars spent so far,
+# across all sessions, computed from the actual model used per generation.
+def load_spend() -> float:
+    if SPEND_JSON.exists():
+        try:
+            with open(SPEND_JSON, encoding="utf-8") as f:
+                return float(json.load(f).get("total_usd", 0.0))
+        except Exception:
+            return 0.0
+    return 0.0
+
+def add_spend(amount_usd: float) -> float:
+    total = load_spend() + amount_usd
+    with open(SPEND_JSON, "w", encoding="utf-8") as f:
+        json.dump({"total_usd": round(total, 4)}, f)
+    return total
+
 def brand_to_prompt_block(brand: dict) -> str:
     """Convert brand kit + knowledge base into a full prompt context block."""
     lines = ["═══ BRAND & PRODUCT KNOWLEDGE ═══"]
@@ -95,6 +699,9 @@ def brand_to_prompt_block(brand: dict) -> str:
     # ── Identity
     if brand.get("brand_name"):
         lines.append(f"\nBRAND: {brand['brand_name']}")
+        lines.append(f"⚠️ HARD RULE: \"{brand['brand_name']}\" is the ONLY brand name/wordmark permitted "
+                     f"anywhere in this ad. Any other brand name, logo, or wordmark — especially one copied "
+                     f"from a reference image — is strictly forbidden.")
     if brand.get("_active_product_name"):
         lines.append(f"PRODUCT: {brand['_active_product_name']}")
     if brand.get("tagline"):
@@ -147,7 +754,7 @@ def img_to_b64(path: str):
         return base64.b64encode(f.read()).decode(), mime
 
 def call_gemini_image(prompt, ref_paths, model,
-                      winning_ad_path=None, product_image_path=None):
+                      winning_ad_path=None, product_image_path=None, texture_ref_path=None, is_tweak=False):
     """
     Single-turn API call with clearly labelled images.
     Image generation models require everything in ONE user turn.
@@ -179,28 +786,49 @@ def call_gemini_image(prompt, ref_paths, model,
 
     if winning_ad and os.path.exists(winning_ad):
         b64, mime = img_to_b64(winning_ad)
-        parts.append({"text": "=== IMAGE 1: WINNING AD — CREATIVE DIRECTION REFERENCE ==="})
-        parts.append({"inline_data": {"mime_type": mime, "data": b64}})
-        parts.append({"text":
-            "This is the WINNING AD. Treat it as a TEMPLATE to clone almost exactly — this is your primary creative reference.\n\n"
-            "REPLICATE EXACTLY from IMAGE 1, pixel-for-pixel as much as possible:\n"
-            "- Overall composition and layout structure (where everything sits, how much negative space, balance)\n"
-            "- Background — exact type, treatment (solid, gradient, textured, lifestyle scene), and color family\n"
-            "- Color palette — dominant and accent tones, exact same hues\n"
-            "- Lighting, shadows, and how the product is treated (floating, glowing, grounded, on a surface, etc.)\n"
-            "- Every graphic element: shapes, panels, dividers, badges, arrows, pointers, icons, decorative elements — "
-            "same shapes, same positions, same sizes, same styling\n"
-            "- Overall mood, energy, and visual confidence (busy vs minimal, centered vs asymmetric)\n\n"
-            "ONLY change these two things, nothing else:\n"
-            "1. The product → remove IMAGE 1's product completely and put IMAGE 2's product in the EXACT same "
-            "position, scale, angle, and role (e.g. if IMAGE 1's product is held by a hand, IMAGE 2's product is "
-            "held by that same hand in that same way; if it's standing on a surface, place IMAGE 2's product "
-            "standing on that same surface)\n"
-            "2. All text, words, and logos → replace with the new headline/subheadline/CTA copy provided "
-            "in the prompt below, in the SAME positions, sizes, fonts, and styles as IMAGE 1's text\n\n"
-            "Do NOT redesign, simplify, reinterpret, or 'inspire yourself' from IMAGE 1 — copy it as a template "
-            "and swap only the product and text. The result should look like the exact same ad, with only the "
-            "product and copy swapped."})
+        if is_tweak:
+            parts.append({"text": "=== IMAGE 1: STYLE REFERENCE — VIBE & AESTHETIC GUIDE ==="})
+            parts.append({"inline_data": {"mime_type": mime, "data": b64}})
+            parts.append({"text":
+                "IMAGE 1 is a STYLE REFERENCE showing the visual aesthetic to match: "
+                "background color/feel, lighting, product placement style, color palette, and overall mood.\n\n"
+                "Do NOT copy its exact layout or reproduce it as a grid/collage. "
+                "Use it only as a vibe and aesthetic guide. "
+                "The main prompt below describes what to actually create."})
+        else:
+            parts.append({"text": "=== IMAGE 1: WINNING AD — CREATIVE DIRECTION REFERENCE ==="})
+            parts.append({"inline_data": {"mime_type": mime, "data": b64}})
+            parts.append({"text":
+                "This is the WINNING AD. Treat it as a TEMPLATE to clone almost exactly — this is your primary creative reference.\n\n"
+                "REPLICATE EXACTLY from IMAGE 1, pixel-for-pixel as much as possible:\n"
+                "- Overall composition and layout structure (where everything sits, how much negative space, balance)\n"
+                "- Background — exact type and treatment (solid, gradient, textured, lifestyle scene) — but NOT its color, see below\n"
+                "- Lighting quality, shadows, and how the product is treated (floating, glowing, grounded, on a surface, etc.)\n"
+                "- Every graphic element's shape, position, and size: panels, dividers, badges, arrows, pointers, icons, decorative elements\n"
+                "- Overall mood, energy, and visual confidence (busy vs minimal, centered vs asymmetric)\n\n"
+                "DO NOT copy from IMAGE 1 — these must come from the brand/copy in the main prompt below instead:\n"
+                "- Color palette — do not reuse IMAGE 1's actual hues (it's a different, unrelated brand's ad). "
+                "Recolor the background, accents, badges, and CTA using the BRAND COLORS given in the main prompt, "
+                "applied with the same lighting quality/mood noted above.\n"
+                "- Any badge, callout, or stat text (e.g. a sold-count, a timing claim, a review score) — never invent "
+                "a number or reuse IMAGE 1's claim. Only include such a badge if the main prompt's brand knowledge "
+                "provides a real, matching fact; otherwise drop that badge/callout entirely rather than filling it "
+                "with a plausible-sounding but unverified claim.\n\n"
+                "ONLY change these things, nothing else:\n"
+                "1. The product → remove IMAGE 1's product completely and put IMAGE 2's product in the EXACT same "
+                "position, scale, angle, and role (e.g. if IMAGE 1's product is held by a hand, IMAGE 2's product is "
+                "held by that same hand in that same way; if it's standing on a surface, place IMAGE 2's product "
+                "standing on that same surface)\n"
+                "2. All text, words, and logos → replace with the new headline/subheadline/CTA copy provided "
+                "in the prompt below, in the SAME positions, sizes, fonts, and styles as IMAGE 1's text\n"
+                "3. Colors and any badge/stat text → per the DO NOT copy rules above\n\n"
+                "Do NOT redesign, simplify, or reinterpret beyond those changes — same ad, recolored into the "
+                "brand's own palette.\n\n"
+                "⚠️ CRITICAL — BRAND IDENTITY LEAK PREVENTION:\n"
+                "IMAGE 1 belongs to a DIFFERENT, UNRELATED brand. Its name/wordmark/logo — wherever it appears "
+                "(corner, watermark, product label) — must be completely removed, never even partially or "
+                "stylized. The ONLY brand name allowed in the output is the one in the brand block below; if "
+                "none is given, render no wordmark at all rather than reuse IMAGE 1's."})
 
     if product_img and os.path.exists(product_img):
         b64, mime = img_to_b64(product_img)
@@ -210,9 +838,46 @@ def call_gemini_image(prompt, ref_paths, model,
             "This is the ONLY product allowed in the output.\n\n"
             "COPY exactly:\n"
             "- Product shape, silhouette, and proportions\n"
-            "- Label design, colors, and packaging details\n"
+            "- Label design, colors, and packaging details — including every number and unit of text on the "
+            "label (e.g. volume/size like \"550ML\") reproduced EXACTLY character-for-character, never a "
+            "different or rounded number\n"
             "- Surface material and finish (matte, glossy, transparent, etc.)\n\n"
-            "DO NOT substitute, hallucinate, or blend with any other product."})
+            "DO NOT substitute, hallucinate, or blend with any other product. This means: never replace it with "
+            "a generic glass, cup, tumbler, or unbranded vessel, even if the ad concept is about drinking/"
+            "consuming it — the actual branded container above must stay visibly present as the hero.\n\n"
+            "⚠️ DO NOT default to a generic dark amber/brown glass \"traditional herbal tonic\" bottle just "
+            "because this is a health/wellness product ad — that is a stereotype, not this product. Look "
+            "carefully at the actual container material and color shown above (e.g. if it's a translucent/"
+            "frosted white or light-colored plastic bottle, render it as translucent/frosted white plastic, "
+            "NOT dark amber glass) and copy that exact material and color, even if it doesn't match what a "
+            "typical ad in this category usually looks like.\n\n"
+            "⚠️ IF THE PRODUCT APPEARS MORE THAN ONCE in the scene (e.g. one held by a person AND another placed "
+            "on a surface/table): every single instance must be an IDENTICAL copy of this reference image — same "
+            "label text, same volume/size number, same colors, same cap. Never let a second or third instance "
+            "drift into different or invented text just because it's smaller or partially visible in the frame."})
+
+    if texture_ref_path and os.path.exists(texture_ref_path):
+        b64, mime = img_to_b64(texture_ref_path)
+        parts.append({"text": "=== IMAGE 3: PRODUCT TEXTURE REFERENCE — CONTENTS/LIQUID APPEARANCE ONLY ==="})
+        parts.append({"inline_data": {"mime_type": mime, "data": b64}})
+        parts.append({"text":
+            "This shows how the product's actual contents (the liquid/jelly/gel inside the bottle) look and "
+            "flow when poured or exposed — its color, clarity/opacity, viscosity, and flow behavior.\n\n"
+            "If the ad concept shows the product being poured, dispensed, or its contents otherwise visible, "
+            "match THIS image's liquid appearance exactly — do not invent a generic liquid color (e.g. do not "
+            "default to a plain white/milky liquid unless that is what this reference actually shows).\n\n"
+            "IGNORE this image's bottle, container, glass, or any hands/props in it — those come from IMAGE 2 "
+            "and the ad concept, not from here. This image is ONLY a texture/color/viscosity reference for the "
+            "contents, nothing else about it should appear in the output."})
+
+    if parts:
+        parts.append({"text":
+            "⚠️ The labels above (\"=== IMAGE 1... ===\", \"=== IMAGE 2... ===\", \"=== IMAGE 3... ===\" and every "
+            "ALL-CAPS instruction heading like PRODUCT:, DO NOT copy, etc.) are instructions for you to read — "
+            "they are NOT text that exists on the product or in the scene. Never render any of these labels, "
+            "brackets, or headings as visible text anywhere in the output image, including on the product label "
+            "itself. The product label must show ONLY the real packaging text visible in the product reference "
+            "image, nothing else."})
 
     parts.append({"text": "\n\n" + prompt})
 
@@ -220,7 +885,12 @@ def call_gemini_image(prompt, ref_paths, model,
         "contents": [{"role": "user", "parts": parts}],
         "generationConfig": {
             "responseModalities": ["TEXT", "IMAGE"],
-            "imageConfig": {"aspectRatio": "4:5"}
+            "imageConfig": {"aspectRatio": "4:5"},
+            # Lower than the model default (~1.0) so product/brand fidelity stays
+            # consistent across multiple generations from the same reference — the
+            # camera-angle/layout variation notes already inject controlled variety,
+            # so we don't need high sampling temperature to get different-looking ads.
+            "temperature": 0.65
         }
     }).encode()
 
@@ -407,7 +1077,12 @@ def _vision_call(prompt_text: str, image_path: str, timeout: int = 30) -> str:
             body = json.loads(resp.read())
         parts = body.get("candidates",[{}])[0].get("content",{}).get("parts",[])
         return next((p["text"] for p in parts if "text" in p), "")
-    except Exception:
+    except Exception as e:
+        # Previously silent — a failed vision call (timeout, rate limit, bad image)
+        # meant product_visual/product_section silently fell back to a much weaker
+        # generic description with no visible sign anything went wrong. Logging the
+        # real reason makes "Gemini picked the wrong product" cases diagnosable.
+        print(f"[vision] FAILED for {Path(image_path).name}: {e}")
         return ""
 
 def analyze_ad_layout(image_path: str) -> str:
@@ -460,7 +1135,7 @@ def fetch_product_facts(product_url: str) -> str:
     try:
         json_url = product_url.rstrip("/") + ".json"
         req = urllib.request.Request(json_url, headers=headers)
-        with urllib.request.urlopen(req, timeout=12) as resp:
+        with urllib.request.urlopen(req, timeout=6) as resp:
             data = json.loads(resp.read())
         prod = data.get("product", {})
         if prod.get("title"):
@@ -483,7 +1158,7 @@ def fetch_product_facts(product_url: str) -> str:
     if len(facts) < 2:
         try:
             req = urllib.request.Request(product_url, headers=headers)
-            with urllib.request.urlopen(req, timeout=12) as resp:
+            with urllib.request.urlopen(req, timeout=6) as resp:
                 html = resp.read().decode("utf-8", errors="ignore")
 
             # Page title
@@ -930,62 +1605,111 @@ def apply_text_overlay(img_path: str, copy_data: dict, out_path: str,
     return True
 
 
-def extract_benefits_from_knowledge(benefits_text: str, problem: str) -> list:
+def extract_benefits_from_knowledge(benefits_text: str, problem: str, keywords: list = None,
+                                     exclude_keywords: list = None) -> list:
     """
     Extract product benefit bullets DIRECTLY from the user's Brand Setup text.
     No AI involved — copies exactly what the user wrote.
-    Looks for the problem section first, then falls back to all bullets.
-    Returns at least 3 benefits.
+
+    Brand Setup benefit text varies in format across products:
+    - Blank-line-separated blocks with a (often Malay) title line + plain
+      description lines, no bullet markers (e.g. Jeli Gamat)
+    - Blocks with English ALL-CAPS-ish headers ending in ":" and "-" bulleted
+      lines (e.g. Gel Gamat)
+    - A single flat "-" bulleted list with no title/header at all (e.g. Minyak Urut)
+
+    `keywords`: explicit lowercase substrings (from PRODUCT_USE_CASES'
+    benefit_keywords) to match against candidate bullets — far more reliable than
+    matching the English use-case label against Malay-language headers.
+    Falls back to bullets from everywhere if no keyword match (or none given),
+    so this never returns empty as long as the user wrote ANY benefit text.
+
+    `exclude_keywords`: other use cases' benefit_keywords — when the fallback has
+    to pad with bullets from blocks this use case didn't directly match, it skips
+    any block/bullet that belongs to a DIFFERENT specific use case (matches
+    exclude_keywords), so e.g. a gastric ad never gets padded with accident-
+    recovery bullets just because gastric has no dedicated block of its own.
     """
     if not benefits_text:
         return []
 
-    lines = benefits_text.split("\n")
-    bullets = []
-    in_section = False
-    problem_upper = problem.upper().replace("-", " ").replace("_", " ")
+    keywords = [k.lower() for k in (keywords or [])]
 
-    # ── Pass 1: Find bullets under the matching problem section ─────────────
-    for line in lines:
-        stripped = line.strip()
-        if not stripped:
-            continue
-        # Detect section headers (all-caps lines or lines ending with :)
-        if stripped.upper() == stripped and len(stripped) > 3 and not stripped.startswith("-"):
-            # Check if this header matches the current problem
-            in_section = any(kw in stripped.upper() for kw in problem_upper.split())
-            continue
-        if stripped.endswith(":") and len(stripped) < 40:
-            in_section = any(kw in stripped.upper() for kw in problem_upper.split())
-            continue
-        # Extract bullet points
-        if stripped.startswith("-") or stripped.startswith("•") or stripped.startswith("*"):
-            bullet = stripped.lstrip("-•*").strip()
-            if bullet and len(bullet) > 3:
-                if in_section:
-                    bullets.append(bullet)
+    def _strip_marker(line: str) -> str:
+        return line.lstrip("-•*").strip()
 
-    # ── Pass 2: If fewer than 3 found, take bullets from anywhere in text ───
-    if len(bullets) < 3:
-        all_bullets = []
-        for line in lines:
-            stripped = line.strip()
-            if stripped.startswith("-") or stripped.startswith("•") or stripped.startswith("*"):
-                bullet = stripped.lstrip("-•*").strip()
-                if bullet and len(bullet) > 3 and bullet not in bullets:
-                    all_bullets.append(bullet)
-        # Fill up to 5 total
-        for b in all_bullets:
-            if len(bullets) >= 5:
-                break
-            bullets.append(b)
+    # Meta-commentary lines (not real benefits) — exclude by known phrases or length,
+    # since these tend to be long explanatory sentences rather than short bullets.
+    META_MARKERS = ("observed time-to-results", "note:", "limited effect")
+    def _is_meta(line: str) -> bool:
+        low = line.lower()
+        return any(m in low for m in META_MARKERS) or len(line) > 130
 
-    return bullets[:5]   # max 5 benefits
+    # ── Split into blank-line-separated blocks ───────────────────────────────────
+    raw_blocks = [b.strip() for b in re.split(r"\n\s*\n", benefits_text) if b.strip()]
+    blocks = []   # list of (title, [bullet_lines])
+    for raw in raw_blocks:
+        block_lines = [l.strip() for l in raw.split("\n") if l.strip() and not _is_meta(l.strip())]
+        if not block_lines:
+            continue
+        all_bulleted = all(l.startswith(("-", "•", "*")) for l in block_lines)
+        if all_bulleted:
+            # Flat bulleted list, no separate title line (e.g. Minyak Urut) —
+            # every line is a real bullet, none should be treated as a title.
+            title, body = "", [_strip_marker(l) for l in block_lines]
+        else:
+            # First line is a title/header (e.g. "Kesihatan Sendi" or "PRIMARY (...):")
+            title = block_lines[0]
+            body  = [_strip_marker(l) for l in block_lines[1:]]
+        body = [b for b in body if len(b) > 3]
+        if body:
+            blocks.append((title, body))
+
+    if not blocks:
+        bullets = [_strip_marker(l) for l in benefits_text.split("\n")
+                   if len(_strip_marker(l)) > 3 and not _is_meta(l)]
+        return bullets[:5]
+
+    # ── Prefer bullets that match the explicit keyword list (checked against both
+    # the block title AND each individual bullet, since granularity differs by product) ──
+    matched_bullets = []
+    if keywords:
+        for title, body in blocks:
+            title_low = title.lower()
+            if any(kw in title_low for kw in keywords):
+                matched_bullets.extend(body)
+            else:
+                for b in body:
+                    if any(kw in b.lower() for kw in keywords):
+                        matched_bullets.append(b)
+
+    if len(matched_bullets) >= 3:
+        return matched_bullets[:5]
+
+    # ── Fallback: no clean match (or too few) — use bullets from every block,
+    # EXCEPT blocks/bullets that belong to a different specific use case ────────
+    exclude = [k.lower() for k in (exclude_keywords or [])]
+    def _belongs_to_other_use_case(text_low):
+        return exclude and any(kw in text_low for kw in exclude)
+
+    all_bullets = []
+    for title, body in blocks:
+        if _belongs_to_other_use_case(title.lower()):
+            continue
+        for b in body:
+            if _belongs_to_other_use_case(b.lower()):
+                continue
+            if b not in all_bullets:
+                all_bullets.append(b)
+    merged = matched_bullets + [b for b in all_bullets if b not in matched_bullets]
+    return merged[:5]
 
 
 def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
                                   copy_h1="", copy_h2="", copy_cta="",
-                                  product_facts="") -> dict:
+                                  product_facts="", vary_copy=False,
+                                  previous_headlines=None,
+                                  persona_key=None, angle_key=None, style_key=None) -> dict:
     """
     Step 1 of 2: Use the text model to generate typo-free, accurate ad copy
     from the brand knowledge base BEFORE image generation.
@@ -1003,26 +1727,67 @@ def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
     certs        = ", ".join(brand.get("certifications", [])) or ""
     claims       = "\n".join(f"- {c}" for c in brand.get("key_claims", []))
     benefits_full = (kb.get("benefits")    or "").strip()
-    product_txt   = (kb.get("product")     or "").strip()[:500]
-    comp_txt      = (kb.get("competitors") or "").strip()[:400]
-    proof_txt     = (kb.get("proof")       or "").strip()[:300]
+    # Redact mentions of OTHER use cases' specific conditions (e.g. strip "sendi"
+    # out of a C-section ad's context) — these fields are general background
+    # included in every generation regardless of use case, so a condition named
+    # prominently here (even truthfully, as a general product fact) can pull the
+    # headline off-topic. See redact_other_conditions() for why this is safer
+    # than relying on an instruction alone.
+    product_txt   = redact_other_conditions((kb.get("product")     or "").strip()[:500], product_name, problem)
+    comp_txt      = redact_other_conditions((kb.get("competitors") or "").strip()[:400], product_name, problem)
+    proof_txt     = redact_other_conditions((kb.get("proof")       or "").strip()[:300], product_name, problem)
     audience_txt  = (kb.get("audience")    or "").strip()[:300]
 
-    # ── Extract benefits DIRECTLY from Brand Setup — exact copy, no AI ──────
-    direct_benefits = extract_benefits_from_knowledge(benefits_full, problem)
-    print(f"[copy-gen] Direct benefits from Brand Setup: {direct_benefits}")
+    # ── Benefits: prefer authored ground-truth bullets (e.g. from a supplied Word
+    # doc) over fuzzy-matching Brand Setup text — authored bullets are exact and
+    # can never cross-contaminate between use cases. Falls back to keyword
+    # matching only for use cases with no authored content yet. ─────────────────
+    authored_benefits = get_authored_benefits(product_name, problem)
+    if authored_benefits:
+        direct_benefits = random.sample(authored_benefits, min(5, len(authored_benefits)))
+        print(f"[copy-gen] Authored benefits for '{problem}': {direct_benefits}")
+    else:
+        benefit_keywords = get_benefit_keywords(product_name, problem)
+        other_keywords   = get_other_benefit_keywords(product_name, problem)
+        direct_benefits = extract_benefits_from_knowledge(benefits_full, problem, keywords=benefit_keywords,
+                                                            exclude_keywords=other_keywords)
+        print(f"[copy-gen] Direct benefits from Brand Setup (keywords={benefit_keywords}): {direct_benefits}")
 
-    # Format benefits for the prompt (first 600 chars of full text)
-    benefits_txt = benefits_full[:600]
+    # Format benefits for the prompt — built from the correctly use-case-scoped
+    # direct_benefits above, NOT the raw full Benefits field. This used to take the
+    # first 600 chars of the ENTIRE multi-segment Benefits text regardless of which
+    # use case was active — since that field is now organized use-case-by-use-case
+    # (Sakit Sendi first), it was mislabeling joint-pain content as e.g. "BENEFITS
+    # for Pemulihan Selepas Bersalin Caesar", directly contradicting the correctly
+    # scoped bullets elsewhere in the same prompt. This was the actual root cause
+    # of copy pivoting to joint pain regardless of the persona/use case selected.
+    benefits_txt = "\n".join(f"- {b}" for b in direct_benefits) if direct_benefits else ""
 
     # ── Build JSON template based on framework ───────────────────────────────
     is_vs_them = framework_hint == "US_VS_THEM"
 
+    # Field hints point back at the ANGLE STRUCTURE block below when an angle is
+    # selected, instead of a generic "short powerful headline" phrase — otherwise
+    # the model tends to follow the generic hint and the angle's actual structural
+    # formula (myth-vs-truth, trust-signal-first, question-not-answer, etc.) gets
+    # diluted into a same-shaped headline with different wording.
+    _has_angle = bool(angle_key and angle_key in ANGLES)
+    _has_style = bool(style_key and style_key in STYLES)
+    if _has_angle or _has_style:
+        _ref = " and ".join(filter(None, ["ANGLE STRUCTURE" if _has_angle else "", "CREATIVE STYLE" if _has_style else ""]))
+        h1_hint  = f"Headline — follow the {_ref} below exactly, max 7 words"
+        h2_hint  = f"Subheadline — follow the {_ref} below exactly, max 10 words"
+        cta_hint = f"CTA — follow the {_ref} below exactly, max 5 words (no price)"
+    else:
+        h1_hint  = "Short powerful headline max 7 words"
+        h2_hint  = "Supporting subheadline max 10 words"
+        cta_hint = "Call to action max 5 words (no price)"
+
     if is_vs_them:
         json_template = f"""{{
-  "h1": "Short powerful headline max 7 words",
-  "h2": "Supporting subheadline max 10 words",
-  "cta": "Call to action max 5 words (no price)",
+  "h1": "{h1_hint}",
+  "h2": "{h2_hint}",
+  "cta": "{cta_hint}",
   "left_header": "JENAMA LAIN",
   "left_bullets": ["competitor weakness 1 (max 5 words)", "weakness 2", "weakness 3", "weakness 4"],
   "right_header": "{brand_name}",
@@ -1032,9 +1797,9 @@ def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
     else:
         # All other frameworks: single column benefits, no comparison table
         json_template = f"""{{
-  "h1": "Short powerful headline max 7 words",
-  "h2": "Supporting subheadline max 10 words",
-  "cta": "Call to action max 5 words (no price)",
+  "h1": "{h1_hint}",
+  "h2": "{h2_hint}",
+  "cta": "{cta_hint}",
   "left_header": "",
   "left_bullets": [],
   "right_header": "",
@@ -1054,6 +1819,54 @@ def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
         "BENEFIT":       "Benefit showcase — headline is bold claim, bullets list real product benefits",
     }.get(framework_hint, "Benefit showcase")
 
+    # ── Build persona copy guidance block ───────────────────────────────────
+    persona_copy_block = ""
+    if persona_key and persona_key in PERSONAS:
+        p = PERSONAS[persona_key]
+        persona_copy_block = f"""
+PERSONA CONTEXT — write for this specific audience:
+{p['copy_voice']}
+"""
+
+    # ── Build persuasion-angle copy guidance block — independent of persona ──
+    # This is the PRIMARY structural directive when an angle is selected — it defines
+    # the STRUCTURE of h1/h2/cta (what role each field plays), not just a tone/flavor
+    # to sprinkle on top of an otherwise-generic headline. Different angles must
+    # produce genuinely different message shapes, not the same message reworded.
+    angle_copy_block = ""
+    if angle_key and angle_key in ANGLES:
+        a = ANGLES[angle_key]
+        angle_copy_block = f"""
+━━━ ANGLE STRUCTURE — defines h1/h2/cta, not just tone ━━━
+{a['label']} ({a['psychology']}): {a['copy_instruction']}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+
+    # ── Creative Style — Clarity vs Curiosity Gap. Independent of angle: angle is
+    # WHAT the message argues, style is HOW directly that message is presented.
+    # From the "Static Ads That Scale" field manual — ads that sit in the middle
+    # of this spectrum (too vague to be clear, too obvious to build curiosity) lose.
+    style_copy_block = ""
+    if style_key and style_key in STYLES:
+        st = STYLES[style_key]
+        style_copy_block = f"""
+━━━ CREATIVE STYLE — {st['label']} ({st['subtitle']}) ━━━
+{st['copy_instruction']}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+
+    # ── Fallback emotional structure — only applies when NO angle is selected.
+    # Each angle above now carries its own opening logic (Problem Agitate opens on
+    # pain, Curiosity opens on a question, Social Proof opens on trust, etc.) — this
+    # generic "feel the pain first" rule would otherwise contradict angles that are
+    # deliberately NOT pain-first, so it only fires as a sane default with no angle.
+    pain_first_block = ""
+    if not angle_copy_block:
+        pain_point = (p['narrative'] if (persona_key and persona_key in PERSONAS) else problem_ctx) or problem
+        pain_first_block = f"""
+EMOTIONAL STRUCTURE: h1/h2 must surface the reader's real problem first (not the resolved outcome) —
+{brand_name} as the relief belongs in the CTA, not the opening line.
+PROBLEM TO SURFACE: {pain_point}
+"""
+
     prompt = f"""Write ad copy for {product_name} by {brand_name}.
 
 PRODUCT KNOWLEDGE (use ONLY these facts — never invent):
@@ -1062,16 +1875,30 @@ BENEFITS for {problem}: {benefits_txt or '(not provided)'}
 COMPETITORS: {comp_txt or '(not provided)'}
 CERTIFICATIONS: {certs or 'Halal JAKIM, KKM Approved, GMP Certified'}
 {f"LIVE PRODUCT FACTS: {product_facts}" if product_facts else ""}
-
+{persona_copy_block}
+{angle_copy_block}
+{style_copy_block}
+{pain_first_block}
 TASK: {framework_task}
 TARGET: {problem}
+{f'''
+VARIATION REQUIRED: This is one of several copy variations being generated for the same use case.
+Write a FRESH, DISTINCT headline and angle — different emotional hook, sentence structure, or point
+of emphasis than these already-used headlines (do not just reword them):
+{chr(10).join(f"- {h}" for h in previous_headlines)}''' if vary_copy and previous_headlines else ""}
 
 RULES:
 1. Use ONLY facts above — never invent
 2. Correct Bahasa Malaysia only — no invented words
 3. Max 5 words per bullet
 4. No price, no RM amounts
-{"5. benefit_bullets must contain REAL benefits from the Benefits section above" if not is_vs_them else "5. right_bullets must be REAL benefits from the Benefits section above"}
+5. {"h1/h2/cta must follow the ANGLE STRUCTURE" + (" and CREATIVE STYLE" if style_copy_block else "") + " above exactly — that structure IS the rule for this field" if angle_copy_block else ("h1/h2/cta must follow the CREATIVE STYLE above exactly" if style_copy_block else "h1 must surface/agitate the problem, not the resolved outcome — see EMOTIONAL STRUCTURE above")}
+{"6. benefit_bullets must contain REAL benefits from the Benefits section above" if not is_vs_them else "6. right_bullets must be REAL benefits from the Benefits section above"}
+7. DESCRIPTION above is general product background — {product_name} may support several unrelated health
+   conditions elsewhere (e.g. joint pain, gastric, general wellness), and DESCRIPTION may mention some of
+   those in passing. This ad is ONLY about TARGET: {problem}. Do not mention, hint at, or pivot the
+   headline/subheadline/CTA/bullets toward any condition other than {problem}, even if DESCRIPTION touches
+   on it — every line must read as if the product exists solely to help with {problem}
 
 Return JSON only:
 {json_template}"""
@@ -1140,7 +1967,8 @@ VIBE_MODIFIERS = [
 def build_prompt(layout_analysis, product_visual, problem, problem_ctx,
                  has_style_ref, has_product, brand,
                  copy_h1="", copy_h2="", copy_cta="", copy_data=None,
-                 vibe_idx=0, extracted_style=None, skip_overlay=False, tweak_instructions=""):
+                 vibe_idx=0, extracted_style=None, skip_overlay=False, tweak_instructions="",
+                 persona_desc="", persona_style_cues="", angle_visual="", style_visual=""):
     """
     Replication brief: keep exact winning-ad layout, swap in the correct product + copy.
     product_visual = vision analysis of the product photo (describes bottle precisely).
@@ -1151,23 +1979,30 @@ def build_prompt(layout_analysis, product_visual, problem, problem_ctx,
     # ── Product identity section (most important — AI must render this exactly) ──
     if product_visual:
         product_section = f"""━━━ PRODUCT IDENTITY — MUST MATCH EXACTLY ━━━
-The FIRST reference image attached is the actual product photo.
-Render the product bottle IDENTICALLY to that photo. Do not invent or substitute.
+The product reference image attached (labeled PRODUCT) is the actual product photo.
+Render the product bottle/jar IDENTICALLY to that photo. Do not invent or substitute a
+generic container, glass, cup, or vessel — it must be recognizably this exact packaging.
 
 Visual description of the product (from photo analysis):
 {product_visual}
 
 Product name: {product_name}
 CRITICAL RULES:
-- The product bottle in the ad MUST look exactly like the reference photo
+- The product container in the ad MUST look exactly like the reference photo
 - Keep every label detail: colors, text, fonts, icons as seen in the photo
-- Same cap shape, bottle shape, transparency as the photo
-- Place the bottle as the visual hero of the ad
+- Same cap shape, bottle/jar shape, transparency as the photo
+- Same MATERIAL and COLOR as the photo above — do not substitute it with a dark amber/brown
+  glass "traditional herbal tonic" bottle just because the ad concept is a health/wellness
+  product. Match the exact material (plastic/glass/etc.) and exact color described above,
+  even if that differs from what a typical ad in this category usually looks like.
+- Place the container as the visual hero of the ad — never depict the product only as a
+  generic poured liquid/glass with no branded packaging visible
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
     else:
         product_section = f"""PRODUCT: {product_name}
-The product photo is the first reference image — render it exactly as shown.
-It is the hero of the ad. Reproduce label, cap, bottle shape accurately."""
+The product photo is the reference image labeled PRODUCT — render it exactly as shown,
+not as a generic container/glass/vessel. It is the hero of the ad. Reproduce label, cap,
+bottle/jar shape accurately."""
 
     # ── Layout section ──
     if layout_analysis and has_style_ref:
@@ -1194,25 +2029,7 @@ LAYOUT RULES:
     brand_name = brand.get("brand_name", "Serigama")
 
     # ── Simple per-slot variation phrase — just enough for batch variety ──────
-    VARIATION_AXES = [
-        "straight-on, eye-level angle",
-        "slightly from the left, eye-level angle",
-        "slightly from the right, eye-level angle",
-        "slightly from above",
-        "slightly closer / zoomed in",
-        "slightly further / zoomed out",
-    ]
-    variation_note = VARIATION_AXES[vibe_idx % len(VARIATION_AXES)]
-
-    LAYOUT_VARIATIONS = [
-        "product placed center, balanced negative space around it",
-        "product placed slightly left, more breathing room on the right",
-        "product placed slightly right, more breathing room on the left",
-        "product placed lower in frame, open space above",
-        "product placed upper-frame, grounded shadow below",
-        "product placed off-center on a diagonal, dynamic negative space",
-    ]
-    layout_note = LAYOUT_VARIATIONS[vibe_idx % len(LAYOUT_VARIATIONS)]
+    slot_num      = vibe_idx + 1  # 1-based for the prompt
 
     # ── Copy block — Gemini renders this text directly onto the ad ───────────
     h1  = copy_h1  or (copy_data or {}).get("h1", "")
@@ -1225,15 +2042,51 @@ LAYOUT RULES:
         copy_lines.append(f'- SUBHEADLINE (smaller, below headline): "{h2}"')
     if cta:
         copy_lines.append(f'- CTA (button or pill, high contrast): "{cta}"')
+
+    # Bullets were being silently dropped here — the ad layout (cloned from the
+    # winning-ad template) calls for numbered bullet slots with icons, but Gemini
+    # was never told what those bullets should say, so it invented placeholder text
+    # to fill the slots (garbled, sometimes bilingual gibberish). Cover both bullet
+    # shapes: benefit_bullets (single-column frameworks) and left/right_bullets
+    # (US VS THEM comparison layout).
+    cd              = copy_data or {}
+    benefit_bullets = [b for b in (cd.get("benefit_bullets") or []) if b]
+    left_bullets    = [b for b in (cd.get("left_bullets") or []) if b]
+    right_bullets   = [b for b in (cd.get("right_bullets") or []) if b]
+    left_header     = cd.get("left_header") or ""
+    right_header    = cd.get("right_header") or ""
+
+    bullet_count = len(benefit_bullets) or (len(left_bullets) + len(right_bullets))
+
+    if benefit_bullets:
+        bullet_lines = "\n".join(f'  {i+1}. "{b}"' for i, b in enumerate(benefit_bullets))
+        copy_lines.append(f'- BENEFIT BULLETS (one short line next to each icon/number, in order):\n{bullet_lines}')
+    if left_bullets or right_bullets:
+        if left_bullets:
+            lb = "\n".join(f'  - "{b}"' for b in left_bullets)
+            left_label = f'LEFT COLUMN header "{left_header}"' if left_header else "LEFT COLUMN"
+            copy_lines.append(f'- {left_label}:\n{lb}')
+        if right_bullets:
+            rb = "\n".join(f'  - "{b}"' for b in right_bullets)
+            right_label = f'RIGHT COLUMN header "{right_header}"' if right_header else "RIGHT COLUMN"
+            copy_lines.append(f'- {right_label}:\n{rb}')
+
     copy_block = ""
     if copy_lines:
         copy_block = (
-            "\n\nTEXT TO RENDER ON THE AD (in Bahasa Malaysia, exactly as written, no spelling changes):\n"
+            "\n\nTEXT TO RENDER ON THE AD (in Bahasa Malaysia, exactly as written, no spelling changes, no "
+            "invented or blended words, no mixing in English fragments):\n"
             + "\n".join(copy_lines) +
-            "\n\nTEXT STYLING:\n"
-            "- Use clean, legible, modern sans-serif typography\n"
+            "\n\nTEXT STYLING (brand typography, not IMAGE 1's font):\n"
+            "- Headline (h1): elegant serif typeface — heritage, trustworthy feel\n"
+            "- Subheadline, CTA, and bullets: clean sans-serif — easy to read\n"
             "- Place the headline, subheadline, and CTA following IMAGE 1's text placement and hierarchy "
             "(same regions, alignment, and relative sizing as the winning ad)\n"
+            f"- If the layout has numbered/iconed bullet slots, render EXACTLY {bullet_count} slot"
+            f"{'s' if bullet_count != 1 else ''} — one per bullet line above, in the same order. If IMAGE 1's "
+            "original layout shows MORE icon slots than that, DELETE the extra slots so the row count matches "
+            f"{bullet_count} (fewer rows, never a blank or empty row). Never invent, merge, blend, or truncate "
+            "a bullet into a new word/phrase that isn't listed above verbatim\n"
             "- Ensure strong contrast between text and background (add a subtle shadow, scrim, or solid panel behind text if needed for readability)\n"
             "- The CTA should look like a tappable button/pill with a solid background color from the brand palette"
         )
@@ -1246,19 +2099,28 @@ LAYOUT RULES:
         mood   = extracted_style.get("mood", {}) or {}
         comp   = extracted_style.get("composition", {}) or {}
         lay    = extracted_style.get("layout", {}) or {}
+        # ── Match the reference's LIGHTING/MOOD quality (bright vs moody, warm vs
+        # cool light, background TYPE) — but never its actual color hues. Hue always
+        # comes from the brand's own palette below, otherwise the generated ad ends
+        # up in the reference ad's competitor colors instead of the brand's.
         color_bits = []
         if colors.get("background_description"):
-            color_bits.append(f"background feel: {colors['background_description']}")
-        if colors.get("dominant_color"):
-            color_bits.append(f"dominant tone: {colors['dominant_color']}")
-        if colors.get("accent_color"):
-            color_bits.append(f"accent tone: {colors['accent_color']}")
+            color_bits.append(f"background treatment (not color): {colors['background_description']}")
         if mood.get("lighting"):
             color_bits.append(f"lighting: {mood['lighting']}")
         if mood.get("tone"):
-            color_bits.append(f"overall tone: {mood['tone']}")
+            color_bits.append(f"overall energy/tone: {mood['tone']}")
+        _brand_colors = ", ".join(filter(None, [
+            f"Primary {brand.get('primary_color')}" if brand.get("primary_color") else "",
+            f"Secondary {brand.get('secondary_color')}" if brand.get("secondary_color") else "",
+            f"Accent/BG {brand.get('accent_color')}" if brand.get("accent_color") else "",
+        ])) or "the brand colors listed in BRAND & PRODUCT KNOWLEDGE above"
+        color_bits.append(
+            f"COLOR PALETTE: ignore this reference's actual colors (different brand) — recolor background/"
+            f"accents/badges/CTA using {_brand_colors}, keeping the lighting/mood noted above."
+        )
         if color_bits:
-            color_block = "\n\nCOLOR & LIGHTING (match IMAGE 1 closely):\n- " + "\n- ".join(color_bits)
+            color_block = "\n\nCOLOR & LIGHTING (mood/lighting from IMAGE 1, but colors from the brand):\n- " + "\n- ".join(color_bits)
 
         layout_bits = []
         if lay.get("structure"):
@@ -1280,19 +2142,99 @@ LAYOUT RULES:
         if layout_bits:
             layout_block = "\n\nLAYOUT — REPLICATE FROM IMAGE 1:\n- " + "\n- ".join(layout_bits)
             if graphics:
-                layout_block += ("\n\nIMPORTANT: IMAGE 1 contains graphic elements (arrows, pointers, badges, "
-                                  "callouts, icons) listed above — recreate these same elements in the same "
-                                  "positions, adapted to point at / highlight the new product and copy.")
+                layout_block += ("\n\nGraphic elements above (arrows, pointers, badges, callouts, icons): "
+                                  "recreate POSITION/SHAPE/STYLE only.\n"
+                                  "- Meaning must match THIS ad's real benefits, not IMAGE 1's original topic\n"
+                                  "- Flat icon/line-art style only — no extra photographic hand/bottle/person "
+                                  "inside a callout; exactly ONE photographic hero shot in the whole ad\n"
+                                  "- Any badge with a stat/claim (sold-count, timing, review score) needs a real "
+                                  "matching fact from the brand knowledge below, or gets dropped — never invented")
+
+        # ── Hard constraints from the reference — these were extracted (cta_placement,
+        # forbidden_elements) but previously only reached the post-generation QA check,
+        # never the generation prompt itself, so Gemini had no way to know the reference
+        # had no CTA or that certain elements (gradients, sunbursts, etc.) shouldn't appear.
+        constraint_bits = []
+        cta_placement = (lay.get("cta_placement") or "").strip().lower()
+        if cta_placement in ("", "none", "n/a", "absent", "no cta"):
+            constraint_bits.append(
+                "NO CTA button or pill anywhere in the ad — IMAGE 1 has no CTA element. Adding one is a "
+                "direct violation of this reference's layout."
+            )
+        bg_type = (comp.get("background_type") or "").lower()
+        if "flat" in bg_type or "solid" in bg_type:
+            constraint_bits.append(
+                f"Background MUST be a flat solid color — NOT a gradient, NOT a sunburst, NOT textured. "
+                f"IMAGE 1's background is: {comp.get('background_type')}."
+            )
+        for fe in (extracted_style.get("forbidden_elements") or []):
+            if fe:
+                constraint_bits.append(fe if fe.strip().upper().startswith("NO ") else f"NO {fe}")
+        if constraint_bits:
+            layout_block += (
+                "\n\nHARD CONSTRAINTS FROM IMAGE 1 — VIOLATING ANY OF THESE MAKES THE GENERATION WRONG:\n- "
+                + "\n- ".join(constraint_bits)
+            )
 
         if comp.get("has_human"):
             human_block = ("\n\nHUMAN ELEMENT: IMAGE 1 features a person interacting with the product. "
                            "You MAY include a person in a similar role (e.g. holding/using the product), "
                            "but do not copy their identity, face, or outfit — generate a new person that "
                            "fits the same vibe.")
+            # Default demographic anchor — only applies when no specific persona was
+            # selected (personas already carry their own ethnicity/age specifics).
+            # Without this, the model defaults to generic/Western stock-photo casting
+            # instead of reflecting the brand's actual customer base.
+            if not persona_desc:
+                human_block += (
+                    "\n\nDEFAULT CASTING (no specific persona selected): the person should generally reflect "
+                    "this brand's core customer base — primarily Malay women (occasionally Chinese, ~10%), "
+                    "age range roughly 25-70, with a clearly Asian/Malaysian appearance. Avoid generic "
+                    "Western/Caucasian stock-photo casting unless the brand knowledge above specifically calls "
+                    "for it. If the depicted person is a Malay woman, she should be WEARING A HIJAB/TUDUNG "
+                    "(modest headscarf) by default, styled appropriately for the scene. If Chinese, no hijab "
+                    "needed."
+                )
 
     problem_block = ""
     if problem_ctx:
         problem_block = f"\n\nTARGET PROBLEM / ANGLE FOR THIS AD: {problem_ctx}\nUse this to inform mood, imagery cues, and the copy's emotional angle — the ad should feel relevant to someone facing this problem."
+
+    # ── Creative Style — Clarity vs Curiosity Gap. Applies regardless of whether
+    # a person is in the layout (unlike angle_visual, which lives inside the
+    # persona casting block) since it governs the whole ad's execution style.
+    style_block = ""
+    if style_visual:
+        style_block = f"\n\nCREATIVE STYLE FOR THIS AD: {style_visual}\nThis governs the overall execution — commit to this lane fully, don't blend obvious-ad and native/hidden styling."
+
+    persona_block = ""
+    if persona_desc:
+        angle_visual_block = ""
+        if angle_visual:
+            angle_visual_block = f"""
+
+SCENE/MOMENT FOR THIS ANGLE — vary the composition, not the person:
+{angle_visual}
+Pick this specific moment/framing instead of a default static portrait. The depicted person's age,
+look, wardrobe, and relationship to others stays LOCKED to the persona description above — only the
+scene, framing, and composition change to fit this angle."""
+        persona_block = f"""
+
+━━━ TARGET CUSTOMER PERSONA FOR THIS AD — APPLY ONE OF THE TWO PATHS BELOW ━━━
+{persona_desc}
+
+PATH A — if the ad layout includes a person: cast and style them to match this persona exactly
+(age, look, wardrobe, setting, emotional tone, body language/pose).
+{angle_visual_block}
+
+PATH B — if the ad layout is a clean product shot with NO person: do NOT add a person. Instead,
+shift the ad's color tone, lighting mood, background styling, and the emotional register of the
+headline/copy to match this persona's vibe:
+{persona_style_cues or "Adjust warmth/coolness of lighting and palette to suit this persona's mood."}
+
+Either way, this only affects mood/casting/styling — it does NOT change the product, brand
+identity, or the core layout structure being cloned from IMAGE 1.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
     tweak_block = ""
     if tweak_instructions:
@@ -1307,32 +2249,39 @@ following requested change. This instruction overrides any conflicting guidance 
     if has_style_ref and has_product:
         return f"""Generate a 4:5 advertisement image.
 
-{brand_block}{problem_block}
+{brand_block}{problem_block}{style_block}
 
-CREATIVE DIRECTION: Clone IMAGE 1 as a template — same composition, layout, background, color palette, lighting,
-and every graphic element (panels, badges, arrows, icons, dividers) in the same positions and styling.
-This must look like the EXACT same ad as IMAGE 1, with ONLY the product and text swapped.{color_block}{layout_block}
+CREATIVE DIRECTION: This is slot #{slot_num} — each slot in this batch uses a DIFFERENT winning ad as IMAGE 1,
+so every output will have a different layout, background, and structure. Clone IMAGE 1's composition exactly —
+same layout, background treatment, graphic elements, and structure. Only swap the product and text.{
+" UNLESS CREATIVE STYLE above calls for native/organic — then strip the polished-ad elements (badges, "
+"CTA pill, commercial framing) the template would normally clone; style wins over exact cloning here."
+if (style_visual and "native" in style_visual.lower()) else ""}{color_block}{layout_block}
 
-PRODUCT: Completely remove IMAGE 1's product and replace it with IMAGE 2's product, in the exact same position,
-scale, angle, and role that IMAGE 1's product occupied (same surface, same hand, same framing). Render IMAGE 2's
-product faithfully with correct shape, label, and packaging.
+PRODUCT: Completely remove IMAGE 1's product. Replace it with IMAGE 2's product.
+⚠️ IMAGE 2 IS THE SINGLE SOURCE OF TRUTH FOR THE PRODUCT — copy it exactly:
+- Container shape: if IMAGE 2 shows a bottle, render a bottle (same silhouette, same proportions, same neck/cap shape)
+- Label: replicate the label layout, text, colors, and logo placement from IMAGE 2 — do not invent or simplify the label
+- Color of packaging: match IMAGE 2 exactly — never substitute with a different color or finish
+- NEVER render a generic glass, cup, bowl, tin, or tube — the exact container type from IMAGE 2 must be used
+- Place it in the same position, scale, and role that IMAGE 1's product occupied
+{product_section}
 
-LAYOUT VARIATION FOR THIS SLOT (apply on top of the above, keep it subtle): {layout_note}
-
-CAMERA ANGLE: {variation_note}{human_block}{copy_block}
+CAMERA ANGLE VARIATION (subtle — keep IMAGE 1's overall framing): {variation_note}{human_block}{persona_block}{copy_block}
 
 OUTPUT RULES:
 - No watermarks or signatures
 - No invented text other than the headline, subheadline, and CTA specified above
-- Clean, professional ad quality
+- Clean, professional Meta ad quality
 - 4:5 aspect ratio{tweak_block}"""
 
     elif has_product:
         return f"""Create a 4:5 advertisement image.
 
-{brand_block}{problem_block}
+{brand_block}{problem_block}{style_block}{persona_block}
 
 PRODUCT: Feature only the product from the PRODUCT image. Do not change or replace it.
+{product_section}
 BACKGROUND: Clean soft gradient, professional health product style.
 PRODUCT PLACEMENT: centered, large, clear hero shot.
 
@@ -1345,7 +2294,7 @@ Rules:
     else:
         return f"""Create a clean 4:5 advertisement background for {brand_name}.
 
-{brand_block}{problem_block}
+{brand_block}{problem_block}{style_block}
 
 Professional health product style, soft gradient.{copy_block}{tweak_block}"""
 
@@ -1499,9 +2448,37 @@ def api_upload():
         dest = session_dir / f"product_{pf.filename}"
         pf.save(str(dest))
         product_path = str(dest)
+    else:
+        # User picked a specific existing brand-kit photo in the sidebar instead of
+        # uploading a new one — only accept paths that actually live in the brand
+        # kit folder (never trust an arbitrary client-supplied filesystem path).
+        picked = request.form.get("product_photo_path", "")
+        if picked:
+            try:
+                picked_resolved = Path(picked).resolve()
+                if picked_resolved.is_relative_to(BRAND_DIR.resolve()) and picked_resolved.exists():
+                    product_path = str(picked_resolved)
+            except (OSError, ValueError):
+                pass
+
+    # Optional explicit texture reference — a photo showing the product's actual
+    # contents (liquid/jelly/gel) when poured/exposed, since the primary identity
+    # photo is often a sealed bottle that doesn't reveal this. Same brand-kit-only
+    # path validation as product_photo_path above.
+    texture_path = ""
+    picked_texture = request.form.get("texture_photo_path", "")
+    if picked_texture:
+        try:
+            texture_resolved = Path(picked_texture).resolve()
+            if texture_resolved.is_relative_to(BRAND_DIR.resolve()) and texture_resolved.exists():
+                texture_path = str(texture_resolved)
+        except (OSError, ValueError):
+            pass
+
     meta = {"session_id": session_id, "ad_paths": ad_paths,
             "product_path": product_path,
-            "problem": request.form.get("problem","Post-partum"),
+            "texture_path": texture_path,
+            "problem": request.form.get("problem","Selepas Bersalin"),
             "count": int(request.form.get("count",6))}
     with open(session_dir / "meta.json","w") as fp:
         json.dump(meta, fp)
@@ -1668,6 +2645,49 @@ def upload_templates():
     return jsonify({"ok": True, "added": len(added), "templates": added})
 
 
+@app.route("/api/templates/upload-url", methods=["POST"])
+def upload_template_from_url():
+    """Fetch an image from a URL (dragged from browser) and save as a template."""
+    image_url = (request.form.get("image_url") or "").strip()
+    if not image_url:
+        return jsonify({"error": "No URL provided"}), 400
+    try:
+        req = urllib.request.Request(image_url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            content_type = resp.headers.get("Content-Type", "image/jpeg")
+            img_bytes = resp.read()
+    except Exception as ex:
+        return jsonify({"error": str(ex)}), 400
+
+    # Guess extension from content-type
+    ext = ".jpg"
+    if "png" in content_type:   ext = ".png"
+    elif "webp" in content_type: ext = ".webp"
+    elif "gif" in content_type:  ext = ".gif"
+
+    tpls = load_templates()
+    tid  = next_tpl_id(tpls)
+    dest = TEMPLATES_DIR / f"tpl_{tid:05d}{ext}"
+    dest.write_bytes(img_bytes)
+
+    entry = {
+        "id":      tid,
+        "path":    str(dest),
+        "label":   f"Winning Ad #{tid}",
+        "section": "Uploaded",
+        "source":  image_url,
+        "page":    0,
+    }
+    style = extract_winning_ad_style(str(dest))
+    if style:
+        entry["extracted_style"] = style
+
+    tpls.append(entry)
+    save_templates(tpls)
+    entry["url"] = f"/api/templates/image/{dest.name}"
+    return jsonify({"ok": True, "templates": [entry]})
+
+
 @app.route("/api/templates/style/<int:tpl_id>", methods=["GET"])
 def get_template_style(tpl_id):
     """Return the extracted style JSON for a specific template."""
@@ -1728,11 +2748,50 @@ def api_generate_one():
     session_id   = data["session_id"]
     idx          = int(data["index"])
     quality      = data.get("quality", "draft")
-    problem      = data.get("problem", "Post-partum")
+    problem      = data.get("problem", "Selepas Bersalin")
+    problem_ids  = data.get("problem_ids", [])    # list of use-case labels, e.g. ["Gastric / GERD Relief", ...]
     total        = int(data.get("count", 6))
     template_ids = data.get("template_ids", [])   # list of int template IDs
+    persona_ids  = data.get("persona_ids", [])    # list of persona keys, e.g. ["knee","accident"]
+    angle_ids    = data.get("angle_ids", [])      # list of angle keys, e.g. ["social_proof","curiosity"]
+    style_ids    = data.get("style_ids", [])      # list of style keys, e.g. ["clarity","curiosity_gap"]
     campaign_id  = data.get("campaign_id", None)
     campaign_name= data.get("campaign_name", "")
+
+    # ── Multi use-case × multi persona × multi angle: cycle through every combination
+    # across the batch, so each image slot gets a different (use case, persona, angle)
+    # triple rather than every image looking/reading the same. Single-select still
+    # works — combos length 1. A batch always costs exactly `total` images regardless
+    # of how many combos exist — combos are cycled round-robin, never materialized in
+    # full, so combinatorics only affects coverage, not cost. The combo order is
+    # shuffled with a session-stable seed so small batches sample a diverse spread
+    # instead of always front-loading the first few nested-loop combinations.
+    _problems_for_combo = problem_ids if problem_ids else [problem]
+    _personas_for_combo = persona_ids if persona_ids else [None]
+    _angles_for_combo   = angle_ids if angle_ids else [None]
+    _styles_for_combo   = style_ids if style_ids else [None]
+    if persona_ids:
+        # Each persona owns its own use case(s) — pair a persona ONLY with a problem
+        # from its own use_cases, never with another persona's. Cross-multiplying use
+        # case and persona as fully independent axes (the old behaviour) could pair
+        # e.g. the C-Section persona with the Joint Pain use case whenever two personas
+        # with different use cases were selected together, producing copy that talks
+        # about the wrong health problem for the persona actually being depicted.
+        _combos = []
+        for per in _personas_for_combo:
+            per_use_cases = (PERSONAS.get(per, {}) or {}).get("use_cases") or []
+            per_problems  = [p for p in per_use_cases if p in _problems_for_combo] or per_use_cases or _problems_for_combo
+            for p in per_problems:
+                for ang in _angles_for_combo:
+                    for sty in _styles_for_combo:
+                        _combos.append((p, per, ang, sty))
+    else:
+        _combos = [(p, None, ang, sty) for p in _problems_for_combo
+                                        for ang in _angles_for_combo
+                                        for sty in _styles_for_combo]
+    random.Random(session_id).shuffle(_combos)
+    problem, persona_key_for_idx, angle_key_for_idx, style_key_for_idx = _combos[(idx - 1) % len(_combos)]
+    print(f"[combo] idx={idx} -> use_case='{problem}' persona={persona_key_for_idx} angle={angle_key_for_idx} style={style_key_for_idx}")
     # active_product_id comes as a JS integer — normalise to int for comparison
     _apid = data.get("active_product_id", None)
     active_product_id = int(_apid) if _apid is not None else None
@@ -1740,10 +2799,15 @@ def api_generate_one():
     copy_h2      = (data.get("copy_h2")  or "").strip()
     copy_cta     = (data.get("copy_cta") or "").strip()
     skip_overlay = bool(data.get("skip_overlay", False))
+    vary_copy    = bool(data.get("vary_copy", False))   # if True, generate fresh copy per image instead of reusing cache
 
     session_dir = SESSIONS_DIR / session_id
     with open(session_dir / "meta.json") as fp:
         meta = json.load(fp)
+
+    # Nonce is generated on the frontend once per Generate click and sent with
+    # every slot — no race condition, guaranteed fresh shuffle every batch.
+    batch_nonce = data.get("batch_nonce") or session_id
 
     brand        = load_brand()
 
@@ -1784,6 +2848,7 @@ def api_generate_one():
 
     # Per-product photos take priority over global product_photos pool
     all_products = brand.get("products", [])
+    active_prod   = None
     if active_product_id is not None:
         active_prod = next((p for p in all_products if p.get("id") == active_product_id), None)
         if active_prod and active_prod.get("photos"):
@@ -1803,25 +2868,93 @@ def api_generate_one():
                 print(f"[generate] Using photos from product '{prod.get('name')}' as fallback")
                 break
 
-    # Style references: selected templates first, then session uploads, then brand creatives
+    # Auto-mode: no templates manually selected → assign a DIFFERENT template to every
+    # slot so a 4-image batch uses 4 distinct winning ads as layout references.
+    # Shuffle with a batch-stable seed (session_id) so the spread is diverse but
+    # consistent if the same batch is regenerated.
+    if not tpl_paths:
+        all_lib = [t for t in load_templates() if os.path.exists(t["path"])]
+        if all_lib:
+            import random as _rnd
+            _rng = _rnd.Random(session_id)
+            # Build an infinite non-repeating sequence: shuffle the full library,
+            # exhaust it, then reshuffle before repeating — so 10 images with 6
+            # templates gives [all 6 unique] + [all 6 reshuffled, pick 4], never
+            # the same template twice in a row across the batch.
+            _n = len(all_lib)
+            _pass = (idx - 1) // _n        # which full pass through the library
+            _pos  = (idx - 1) %  _n        # position within that pass
+            _rng2 = _rnd.Random(f"{batch_nonce}_{_pass}")
+            _shuffled = all_lib[:]
+            _rng2.shuffle(_shuffled)
+            tpl_paths = [_shuffled[_pos]["path"]]
+            print(f"[auto-tpl] idx={idx}/{total} pass={_pass} pos={_pos} → '{Path(tpl_paths[0]).name}'")
+
+    # Style references: selected/auto templates first, then session uploads, then brand creatives
     style_refs = tpl_paths or ad_paths or brand_creatives
     # Cycle so each slot uses a different winning ad reference
     style_ref  = [style_refs[(idx-1) % len(style_refs)]] if style_refs else []
 
-    # Product ref: session upload > active product photos (pick largest = best quality)
+    # Product ref priority: session upload/pick (this generation only) > saved
+    # per-product default (persists across sessions, set once via the 🧪/✓ picker)
+    # > first-uploaded photo as a last-resort guess. File size is deliberately NOT
+    # used as a signal — a big lifestyle/mockup photo (e.g. a glass and spoon with
+    # no product in frame) can easily outweigh a small, clean, isolated product
+    # PNG, which is exactly what caused Gemini to faithfully render a random glass
+    # instead of the actual bottle — it was never given the right reference image.
+    saved_default_photo = (active_prod or {}).get("default_photo_path", "")
+    if saved_default_photo and not os.path.exists(saved_default_photo):
+        saved_default_photo = ""
     if brand_product_photos:
-        best_photo = max(brand_product_photos, key=lambda p: os.path.getsize(p) if os.path.exists(p) else 0)
+        best_photo = saved_default_photo or brand_product_photos[0]
     else:
         best_photo = ""
     product_ref = product_path or best_photo
     print(f"[generate] Using product photo: {Path(product_ref).name if product_ref else 'NONE'}")
+
+    # ── Texture reference: shows the product's actual contents (liquid/jelly/gel)
+    # when poured/exposed — a sealed bottle photo often can't show this, and Gemini
+    # will otherwise default to inventing a generic (often wrong, e.g. white/milky)
+    # liquid. Priority: this generation's explicit pick > saved per-product default
+    # (persists across sessions) > second brand-kit photo as a last-resort guess.
+    texture_path = meta.get("texture_path", "")
+    saved_default_texture = (active_prod or {}).get("default_texture_path", "")
+    if saved_default_texture and not os.path.exists(saved_default_texture):
+        saved_default_texture = ""
+    if texture_path and os.path.exists(texture_path):
+        texture_ref_photo = texture_path
+    elif saved_default_texture:
+        texture_ref_photo = saved_default_texture
+    else:
+        _texture_candidates = [p for p in brand_product_photos if p != product_ref]
+        texture_ref_photo = _texture_candidates[0] if _texture_candidates else None
+    print(f"[generate] Using texture reference: {Path(texture_ref_photo).name if texture_ref_photo else 'NONE'}")
+
+    # ── Vision-ground the ACTUAL product photo so Gemini has an explicit textual
+    # description (label text, colors, container shape) to lock onto, not just the
+    # raw reference image — this is what actually prevents product hallucination
+    # (e.g. rendering a generic glass/vessel instead of the real branded jar).
+    # Cached per session/product so a multi-image batch only pays for this once.
+    product_visual = ""
+    if product_ref:
+        _pv_cache = meta.get("product_visual_cache", {})
+        product_visual = _pv_cache.get(product_ref, "")
+        if not product_visual:
+            product_visual = analyze_product_visual(product_ref) or ""
+            if product_visual:
+                _pv_cache[product_ref] = product_visual
+                meta["product_visual_cache"] = _pv_cache
+                with open(session_dir / "meta.json", "w") as fp:
+                    json.dump(meta, fp)
+        print(f"[generate] product_visual {'cached' if product_ref in _pv_cache and product_visual else 'MISSING'} "
+              f"({len(product_visual)} chars)")
 
     # ── CRITICAL: product photo goes FIRST so the model weights it highest ──
     # Order: [product_photo, winning_ad_style_ref]
     # The model treats the first image as the primary subject
     print(f"[generate idx={idx}] product_ref={product_ref}  style_refs={style_ref}")
     if not product_ref:
-        print("[generate] WARNING: no product photo found — check Brand Setup → Assets")
+        print("[generate] WARNING: no product photo found — check Brand Setup -> Assets")
     # Send BOTH product photo AND winning ad to Gemini
     # Order: [winning ad first = primary layout reference, product photo second]
     # Winning ad tells Gemini the visual design. Product photo tells it what to show.
@@ -1854,16 +2987,52 @@ def api_generate_one():
                 detected_framework = "BENEFIT"
             else:
                 detected_framework = "BENEFIT"
-            print(f"[framework] Template section='{section}' → framework={detected_framework}")
+            print(f"[framework] Template section='{section}' -> framework={detected_framework}")
 
-    # ── SPEED: copy generated ONCE per session, cached for all images ────────────
-    # Copy data is stored in session meta after first image — all others reuse it.
-    # This saves ~10-20s per image when generating 6 at once.
+    # ── SPEED: kick off style extraction in background thread immediately ─────────
+    # Style extraction (~20s) and copy generation (~30s) are independent — run them
+    # concurrently so total wait ≈ max(~30s) instead of sum (~50s).
+    _style_executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+
+    def _extract_style_for_ref():
+        if not style_ref:
+            return None
+        tpls = load_templates()
+        selected_tpl = next((t for t in tpls if t.get("path") == style_ref[0]), None)
+        if selected_tpl:
+            cached = selected_tpl.get("extracted_style")
+            if cached:
+                return cached   # instant — already cached
+            print(f"[StyleExtract] Running on-demand for template {selected_tpl.get('id')}")
+            style = extract_winning_ad_style(style_ref[0])
+            if style:
+                selected_tpl["extracted_style"] = style
+                save_templates(tpls)
+            return style
+        print(f"[StyleExtract] Running on-demand for session-uploaded winning ad")
+        return extract_winning_ad_style(style_ref[0])
+
+    _style_future = _style_executor.submit(_extract_style_for_ref)
+
+    # ── SPEED: copy generated ONCE per (use case) within a session, cached per-problem ──
+    # When multiple use cases are selected, each one needs its own copy (different
+    # headline/benefits angle) — but repeats of the same use case across the batch
+    # reuse the cached copy for that use case. Saves ~10-20s per repeated image.
+    # EXCEPTION: if vary_copy is on, skip the cache entirely — every image gets its
+    # own freshly-generated copy (slower, but distinct headline/angle each time),
+    # and previously-used headlines for this use case are fed back in so the model
+    # writes something genuinely different rather than a near-duplicate.
+    # Cache key includes persona + angle, not just use case — otherwise a same-use-case
+    # slot with a different persona/angle would silently reuse the wrong cached copy
+    # and the persona/angle selection would have no visible effect on repeated slots.
+    _copy_key = f"{problem}||{persona_key_for_idx or ''}||{angle_key_for_idx or ''}||{style_key_for_idx or ''}"
     session_meta_path = session_dir / "meta.json"
-    cached_copy = meta.get("cached_copy_data")
+    cached_copy_map = meta.get("cached_copy_by_problem", {})
+    headline_history = meta.get("headline_history_by_problem", {})
+    cached_copy = None if vary_copy else cached_copy_map.get(_copy_key)
 
     if cached_copy:
-        # Reuse copy from previous image in this batch
+        # Reuse copy from a previous image in this batch that used the same use case
         copy_data = cached_copy
         # Still apply manual overrides per-image if user provided them
         if copy_h1:  copy_data["h1"]  = copy_h1
@@ -1880,18 +3049,32 @@ def api_generate_one():
             ap = next((p for p in brand.get("products", []) if p.get("id") == active_product_id), None)
             if ap: product_url = ap.get("product_url", "") or ""
 
+        # Skip web fetch if Brand Setup knowledge base is already rich (saves ~24s)
+        kb = brand.get("knowledge", {})
+        active_kb = {}
+        if active_product_id is not None:
+            ap2 = next((p for p in brand.get("products", []) if p.get("id") == active_product_id), None)
+            if ap2: active_kb = ap2.get("knowledge", {})
+        combined_kb = {**kb, **active_kb}
+        kb_text = " ".join(str(v) for v in combined_kb.values() if v)
+        knowledge_is_rich = len(kb_text.strip()) > 300
+
         product_facts = ""
-        if product_url:
-            print(f"[web-fetch] Checking product page: {product_url}")
+        if product_url and not knowledge_is_rich:
+            print(f"[web-fetch] Knowledge sparse — fetching live product facts from {product_url}")
             product_facts = fetch_product_facts(product_url)
             if product_facts:
                 print(f"[web-fetch] Got {len(product_facts)} chars of live product data")
             else:
                 print("[web-fetch] Nothing fetched — using Brand Setup knowledge only")
+        elif knowledge_is_rich:
+            print(f"[web-fetch] Skipping — Brand Setup knowledge is rich ({len(kb_text)} chars)")
         else:
-            print("[web-fetch] No product URL set — add one in Brand Setup → Products")
+            print("[web-fetch] No product URL set — add one in Brand Setup -> Products")
 
         all_copy_manual = bool(copy_h1 and copy_h2 and copy_cta)
+
+        prior_headlines = headline_history.get(_copy_key, []) if vary_copy else []
 
         if all_copy_manual:
             # H1/H2/CTA provided — use them exactly, but still generate bullets
@@ -1901,7 +3084,9 @@ def api_generate_one():
             copy_data = generate_copy_from_knowledge(
                 framework_hint, problem, problem_ctx, brand,
                 copy_h1=copy_h1, copy_h2=copy_h2, copy_cta=copy_cta,
-                product_facts=product_facts
+                product_facts=product_facts,
+                vary_copy=vary_copy, previous_headlines=prior_headlines,
+                persona_key=persona_key_for_idx, angle_key=angle_key_for_idx, style_key=style_key_for_idx,
             )
         else:
             framework_hint = detected_framework
@@ -1909,7 +3094,9 @@ def api_generate_one():
             copy_data = generate_copy_from_knowledge(
                 framework_hint, problem, problem_ctx, brand,
                 copy_h1=copy_h1, copy_h2=copy_h2, copy_cta=copy_cta,
-                product_facts=product_facts
+                product_facts=product_facts,
+                vary_copy=vary_copy, previous_headlines=prior_headlines,
+                persona_key=persona_key_for_idx, angle_key=angle_key_for_idx, style_key=style_key_for_idx,
             )
             if quality == "final":
                 copy_data = verify_and_clean_copy(copy_data, product_facts)
@@ -1929,39 +3116,41 @@ def api_generate_one():
             copy_data["benefit_bullets"]= benefits
             print(f"[framework] {detected_framework} — using single-column benefits: {benefits[:2]}")
 
-        # Cache in session meta so all subsequent images in this batch skip copy gen
-        meta["cached_copy_data"] = copy_data
+        if vary_copy:
+            # Don't cache for reuse — but DO remember this headline so the next
+            # variation for this same use case/persona/angle avoids repeating it.
+            headline_history.setdefault(_copy_key, []).append(copy_data.get("h1", ""))
+            meta["headline_history_by_problem"] = headline_history
+        else:
+            # Cache in session meta, keyed by use case + persona + angle, so repeats
+            # of the same triple later in the batch skip copy gen — a different
+            # persona or angle on the same use case still gets its own copy.
+            cached_copy_map[_copy_key] = copy_data
+            meta["cached_copy_by_problem"] = cached_copy_map
         with open(session_meta_path, "w") as fp:
             json.dump(meta, fp)
 
-    # ── Step 2: Analyse winning ad COLORS/STYLE — described in text, not sent as image ──
-    # The winning ad image is NOT sent to Gemini (it copies text from it).
-    # Instead, vision model reads it and produces a text description of colors/layout
-    # which goes into the prompt — Gemini uses the description, not the image itself.
-    product_visual  = ""
     layout_analysis = ""
 
-    # Vision analysis removed — prompt is now short and clear, no extra description needed
-
-    # ── Step 3: Get extracted style from selected template ────────────────────────
+    # ── Step 3: Collect style result (ran in parallel with copy gen above) ────────
     extracted_style = None
-    if style_ref:
-        tpls = load_templates()
-        selected_tpl = next((t for t in tpls if t.get("path") == style_ref[0]), None)
-        if selected_tpl:
-            extracted_style = selected_tpl.get("extracted_style")
-            if not extracted_style:
-                # Extract now if not done at upload time
-                print(f"[StyleExtract] Running on-demand for template {selected_tpl.get('id')}")
-                extracted_style = extract_winning_ad_style(style_ref[0])
-                if extracted_style:
-                    selected_tpl["extracted_style"] = extracted_style
-                    save_templates(tpls)
-        else:
-            # Session-uploaded winning ad (not in Template Library) — extract style
-            # directly so the vibe (colors/mood/layout) still gets locked in.
-            print(f"[StyleExtract] Running on-demand for session-uploaded winning ad")
-            extracted_style = extract_winning_ad_style(style_ref[0])
+    try:
+        extracted_style = _style_future.result(timeout=30)
+    except Exception as e:
+        print(f"[StyleExtract] Failed or timed out: {e}")
+    finally:
+        _style_executor.shutdown(wait=False)
+
+    # ── Persona description for this slot's chosen persona (from the combo above) ──
+    # Gemini infers casting (ethnicity/wardrobe/hijab/setting) directly from the raw
+    # persona narrative baked into persona["prompt"] — no per-use-case special-casing.
+    persona_desc = ""
+    persona_style_cues = ""
+    if persona_key_for_idx:
+        persona = PERSONAS.get(persona_key_for_idx)
+        if persona:
+            persona_desc = persona["prompt"]
+            persona_style_cues = persona.get("style_cues", "")
 
     # ── Step 4: Build prompt with extracted style ────────────────────────────────
     prompt = build_prompt(layout_analysis, product_visual, problem, problem_ctx,
@@ -1970,32 +3159,46 @@ def api_generate_one():
                           copy_data=copy_data,
                           vibe_idx=idx - 1,
                           extracted_style=extracted_style,
-                          skip_overlay=skip_overlay)
+                          skip_overlay=skip_overlay,
+                          persona_desc=persona_desc,
+                          persona_style_cues=persona_style_cues,
+                          angle_visual=ANGLES.get(angle_key_for_idx, {}).get("visual_treatment", "") if angle_key_for_idx else "",
+                          style_visual=STYLES.get(style_key_for_idx, {}).get("visual_treatment", "") if style_key_for_idx else "")
 
     # Pass winning_ad and product separately so Gemini knows exactly what each image is
     winning_ad_img  = style_ref[0] if style_ref else None
     product_img_ref = product_ref if product_ref else None
+    texture_ref     = texture_ref_photo
 
     # NOTE: gemini-2.5-flash-image (DRAFT_MODEL) frequently ignores the winning-ad
     # reference image entirely for style transfer. nano-banana-pro-preview handles
     # multi-image composition / style replication far more reliably, so use it
     # for ALL generations (not just "final") whenever a winning ad is provided.
+    # Track which model ACTUALLY ran — cost must reflect this, not the requested
+    # `quality` flag, since a winning ad forces FINAL_MODEL regardless of the flag.
+    actual_quality_used = "draft"
     if quality == "final" or winning_ad_img:
         img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
                                            winning_ad_path=winning_ad_img,
-                                           product_image_path=product_img_ref)
+                                           product_image_path=product_img_ref,
+                                           texture_ref_path=texture_ref)
+        actual_quality_used = "final"
         if err:
             img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                                winning_ad_path=winning_ad_img,
-                                               product_image_path=product_img_ref)
+                                               product_image_path=product_img_ref,
+                                               texture_ref_path=texture_ref)
+            actual_quality_used = "draft"
     else:
         img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                            winning_ad_path=winning_ad_img,
-                                           product_image_path=product_img_ref)
+                                           product_image_path=product_img_ref,
+                                           texture_ref_path=texture_ref)
         if err:
             img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_FALL,
                                                winning_ad_path=winning_ad_img,
-                                               product_image_path=product_img_ref)
+                                               product_image_path=product_img_ref,
+                                               texture_ref_path=texture_ref)
 
     if err:
         return jsonify({"error": err}), 500
@@ -2030,6 +3233,12 @@ def api_generate_one():
         else:
             print("[pil] Overlay skipped (no copy data or PIL error)")
 
+    # ── Resolved persona/angle labels for this slot — persisted + returned so cards
+    # can tag use case, persona, and angle distinctly (three separate axes now).
+    _persona_label = PERSONAS.get(persona_key_for_idx, {}).get("label", "") if persona_key_for_idx else ""
+    _angle_label   = ANGLES.get(angle_key_for_idx, {}).get("label", "") if angle_key_for_idx else ""
+    _style_label   = STYLES.get(style_key_for_idx, {}).get("label", "") if style_key_for_idx else ""
+
     # Auto-save to Board
     board     = load_board()
     bid       = max((b["id"] for b in board), default=0) + 1
@@ -2042,6 +3251,9 @@ def api_generate_one():
         "filename":     b_filename,
         "label":        f"Ad {idx}" + (f" — {prod_name}" if prod_name else ""),
         "problem":      problem,
+        "persona":      _persona_label,
+        "angle":        _angle_label,
+        "style":        _style_label,
         "quality":      quality,
         "session_id":   session_id,
         "campaign_id":  campaign_id,
@@ -2064,14 +3276,23 @@ def api_generate_one():
     if extracted_style and quality == "draft":   # only score drafts to save cost
         match_result = score_generated_ad(extracted_style, str(out_path))
 
+    this_cost_usd  = COSTS[actual_quality_used]
+    total_spend_usd = add_spend(this_cost_usd)
+
     return jsonify({
         "image_url":    f"/api/image/{session_id}/{out_name}",
         "board_url":    f"/api/board/image/{b_filename}",
         "board_id":     bid,
         "filename":     out_name,
         "label":        f"Ad {idx}",
-        "cost_usd":     COSTS[quality],
-        "cost_myr":     round(COSTS[quality] * MYR_RATE, 2),
+        "use_case":     problem,
+        "persona":      _persona_label,
+        "angle":        _angle_label,
+        "style":        _style_label,
+        "cost_usd":     this_cost_usd,
+        "cost_myr":     round(this_cost_usd * MYR_RATE, 2),
+        "total_spend_usd": round(total_spend_usd, 4),
+        "total_spend_myr": round(total_spend_usd * MYR_RATE, 2),
         "match_score":  match_result.get("match_score")      if match_result else None,
         "mismatch":     match_result.get("biggest_mismatch") if match_result else None,
         "verdict":      match_result.get("verdict")          if match_result else None,
@@ -2148,6 +3369,106 @@ def load_board() -> list:
 def save_board(items: list):
     with open(BOARD_JSON, "w", encoding="utf-8") as f:
         json.dump(items, f, indent=2, ensure_ascii=False)
+
+@app.route("/api/spend", methods=["GET"])
+def get_spend():
+    """Cumulative real $ spent so far, across all sessions. NOT a Gemini account
+    balance — Gemini's API has no balance/credits endpoint; this is a local running
+    total computed from the actual cost of every generation made through this app."""
+    total = load_spend()
+    return jsonify({"total_usd": round(total, 4), "total_myr": round(total * MYR_RATE, 2)})
+
+@app.route("/api/personas", methods=["GET"])
+def get_personas():
+    return jsonify([{"id": k, **v} for k, v in PERSONAS.items()])
+
+def _slugify(label: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "_", (label or "").strip().lower()).strip("_")
+    return slug or uuid.uuid4().hex[:8]
+
+@app.route("/api/personas", methods=["POST"])
+def save_persona():
+    """Upsert a persona from the Personas & Angles tab. Only the human-editable
+    fields are accepted — prompt/copy_voice are re-derived from narrative here so
+    editing a persona never requires touching prompt-engineering text."""
+    data = request.json or {}
+    pid  = (data.get("id") or "").strip() or _slugify(data.get("label", ""))
+    entry = {
+        "label":     data.get("label", "").strip() or pid,
+        "emoji":     data.get("emoji", "🙂"),
+        "subtitle":  data.get("subtitle", ""),
+        "narrative": data.get("narrative", "").strip(),
+        "use_cases": data.get("use_cases", []),
+        "style_cues": data.get("style_cues") or DEFAULT_PERSONA_STYLE_CUES,
+    }
+    PERSONAS[pid] = _hydrate_persona(entry)
+    save_personas(PERSONAS)
+    return jsonify({"ok": True, "id": pid, "persona": PERSONAS[pid]})
+
+@app.route("/api/personas/delete", methods=["POST"])
+def delete_persona():
+    data = request.json or {}
+    pid  = data.get("id", "")
+    PERSONAS.pop(pid, None)
+    save_personas(PERSONAS)
+    return jsonify({"ok": True})
+
+@app.route("/api/angles", methods=["GET"])
+def get_angles():
+    return jsonify([{"id": k, **v} for k, v in ANGLES.items()])
+
+@app.route("/api/angles", methods=["POST"])
+def save_angle():
+    """Upsert an angle from the Personas & Angles tab."""
+    data = request.json or {}
+    aid  = (data.get("id") or "").strip() or _slugify(data.get("label", ""))
+    ANGLES[aid] = {
+        "label":            data.get("label", "").strip() or aid,
+        "psychology":       data.get("psychology", ""),
+        "copy_instruction": data.get("copy_instruction", ""),
+        "visual_treatment": data.get("visual_treatment", ""),
+    }
+    save_angles(ANGLES)
+    return jsonify({"ok": True, "id": aid, "angle": ANGLES[aid]})
+
+@app.route("/api/angles/delete", methods=["POST"])
+def delete_angle():
+    data = request.json or {}
+    aid  = data.get("id", "")
+    ANGLES.pop(aid, None)
+    save_angles(ANGLES)
+    return jsonify({"ok": True})
+
+@app.route("/api/styles", methods=["GET"])
+def get_styles():
+    return jsonify([{"id": k, **v} for k, v in STYLES.items()])
+
+@app.route("/api/styles", methods=["POST"])
+def save_style():
+    """Upsert a creative style (Clarity / Curiosity Gap / custom) from the Personas & Angles tab."""
+    data = request.json or {}
+    sid  = (data.get("id") or "").strip() or _slugify(data.get("label", ""))
+    STYLES[sid] = {
+        "label":            data.get("label", "").strip() or sid,
+        "subtitle":         data.get("subtitle", ""),
+        "copy_instruction": data.get("copy_instruction", ""),
+        "visual_treatment": data.get("visual_treatment", ""),
+    }
+    save_styles(STYLES)
+    return jsonify({"ok": True, "id": sid, "style": STYLES[sid]})
+
+@app.route("/api/styles/delete", methods=["POST"])
+def delete_style():
+    data = request.json or {}
+    sid  = data.get("id", "")
+    STYLES.pop(sid, None)
+    save_styles(STYLES)
+    return jsonify({"ok": True})
+
+@app.route("/api/use-cases", methods=["GET"])
+def get_use_cases():
+    product_name = request.args.get("product_name", "")
+    return jsonify(get_use_cases_for_product(product_name))
 
 @app.route("/api/board", methods=["GET"])
 def get_board():
@@ -2246,6 +3567,7 @@ def board_regenerate():
     if active_product_id is not None:
         active_product_id = int(active_product_id)
     all_products = brand.get("products", [])
+    active_prod  = None
     if active_product_id is not None:
         active_prod = next((p for p in all_products if p.get("id") == active_product_id), None)
         if active_prod:
@@ -2267,10 +3589,23 @@ def board_regenerate():
             if cand:
                 brand_product_photos = cand
                 break
-    product_ref = (max(brand_product_photos, key=lambda p: os.path.getsize(p))
-                   if brand_product_photos else "")
+    # Same priority as api_generate_one(): saved per-product default first, then
+    # first-uploaded photo as a last-resort guess (never largest-file — see there
+    # for why that was actively wrong).
+    _saved_photo   = (active_prod or {}).get("default_photo_path", "")
+    _saved_texture = (active_prod or {}).get("default_texture_path", "")
+    if _saved_photo and not os.path.exists(_saved_photo):
+        _saved_photo = ""
+    if _saved_texture and not os.path.exists(_saved_texture):
+        _saved_texture = ""
+    product_ref  = _saved_photo or (brand_product_photos[0] if brand_product_photos else "")
+    if _saved_texture:
+        texture_ref = _saved_texture
+    else:
+        _tex_candidates = [p for p in brand_product_photos if p != product_ref]
+        texture_ref = _tex_candidates[0] if _tex_candidates else None
 
-    problem     = item.get("problem", "Post-partum")
+    problem     = item.get("problem", "Selepas Bersalin")
     problem_ctx = PROBLEM_CONTEXT.get(problem, problem)
     copy_data   = item.get("copy_data") or {}
 
@@ -2311,19 +3646,27 @@ OUTPUT RULES:
         if quality == "final":
             img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
                                                 winning_ad_path=str(src_path),
-                                                product_image_path=product_ref or None)
+                                                product_image_path=product_ref or None,
+                                                texture_ref_path=texture_ref,
+                                                is_tweak=True)
             if err:
                 img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                                     winning_ad_path=str(src_path),
-                                                    product_image_path=product_ref or None)
+                                                    product_image_path=product_ref or None,
+                                                    texture_ref_path=texture_ref,
+                                                    is_tweak=True)
         else:
             img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                                 winning_ad_path=str(src_path),
-                                                product_image_path=product_ref or None)
+                                                product_image_path=product_ref or None,
+                                                texture_ref_path=texture_ref,
+                                                is_tweak=True)
             if err:
                 img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_FALL,
                                                     winning_ad_path=str(src_path),
-                                                    product_image_path=product_ref or None)
+                                                    product_image_path=product_ref or None,
+                                                    texture_ref_path=texture_ref,
+                                                    is_tweak=True)
         if err or not img_bytes:
             continue
 
@@ -2341,8 +3684,11 @@ OUTPUT RULES:
     if not results:
         return jsonify({"error": "Generation failed — please try again"}), 500
     cost_usd = round(COSTS.get(quality, COSTS["draft"]) * len(results), 2)
+    total_spend_usd = add_spend(cost_usd)
     return jsonify({"ok": True, "items": results,
-                     "cost_usd": cost_usd, "cost_myr": round(cost_usd * MYR_RATE, 2)})
+                     "cost_usd": cost_usd, "cost_myr": round(cost_usd * MYR_RATE, 2),
+                     "total_spend_usd": round(total_spend_usd, 4),
+                     "total_spend_myr": round(total_spend_usd * MYR_RATE, 2)})
 
 @app.route("/api/board/delete-variant", methods=["POST"])
 def board_delete_variant():
@@ -2371,6 +3717,37 @@ def save_products():
     brand["active_product_id"] = data.get("active_product_id", None)
     save_brand(brand)
     return jsonify({"ok": True})
+
+@app.route("/api/brand-kit/products/<int:product_id>/default-photos", methods=["POST"])
+def set_default_product_photos(product_id):
+    """Persist which photo is the product-identity reference and which (if any) is
+    the texture/contents reference for this product — so the picker choice made
+    once in the sidebar becomes the default for every future generation, instead
+    of resetting to an auto-guess every time the page reloads."""
+    data  = request.json or {}
+    brand = load_brand()
+    products = brand.get("products", [])
+    prod = next((p for p in products if p.get("id") == product_id), None)
+    if prod is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    def _validate(path):
+        if not path:
+            return ""
+        try:
+            resolved = Path(path).resolve()
+            if resolved.is_relative_to(BRAND_DIR.resolve()) and resolved.exists():
+                return str(resolved)
+        except (OSError, ValueError):
+            pass
+        return ""
+
+    if "default_photo_path" in data:
+        prod["default_photo_path"] = _validate(data.get("default_photo_path", ""))
+    if "default_texture_path" in data:
+        prod["default_texture_path"] = _validate(data.get("default_texture_path", ""))
+    save_brand(brand)
+    return jsonify({"ok": True, "product": prod})
 
 def test_product_image():  # kept as debug utility (no route, called manually)
     """
