@@ -267,6 +267,23 @@ h1,h2,h3,.ws-title,.topbar-logo,.sb-step-title,.bp-header-text h1,.board-header 
   background:none;cursor:pointer;display:none}
 .btn-save.show{display:block}
 .btn-save:hover{background:var(--bg)}
+.btn-meta-copy{font-size:11px;padding:4px 10px;border:1.5px solid #0ea5e9;border-radius:5px;
+  background:#fff;cursor:pointer;color:#0ea5e9;display:none;transition:all .15s;font-weight:600}
+.btn-meta-copy.show{display:block}
+.btn-meta-copy:hover{background:#0ea5e9;color:#fff}
+.meta-copy-panel{padding:10px 12px;border-top:1px solid var(--border);background:var(--bg);
+  display:flex;flex-direction:column;gap:8px}
+.meta-copy-row{display:flex;flex-direction:column;gap:3px}
+.meta-copy-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.04em;display:flex;align-items:center;gap:6px}
+.meta-char-hint{font-weight:400;font-size:9px;background:var(--border);padding:1px 5px;
+  border-radius:4px;text-transform:none;letter-spacing:0}
+.meta-copy-text{font-size:12px;color:var(--fg);line-height:1.45;padding:6px 8px;
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;word-break:break-word}
+.meta-copy-btn{align-self:flex-end;font-size:10px;padding:3px 10px;border:1px solid var(--border);
+  border-radius:5px;background:none;cursor:pointer;color:var(--muted);transition:all .15s;margin-top:1px}
+.meta-copy-btn:hover{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+.meta-copy-btn.copied{background:#16a34a;color:#fff;border-color:#16a34a}
 
 /* Empty state */
 .empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted2)}
@@ -1043,6 +1060,43 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
 
   </div><!-- /board-panel -->
 
+  <!-- ── META Copy Panel (fixed right side) ── -->
+  <div id="meta-panel-overlay" onclick="closeMetaPanel()" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.35)"></div>
+  <div id="meta-panel-drawer" style="display:none;position:fixed;top:0;right:0;height:100%;width:360px;max-width:92vw;background:var(--white);z-index:201;box-shadow:-4px 0 24px rgba(0,0,0,.18);flex-direction:column;transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-weight:700;font-size:15px">📋 META Ads Copy</div>
+        <div id="meta-panel-sub" style="font-size:11px;color:var(--muted);margin-top:2px"></div>
+      </div>
+      <button onclick="closeMetaPanel()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:4px">✕</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:16px">
+      <div class="meta-copy-row">
+        <div class="meta-copy-label">Primary Text <span class="meta-char-hint">≤125 chars · hook in first 40</span></div>
+        <div class="meta-copy-text" id="mp-primary" style="font-size:13px;min-height:48px"></div>
+        <div id="mp-primary-chars" style="font-size:10px;color:var(--muted);text-align:right;margin-top:2px"></div>
+        <button class="meta-copy-btn" onclick="copyMetaField('mp-primary',this)">Copy</button>
+      </div>
+      <div class="meta-copy-row">
+        <div class="meta-copy-label">Headline <span class="meta-char-hint">≤40 chars</span></div>
+        <div class="meta-copy-text" id="mp-headline"></div>
+        <div id="mp-headline-chars" style="font-size:10px;color:var(--muted);text-align:right;margin-top:2px"></div>
+        <button class="meta-copy-btn" onclick="copyMetaField('mp-headline',this)">Copy</button>
+      </div>
+      <div class="meta-copy-row">
+        <div class="meta-copy-label">Description <span class="meta-char-hint">≤25 chars</span></div>
+        <div class="meta-copy-text" id="mp-description"></div>
+        <div id="mp-desc-chars" style="font-size:10px;color:var(--muted);text-align:right;margin-top:2px"></div>
+        <button class="meta-copy-btn" onclick="copyMetaField('mp-description',this)">Copy</button>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:4px 0">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Ad Copy on Image</div>
+        <div id="mp-ad-copy" style="font-size:12px;color:var(--fg);line-height:1.6"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Variant Lightbox ── -->
   <div class="variant-lightbox-overlay" id="variant-lightbox-overlay" onclick="if(event.target===this) closeVariantLightbox()">
     <button class="board-modal-close" onclick="closeVariantLightbox()">✕</button>
@@ -1185,40 +1239,9 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
           </div>
         </div>
 
-        <!-- Brand Colors + Certs -->
+        <!-- Certs -->
         <div class="bp-card">
-          <h3>🎨 Brand Colors</h3>
-          <div class="color-fields">
-            <div class="color-field form-row">
-              <label class="form-label">Primary</label>
-              <div class="color-preview-wrap">
-                <div class="color-swatch" id="swatch-primary" onclick="document.getElementById('cp-primary').click()">
-                  <input type="color" id="cp-primary" oninput="onColorInput('primary',this.value)">
-                </div>
-                <input class="form-input" id="bk-primary" placeholder="#F5A800" oninput="syncColorSwatch('primary',this.value);markDirty()">
-              </div>
-            </div>
-            <div class="color-field form-row">
-              <label class="form-label">Secondary</label>
-              <div class="color-preview-wrap">
-                <div class="color-swatch" id="swatch-secondary" onclick="document.getElementById('cp-secondary').click()">
-                  <input type="color" id="cp-secondary" oninput="onColorInput('secondary',this.value)">
-                </div>
-                <input class="form-input" id="bk-secondary" placeholder="#D94F00" oninput="syncColorSwatch('secondary',this.value);markDirty()">
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <label class="form-label">Accent / Background</label>
-            <div class="color-preview-wrap">
-              <div class="color-swatch" id="swatch-accent" onclick="document.getElementById('cp-accent').click()">
-                <input type="color" id="cp-accent" oninput="onColorInput('accent',this.value)">
-              </div>
-              <input class="form-input" id="bk-accent" placeholder="#FFF8E7" oninput="syncColorSwatch('accent',this.value);markDirty()">
-            </div>
-          </div>
-
-          <h3 style="margin-top:18px">🏅 Certifications</h3>
+          <h3>🏅 Certifications</h3>
           <div class="cert-grid" id="cert-grid">
             <button class="cert-toggle" data-cert="Halal JAKIM" onclick="toggleCert(this)">Halal JAKIM</button>
             <button class="cert-toggle" data-cert="KKM Approved" onclick="toggleCert(this)">KKM Approved</button>
@@ -2033,6 +2056,10 @@ function renderCards() {
           </div>` : ''}
       </div>
       <div class="card-footer">
+        ${c.imageUrl ? `
+        <button class="btn-meta-copy show" onclick="showMetaPanel(event,'${c.id}','card')">
+          📋 META Copy
+        </button>` : ''}
         <button class="btn-canva ${c.imageUrl?'show':''}"
                 id="canva-btn-${c.id}"
                 data-sid="${c.imageUrl ? c.imageUrl.split('?')[0].split('/').slice(-2,-1)[0] : ''}"
@@ -2050,6 +2077,104 @@ function renderCards() {
 }
 
 function filterCards(){ renderCards(); }
+
+function showMetaPanel(e, id, source) {
+  e.stopPropagation();
+
+  // Resolve copy data — from allCreatives (card) or boardItems (board)
+  let cd = {}, label = '', persona = '', angle = '', useCase = '';
+  if (source === 'card') {
+    const c = allCreatives.find(x => x.id === id);
+    if (c) {
+      cd = { meta_primary_text: c.metaPrimaryText, meta_headline: c.metaHeadline,
+             meta_description: c.metaDescription, h1: c.h1, h2: c.h2, cta: c.cta,
+             benefit_bullets: c.benefitBullets };
+      label = c.label; persona = c.persona; angle = c.angle; useCase = c.useCase;
+    }
+  } else {
+    const b = boardItems.find(x => x.id === id);
+    if (b) {
+      cd = b.copy_data || {};
+      label = b.label; persona = b.persona; angle = b.angle; useCase = b.problem;
+    }
+  }
+
+  // Derive META instantly from existing copy — no API call
+  const h1  = (cd.meta_headline     || cd.h1  || '').trim();
+  const h2  = (cd.h2  || '').trim();
+  const cta = (cd.cta || '').trim();
+  const bullets = (cd.benefit_bullets || cd.right_bullets || []).filter(Boolean);
+
+  let primary = cd.meta_primary_text || '';
+  if (!primary) {
+    // Build a complete sentence from h2 (or h1) + first benefit bullet
+    const hook  = h2 || h1;
+    const proof = bullets[0] || '';
+    primary = proof ? `${hook} ${proof}.` : hook;
+  }
+
+  let headline = cd.meta_headline || '';
+  if (!headline) {
+    // Use h1 as-is — complete sentence wins over character limit
+    headline = h1;
+  }
+
+  let description = cd.meta_description || '';
+  if (!description) {
+    // Use CTA as-is
+    description = cta;
+  }
+
+  // Populate panel
+  const setField = (id, val, charId, limit) => {
+    document.getElementById(id).textContent = val;
+    const el = document.getElementById(charId);
+    if (el) {
+      const over = val.length > limit;
+      el.textContent = `${val.length}/${limit} chars`;
+      el.style.color = over ? '#dc2626' : 'var(--muted)';
+    }
+  };
+  setField('mp-primary',     primary,     'mp-primary-chars',  125);
+  setField('mp-headline',    headline,    'mp-headline-chars',  40);
+  setField('mp-description', description, 'mp-desc-chars',      25);
+
+  document.getElementById('meta-panel-sub').textContent =
+    [useCase, persona, angle].filter(Boolean).join(' · ');
+
+  // Ad copy summary
+  const copyLines = [];
+  if (cd.h1)  copyLines.push(`<b>H1:</b> ${cd.h1}`);
+  if (cd.h2)  copyLines.push(`<b>H2:</b> ${cd.h2}`);
+  if (cd.cta) copyLines.push(`<b>CTA:</b> ${cd.cta}`);
+  if (bullets.length) copyLines.push(`<b>Bullets:</b><br>• ${bullets.join('<br>• ')}`);
+  document.getElementById('mp-ad-copy').innerHTML = copyLines.join('<br>') || '<span style="color:var(--muted)">No copy data</span>';
+
+  // Open drawer
+  document.getElementById('meta-panel-overlay').style.display = 'block';
+  const drawer = document.getElementById('meta-panel-drawer');
+  drawer.style.display = 'flex';
+  requestAnimationFrame(() => drawer.style.transform = 'translateX(0)');
+}
+
+function closeMetaPanel() {
+  const drawer = document.getElementById('meta-panel-drawer');
+  drawer.style.transform = 'translateX(100%)';
+  setTimeout(() => {
+    drawer.style.display = 'none';
+    document.getElementById('meta-panel-overlay').style.display = 'none';
+  }, 250);
+}
+
+function copyMetaField(elId, btn) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
 
 // ── Generate ──────────────────────────────────────────────────────────────────
 async function generate() {
@@ -2121,73 +2246,74 @@ async function generate() {
 
   const batchNonce = Math.random().toString(36).slice(2) + Date.now().toString(36);
 
-  // Generate one by one
-  let done=0;
-  for (let i=1;i<=count;i++) {
-    const ph = placeholders[i-1];
-    try {
-      const r = await fetch('/api/generate-one',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          session_id:    uploadResp.session_id,
-          batch_nonce:   batchNonce,
-          index:         i,
-          quality:       'draft',
-          problem:       _effectiveProblem,
-          problem_ids:   _selectedProblemIds,
-          count:         count,
-          template_ids:  [...selectedTplIds],
-          persona_ids:   state.personaIds,
-          angle_ids:     state.angleIds,
-          style_ids:     state.styleIds,
-          vary_copy:     document.getElementById('vary-copy-toggle').checked,
-          campaign_id:      activeCampaign ? activeCampaign.id   : null,
-          campaign_name:    activeCampaign ? activeCampaign.name : '',
-          active_product_id: activeProductId,
-          skip_overlay: false
-        })
-      });
-      const d = await r.json();
+  // Generate all in parallel — each slot fires immediately, cards update as each finishes
+  let done = 0;
+  const varyCopy = document.getElementById('vary-copy-toggle').checked;
+  const tasks = Array.from({length: count}, (_, idx) => {
+    const i = idx + 1;
+    const ph = placeholders[idx];
+    return fetch('/api/generate-one', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        session_id:        uploadResp.session_id,
+        batch_nonce:       batchNonce,
+        index:             i,
+        quality:           'draft',
+        problem:           _effectiveProblem,
+        problem_ids:       _selectedProblemIds,
+        count:             count,
+        template_ids:      [...selectedTplIds],
+        persona_ids:       state.personaIds,
+        angle_ids:         state.angleIds,
+        style_ids:         state.styleIds,
+        vary_copy:         varyCopy,
+        campaign_id:       activeCampaign ? activeCampaign.id   : null,
+        campaign_name:     activeCampaign ? activeCampaign.name : '',
+        active_product_id: activeProductId,
+        skip_overlay:      false
+      })
+    })
+    .then(r => r.json())
+    .then(d => {
       if (d.error) throw new Error(d.error);
-
-      ph.label      = d.label||'Ad '+i;
-      ph.useCase    = d.use_case||_effectiveProblem;
-      ph.persona    = d.persona||'';
-      ph.angle      = d.angle||'';
-      ph.style      = d.style||'';
-      ph.imageUrl   = d.image_url+'?t='+Date.now();
-      ph.filename   = d.filename||('img_'+String(i).padStart(2,'0')+'_draft.png');
+      ph.label      = d.label || 'Ad ' + i;
+      ph.useCase    = d.use_case || _effectiveProblem;
+      ph.persona    = d.persona || '';
+      ph.angle      = d.angle || '';
+      ph.style      = d.style || '';
+      ph.imageUrl   = d.image_url + '?t=' + Date.now();
+      ph.filename   = d.filename || ('img_' + String(i).padStart(2,'0') + '_draft.png');
       ph.isNew      = true;
-      // STEP 5: attach match score if returned
-      ph.matchScore = d.match_score || null;
-      ph.mismatch   = d.mismatch   || null;
-      ph.verdict    = d.verdict    || null;
-      ph.costMyr    = typeof d.cost_myr === 'number' ? d.cost_myr : null;
-
-      state.totalUsd += d.cost_usd||COST_PER;
+      ph.matchScore       = d.match_score || null;
+      ph.mismatch         = d.mismatch   || null;
+      ph.verdict          = d.verdict    || null;
+      ph.costMyr          = typeof d.cost_myr === 'number' ? d.cost_myr : null;
+      ph.metaPrimaryText  = d.meta_primary_text || '';
+      ph.metaHeadline     = d.meta_headline     || '';
+      ph.metaDescription  = d.meta_description  || '';
+      state.totalUsd += d.cost_usd || COST_PER;
       document.getElementById('session-cost').textContent =
         `$${state.totalUsd.toFixed(2)} / RM ${(state.totalUsd*MYR).toFixed(2)}`;
-
-      // Update the cumulative spend tracker directly from this response (avoids an
-      // extra round trip); falls back to a fresh fetch if the server didn't send it.
       if (typeof d.total_spend_usd === 'number') {
         const el = document.getElementById('spend-note-val');
         if (el) el.textContent = `$${d.total_spend_usd.toFixed(2)} / RM ${d.total_spend_myr.toFixed(2)}`;
       } else {
         refreshSpend();
       }
-
       [ph.useCase, ph.persona, ph.angle, ph.style].forEach(v => { if (v) addTag(v); });
-    } catch(e) {
-      ph.label = 'Generation failed';
-    }
-    done++;
-    const pct = Math.round(done/count*100);
-    document.getElementById('progress-fill').style.width=pct+'%';
-    document.getElementById('progress-txt').textContent=`${done} / ${count}`;
-    renderCards();
-  }
+    })
+    .catch(() => { ph.label = 'Generation failed'; })
+    .finally(() => {
+      done++;
+      const pct = Math.round(done / count * 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-txt').textContent = `${done} / ${count}`;
+      renderCards();
+    });
+  });
+
+  await Promise.all(tasks);
 
   document.getElementById('creative-count').textContent =
     `${allCreatives.length} of ${allCreatives.length} saved creatives`;
@@ -2588,6 +2714,8 @@ function renderBoard() {
           ${b.campaign_name ? `<span style="color:#7c3aed;font-weight:600">📁 ${b.campaign_name}</span>` : ''}
           ${date ? `<span style="margin-left:auto;color:var(--muted2)">${date}</span>` : ''}
         </div>
+        <button class="btn-meta-copy show" style="margin-top:6px;width:100%"
+                onclick="showMetaPanel(event,${b.id},'board')">📋 META Copy</button>
       </div>`;
     card.querySelector('.board-card-check').addEventListener('click', (e) => {
       e.stopPropagation();
@@ -3425,9 +3553,6 @@ function _brandPayload() {
     extra_notes:     document.getElementById('bk-notes').value,
     products:        allProducts,
     active_product_id: activeProductId,
-    primary_color:   document.getElementById('bk-primary').value,
-    secondary_color: document.getElementById('bk-secondary').value,
-    accent_color:    document.getElementById('bk-accent').value,
     certifications:  certs,
     key_claims:      tagLists.claims,
   };
@@ -3518,9 +3643,6 @@ async function loadBrandKit() {
   renderProductPhotoSections();
   if (activeProductId) selectProduct(activeProductId);
 
-  setColorField('primary',   brand.primary_color   || '#F5A800');
-  setColorField('secondary', brand.secondary_color || '#D94F00');
-  setColorField('accent',    brand.accent_color    || '#FFF8E7');
 
   document.querySelectorAll('.cert-toggle').forEach(btn => {
     btn.classList.toggle('on', (brand.certifications||[]).includes(btn.dataset.cert));
