@@ -1,0 +1,83 @@
+STATIC-REMIX RUN REPORT
+=======================
+Date: 20260529-1006
+PDF: C:\Users\haliza.LUXOR\Downloads\Winning Ads.pdf (4 sections, 12 reference images extracted)
+Product: Serigama Luxor Jeli Gamat 550ml — https://serigama.com.my/products/baru-jeli-gamat-550ml
+
+IMAGES PRODUCED
+---------------
+Total requested: 2
+Total generated: 0 (pending — API billing not enabled for gemini-3-pro-image)
+Status: All briefs, prompts, and the generation script are ready.
+        Run `python generate.py` after enabling billing on your Google AI API key.
+
+HOW TO COMPLETE IMAGE GENERATION
+---------------------------------
+1. Enable billing at aistudio.google.com (link a Google Cloud billing account)
+2. Set your key: $env:GEMINI_API_KEY = "AIzaSy..."
+3. Run: python "C:\Users\haliza.LUXOR\.claude\skills\static-remix\runs\20260529-1006\generate.py"
+Images will be saved to: .../runs/20260529-1006/production/
+
+FRAMEWORKS DETECTED IN PDF
+---------------------------
+• US_VS_THEM       — 4 reference ads  [SELECTED for this run]
+• STAT_SURROUND    — 3 reference ads
+• TESTIMONIAL      — 2 reference ads
+• PRODUCT_DETAILS  — 3 reference ads
+
+TOP 3 CONCEPTS TO TEST FIRST
+------------------------------
+1. concept_01_var_01 (US_VS_THEM — Side-by-side table)
+   WHY: Supplement buyers in Malaysia are increasingly label-savvy. A transparent
+   comparison showing Halal JAKIM + KKM + GMP + 3.48g gamat per 10ml directly attacks
+   the #1 purchase objection (is this legitimate / is this halal?). Side-by-side removes
+   cognitive effort — the customer doesn't need to research; you've done it for them.
+
+2. concept_01_var_02 (US_VS_THEM — "JANGAN BELI INI" reverse psychology)
+   WHY: Pattern interrupt for scroll-heavy TikTok/Reels feeds. The dare headline stops
+   thumbs, creates curiosity gap, and pre-qualifies the viewer (anyone who keeps reading
+   self-selects as someone who cares about those exact benefits). The dark background
+   makes the golden Serigama bottle pop dramatically at the reveal.
+
+3. STAT_SURROUND concept (not yet generated — recommend next run)
+   WHY: "10 juta botol terjual" and "20 tahun" are powerful social proof anchors.
+   A stat-led ad (large number, credibility radius of surrounding proof elements)
+   would complement the US VS THEM test by targeting a different psychological
+   trigger — bandwagon / safety in numbers — especially for first-time buyers.
+
+TESTING PLAYBOOK
+----------------
+Budget per creative:   RM20–50 for initial 48-hour test (META/TikTok)
+Platform priority:     TikTok Ads first (lower CPM, health supplement audience strong)
+                       META Reels second
+Kill criteria:         CTR < 0.8% after RM20 spend on TikTok — pause and move on
+                       CTR < 0.5% after RM30 spend on META
+Winner criteria:       CTR > 2% or ROAS > 2 after RM50 spend — scale 2x budget every 48h
+Test one variable at a time — don't change creative and audience simultaneously.
+Audience suggestion:   MY women 28–55, interests: kesihatan, produk halal, ibu menyusu,
+                       gamat, suplemen semulajadi
+
+PER-CONCEPT DETAILS
+-------------------
+CONCEPT 01 — US_VS_THEM
+  VAR_01: Side-by-side comparison table
+    Headline: "Kenapa pilih yang biasa bila ada yang lebih baik?"
+    Caption start: "Ramai yang masih pilih suplemen tanpa sijil Halal..."
+    File: production/concept_01_var_01.png
+    Variation axis: Layout (table vs dare headline)
+
+  VAR_02: "JANGAN BELI INI" reverse psychology
+    Headline: "Jangan beli Jeli Gamat kami... melainkan kau benar-benar nak rasa bezanya."
+    Caption start: "Serius. Jangan beli kalau kau tak kisah pasal:..."
+    File: production/concept_01_var_02.png
+    Variation axis: Layout (table vs dare headline)
+
+RUN FOLDER
+----------
+C:\Users\haliza.LUXOR\.claude\skills\static-remix\runs\20260529-1006\
+  extracted/          — 12 reference images from PDF, labeled by framework
+  teardowns/          — US_VS_THEM_teardown.txt
+  briefs/             — concept_01_brief.txt (var_01 + var_02 fully specified)
+  brand_description.txt
+  generate.py         — run this to produce images once billing enabled
+  report.txt          — this file

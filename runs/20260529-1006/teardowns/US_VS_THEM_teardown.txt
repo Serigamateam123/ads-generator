@@ -1,0 +1,67 @@
+US VS THEM FRAMEWORK TEARDOWN — SERIGAMA JELI GAMAT
+=====================================================
+
+REFERENCE ADS VIEWED:
+1. Mars Men vs "Typical T-Boosters" (side-by-side comparison)
+2. "DON'T BUY THIS PILL" (Pore Favor — reverse-psychology challenger)
+3. Review-led "THE REVIEWS ARE IN" (social proof meets competitor displacement)
+
+---
+
+FRAMEWORK: US VS THEM
+The ad creates a stark binary: the old/wrong/generic option vs YOUR product as the
+obvious winner. It works by (a) validating the customer's existing frustration with
+other products, and (b) letting the comparison do the selling so the brand never
+sounds boastful.
+
+WHY IT WORKS PSYCHOLOGICALLY
+- Contrast effect: presenting a weak left column makes the right column look
+  dramatically superior even if the wins are small
+- Cognitive fluency: bullet-point checklists are fast to read; red ✗ vs green ✓
+  is processed in milliseconds before the brain even reads the text
+- Loss aversion: naming competitor problems first triggers fear of making a
+  "wrong" purchase — which then drives action toward the safe/verified option
+- "Don't Buy This Pill" variant uses reverse psychology — the headline is a dare,
+  which increases curiosity and creates a pattern interrupt in a scroll feed
+
+---
+
+WHAT TO KEEP
+- Clean two-column split: left = generic problem, right = Serigama solution
+- Red ✗ / green ✓ visual system — universal, no language barrier (good for
+  bilingual MY market)
+- Bold all-caps section label "US VS THEM" at top as category anchor
+- Minimal background — lets the product bottle be the only hero on the right side
+- Strong black bar at the bottom for a punchy closer claim
+
+WHAT TO SWAP FOR SERIGAMA
+- LEFT COLUMN (competitor weaknesses for typical jamu/supplement category):
+  • Alcohol-based formula — not halal-certified
+  • Unknown extraction source — origin not stated
+  • No KKM/Health Ministry approval
+  • Hidden dosage — "proprietary blend" that hides actual gamat content
+  • Small 350ml bottle — runs out fast
+  • No third-party testing
+
+- RIGHT COLUMN (Serigama Luxor Jeli Gamat wins):
+  • JAKIM Halal certified ✓
+  • Wild-caught Golden Sea Cucumber (Stichopus Hermanii) ✓
+  • KKM approved ✓
+  • Full transparent label — 3.48g per 10ml ✓
+  • 550ml — 50% more per bottle ✓
+  • GMP-certified facility ✓
+  • 20 years of heritage, 10 million+ bottles sold ✓
+
+- PRODUCT VISUAL: Replace white generic bottle with the golden-labeled Serigama
+  Luxor bottle — the amber/gold label is unmistakably premium vs a plain white bottle
+- BACKGROUND: Use warm beige/cream to match Serigama brand palette instead of
+  stark white or dark tones
+- HEADLINE CLOSER: "RM88 for 550ml — More Gamat, Less Compromise" or
+  "Trusted by Malaysian Mothers Since 2004"
+
+---
+
+VARIATION AXIS IDEAS
+- var_01: Side-by-side table format (Mars Men style) — structured, clinical, trust-building
+- var_02: "DON'T BUY THIS" reverse-psychology hook — headline-led, pattern interrupt,
+  product reveal at the bottom with the comparison points as secondary proof

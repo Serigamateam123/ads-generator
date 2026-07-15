@@ -3,6 +3,3 @@
 .env
 __pycache__/
 *.pyc
-sessions/
-board/
-runs/

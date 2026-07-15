@@ -1,0 +1,109 @@
+CONCEPT 01 — US VS THEM
+=======================
+FRAMEWORK: US_VS_THEM
+VARIATION AXIS: Layout approach — var_01 = classic side-by-side comparison table;
+                               var_02 = reverse-psychology dare headline
+
+PRODUCT: Serigama Luxor Jeli Gamat 550ml
+PRICE: RM88.00 (sale) | Regular: RM98.00
+REFERENCE PRODUCT PHOTO: ../product_photo.png (golden-yellow label, white HDPE bottle, warm beige background)
+
+---
+
+VAR_01 — "SIDE-BY-SIDE COMPARISON TABLE"
+=========================================
+
+SCENE DESCRIPTION:
+Portrait format (9:16). Clean warm-beige/cream background (#D4B896 range) — matches
+the Serigama brand palette. Two-column layout dividing the image vertically.
+
+LEFT COLUMN — header: "SUPPLEMENT BIASA" (Typical Supplement)
+  Plain white unlabelled cylindrical bottle, slightly smaller, slightly blurry/greyed out
+  Background tint: light grey to signal "inferior"
+
+RIGHT COLUMN — header: "SERIGAMA LUXOR" in bold
+  The Serigama Luxor Jeli Gamat 550ml bottle, sharp focus, golden label glowing
+  Background tint: warm amber/gold — #F5A800 at 15% opacity behind the bottle
+
+COMPARISON BULLETS (left red ✗, right green ✓):
+  ✗ Tiada sijil HALAL JAKIM          ✓ Halal JAKIM Certified
+  ✗ Kandungan tersembunyi             ✓ 3.48g gamat per 10ml — label penuh
+  ✗ Tiada kelulusan KKM              ✓ KKM Approved
+  ✗ Kilang tidak berlesen GMP        ✓ GMP-Certified Facility
+  ✗ Botol kecil 350ml               ✓ 550ml — 50% Lebih Banyak
+
+TEXT OVERLAYS:
+  Top label (small caps, centered):    US VS THEM
+  Left header (bold, dark):            SUPPLEMENT BIASA
+  Right header (bold, brand orange):   SERIGAMA LUXOR
+  Bottom black bar text:               "20 Tahun Dipercayai. Lebih 10 Juta Botol Terjual."
+  Sub-line under black bar:            "RM88 untuk 550ml — Lebih Gamat, Lebih Berbaloi."
+
+HEADLINE (for ad copy, not on image):
+  "Kenapa pilih yang biasa bila ada yang lebih baik?"
+
+CAPTION (social media):
+  Ramai yang masih pilih suplemen tanpa sijil Halal, tanpa kelulusan KKM, tanpa label
+  yang jelas. 🤔 Tapi bila dah tahu bezanya — tiada sebab nak balik semula.
+
+  Serigama Luxor Jeli Gamat ✓ Halal JAKIM ✓ KKM Approved ✓ GMP ✓ 3.48g Gamat per 10ml
+  550ml — 50% Lebih Banyak daripada botol standard.
+
+  RM88 je. Free shipping atas RM70. Link di bio. 🌊
+
+ASPECT RATIO: 9:16
+OUTPUT: concept_01_var_01.png
+
+---
+
+VAR_02 — "DON'T BUY THIS" REVERSE PSYCHOLOGY
+=============================================
+
+SCENE DESCRIPTION:
+Portrait format (9:16). Dark charcoal/navy background (#1A1A2E) for high contrast —
+pattern interrupt from the standard warm-toned supplement ads.
+
+TOP HALF — giant bold all-caps white text, left-aligned, stacked:
+  "JANGAN
+   BELI
+   INI"
+  (DON'T BUY THIS)
+  In massive weight — Montserrat ExtraBold or similar. Almost fills top half.
+
+SMALL ITALIC SUBLINE beneath the big text (warm amber, smaller):
+  "...melainkan kau nak sembuh dalam 30 hari."
+  (...unless you want to recover within 30 days.)
+
+BOTTOM HALF — the Serigama Luxor 550ml bottle, centered, clean product shot on
+  the dark background. Golden label glows warmly against the dark.
+  Below the bottle, three tightly-spaced proof lines in small green ✓ style:
+    ✓ Halal JAKIM  ✓ KKM Approved  ✓ GMP Certified
+  Then:
+    ★★★★★  4.8 dari 3,000+ ulasan
+
+BOTTOM STRIP (golden-yellow bar, full width):
+  "RM88 / 550ml — Free Shipping atas RM70"
+
+TEXT OVERLAYS:
+  Main hook (huge):    "JANGAN BELI INI"
+  Subline (italic):    "...melainkan kau nak sembuh dalam 30 hari."
+  Proof badges:        ✓ Halal JAKIM  ✓ KKM Approved  ✓ GMP Certified
+  Social proof:        ★★★★★ 4.8 dari 3,000+ ulasan
+  Offer strip:         "RM88 / 550ml — Free Shipping atas RM70"
+
+HEADLINE (for ad copy, not on image):
+  "Jangan beli Jeli Gamat kami... melainkan kau benar-benar nak rasa bezanya."
+
+CAPTION (social media):
+  Serius. Jangan beli kalau kau tak kisah pasal:
+  ✓ Halal JAKIM
+  ✓ Kelulusan KKM
+  ✓ Kilang GMP bersijil
+  ✓ 3.48g gamat tulen per 10ml
+  ✓ 550ml — 50% lebih banyak daripada yang lain
+
+  Tapi kalau semua tu penting untuk kau dan keluarga — link di bio.
+  Serigama Luxor Jeli Gamat. 20 tahun. 10 juta botol. RM88 je. 🌊
+
+ASPECT RATIO: 9:16
+OUTPUT: concept_01_var_02.png

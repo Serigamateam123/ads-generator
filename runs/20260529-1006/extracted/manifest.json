@@ -1,0 +1,90 @@
+{
+  "heading_font": "Montserrat-Bold",
+  "avg_heading_size": 19.0,
+  "images": [
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\PRODUCT_DETAILS_p000_i00.png",
+      "filename": "PRODUCT_DETAILS_p000_i00.png",
+      "framework": "PRODUCT_DETAILS",
+      "page": 0,
+      "size_bytes": 17269
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\PRODUCT_DETAILS_p000_i01.png",
+      "filename": "PRODUCT_DETAILS_p000_i01.png",
+      "framework": "PRODUCT_DETAILS",
+      "page": 0,
+      "size_bytes": 44071
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\PRODUCT_DETAILS_p000_i02.png",
+      "filename": "PRODUCT_DETAILS_p000_i02.png",
+      "framework": "PRODUCT_DETAILS",
+      "page": 0,
+      "size_bytes": 24886
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\US_VS_THEM_p001_i00.png",
+      "filename": "US_VS_THEM_p001_i00.png",
+      "framework": "US_VS_THEM",
+      "page": 1,
+      "size_bytes": 550120
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\US_VS_THEM_p001_i01.png",
+      "filename": "US_VS_THEM_p001_i01.png",
+      "framework": "US_VS_THEM",
+      "page": 1,
+      "size_bytes": 857183
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\US_VS_THEM_p001_i02.png",
+      "filename": "US_VS_THEM_p001_i02.png",
+      "framework": "US_VS_THEM",
+      "page": 1,
+      "size_bytes": 570600
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\US_VS_THEM_p001_i03.png",
+      "filename": "US_VS_THEM_p001_i03.png",
+      "framework": "US_VS_THEM",
+      "page": 1,
+      "size_bytes": 697516
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\STAT_SURROUND_p002_i00.png",
+      "filename": "STAT_SURROUND_p002_i00.png",
+      "framework": "STAT_SURROUND",
+      "page": 2,
+      "size_bytes": 1094520
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\STAT_SURROUND_p002_i01.png",
+      "filename": "STAT_SURROUND_p002_i01.png",
+      "framework": "STAT_SURROUND",
+      "page": 2,
+      "size_bytes": 951786
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\STAT_SURROUND_p002_i02.png",
+      "filename": "STAT_SURROUND_p002_i02.png",
+      "framework": "STAT_SURROUND",
+      "page": 2,
+      "size_bytes": 819714
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\TESTIMONIAL_p003_i00.png",
+      "filename": "TESTIMONIAL_p003_i00.png",
+      "framework": "TESTIMONIAL",
+      "page": 3,
+      "size_bytes": 60535
+    },
+    {
+      "path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\runs\\20260529-1006\\extracted\\TESTIMONIAL_p003_i01.png",
+      "filename": "TESTIMONIAL_p003_i01.png",
+      "framework": "TESTIMONIAL",
+      "page": 3,
+      "size_bytes": 1174474
+    }
+  ]
+}
