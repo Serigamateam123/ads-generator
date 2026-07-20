@@ -2308,6 +2308,7 @@ async function generate() {
   renderCards();
 
   const batchNonce = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  window._quotaAlerted = false;   // show the "out of credits" notice at most once per batch
 
   // Generate all in parallel — each slot fires immediately, cards update as each finishes
   let done = 0;
@@ -2339,7 +2340,21 @@ async function generate() {
     })
     .then(r => r.json())
     .then(d => {
-      if (d.error) throw new Error(d.error);
+      if (d.error) {
+        // Billing/quota failure: the account is out of Gemini credits (or rate
+        // limited). Show it plainly and once — not a generic "failed" per slot.
+        if (d.quota) {
+          ph.label = '⚠️ Out of API credits';
+          ph.error = d.error;
+          if (!window._quotaAlerted) {
+            window._quotaAlerted = true;
+            alert('⚠️ Rendering stopped — ' + d.error +
+                  '\n\nNo images can be generated until the account has credits again.');
+          }
+          return;
+        }
+        throw new Error(d.error);
+      }
       ph.label      = d.label || 'Ad ' + i;
       ph.useCase    = d.use_case || _effectiveProblem;
       ph.persona    = d.persona || '';

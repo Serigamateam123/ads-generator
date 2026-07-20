@@ -27,6 +27,10 @@ DRAFT_FALL   = "gemini-3.1-flash-image-preview"   # fallback draft
 FINAL_MODEL  = "nano-banana-pro-preview"          # Nano Banana Pro — highest quality, accepts ref images
 VISION_MODEL = "gemini-2.5-flash"                 # vision analysis (text only, cheap)
 
+# Marker prefix on billing/rate-limit errors so callers can recognise a quota
+# failure and stop trying other models (they all share one account quota).
+QUOTA_ERR_PREFIX = "QUOTA: "
+
 SKILLS_DIR    = Path(__file__).parent
 # Always persist inside the project folder, never the OS temp directory — the old
 # platform check (real /tmp on macOS/Linux, but the project folder itself on
@@ -910,8 +914,20 @@ def call_gemini_image(prompt, ref_paths, model,
         with urllib.request.urlopen(req, timeout=120) as resp:
             body = json.loads(resp.read())
     except urllib.error.HTTPError as e:
-        err = e.read().decode()[:400]
+        err = e.read().decode()[:500]
         print(f"[gemini] HTTP {e.code}: {err}")
+        # A 429 here is almost always billing (credits depleted) or a hard rate
+        # limit — NOT something retrying other models fixes, since every model
+        # shares the same account quota. Flag it so the caller can stop the
+        # fallback chain and tell the user the real reason instead of silently
+        # grinding through models and reporting a generic "generation failed".
+        if e.code == 429:
+            low = err.lower()
+            if any(w in low for w in ("credit", "billing", "resource_exhausted", "quota", "depleted")):
+                return None, (QUOTA_ERR_PREFIX + "Your Gemini API credits are depleted (or the key is "
+                              "rate-limited). Top up billing at https://ai.studio/projects, then try again.")
+            return None, (QUOTA_ERR_PREFIX + "Gemini API rate limit hit (HTTP 429). Wait a moment and "
+                          "try again, or check billing at https://ai.studio/projects.")
         return None, f"HTTP {e.code}: {err}"
     for part in body.get("candidates",[{}])[0].get("content",{}).get("parts",[]):
         for key in ("inlineData","inline_data"):
@@ -3444,12 +3460,20 @@ def api_generate_one():
                                        winning_ad_path=winning_ad_img,
                                        product_image_path=product_img_ref,
                                        texture_ref_path=texture_ref)
+    # If the first call failed on billing/quota, every other model will fail the
+    # same way (shared account quota) — don't waste ~2s per slot churning through
+    # fallbacks; surface the real reason immediately with a 402 (payment required).
+    if err and err.startswith(QUOTA_ERR_PREFIX):
+        print(f"[generate] quota/billing failure — skipping fallbacks: {err}")
+        return jsonify({"error": err[len(QUOTA_ERR_PREFIX):], "quota": True}), 402
     if err:
         img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                            winning_ad_path=winning_ad_img,
                                            product_image_path=product_img_ref,
                                            texture_ref_path=texture_ref)
         actual_quality_used = "draft"
+        if err and err.startswith(QUOTA_ERR_PREFIX):
+            return jsonify({"error": err[len(QUOTA_ERR_PREFIX):], "quota": True}), 402
         if err:
             img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_FALL,
                                                winning_ad_path=winning_ad_img,
@@ -3457,7 +3481,9 @@ def api_generate_one():
                                                texture_ref_path=texture_ref)
 
     if err:
-        return jsonify({"error": err}), 500
+        code = 402 if err.startswith(QUOTA_ERR_PREFIX) else 500
+        return jsonify({"error": err.replace(QUOTA_ERR_PREFIX, ""),
+                        "quota": err.startswith(QUOTA_ERR_PREFIX)}), code
 
     out_name = f"img_{idx:02d}_{quality}.png"
     out_path = session_dir / out_name
