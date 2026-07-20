@@ -873,7 +873,7 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <div class="prod-kit-chip-thumbs" id="prod-kit-thumbs"></div>
         <div class="prod-kit-chip-text">
           <strong id="prod-kit-name"></strong>
-          Brand kit photo in use
+          <span id="prod-kit-mode">Brand kit photo in use</span>
         </div>
       </div>
 
@@ -1071,8 +1071,12 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
       <button onclick="closeMetaPanel()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:4px">✕</button>
     </div>
     <div style="flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:16px">
+      <div>
+        <button id="mp-generate-btn" class="meta-copy-btn" style="width:100%;padding:10px;font-weight:700" onclick="generateMetaCopy()">✨ Generate AI Copy</button>
+        <div id="mp-generate-status" style="font-size:11px;color:var(--muted);margin-top:6px"></div>
+      </div>
       <div class="meta-copy-row">
-        <div class="meta-copy-label">Primary Text <span class="meta-char-hint">≤125 chars · hook in first 40</span></div>
+        <div class="meta-copy-label">Primary Text <span class="meta-char-hint">hook works standalone in first ~125 chars · full text ~150-450</span></div>
         <div class="meta-copy-text" id="mp-primary" style="font-size:13px;min-height:48px"></div>
         <div id="mp-primary-chars" style="font-size:10px;color:var(--muted);text-align:right;margin-top:2px"></div>
         <button class="meta-copy-btn" onclick="copyMetaField('mp-primary',this)">Copy</button>
@@ -1121,13 +1125,6 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-          </select>
-        </div>
-        <div class="board-modal-row">
-          <label for="board-modal-quality">Quality:</label>
-          <select id="board-modal-quality">
-            <option value="draft" selected>Draft (~RM0.16/img — cheaper, faster)</option>
-            <option value="final">Final (~RM0.55/img — higher quality)</option>
           </select>
         </div>
         <button class="btn-board-generate" id="board-modal-generate" onclick="boardModalGenerate()">✨ Generate</button>
@@ -1243,11 +1240,9 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <div class="bp-card">
           <h3>🏅 Certifications</h3>
           <div class="cert-grid" id="cert-grid">
-            <button class="cert-toggle" data-cert="Halal JAKIM" onclick="toggleCert(this)">Halal JAKIM</button>
-            <button class="cert-toggle" data-cert="KKM Approved" onclick="toggleCert(this)">KKM Approved</button>
-            <button class="cert-toggle" data-cert="GMP Certified" onclick="toggleCert(this)">GMP Certified</button>
-            <button class="cert-toggle" data-cert="ISO" onclick="toggleCert(this)">ISO</button>
-            <button class="cert-toggle" data-cert="MeSTI" onclick="toggleCert(this)">MeSTI</button>
+            <button class="cert-toggle" data-cert="Diperakui Halal" onclick="toggleCert(this)">Diperakui Halal</button>
+            <button class="cert-toggle" data-cert="KKM" onclick="toggleCert(this)">KKM</button>
+            <button class="cert-toggle" data-cert="Pengilangan Taraf GMP" onclick="toggleCert(this)">Pengilangan Taraf GMP</button>
           </div>
         </div>
 
@@ -1546,7 +1541,7 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
 // (nano-banana-pro-preview) whenever a winning ad reference is provided, which is
 // the normal case here — so estimate at the Final rate, not the cheaper Draft rate.
 const MYR = 4.07, COST_PER = 0.134;
-let state = { adsFiles:[], productFile:null, problem:'Selepas Bersalin', problemIds:[], totalUsd:0, personaIds:[], angleIds:[], styleIds:[], selectedProductPhotoPath:null, selectedTexturePhotoPath:null };
+let state = { adsFiles:[], productFile:null, problem:'Selepas Bersalin', problemIds:[], totalUsd:0, personaIds:[], angleIds:[], styleIds:[], selectedProductPhotoPath:null, selectedTexturePhotoPath:null, productPhotoManuallyPicked:false };
 let _lastPhotoInitProductId = undefined; // tracks which product's saved defaults were last applied
 let allCreatives = [];   // { id, num, useCase, persona, angle, imageUrl, filename, ts, isNew }
 let activeTag = 'all';
@@ -2078,8 +2073,14 @@ function renderCards() {
 
 function filterCards(){ renderCards(); }
 
+let currentMetaId      = null;
+let currentMetaSource  = null;
+let currentMetaBoardId = null;
+
 function showMetaPanel(e, id, source) {
   e.stopPropagation();
+  currentMetaId     = id;
+  currentMetaSource = source;
 
   // Resolve copy data — from allCreatives (card) or boardItems (board)
   let cd = {}, label = '', persona = '', angle = '', useCase = '';
@@ -2090,14 +2091,23 @@ function showMetaPanel(e, id, source) {
              meta_description: c.metaDescription, h1: c.h1, h2: c.h2, cta: c.cta,
              benefit_bullets: c.benefitBullets };
       label = c.label; persona = c.persona; angle = c.angle; useCase = c.useCase;
+      currentMetaBoardId = c.boardId || null;
     }
   } else {
     const b = boardItems.find(x => x.id === id);
     if (b) {
       cd = b.copy_data || {};
       label = b.label; persona = b.persona; angle = b.angle; useCase = b.problem;
+      currentMetaBoardId = id; // board item's own id IS the board_id
     }
   }
+
+  const genBtn = document.getElementById('mp-generate-btn');
+  const hasRealCopy = !!(cd.meta_primary_text);
+  genBtn.textContent = hasRealCopy ? '🔄 Regenerate AI Copy' : '✨ Generate AI Copy';
+  genBtn.disabled = !currentMetaBoardId;
+  document.getElementById('mp-generate-status').textContent =
+    currentMetaBoardId ? '' : 'Not available yet for this item — generate a new image to enable this.';
 
   // Derive META instantly from existing copy — no API call
   const h1  = (cd.meta_headline     || cd.h1  || '').trim();
@@ -2135,7 +2145,7 @@ function showMetaPanel(e, id, source) {
       el.style.color = over ? '#dc2626' : 'var(--muted)';
     }
   };
-  setField('mp-primary',     primary,     'mp-primary-chars',  125);
+  setField('mp-primary',     primary,     'mp-primary-chars',  450);
   setField('mp-headline',    headline,    'mp-headline-chars',  40);
   setField('mp-description', description, 'mp-desc-chars',      25);
 
@@ -2155,6 +2165,57 @@ function showMetaPanel(e, id, source) {
   const drawer = document.getElementById('meta-panel-drawer');
   drawer.style.display = 'flex';
   requestAnimationFrame(() => drawer.style.transform = 'translateX(0)');
+}
+
+async function generateMetaCopy() {
+  if (!currentMetaBoardId) return;
+  const btn    = document.getElementById('mp-generate-btn');
+  const status = document.getElementById('mp-generate-status');
+  btn.disabled = true;
+  status.textContent = 'Writing copy…';
+  try {
+    const res = await fetch(`/api/board/${currentMetaBoardId}/generate-meta`, {method: 'POST'});
+    const d = await res.json();
+    if (!res.ok || d.error) throw new Error(d.error || 'Generation failed');
+
+    const setField = (id, val, charId, limit) => {
+      document.getElementById(id).textContent = val;
+      const el = document.getElementById(charId);
+      if (el) {
+        const over = val.length > limit;
+        el.textContent = `${val.length}/${limit} chars`;
+        el.style.color = over ? '#dc2626' : 'var(--muted)';
+      }
+    };
+    setField('mp-primary',     d.meta_primary_text || '', 'mp-primary-chars',  450);
+    setField('mp-headline',    d.meta_headline     || '', 'mp-headline-chars',  40);
+    setField('mp-description', d.meta_description  || '', 'mp-desc-chars',      25);
+
+    // Persist into local state so re-opening the panel shows this without
+    // hitting the API again, and so the card view stays in sync.
+    if (currentMetaSource === 'card') {
+      const c = allCreatives.find(x => x.id === currentMetaId);
+      if (c) {
+        c.metaPrimaryText = d.meta_primary_text || '';
+        c.metaHeadline    = d.meta_headline     || '';
+        c.metaDescription = d.meta_description  || '';
+      }
+    } else {
+      const b = boardItems.find(x => x.id === currentMetaId);
+      if (b) {
+        b.copy_data = b.copy_data || {};
+        b.copy_data.meta_primary_text = d.meta_primary_text || '';
+        b.copy_data.meta_headline     = d.meta_headline     || '';
+        b.copy_data.meta_description  = d.meta_description  || '';
+      }
+    }
+
+    btn.textContent = '🔄 Regenerate AI Copy';
+    status.textContent = '✅ Generated';
+  } catch (e) {
+    status.textContent = '⚠ ' + e.message;
+  }
+  btn.disabled = false;
 }
 
 function closeMetaPanel() {
@@ -2211,10 +2272,12 @@ async function generate() {
   const fd = new FormData();
   state.adsFiles.forEach(f=>fd.append('ads',f));
   if (state.productFile) fd.append('product', state.productFile); // only if manually uploaded
-  // If no session-upload override, tell the backend exactly which brand-kit photo
-  // to use as the product reference (defaults to the first/primary one, but the
-  // user can click a different thumbnail in the sidebar to pick another).
-  else if (state.selectedProductPhotoPath) fd.append('product_photo_path', state.selectedProductPhotoPath);
+  // Only pin a specific brand-kit photo if the user deliberately clicked one this
+  // session — otherwise leave it unset so the backend can auto-match whichever
+  // photo best fits each generation's own template (bottle alone / poured into a
+  // glass / held in a hand), instead of always forcing the same static default.
+  else if (state.selectedProductPhotoPath && state.productPhotoManuallyPicked)
+    fd.append('product_photo_path', state.selectedProductPhotoPath);
   if (state.selectedTexturePhotoPath) fd.append('texture_photo_path', state.selectedTexturePhotoPath);
   fd.append('problem', _effectiveProblem);
   fd.append('count', count);
@@ -2259,7 +2322,7 @@ async function generate() {
         session_id:        uploadResp.session_id,
         batch_nonce:       batchNonce,
         index:             i,
-        quality:           'draft',
+        quality:           'final',
         problem:           _effectiveProblem,
         problem_ids:       _selectedProblemIds,
         count:             count,
@@ -2292,6 +2355,7 @@ async function generate() {
       ph.metaPrimaryText  = d.meta_primary_text || '';
       ph.metaHeadline     = d.meta_headline     || '';
       ph.metaDescription  = d.meta_description  || '';
+      ph.boardId          = d.board_id || null;
       state.totalUsd += d.cost_usd || COST_PER;
       document.getElementById('session-cost').textContent =
         `$${state.totalUsd.toFixed(2)} / RM ${(state.totalUsd*MYR).toFixed(2)}`;
@@ -2451,7 +2515,6 @@ loadStyles();
 refreshSpend();
 loadTemplateLibrary(); // pre-load so auto-mode works without visiting Templates tab
 document.getElementById('board-modal-count').addEventListener('change', updateBoardModalEstimate);
-document.getElementById('board-modal-quality').addEventListener('change', updateBoardModalEstimate);
 
 // ── Campaigns ─────────────────────────────────────────────────────────────────
 let allCampaigns   = [];
@@ -2742,13 +2805,12 @@ function boardToggleSelect(id) {
 }
 
 let boardModalId = null;
-const VARIANT_COST_USD = {draft: 0.039, final: 0.134};
+const VARIANT_COST_USD = 0.134; // final — every generation always uses nano-banana-pro now
 const MYR_RATE = 4.07;
 
 function updateBoardModalEstimate() {
-  const count   = parseInt(document.getElementById('board-modal-count').value);
-  const quality = document.getElementById('board-modal-quality').value;
-  const usd = VARIANT_COST_USD[quality] * count;
+  const count = parseInt(document.getElementById('board-modal-count').value);
+  const usd = VARIANT_COST_USD * count;
   const myr = usd * MYR_RATE;
   document.getElementById('board-modal-estimate').textContent =
     `Estimated cost: RM${myr.toFixed(2)} for ${count} image${count>1?'s':''}`;
@@ -2845,7 +2907,7 @@ async function boardModalGenerate() {
     return;
   }
   const count   = parseInt(document.getElementById('board-modal-count').value);
-  const quality = document.getElementById('board-modal-quality').value;
+  const quality = 'final';
   const btn   = document.getElementById('board-modal-generate');
   const status= document.getElementById('board-modal-status');
   btn.disabled = true;
@@ -3453,6 +3515,10 @@ function onSidebarProductChange() {
       state.selectedTexturePhotoPath =
         (prod.default_texture_path && prod.photos.includes(prod.default_texture_path))
           ? prod.default_texture_path : null;
+      // Switching products resets to auto-match mode — the backend will pick
+      // whichever photo best fits each generation's template, unless the user
+      // deliberately clicks a specific photo below to pin it again.
+      state.productPhotoManuallyPicked = false;
       _lastPhotoInitProductId = prod.id;
     } else if (!state.selectedProductPhotoPath || !prod.photos.includes(state.selectedProductPhotoPath)) {
       state.selectedProductPhotoPath = prod.photos[0];
@@ -3472,6 +3538,7 @@ function onSidebarProductChange() {
       img.onerror = () => wrap.style.display = 'none';
       img.onclick = () => {
         state.selectedProductPhotoPath = p;
+        state.productPhotoManuallyPicked = true;
         onSidebarProductChange();
         saveDefaultPhotos(prod.id, {default_photo_path: p});
       };
@@ -3506,6 +3573,14 @@ function onSidebarProductChange() {
     warnEl.style.display      = 'none';
     state.brandHasProduct     = true;
     if (!state.productFile) placeholder.style.display = 'block';
+    const modeEl = document.getElementById('prod-kit-mode');
+    if (modeEl) {
+      if (state.productPhotoManuallyPicked) {
+        modeEl.innerHTML = 'Pinned to this photo — <a href="#" onclick="event.preventDefault();state.productPhotoManuallyPicked=false;onSidebarProductChange();" style="text-decoration:underline">switch back to auto-match</a>';
+      } else {
+        modeEl.textContent = `Auto-matching photo to template (${prod.photos.length} available)`;
+      }
+    }
   } else if (prod) {
     kitPreview.style.display  = 'none';
     warnEl.style.display      = 'none';   // no photo warning — knowledge still works

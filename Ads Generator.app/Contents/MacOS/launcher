@@ -1,0 +1,14 @@
+#!/bin/bash
+# Launcher for the Static Ads Generator macOS app.
+# The .app lives inside the "Ads Generator" project folder, so the project dir
+# is the folder that contains the .app bundle.
+PROJECT_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
+cd "$PROJECT_DIR" || exit 1
+LOG="$PROJECT_DIR/app.log"
+PORT=7373
+{ echo ""; echo "==== $(date '+%Y-%m-%d %H:%M:%S') launching Ads Generator ===="; } >> "$LOG" 2>&1
+OLD_PIDS="$(lsof -ti tcp:$PORT 2>/dev/null)"
+if [ -n "$OLD_PIDS" ]; then echo "$OLD_PIDS" | xargs kill -9 2>/dev/null; sleep 1; fi
+PY="$PROJECT_DIR/venv/bin/python"
+[ -x "$PY" ] || PY="$(command -v python3 || command -v python)"
+exec "$PY" "$PROJECT_DIR/ui_server.py" >> "$LOG" 2>&1

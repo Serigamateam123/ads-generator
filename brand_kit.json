@@ -5,15 +5,19 @@
   "price": "",
   "product_url": "",
   "key_claims": [],
-  "certifications": [],
-  "logo_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\logo.png",
+  "certifications": [
+    "Diperakui Halal",
+    "KKM",
+    "Pengilangan Taraf GMP"
+  ],
+  "logo_path": "/Users/nrmalisa/Applications/Ads Generator/brand_kit/logo.png",
   "product_photos": [],
   "extra_notes": "BRAND-WIDE COMPLIANCE NOTES (apply to all Serigama products):\n- Never use the word \"tonic\" to describe Jeli Gamat — always \"traditional health supplement\" (R3 rule).\n- Do NOT use clinical-trial language (\"clinically proven\", \"scientifically proven to treat\") for any product — Gamat has research-backed active compounds but no full clinical trial validation on Serigama products specifically.\n- Do NOT claim or imply treatment of MAB-prohibited conditions: cancer, diabetes, hypertension, heart disease — even though lab research on Gamat compounds touches these areas, Serigama products cannot make these claims.\n- Do NOT make comparative claims against named competitors (e.g. \"more Gamat than Brand X\", price-per-gram comparisons) — generic \"great value\" framing is fine, naming competitors is not.\n- Jeli Gamat (MAL09041152TC) and Gel Gamat (MAL09042422TC) are JAKIM halal-certified — halal logo can be shown on their creatives.\n- Minyak Urut Gamat is NOT halal certified — never display the JAKIM halal logo on Minyak Urut creatives. It is a cosmetic (NOT) product, not a Traditional Medicine — it cannot carry medicinal claims.\n- Minyak Urut Gamat is NOT a warming/heat oil — never claim heat sensation (\"panas\"/\"hangat\") — its positioning is gentle, aromatic, refreshing (non-warming aromatherapy massage oil), which differentiates it from traditional heat-based minyak urut competitors.\n- All three products share the same active ingredient: Gamat (Stichopus sea cucumber extract, native to Malaysian waters) — collagen, saponins, GAG, peptides, antioxidants. Heritage + Malaysian-origin + university-research (USM/APEX) framing is safe; avoid naming individual scientists.\n- All packaging is trilingual: English / Malay / Chinese (no Jawi).",
   "knowledge": {},
   "products": [
     {
-      "default_photo_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_0_Jeli Gamat 550ML.png",
-      "default_texture_path": "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_1_5 (1).jpg",
+      "default_photo_path": "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_0_Jeli Gamat 550ML.png",
+      "default_texture_path": "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_1_5 (1).jpg",
       "id": 1781582643316,
       "knowledge": {
         "audience": "1. Warga Emas (50+)\nSakit lutut\nSakit sendi\nSukar berjalan\nSendi berbunyi\nGout\n\n2. Pekerja Lasak\nBuruh\nKontraktor\nPemandu lori\nRider\nPetani\n\n3. Individu Dalam Fasa Pemulihan\nSelepas pembedahan\nSelepas kemalangan\nSelepas bersalin\nLuka lambat sembuh\n\n4. Golongan Pertengahan Umur (35-55)\nCepat penat\nBadan mudah lenguh\nSendi mula tidak selesa\nMahu menjaga kesihatan jangka panjang\n\n5. Atlet & Orang Aktif\nKerap bersukan\nAktiviti lasak\nPerlukan sokongan pemulihan otot dan sendi\n\nPrimary real-world trigger: Post-caesarean / post-natal recovery (pantang/confinement practice) — the single highest-intent customer trigger. Also: post-surgery wound healing (paired with Gel Gamat), chronic gastric/GERD relief (repeat-purchase potential).",
@@ -25,11 +29,11 @@
       },
       "name": "Jeli Gamat 550ML",
       "photos": [
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_0_Jeli Gamat 550ML.png",
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_1_5 (1).jpg",
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_2_ChatGPT Image Jan 13, 2026, 12_31_31 PM.png",
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_4_18.jpg",
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643316_4_6dda669b-1c63-4a52-8376-0e94b2a45e8e.jpg"
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_0_Jeli Gamat 550ML.png",
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_1_5 (1).jpg",
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_2_ChatGPT Image Jan 13, 2026, 12_31_31 PM.png",
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_4_18.jpg",
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643316_4_6dda669b-1c63-4a52-8376-0e94b2a45e8e.jpg"
       ],
       "price": "88",
       "product_url": "https://serigama.com.my/products/baru-jeli-gamat-550ml",
@@ -47,7 +51,7 @@
       },
       "name": "Gel Gamat 120G",
       "photos": [
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643317_0_gg.jpg"
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643317_0_gg.jpg"
       ],
       "price": "48",
       "product_url": "https://serigama.com.my/products/gel-gamat?variant=46596987388150",
@@ -65,7 +69,7 @@
       },
       "name": "Minyak Urut Aromatik Gamat 75ML",
       "photos": [
-        "C:\\Users\\haliza.LUXOR\\.claude\\skills\\static-remix\\brand_kit\\prod1781582643318_0_ZoWW0hTPrMG2HsijiJ6uScC6wpaJrOgy3WnaE4P3.png"
+        "/Users/nrmalisa/Applications/Ads Generator/brand_kit/prod1781582643318_0_ZoWW0hTPrMG2HsijiJ6uScC6wpaJrOgy3WnaE4P3.png"
       ],
       "price": "28",
       "product_url": "https://serigama.com.my/products/minyak-urut?variant=46596989026550",

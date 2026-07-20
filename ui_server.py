@@ -4,7 +4,7 @@ Run: python ui_server.py
 Opens at: http://localhost:7373
 """
 import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap, random
-import concurrent.futures
+import concurrent.futures, threading
 from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
 
@@ -28,8 +28,12 @@ FINAL_MODEL  = "nano-banana-pro-preview"          # Nano Banana Pro — highest 
 VISION_MODEL = "gemini-2.5-flash"                 # vision analysis (text only, cheap)
 
 SKILLS_DIR    = Path(__file__).parent
-import sys as _sys
-_TMP          = Path("/tmp") if _sys.platform != "win32" else SKILLS_DIR
+# Always persist inside the project folder, never the OS temp directory — the old
+# platform check (real /tmp on macOS/Linux, but the project folder itself on
+# Windows) meant Brand Setup, Board, personas, and spend data all silently reset
+# every time this ran on a non-Windows machine, since /tmp gets wiped on reboot
+# and even routine cleanup. This caused real data loss more than once.
+_TMP          = SKILLS_DIR
 SESSIONS_DIR  = _TMP / "sessions"
 BRAND_DIR     = SKILLS_DIR / "brand_kit"
 BRAND_JSON    = _TMP / "brand_kit.json"
@@ -40,6 +44,12 @@ PERSONAS_JSON = _TMP / "personas.json"       # editable in-app via the Personas 
 ANGLES_JSON   = _TMP / "angles.json"         # editable in-app via the Personas & Angles tab
 STYLES_JSON   = _TMP / "styles.json"         # editable in-app via the Personas & Angles tab
 BENEFITS_JSON = _TMP / "product_benefits.json"  # authored per-segment benefit bullets (from user's source docs)
+PHOTO_STYLE_JSON = _TMP / "photo_styles.json"   # cached classification of how each product photo presents
+                                                  # the product (bottle alone / poured / held) — used to
+                                                  # auto-pick whichever photo best matches the chosen template
+ROTATION_JSON = _TMP / "template_rotation.json" # persistent auto-template rotation state (order + cursor) so
+                                                  # every render walks to the next distinct design and the whole
+                                                  # library is used before any template repeats
 TEMPLATES_DIR = SKILLS_DIR / "templates"
 TEMPLATES_JSON= TEMPLATES_DIR / "templates.json"
 for d in (SESSIONS_DIR, BRAND_DIR, TEMPLATES_DIR):
@@ -706,6 +716,15 @@ def brand_to_prompt_block(brand: dict) -> str:
     # Price intentionally excluded — never shown in generated ads
     if brand.get("certifications"):
         lines.append(f"CERTIFICATIONS (show prominently): {', '.join(brand['certifications'])}")
+        if any("halal" in c.lower() for c in brand["certifications"]):
+            lines.append(
+                "⚠️ HALAL LOGO RULE: if a Halal logo/badge appears anywhere in this ad — whether you're "
+                "adding one fresh or copying a badge shape from a reference template — it MUST be the "
+                "Malaysian JAKIM Halal logo (the official Malaysian government halal certification mark), "
+                "never Indonesia's (MUI/BPJPH), Singapore's (MUIS), or any other country's halal mark. If "
+                "you're not confident you can render the real JAKIM logo accurately, use a plain text badge "
+                "reading \"Halal JAKIM\" instead of an inaccurate logo."
+            )
     if brand.get("key_claims"):
         lines.append("KEY CLAIMS:")
         for c in brand["key_claims"]:
@@ -737,12 +756,41 @@ def brand_to_prompt_block(brand: dict) -> str:
     return "\n".join(lines)
 
 # ── Image helpers ──────────────────────────────────────────────────────────────
+# Reference images are only used by the model to read the product label, layout,
+# and style — they do NOT set the output resolution (that's imageConfig.aspectRatio).
+# So a huge 4472px, multi-MB source photo just inflates upload + model-ingest time
+# for zero quality gain. Cap the longest edge before sending; this is what keeps a
+# Nano Banana Pro render under a minute even when a brand photo is very large.
+_B64_MAX_EDGE = 1280
+
 def img_to_b64(path: str):
     ext = Path(path).suffix.lower().strip(".")
-    mime = {"png":"image/png","jpg":"image/jpeg","jpeg":"image/jpeg",
-            "webp":"image/webp","gif":"image/gif"}.get(ext,"image/png")
-    with open(path, "rb") as f:
-        return base64.b64encode(f.read()).decode(), mime
+    raw_mime = {"png":"image/png","jpg":"image/jpeg","jpeg":"image/jpeg",
+                "webp":"image/webp","gif":"image/gif"}.get(ext,"image/png")
+    try:
+        import io
+        from PIL import Image as _Img
+        im = _Img.open(path)
+        w, h = im.size
+        scale = _B64_MAX_EDGE / float(max(w, h))
+        if scale < 1.0:  # only ever downscale, never upscale
+            im = im.resize((max(1, int(w * scale)), max(1, int(h * scale))), _Img.LANCZOS)
+        elif raw_mime != "image/gif":
+            # already small enough and not animated — send original bytes untouched
+            with open(path, "rb") as f:
+                return base64.b64encode(f.read()).decode(), raw_mime
+        # Preserve transparency (cut-out product PNGs) as PNG; everything else -> JPEG.
+        has_alpha = im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info)
+        buf = io.BytesIO()
+        if has_alpha:
+            im.convert("RGBA").save(buf, format="PNG", optimize=True)
+            return base64.b64encode(buf.getvalue()).decode(), "image/png"
+        im.convert("RGB").save(buf, format="JPEG", quality=85)
+        return base64.b64encode(buf.getvalue()).decode(), "image/jpeg"
+    except Exception as e:
+        print(f"[img_to_b64] resize skipped for {Path(path).name}: {e}")
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read()).decode(), raw_mime
 
 def call_gemini_image(prompt, ref_paths, model,
                       winning_ad_path=None, product_image_path=None, texture_ref_path=None, is_tweak=False):
@@ -1080,6 +1128,75 @@ def analyze_product_visual(image_path: str) -> str:
         "Be specific and literal — describe only what you see.",
         image_path
     )
+
+# ── Product photo ↔ template auto-matching ──────────────────────────────────
+# Fixed vocabulary both sides get bucketed into, so matching a product photo to
+# a template's product presentation is a simple category lookup rather than
+# fragile free-text comparison.
+PRODUCT_PRESENTATION_CATEGORIES = [
+    "bottle_alone", "poured_glass", "held_hand", "group_bottles", "lifestyle_scene",
+]
+
+def _bucket_presentation(text: str) -> str:
+    """Map a free-text presentation description (from either a template's
+    extracted product_style or a photo's own classification) into one of
+    PRODUCT_PRESENTATION_CATEGORIES, so the two sides can be compared directly."""
+    t = (text or "").lower()
+    if any(w in t for w in ("pour", "glass", "cup", "tumbler")):
+        return "poured_glass"
+    if any(w in t for w in ("hand", "held", "holding")):
+        return "held_hand"
+    if any(w in t for w in ("group", "multiple", "several", "set of")):
+        return "group_bottles"
+    if any(w in t for w in ("prop", "lifestyle", "scene", "spoon", "ice", "table setting")):
+        return "lifestyle_scene"
+    return "bottle_alone"
+
+def load_photo_styles() -> dict:
+    if PHOTO_STYLE_JSON.exists():
+        with open(PHOTO_STYLE_JSON, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def save_photo_styles(data: dict):
+    with open(PHOTO_STYLE_JSON, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+def classify_product_photo(image_path: str) -> str:
+    """Cheap vision pass: bucket how this product photo presents the product
+    (bottle alone / poured into a glass / held in a hand / group / lifestyle
+    scene with props) so it can be auto-matched against a template's own
+    presentation style. Cached to disk — only runs once per photo ever."""
+    cache = load_photo_styles()
+    if image_path in cache:
+        return cache[image_path]
+    raw = _vision_call(
+        "Look at this product photo. In 2-4 words, describe how the product is presented. "
+        "Use language like: 'standing alone', 'poured into a glass', 'held in a hand', "
+        "'group of bottles', 'lifestyle scene with props'. Reply with ONLY the short phrase.",
+        image_path, timeout=15
+    )
+    category = _bucket_presentation(raw)
+    cache[image_path] = category
+    save_photo_styles(cache)
+    return category
+
+def pick_product_photo_for_template(photos: list, template_product_style: str) -> str:
+    """Auto-match: given the candidate product photos and the chosen template's
+    own product presentation style, pick whichever photo's classified category
+    matches. Falls back to the first photo if nothing matches or classification
+    is unavailable — never blocks generation on this being a bit uncertain."""
+    if not photos:
+        return ""
+    if len(photos) == 1 or not template_product_style:
+        return photos[0]
+    target = _bucket_presentation(template_product_style)
+    for p in photos:
+        if classify_product_photo(p) == target:
+            print(f"[photo-match] template wants '{target}' → picked {Path(p).name}")
+            return p
+    print(f"[photo-match] no photo matches '{target}' — using first photo as fallback")
+    return photos[0]
 
 def fetch_product_facts(product_url: str) -> str:
     """
@@ -1939,24 +2056,26 @@ def build_prompt(layout_analysis, product_visual, problem, problem_ctx,
 
     # ── Product identity section (most important — AI must render this exactly) ──
     if product_visual:
-        product_section = f"""━━━ PRODUCT IDENTITY — USE IMAGE 1 EXACTLY ━━━
-IMAGE 1 (the first image sent) is your product photo. Reproduce it identically.
+        product_section = f"""━━━ YOUR PRODUCT — MATCH IMAGE 1 EXACTLY ━━━
+IMAGE 1 is a photo of your real product. No matter what form it takes in the final ad — standing
+alone, poured into a glass, held in a hand — it must still clearly be THIS exact product: same
+bottle/jar, same label, same colors, same cap. (See the HOW TO SHOW YOUR PRODUCT section below for
+which of these forms to actually use.)
 
-Detailed description of IMAGE 1 product (match every detail):
+What IMAGE 1 actually looks like:
 {product_visual}
 
 Product name on label: {product_name}
 RULES — violating any of these makes the generation wrong:
-- Bottle/jar shape, silhouette, proportions: IDENTICAL to IMAGE 1
-- Label colors, text, logo, layout: IDENTICAL to IMAGE 1
-- Cap/lid shape, color, material: IDENTICAL to IMAGE 1
-- Material finish (plastic, glass, matte, glossy): IDENTICAL to IMAGE 1
-- Do NOT substitute a dark amber/brown "herbal tonic" glass bottle — the actual product is different
-- Do NOT render a generic glass, cup, bowl, tin, or unlabeled vessel
-- The branded packaging must always be visible — never show only a poured liquid with no bottle
+- Bottle/jar shape, silhouette, proportions: same as IMAGE 1
+- Label colors, text, logo, layout: same as IMAGE 1
+- Cap/lid shape, color, material: same as IMAGE 1
+- Material finish (plastic, glass, matte, glossy): same as IMAGE 1
+- Never swap in a generic dark amber/brown "herbal tonic" bottle — the real product looks different
+- Never invent a random unbranded container that isn't grounded in IMAGE 1 (or IMAGE 3 for liquid look)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
     else:
-        product_section = f"""PRODUCT: Use IMAGE 1 (the first image sent) as the product reference.
+        product_section = f"""PRODUCT: IMAGE 1 is your product reference.
 Render it exactly — same bottle/jar shape, label, cap, and finish as IMAGE 1.
 Do not substitute a generic container. Product name: {product_name}"""
 
@@ -2020,11 +2139,16 @@ Do not substitute a generic container. Product name: {product_name}"""
 
     copy_block = ""
     if copy_lines:
+        typo          = (extracted_style or {}).get("typography", {}) or {}
+        headline_font = typo.get("font_style") or "a strong display typeface"
+        headline_wt   = typo.get("headline_weight") or "bold"
+        headline_case = typo.get("headline_case") or ""
+        case_note     = f", {headline_case}" if headline_case else ""
         copy_block = (
             "\n\nTEXT TO RENDER ON THE AD:\n"
             + "\n".join(copy_lines) +
             "\n\nTEXT STYLING:\n"
-            "- Headline: large, bold, most prominent — elegant serif or strong display typeface\n"
+            f"- Headline: large, {headline_wt}, most prominent — use IMAGE 2's own font style: {headline_font}{case_note}\n"
             "- Subheadline: smaller, clean sans-serif, below headline\n"
             "- CTA: tappable button/pill with solid high-contrast background\n"
             "- Bullets: clean sans-serif, one line each next to icon/number\n"
@@ -2034,9 +2158,10 @@ Do not substitute a generic container. Product name: {product_name}"""
             "delete any extra icon slots from IMAGE 2's layout so the count matches"
         )
 
-    color_block  = ""
-    layout_block = ""
-    human_block  = ""
+    color_block        = ""
+    layout_block       = ""
+    human_block        = ""
+    presentation_block = ""
     if extracted_style:
         colors = extracted_style.get("colors", {}) or {}
         mood   = extracted_style.get("mood", {}) or {}
@@ -2045,45 +2170,78 @@ Do not substitute a generic container. Product name: {product_name}"""
         # ── Carry over the winning ad's full color palette, lighting, and mood.
         # Brand colors are NOT forced — the template IS the brand direction for this slot.
         # Brand colors may appear in font/badge/CTA only if they fit naturally.
+        # NOTE: this all describes IMAGE 2 (the template) — do not relabel as IMAGE 1,
+        # which is reserved for the product photo throughout this whole prompt.
         color_bits = []
         if colors.get("background_description"):
             color_bits.append(f"background: {colors['background_description']}")
         if colors.get("palette"):
-            color_bits.append(f"color palette: replicate IMAGE 1's actual colors — {colors['palette']}")
+            color_bits.append(f"color palette: copy IMAGE 2's actual colors — {colors['palette']}")
         if mood.get("lighting"):
             color_bits.append(f"lighting: {mood['lighting']}")
         if mood.get("tone"):
             color_bits.append(f"overall energy/tone: {mood['tone']}")
         if color_bits:
-            color_block = "\n\nCOLOR & LIGHTING (clone from IMAGE 1 — do NOT override with brand colors):\n- " + "\n- ".join(color_bits)
+            color_block = ("\n\nCOLOR & LIGHTING (copy this from IMAGE 2 — do NOT switch to brand colors):\n- "
+                            + "\n- ".join(color_bits) +
+                            "\n\n⚠️ SCOPE LIMIT: the above applies ONLY to background, backdrop, panels, badges, "
+                            "icons, and text colors. It NEVER applies to the product's own label/packaging color — "
+                            "that comes ONLY from IMAGE 1 (see PRODUCT rules) and must stay exactly as IMAGE 1 shows "
+                            "it, even if IMAGE 2's own original product or packaging was a completely different "
+                            "color (e.g. IMAGE 2's background is green — the background becomes green, but IMAGE 1's "
+                            "label does NOT become green just because it's near a green background).")
 
         layout_bits = []
         if lay.get("structure"):
             layout_bits.append(f"overall structure: {lay['structure']}")
-        if lay.get("product_placement"):
-            layout_bits.append(f"product placement: {lay['product_placement']}")
         if lay.get("negative_space"):
             layout_bits.append(f"negative space: {lay['negative_space']}")
         if comp.get("style"):
             layout_bits.append(f"composition style: {comp['style']}")
         if comp.get("background_type"):
             layout_bits.append(f"background type: {comp['background_type']}")
-        if comp.get("product_style"):
-            layout_bits.append(f"product treatment: {comp['product_style']}")
         graphics = extracted_style.get("graphic_elements") or []
         if graphics:
             layout_bits.append("graphic elements to recreate: " + "; ".join(graphics))
 
         if layout_bits:
-            layout_block = "\n\nLAYOUT — REPLICATE FROM IMAGE 1:\n- " + "\n- ".join(layout_bits)
+            layout_block = "\n\nLAYOUT — COPY THIS FROM IMAGE 2:\n- " + "\n- ".join(layout_bits)
             if graphics:
                 layout_block += ("\n\nGraphic elements above (arrows, pointers, badges, callouts, icons): "
-                                  "recreate POSITION/SHAPE/STYLE only.\n"
-                                  "- Meaning must match THIS ad's real benefits, not IMAGE 1's original topic\n"
+                                  "copy their POSITION/SHAPE/STYLE only.\n"
+                                  "- Their meaning must match THIS ad's real benefits, not IMAGE 2's original topic\n"
                                   "- Flat icon/line-art style only — no extra photographic hand/bottle/person "
                                   "inside a callout; exactly ONE photographic hero shot in the whole ad\n"
                                   "- Any badge with a stat/claim (sold-count, timing, review score) needs a real "
-                                  "matching fact from the brand knowledge below, or gets dropped — never invented")
+                                  "matching fact from the brand knowledge below, or gets dropped — never invented\n"
+                                  "- If IMAGE 2 has any certification/country badge (halal mark, quality seal, "
+                                  "flag, etc.), do NOT copy IT — replace it with this brand's own certification "
+                                  "badge per the HALAL LOGO RULE / CERTIFICATIONS above, or drop it entirely if "
+                                  "this brand has no equivalent certification")
+
+        # ── How the product itself should be PRESENTED — read straight from the
+        # template so the product can take whatever form the winning ad actually
+        # shows (bottle alone, poured into a glass, held in a hand), instead of a
+        # rigid "always just the bottle standing there" rule that would block a
+        # valid pour/glass shot the template itself calls for.
+        presentation_bits = []
+        if comp.get("product_style"):
+            presentation_bits.append(f"IMAGE 2 shows its product like this: {comp['product_style']}")
+        if lay.get("product_placement"):
+            presentation_bits.append(f"IMAGE 2 places its product here: {lay['product_placement']}")
+        if presentation_bits:
+            presentation_block = (
+                "\n\nHOW TO SHOW YOUR PRODUCT — match IMAGE 2's presentation:\n- "
+                + "\n- ".join(presentation_bits) +
+                "\n\nShow YOUR product the same way IMAGE 2 shows its product:\n"
+                "- If IMAGE 2 shows the product poured into a glass or cup, pour YOUR product into a glass "
+                "too — use IMAGE 3 for what the liquid actually looks like (color, clarity, thickness), "
+                "never invent a random liquid color\n"
+                "- If IMAGE 2 shows it held in a hand, hold YOUR product the same way\n"
+                "- If IMAGE 2 just shows the bottle standing alone, do the same\n"
+                "- Either way, your real bottle/jar from IMAGE 1 should still be visible somewhere in the "
+                "shot, unless IMAGE 2's own shot is truly just a poured glass with no bottle in view"
+            )
 
         # ── Hard constraints from the reference — these were extracted (cta_placement,
         # forbidden_elements) but previously only reached the post-generation QA check,
@@ -2093,26 +2251,26 @@ Do not substitute a generic container. Product name: {product_name}"""
         cta_placement = (lay.get("cta_placement") or "").strip().lower()
         if cta_placement in ("", "none", "n/a", "absent", "no cta"):
             constraint_bits.append(
-                "NO CTA button or pill anywhere in the ad — IMAGE 1 has no CTA element. Adding one is a "
+                "NO CTA button or pill anywhere in the ad — IMAGE 2 has no CTA element. Adding one is a "
                 "direct violation of this reference's layout."
             )
         bg_type = (comp.get("background_type") or "").lower()
         if "flat" in bg_type or "solid" in bg_type:
             constraint_bits.append(
                 f"Background MUST be a flat solid color — NOT a gradient, NOT a sunburst, NOT textured. "
-                f"IMAGE 1's background is: {comp.get('background_type')}."
+                f"IMAGE 2's background is: {comp.get('background_type')}."
             )
         for fe in (extracted_style.get("forbidden_elements") or []):
             if fe:
                 constraint_bits.append(fe if fe.strip().upper().startswith("NO ") else f"NO {fe}")
         if constraint_bits:
             layout_block += (
-                "\n\nHARD CONSTRAINTS FROM IMAGE 1 — VIOLATING ANY OF THESE MAKES THE GENERATION WRONG:\n- "
+                "\n\nHARD CONSTRAINTS FROM IMAGE 2 — VIOLATING ANY OF THESE MAKES THE GENERATION WRONG:\n- "
                 + "\n- ".join(constraint_bits)
             )
 
         if comp.get("has_human"):
-            human_block = ("\n\nHUMAN ELEMENT: IMAGE 1 features a person interacting with the product. "
+            human_block = ("\n\nHUMAN ELEMENT: IMAGE 2 features a person interacting with the product. "
                            "You MAY include a person in a similar role (e.g. holding/using the product), "
                            "but do not copy their identity, face, or outfit — generate a new person that "
                            "fits the same vibe.")
@@ -2142,17 +2300,21 @@ Do not substitute a generic container. Product name: {product_name}"""
     if style_visual:
         style_block = f"\n\nCREATIVE STYLE FOR THIS AD: {style_visual}\nThis governs the overall execution — commit to this lane fully, don't blend obvious-ad and native/hidden styling."
 
-    persona_block = ""
-    if persona_desc:
-        angle_visual_block = ""
-        if angle_visual:
-            angle_visual_block = f"""
+    # Angle's visual/scene treatment must reach the image prompt whether or not a
+    # persona is also selected — angle is documented as fully independent of
+    # persona, so it can't be gated behind "only if a persona was picked."
+    angle_visual_block = ""
+    if angle_visual:
+        angle_visual_block = f"""
 
 SCENE/MOMENT FOR THIS ANGLE — vary the composition, not the person:
 {angle_visual}
 Pick this specific moment/framing instead of a default static portrait. The depicted person's age,
 look, wardrobe, and relationship to others stays LOCKED to the persona description above — only the
 scene, framing, and composition change to fit this angle."""
+
+    persona_block = ""
+    if persona_desc:
         persona_block = f"""
 
 ━━━ TARGET CUSTOMER PERSONA FOR THIS AD — APPLY ONE OF THE TWO PATHS BELOW ━━━
@@ -2171,6 +2333,16 @@ The persona only affects the emotional register of the copy, not the visual pale
 Either way, this only affects mood/casting/styling — it does NOT change the product, brand
 identity, or the core layout structure being cloned from IMAGE 2.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+    elif angle_visual:
+        # No persona selected — the angle's scene/composition guidance still needs
+        # to reach the prompt on its own.
+        persona_block = f"""
+
+━━━ SCENE/COMPOSITION FOR THIS AD'S ANGLE ━━━
+{angle_visual}
+Apply this to the scene, framing, and composition. This does not change the product, brand
+identity, or the core layout structure being cloned from IMAGE 2.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
     tweak_block = ""
     if tweak_instructions:
@@ -2187,26 +2359,30 @@ following requested change. This instruction overrides any conflicting guidance 
 
 {brand_block}{problem_block}{style_block}
 
-CREATIVE DIRECTION: Clone IMAGE 2 (the winning ad template) as closely as possible:
-- BACKGROUND: use IMAGE 2's exact background — its color, texture, gradient, or scene. Do NOT replace it with yellow, cream, or any brand color.
-- LAYOUT & COMPOSITION: replicate IMAGE 2's structure exactly — zones, panels, placement of text and product.
-- GRAPHIC ELEMENTS: keep IMAGE 2's badges, icons, dividers, CTA pill shape and position.
-- COLORS: follow IMAGE 2's color palette for the background and graphic elements. Brand colors (from BRAND & PRODUCT KNOWLEDGE) apply only to the CTA button text and headline — not to the background or overall palette.
-Only replace: the product shown in IMAGE 2 (swap it with IMAGE 1's product) and all text copy (use the copy below).{
+CREATIVE DIRECTION — copy the whole look of IMAGE 2 (the winning ad template):
+- BACKGROUND: same background as IMAGE 2 — its color, texture, gradient, or scene. Do NOT replace it with yellow, cream, or any brand color.
+- LAYOUT & COMPOSITION: same structure as IMAGE 2 — zones, panels, where the text and product sit.
+- GRAPHIC ELEMENTS: same badges, icons, dividers, CTA pill shape and position as IMAGE 2.
+- COLORS: same color palette as IMAGE 2 for the background and graphic elements. Brand colors (from BRAND & PRODUCT KNOWLEDGE) only apply to the CTA button text and headline — not the background or overall palette.
+- FONTS: same font style as IMAGE 2 (see TEXT STYLING below for specifics).
+The only two things that change from IMAGE 2: the product (swap it for IMAGE 1's product — see below) and all the text (use the copy below).{
 " UNLESS CREATIVE STYLE above calls for native/organic — then strip the polished-ad elements (badges, "
 "CTA pill, commercial framing) the template would normally clone; style wins over exact cloning here."
-if (style_visual and "native" in style_visual.lower()) else ""}{color_block}{layout_block}
+if (style_visual and "native" in style_visual.lower()) else ""}{color_block}{layout_block}{presentation_block}
 
-PRODUCT: Use IMAGE 1's product (your actual product) exactly as it appears.
-⚠️ IMAGE 1 IS THE SINGLE SOURCE OF TRUTH FOR THE PRODUCT — copy it exactly:
-- Container shape: replicate IMAGE 1's exact silhouette, proportions, neck/cap shape
-- Label: replicate IMAGE 1's label layout, text, colors, and logo — do not invent or simplify
-- Color of packaging: match IMAGE 1 exactly — never substitute with a different color or finish
-- NEVER render a generic glass, cup, bowl, tin, or tube — use the exact container from IMAGE 1
-- Place the product in the same position, scale, and role it occupies in IMAGE 2's layout
+PRODUCT: use IMAGE 1 — your real product — exactly as it appears.
+⚠️ IMAGE 1 IS THE SINGLE SOURCE OF TRUTH FOR THE PRODUCT:
+- Container shape: same silhouette, proportions, neck/cap shape as IMAGE 1
+- Label: same layout, text, colors, and logo as IMAGE 1 — never invent or simplify it
+- Color of packaging: same as IMAGE 1 — never substitute a different color or finish, and never
+  recolor the label/packaging to match IMAGE 2's background or IMAGE 2's own original product color
+  (e.g. if IMAGE 2's scene is green, the SCENE becomes green — the product label stays IMAGE 1's
+  real color regardless)
+- See HOW TO SHOW YOUR PRODUCT above for whether it should stand alone, be poured into a glass,
+  or be held — whichever form IMAGE 2 uses, but always still recognizably IMAGE 1's real product
 {product_section}
 
-CAMERA ANGLE VARIATION (subtle — keep IMAGE 1's overall framing): {variation_note}{human_block}{persona_block}{copy_block}
+CAMERA ANGLE VARIATION (subtle — keep IMAGE 2's overall framing): {variation_note}{human_block}{persona_block}{copy_block}
 
 OUTPUT RULES:
 - No watermarks or signatures
@@ -2727,6 +2903,77 @@ def _gemini_pick_best_template(candidates: list, persona_label: str, angle_label
     return candidates[0]
 
 
+# ── Auto-template rotation ────────────────────────────────────────────────────
+# Guarantees every render gets a DIFFERENT template design: it walks a persistent,
+# category-diverse ordering of the whole library one step per image, so the entire
+# library is used before any template repeats — instead of an independent random
+# roll that can (and did) land the same design on back-to-back renders.
+_ROTATION_LOCK = threading.Lock()
+
+def _build_diverse_order(all_lib, seed=None):
+    """Order the library so consecutive entries come from DIFFERENT section/framework
+    categories (US vs Them → Testimonial → Product highlight → …) before repeating a
+    category — so successive renders differ in concept, not just in file."""
+    rng = random.Random(seed)
+    by_section = {}
+    for t in all_lib:
+        by_section.setdefault(t.get("section") or "Uncategorized", []).append(t)
+    sections = list(by_section.keys())
+    rng.shuffle(sections)
+    for sec in sections:
+        rng.shuffle(by_section[sec])
+    order, max_len = [], max(len(v) for v in by_section.values())
+    for r in range(max_len):
+        for sec in sections:
+            if r < len(by_section[sec]):
+                order.append(by_section[sec][r]["path"])
+    return order
+
+def next_auto_templates(all_lib, batch_nonce, count):
+    """Return `count` distinct template paths for one batch, continuing a persistent
+    rotation across batches. All slots of a batch (fired in parallel) share one
+    batch_nonce, so the FIRST to arrive claims a base offset for the batch and the
+    rest reuse it — guarded by an in-process lock so parallel slots never collide.
+    Returns the batch's ordered list; caller indexes it by (idx-1)."""
+    paths = [t["path"] for t in all_lib]
+    sig = str(len(paths)) + "|" + "|".join(sorted(paths))
+    with _ROTATION_LOCK:
+        state = {}
+        if ROTATION_JSON.exists():
+            try: state = json.load(open(ROTATION_JSON))
+            except Exception: state = {}
+        order  = state.get("order") or []
+        cursor = int(state.get("cursor", 0))
+        batches = state.get("batches", {})
+        # rebuild the ordering if the library changed or the order is stale/exhausted
+        valid = set(paths)
+        if (state.get("sig") != sig or not order
+                or any(p not in valid for p in order)):
+            order = _build_diverse_order(all_lib, seed=uuid.uuid4().int)
+            cursor, batches = 0, {}
+        # claim (or reuse) a base offset for this batch
+        if batch_nonce in batches:
+            base = int(batches[batch_nonce])
+        else:
+            if cursor >= len(order):   # finished a full pass — reshuffle for a fresh cycle
+                last = order[-1] if order else None
+                order = _build_diverse_order(all_lib, seed=uuid.uuid4().int)
+                if last and len(order) > 1 and order[0] == last:
+                    order.append(order.pop(0))   # avoid an immediate cross-cycle repeat
+                cursor = 0
+            base = cursor
+            cursor += max(1, count)
+            batches[batch_nonce] = base
+            # keep only the most recent handful of batch claims
+            if len(batches) > 24:
+                for k in list(batches.keys())[:-24]:
+                    batches.pop(k, None)
+        state = {"sig": sig, "order": order, "cursor": cursor, "batches": batches}
+        try: json.dump(state, open(ROTATION_JSON, "w"))
+        except Exception as e: print(f"[auto-tpl] rotation save failed: {e}")
+    n = len(order)
+    return [order[(base + i) % n] for i in range(max(1, count))]
+
 # ── Updated generate-one: accept template_ids ─────────────────────────────────
 @app.route("/api/generate-one", methods=["POST"])
 def api_generate_one():
@@ -2851,43 +3098,65 @@ def api_generate_one():
                 print(f"[generate] Using photos from product '{prod.get('name')}' as fallback")
                 break
 
-    # Auto-mode: assign a unique template per slot. Shuffle is seeded by
-    # batch_nonce (fresh every Generate click) + persona/angle so different
-    # persona+angle combos tend to pull from different parts of the library.
-    # Zero extra API calls — instant.
+    # Auto-mode: assign a template per slot from a batch-wide, CATEGORY-DIVERSE
+    # roster — not an independent random roll per slot. The old version seeded
+    # the shuffle per (persona, angle), so each image in a batch picked from its
+    # own unrelated random ordering of the full library with zero coordination.
+    # Since 55%+ of the template library sits in just two visually-similar
+    # categories ("Winning Ad", "Product highlight"), independent rolls could —
+    # and did — land 2-3 slots in a row in the same category, so a batch of
+    # different persona/angle combos still looked like the same ad reskinned.
+    # This roster instead spreads picks across every section/framework category
+    # (US vs Them, Testimonial, Rage Bait, Product highlight, etc.) before ever
+    # repeating one, so consecutive images are genuinely different ad concepts,
+    # not just different files from the same visual family. Seeded by
+    # batch_nonce only (same for the whole batch) so the roster is consistent
+    # across all slots — persona/angle no longer influence which template a
+    # slot gets, only which copy/scene content fills it.
     if not tpl_paths:
         all_lib = [t for t in load_templates() if os.path.exists(t["path"])]
         if all_lib:
-            import random as _rnd
-            _n = len(all_lib)
-            _persona_seed = persona_key_for_idx or "none"
-            _angle_seed   = angle_key_for_idx   or "none"
-            _pass = (idx - 1) // _n
-            _rng  = _rnd.Random(f"{batch_nonce}_{_persona_seed}_{_angle_seed}_{_pass}")
-            _shuffled = all_lib[:]
-            _rng.shuffle(_shuffled)
-            _pos  = (idx - 1) % _n
-            tpl_paths = [_shuffled[_pos]["path"]]
-            print(f"[auto-tpl] idx={idx}/{total} → '{Path(tpl_paths[0]).name}' "
-                  f"(persona={_persona_seed} angle={_angle_seed})")
+            # Persistent rotation: distinct template per slot within the batch AND
+            # continues across batches so designs don't repeat until the whole
+            # library has been used. See next_auto_templates().
+            _batch_tpls = next_auto_templates(all_lib, batch_nonce, total)
+            _pick = _batch_tpls[(idx - 1) % len(_batch_tpls)]
+            tpl_paths = [_pick]
+            _sec = next((t.get("section") for t in all_lib if t["path"] == _pick), "")
+            print(f"[auto-tpl] idx={idx}/{total} → '{Path(_pick).name}' "
+                  f"(section={_sec}) [rotation]")
 
     # Style references: selected/auto templates first, then session uploads, then brand creatives
     style_refs = tpl_paths or ad_paths or brand_creatives
     # Cycle so each slot uses a different winning ad reference
     style_ref  = [style_refs[(idx-1) % len(style_refs)]] if style_refs else []
 
-    # Product ref priority: session upload/pick (this generation only) > saved
-    # per-product default (persists across sessions, set once via the 🧪/✓ picker)
-    # > first-uploaded photo as a last-resort guess. File size is deliberately NOT
-    # used as a signal — a big lifestyle/mockup photo (e.g. a glass and spoon with
-    # no product in frame) can easily outweigh a small, clean, isolated product
-    # PNG, which is exactly what caused Gemini to faithfully render a random glass
+    # ── Look up the resolved template's own product presentation style (bottle
+    # alone / poured into a glass / held in a hand), if it's already been
+    # analyzed and cached — used below to auto-pick whichever of this product's
+    # photos best matches, instead of always using the same static default.
+    _tpl_product_style = ""
+    if style_ref:
+        _matched_tpl = next((t for t in load_templates() if t.get("path") == style_ref[0]), None)
+        if _matched_tpl:
+            _tpl_product_style = ((_matched_tpl.get("extracted_style") or {})
+                                   .get("composition", {}) or {}).get("product_style", "")
+
+    # Product ref priority: session upload/pick (this generation only) > a photo
+    # auto-matched to the chosen template's presentation style > saved per-product
+    # default (persists across sessions, set once via the 🧪/✓ picker) > first-
+    # uploaded photo as a last-resort guess. File size is deliberately NOT used as
+    # a signal — a big lifestyle/mockup photo (e.g. a glass and spoon with no
+    # product in frame) can easily outweigh a small, clean, isolated product PNG,
+    # which is exactly what caused Gemini to faithfully render a random glass
     # instead of the actual bottle — it was never given the right reference image.
     saved_default_photo = (active_prod or {}).get("default_photo_path", "")
     if saved_default_photo and not os.path.exists(saved_default_photo):
         saved_default_photo = ""
     if brand_product_photos:
-        best_photo = saved_default_photo or brand_product_photos[0]
+        matched_photo = (pick_product_photo_for_template(brand_product_photos, _tpl_product_style)
+                          if _tpl_product_style else "")
+        best_photo = matched_photo or saved_default_photo or brand_product_photos[0]
     else:
         best_photo = ""
     product_ref = product_path or best_photo
@@ -3075,8 +3344,17 @@ def api_generate_one():
                 vary_copy=vary_copy, previous_headlines=prior_headlines,
                 persona_key=persona_key_for_idx, angle_key=angle_key_for_idx, style_key=style_key_for_idx,
             )
-            if quality == "final":
-                copy_data = verify_and_clean_copy(copy_data, product_facts)
+
+        # Typo/spelling/fact verification pass — runs on every fresh generation
+        # (manual or AI-written copy, draft or final) since typos are a correctness
+        # issue, not a final-quality-only nicety. Cached-copy reuse above skips this
+        # because it was already verified the first time that combo was generated.
+        copy_data = verify_and_clean_copy(copy_data, product_facts)
+        # Re-apply manual H1/H2/CTA verbatim — the verification pass must never
+        # silently rewrite text the user typed themselves, only AI-generated parts.
+        if copy_h1:  copy_data["h1"]  = copy_h1
+        if copy_h2:  copy_data["h2"]  = copy_h2
+        if copy_cta: copy_data["cta"] = copy_cta
 
         # Tag copy_data with framework so build_prompt can use it
         copy_data["_framework"] = detected_framework
@@ -3145,29 +3423,33 @@ def api_generate_one():
     # Pass winning_ad and product separately so Gemini knows exactly what each image is
     winning_ad_img  = style_ref[0] if style_ref else None
     product_img_ref = product_ref if product_ref else None
-    texture_ref     = texture_ref_photo
+    # IMAGE 3 (liquid/contents texture) is only meaningful when the ad actually shows
+    # the product poured into a glass — the template's presentation tells us that.
+    # Sending it on every render (bottle-alone, held-in-hand, etc.) just adds a third
+    # full image for the model to ingest with no benefit, slowing the render. So only
+    # attach it for poured/glass shots; skip it otherwise (the common case) for speed.
+    _is_poured = _bucket_presentation(_tpl_product_style) == "poured_glass"
+    texture_ref = texture_ref_photo if _is_poured else None
+    if texture_ref_photo and not _is_poured:
+        print("[generate] skipping IMAGE 3 texture ref — template is not a poured/glass shot")
 
-    # Use FINAL_MODEL whenever a winning ad template is provided — nano-banana handles
-    # multi-image style transfer and text rendering far more reliably than flash-image.
-    # This is what produces the RM0.55 cost shown in the UI.
-    actual_quality_used = "draft"
-    if quality == "final" or winning_ad_img:
-        img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
-                                           winning_ad_path=winning_ad_img,
-                                           product_image_path=product_img_ref,
-                                           texture_ref_path=texture_ref)
-        actual_quality_used = "final"
-        if err:
-            img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
-                                               winning_ad_path=winning_ad_img,
-                                               product_image_path=product_img_ref,
-                                               texture_ref_path=texture_ref)
-            actual_quality_used = "draft"
-    else:
+    # Always use nano-banana-pro-preview, regardless of the requested `quality`
+    # flag or whether a winning ad is attached — it handles multi-image style
+    # transfer and text rendering far more reliably than flash-image, and is more
+    # resistant to product hallucination. Product/layout fidelity wins every time.
+    # Track which model ACTUALLY ran — cost must reflect this, not the requested
+    # `quality` flag, since every generation now runs FINAL_MODEL regardless.
+    actual_quality_used = "final"
+    img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
+                                       winning_ad_path=winning_ad_img,
+                                       product_image_path=product_img_ref,
+                                       texture_ref_path=texture_ref)
+    if err:
         img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                            winning_ad_path=winning_ad_img,
                                            product_image_path=product_img_ref,
                                            texture_ref_path=texture_ref)
+        actual_quality_used = "draft"
         if err:
             img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_FALL,
                                                winning_ad_path=winning_ad_img,
@@ -3528,38 +3810,100 @@ def board_generate_meta(board_id):
     cta     = cd.get("cta", "")
     bullets = cd.get("benefit_bullets") or cd.get("right_bullets") or []
     problem = item.get("problem", "")
-    persona = item.get("persona", "")
-    angle   = item.get("angle", "")
+    persona_label = item.get("persona", "")
+    angle_label   = item.get("angle", "")
     brand   = load_brand()
     product_name = brand.get("_active_product_name") or brand.get("brand_name") or "produk ini"
+
+    # Board items only ever stored the display label, not the underlying key —
+    # look the full entry back up so we can use the persona's real narrative and
+    # the angle's actual psychology/structure (the same ones that shaped the
+    # on-image h1/h2/cta), instead of just the label string.
+    persona_entry = next((v for v in PERSONAS.values() if v.get("label") == persona_label), None)
+    angle_entry   = next((v for v in ANGLES.values()   if v.get("label") == angle_label),   None)
+    persona_narrative = (persona_entry or {}).get("narrative", "")
+    angle_psychology  = (angle_entry or {}).get("psychology", "")
+    angle_instruction = (angle_entry or {}).get("copy_instruction", "")
+
+    # Real brand facts so the hook/body can cite something concrete instead of
+    # generic filler — same knowledge base that grounds the on-image copy.
+    kb         = brand.get("knowledge", {})
+    proof_txt  = (kb.get("proof")       or "").strip()[:400]
+    objections = (kb.get("objections") or "").strip()[:400]
+    certs      = ", ".join(brand.get("certifications", [])) or ""
+    brand_voice= brand.get("brand_voice", "")
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
     if not api_key:
         return jsonify({"error": "GEMINI_API_KEY not set"}), 500
 
     bullets_str = "\n".join(f"- {b}" for b in bullets[:4]) if bullets else ""
-    prompt = f"""You are writing META ads copy for a Facebook/Instagram ad.
+
+    prompt = f"""You are a senior direct-response copywriter, writing the META (Facebook/Instagram) ad copy
+that runs ALONGSIDE the visual below — not describing the visual, complementing it.
 
 PRODUCT: {product_name}
-USE CASE: {problem}
-PERSONA: {persona or 'General audience'}
-ANGLE: {angle or 'Benefit showcase'}
+USE CASE / PROBLEM: {problem}
+BRAND VOICE: {brand_voice or 'warm, trustworthy, heritage'}
 
-AD COPY ALREADY ON THE IMAGE:
+PERSONA — write in a voice that could only be for this exact person, not a generic customer:
+{persona_narrative or persona_label or 'General audience'}
+
+ANGLE — this is the SAME psychological strategy that already shaped the on-image copy below;
+the primary text must extend it, not restate it or drift into a different strategy:
+{angle_label or 'Benefit showcase'} ({angle_psychology or 'clear benefit'})
+{angle_instruction or ''}
+
+REAL PROOF POINTS (use verbatim if referenced — never invent a number, stat, or claim not listed here):
+{proof_txt or '(none provided)'}
+CERTIFICATIONS: {certs or 'none provided'}
+COMMON OBJECTIONS + ANSWERS (defuse one if it fits naturally, don't force it):
+{objections or '(none provided)'}
+
+AD COPY ALREADY ON THE IMAGE (primary text must NOT repeat these lines — it runs above/around the
+image, so its job is to add the persona's voice and proof the image can't show):
 Headline (h1): {h1}
 Subheadline (h2): {h2}
 CTA: {cta}
 Benefits shown:
 {bullets_str}
 
-Write META ads copy that complements this visual and speaks to the persona's situation.
+━━━ HOW TO WRITE meta_primary_text ━━━
+Structure: HOOK (must work standalone — this is all that shows before "See More" truncates it,
+so it must be a complete, compelling thought on its own) + 1-3 short follow-up lines that build
+the case, separated by line breaks like real native Facebook/Instagram copy (short punchy lines,
+not one dense paragraph).
 
-META SPECS:
-- meta_primary_text: 1-2 sentences, max 125 chars total. Hook must land in first 40 chars.
-  Open with the persona's pain/curiosity/desire — not the product name. Bahasa Malaysia.
-  Reflect the angle: {angle or 'highlight key benefit'}.
-- meta_headline: max 40 chars. Punchy outcome or claim. Different from h1 — not a repeat. Bahasa Malaysia.
-- meta_description: max 25 chars. Short proof point or secondary CTA. Bahasa Malaysia.
+Pick ONE hook technique that fits the angle above, don't default to a generic opener:
+- Question hook — ask the exact question this persona is silently asking themselves
+- Stat/number hook — lead with a real, verbatim number from PROOF POINTS above
+- Contrarian/pattern-interrupt — challenge a common assumption about this problem
+- Direct callout — name the persona's exact situation ("Kalau awak pernah...")
+- Mini-story opener — one line dropping the reader into the persona's specific moment
+
+After the hook: 1-3 short lines that do real work — agitate the specific consequence of the
+problem (not vague), tie in ONE real benefit or proof point, and defuse an objection if it fits.
+End with a soft nudge toward the CTA already on the image — do not repeat the CTA text verbatim.
+
+Length: hook alone should work in ~125 characters. Total primary text (hook + follow-up lines)
+should run roughly 150-450 characters — long enough to actually build a case, never a single
+thin sentence, never a dense wall of text. Bahasa Malaysia throughout, natural spoken tone (this
+brand's actual customers talk this way — not stiff literal-translation copy).
+
+━━━ HOW TO WRITE meta_headline ━━━
+25-40 characters (aim for ≤30 so it displays in full on mobile). A punchy outcome, benefit, or
+curiosity-driven claim — genuinely different from h1 above, not a rewording of it. Bahasa Malaysia.
+
+━━━ HOW TO WRITE meta_description ━━━
+~25 characters. One short proof point (a real stat/certification) or a secondary nudge — this
+field only displays on a few placements, so it should add one small extra reason to believe,
+not restate the headline. Bahasa Malaysia.
+
+RULES:
+1. Never invent a statistic, certification, or claim not present in PROOF POINTS/CERTIFICATIONS above
+2. Never repeat h1, h2, or cta verbatim anywhere in the three fields
+3. No clichés ("Jangan lepaskan peluang", "Dapatkan sekarang juga" as an opener, etc.) — write like
+   a specific person talking to another specific person, not a generic ad
 
 Return JSON only:
 {{
@@ -3707,26 +4051,24 @@ OUTPUT RULES:
 - No watermarks or signatures
 - Write any on-image text in Bahasa Malaysia, clean and legible"""
 
+    # Always use nano-banana-pro-preview first, regardless of the requested
+    # `quality` flag — see the matching comment in api_generate_one for why.
     results = []
+    actual_qualities = []
     for _ in range(count):
-        if quality == "final":
-            img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
-                                                winning_ad_path=str(src_path),
-                                                product_image_path=product_ref or None,
-                                                texture_ref_path=texture_ref,
-                                                is_tweak=True)
-            if err:
-                img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
-                                                    winning_ad_path=str(src_path),
-                                                    product_image_path=product_ref or None,
-                                                    texture_ref_path=texture_ref,
-                                                    is_tweak=True)
-        else:
+        actual_quality = "final"
+        img_bytes, err = call_gemini_image(prompt, ref_images, FINAL_MODEL,
+                                            winning_ad_path=str(src_path),
+                                            product_image_path=product_ref or None,
+                                            texture_ref_path=texture_ref,
+                                            is_tweak=True)
+        if err:
             img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_MODEL,
                                                 winning_ad_path=str(src_path),
                                                 product_image_path=product_ref or None,
                                                 texture_ref_path=texture_ref,
                                                 is_tweak=True)
+            actual_quality = "draft"
             if err:
                 img_bytes, err = call_gemini_image(prompt, ref_images, DRAFT_FALL,
                                                     winning_ad_path=str(src_path),
@@ -3746,10 +4088,12 @@ OUTPUT RULES:
         results.append({"filename": v_filename,
                          "board_url": f"/api/board/image/{v_filename}",
                          "label": (item.get("label", "Ad") + " (edit)")})
+        actual_qualities.append(actual_quality)
 
     if not results:
         return jsonify({"error": "Generation failed — please try again"}), 500
-    cost_usd = round(COSTS.get(quality, COSTS["draft"]) * len(results), 2)
+    # Cost reflects the model that ACTUALLY ran per image, not the requested flag.
+    cost_usd = round(sum(COSTS[q] for q in actual_qualities), 2)
     total_spend_usd = add_spend(cost_usd)
     return jsonify({"ok": True, "items": results,
                      "cost_usd": cost_usd, "cost_myr": round(cost_usd * MYR_RATE, 2),
