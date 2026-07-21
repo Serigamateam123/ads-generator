@@ -24,7 +24,12 @@ MYR_RATE     = 4.07
 COSTS        = {"draft": 0.039, "final": 0.134}
 DRAFT_MODEL  = "gemini-2.5-flash-image"           # cheap draft (~$0.01)
 DRAFT_FALL   = "gemini-3.1-flash-image-preview"   # fallback draft
-FINAL_MODEL  = "nano-banana-pro-preview"          # Nano Banana Pro — highest quality, accepts ref images
+FINAL_MODEL  = "gemini-3.1-flash-image"           # Fast, high-quality image model (~15s/image). Measured
+                                                  # 2026-07-21: Nano Banana Pro (nano-banana-pro-preview AND
+                                                  # the GA gemini-3-pro-image) took 2-5+ min/image and often
+                                                  # timed out; gemini-3.1-flash-image renders in ~15s with
+                                                  # strong product fidelity. To go back to top-tier Pro quality
+                                                  # (accepting the long wait) set this to "gemini-3-pro-image".
 VISION_MODEL = "gemini-2.5-flash"                 # vision analysis (text only, cheap)
 
 # Marker prefix on billing/rate-limit errors so callers can recognise a quota
