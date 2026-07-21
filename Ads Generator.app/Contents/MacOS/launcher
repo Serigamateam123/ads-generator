@@ -11,4 +11,7 @@ OLD_PIDS="$(lsof -ti tcp:$PORT 2>/dev/null)"
 if [ -n "$OLD_PIDS" ]; then echo "$OLD_PIDS" | xargs kill -9 2>/dev/null; sleep 1; fi
 PY="$PROJECT_DIR/venv/bin/python"
 [ -x "$PY" ] || PY="$(command -v python3 || command -v python)"
-exec "$PY" "$PROJECT_DIR/ui_server.py" >> "$LOG" 2>&1
+# -u / PYTHONUNBUFFERED: write server logs to app.log in real time (unbuffered),
+# so problems are diagnosable live instead of sitting in a buffer.
+export PYTHONUNBUFFERED=1
+exec "$PY" -u "$PROJECT_DIR/ui_server.py" >> "$LOG" 2>&1
