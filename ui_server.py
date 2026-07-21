@@ -3,7 +3,7 @@ static-remix UI server
 Run: python ui_server.py
 Opens at: http://localhost:7373
 """
-import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap, random
+import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap, random, time, socket
 import concurrent.futures, threading
 from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
@@ -58,6 +58,25 @@ TEMPLATES_DIR = SKILLS_DIR / "templates"
 TEMPLATES_JSON= TEMPLATES_DIR / "templates.json"
 for d in (SESSIONS_DIR, BRAND_DIR, TEMPLATES_DIR):
     d.mkdir(exist_ok=True)
+
+# ── Atomic JSON writes ─────────────────────────────────────────────────────────
+# Flask serves requests multi-threaded, and the whole "database" is plain JSON
+# files. Writing with a bare open("w") + json.dump is NOT atomic: if the process
+# is killed mid-write (it was found dead exactly this way) or two requests write
+# at once, the file is left truncated/corrupt and that data (brand kit, board,
+# personas, spend) is lost. Writing to a temp file and os.replace()-ing it in is
+# atomic on POSIX, so a reader/crash never sees a half-written file.
+_WRITE_LOCK = threading.Lock()
+
+def atomic_write_json(path, obj, *, indent=2, ensure_ascii=False):
+    path = Path(path)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with _WRITE_LOCK:
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(obj, f, indent=indent, ensure_ascii=ensure_ascii)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
 
 # ── Use cases per product — from 10_customers/use_cases.md ─────────────────────
 # Only confidence-rated ✅ use cases are included (Primary/Strong/Common/Documented).
@@ -596,8 +615,7 @@ def save_personas(personas: dict):
     slim = {}
     for k, v in personas.items():
         slim[k] = {kk: vv for kk, vv in v.items() if kk not in ("prompt", "copy_voice")}
-    with open(PERSONAS_JSON, "w", encoding="utf-8") as f:
-        json.dump(slim, f, indent=2, ensure_ascii=False)
+    atomic_write_json(PERSONAS_JSON, slim)
 
 def load_angles() -> dict:
     if ANGLES_JSON.exists():
@@ -618,8 +636,7 @@ def load_angles() -> dict:
     return data
 
 def save_angles(angles: dict):
-    with open(ANGLES_JSON, "w", encoding="utf-8") as f:
-        json.dump(angles, f, indent=2, ensure_ascii=False)
+    atomic_write_json(ANGLES_JSON, angles)
 
 def load_styles() -> dict:
     if STYLES_JSON.exists():
@@ -634,8 +651,7 @@ def load_styles() -> dict:
     return data
 
 def save_styles(styles: dict):
-    with open(STYLES_JSON, "w", encoding="utf-8") as f:
-        json.dump(styles, f, indent=2, ensure_ascii=False)
+    atomic_write_json(STYLES_JSON, styles)
 
 PERSONAS = load_personas()
 ANGLES   = load_angles()
@@ -680,8 +696,7 @@ def load_brand() -> dict:
     return dict(DEFAULT_BRAND)
 
 def save_brand(data: dict):
-    with open(BRAND_JSON, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    atomic_write_json(BRAND_JSON, data)
 
 # ── Cumulative spend ledger ──────────────────────────────────────────────────
 # Gemini's API does not expose a balance/remaining-credits endpoint for a given
@@ -697,10 +712,14 @@ def load_spend() -> float:
             return 0.0
     return 0.0
 
+_SPEND_LOCK = threading.Lock()
+
 def add_spend(amount_usd: float) -> float:
-    total = load_spend() + amount_usd
-    with open(SPEND_JSON, "w", encoding="utf-8") as f:
-        json.dump({"total_usd": round(total, 4)}, f)
+    # Lock the whole read-modify-write: two concurrent generations both doing
+    # load_spend()+add would otherwise clobber each other and undercount spend.
+    with _SPEND_LOCK:
+        total = load_spend() + amount_usd
+        atomic_write_json(SPEND_JSON, {"total_usd": round(total, 4)}, indent=None)
     return total
 
 def brand_to_prompt_block(brand: dict) -> str:
@@ -910,25 +929,71 @@ def call_gemini_image(prompt, ref_paths, model,
 
     req = urllib.request.Request(url, data=payload,
           headers={"Content-Type": "application/json"}, method="POST")
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            body = json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        err = e.read().decode()[:500]
-        print(f"[gemini] HTTP {e.code}: {err}")
-        # A 429 here is almost always billing (credits depleted) or a hard rate
-        # limit — NOT something retrying other models fixes, since every model
-        # shares the same account quota. Flag it so the caller can stop the
-        # fallback chain and tell the user the real reason instead of silently
-        # grinding through models and reporting a generic "generation failed".
-        if e.code == 429:
+
+    # Retry with exponential backoff. A transient per-minute rate limit (429) or a
+    # 5xx/network blip should NOT kill the whole render — the old code returned on
+    # the first 429, so one momentary rate-limit spike wasted the generation. We
+    # only give up immediately when the 429 is a HARD billing/credit exhaustion
+    # (retrying can't fix that until the user tops up).
+    MAX_ATTEMPTS = 4
+    # Nano Banana Pro can legitimately take well over a minute, especially when the
+    # service is busy — 120s was cutting off valid renders. Give it real headroom.
+    READ_TIMEOUT = 180
+    body = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=READ_TIMEOUT) as resp:
+                body = json.loads(resp.read())
+            break  # success
+        except urllib.error.HTTPError as e:
+            err = e.read().decode()[:500]
             low = err.lower()
-            if any(w in low for w in ("credit", "billing", "resource_exhausted", "quota", "depleted")):
-                return None, (QUOTA_ERR_PREFIX + "Your Gemini API credits are depleted (or the key is "
-                              "rate-limited). Top up billing at https://ai.studio/projects, then try again.")
-            return None, (QUOTA_ERR_PREFIX + "Gemini API rate limit hit (HTTP 429). Wait a moment and "
-                          "try again, or check billing at https://ai.studio/projects.")
-        return None, f"HTTP {e.code}: {err}"
+            print(f"[gemini] HTTP {e.code} (attempt {attempt}/{MAX_ATTEMPTS}): {err}")
+            if e.code == 429:
+                # Hard credit/billing exhaustion — retrying is pointless.
+                if any(w in low for w in ("credit", "billing", "depleted")):
+                    return None, (QUOTA_ERR_PREFIX + "Your Gemini API credits are depleted (or the key is "
+                                  "rate-limited). Top up billing at https://ai.studio/projects, then try again.")
+                # Transient rate limit (RESOURCE_EXHAUSTED / RPM) — honour Retry-After, else back off.
+                if attempt < MAX_ATTEMPTS:
+                    ra = e.headers.get("Retry-After") if e.headers else None
+                    delay = float(ra) if (ra and str(ra).strip().isdigit()) else min(2 ** attempt, 30)
+                    print(f"[gemini] rate-limited — backing off {delay:.0f}s then retrying")
+                    time.sleep(delay)
+                    continue
+                return None, (QUOTA_ERR_PREFIX + "Gemini API rate limit hit (HTTP 429) after several retries. "
+                              "Wait a moment and try again, or check billing at https://ai.studio/projects.")
+            # Transient server errors — back off and retry.
+            if e.code in (500, 502, 503, 504) and attempt < MAX_ATTEMPTS:
+                delay = min(2 ** attempt, 30)
+                print(f"[gemini] server error {e.code} — retrying in {delay:.0f}s")
+                time.sleep(delay)
+                continue
+            return None, f"HTTP {e.code}: {err}"
+        except (urllib.error.URLError, TimeoutError, socket.timeout) as e:
+            # NOTE: on Python 3.9 socket.timeout is NOT a subclass of TimeoutError,
+            # so it must be listed explicitly — otherwise a read timeout escapes
+            # this handler and crashes the whole request with a 500 (this was the
+            # "failed rendering new image" bug).
+            reason = getattr(e, "reason", e)
+            is_timeout = isinstance(e, (socket.timeout, TimeoutError)) or \
+                         isinstance(reason, (socket.timeout, TimeoutError))
+            # A read timeout means the model itself is slow — retrying the same slow
+            # request up to 4x (each up to READ_TIMEOUT) would make the user wait many
+            # minutes, so cap timeout retries at 2. The caller also falls back to the
+            # faster draft model if the final model keeps timing out.
+            limit = 2 if is_timeout else MAX_ATTEMPTS
+            print(f"[gemini] {'timeout' if is_timeout else 'network error'} "
+                  f"(attempt {attempt}/{limit}): {e}")
+            if attempt < limit:
+                time.sleep(min(2 ** attempt, 10))
+                continue
+            if is_timeout:
+                return None, ("Gemini took too long to render this image and timed out. This usually means "
+                              "the service is busy — please try generating again in a moment.")
+            return None, f"Network error contacting Gemini: {e}"
+    if body is None:
+        return None, "Gemini request failed after retries"
     for part in body.get("candidates",[{}])[0].get("content",{}).get("parts",[]):
         for key in ("inlineData","inline_data"):
             if key in part:
@@ -1145,6 +1210,52 @@ def analyze_product_visual(image_path: str) -> str:
         image_path
     )
 
+# ── Persistent product-visual cache ─────────────────────────────────────────
+# analyze_product_visual() is a paid vision call and, under a 429, returns "" —
+# which silently drops the textual product grounding and spikes hallucination
+# (a wrong/generic bottle instead of the real branded jar). Cache each photo's
+# description to disk, keyed by path + mtime, so it's computed once ever and
+# survives restarts. Critically: if a fresh vision call fails (rate limit), fall
+# back to the last good description for that same photo instead of nothing — so
+# a transient 429 can no longer degrade product fidelity.
+PRODUCT_VISUAL_JSON = _TMP / "product_visuals.json"
+
+def _load_product_visuals() -> dict:
+    if PRODUCT_VISUAL_JSON.exists():
+        try:
+            with open(PRODUCT_VISUAL_JSON, encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def product_visual_for(image_path: str) -> str:
+    """Precise textual description of the product photo, cached to disk. On a
+    failed/rate-limited vision call, returns the last good cached description for
+    this photo so the prompt never loses product grounding."""
+    if not image_path or not os.path.exists(image_path):
+        return ""
+    try:
+        mtime = int(os.path.getmtime(image_path))
+    except OSError:
+        mtime = 0
+    key = f"{image_path}::{mtime}"
+    cache = _load_product_visuals()
+    if cache.get(key):
+        return cache[key]
+    desc = analyze_product_visual(image_path) or ""
+    if desc:
+        cache[key] = desc
+        atomic_write_json(PRODUCT_VISUAL_JSON, cache)
+        return desc
+    # Vision call failed (e.g. 429). Reuse the most recent good description for
+    # this same photo path (any mtime) rather than dropping grounding entirely.
+    fallback = next((v for k, v in cache.items()
+                     if k.rsplit("::", 1)[0] == image_path and v), "")
+    if fallback:
+        print(f"[vision] using cached fallback description for {Path(image_path).name}")
+    return fallback
+
 # ── Product photo ↔ template auto-matching ──────────────────────────────────
 # Fixed vocabulary both sides get bucketed into, so matching a product photo to
 # a template's product presentation is a simple category lookup rather than
@@ -1197,6 +1308,22 @@ def classify_product_photo(image_path: str) -> str:
     save_photo_styles(cache)
     return category
 
+def _photo_is_cutout(path: str) -> bool:
+    """True if this photo is a clean isolated cut-out — either a real transparent
+    (alpha) image or a filename that marks one. A cut-out is the ideal IMAGE 1
+    identity reference: nothing else in frame for the model to copy."""
+    if not path:
+        return False
+    try:
+        from PIL import Image as _Img
+        with _Img.open(path) as im:
+            if im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info):
+                return True
+    except Exception:
+        pass
+    n = Path(path).name.lower()
+    return any(w in n for w in ("removebg", "cutout", "cut-out", "transparent", "nobg", "no-bg"))
+
 def _best_product_identity_photo(photos: list) -> str:
     """Choose the best product-IDENTITY reference (the IMAGE 1 slot) for fidelity —
     NOT for matching a template's scene. An isolated cut-out (transparent
@@ -1204,24 +1331,11 @@ def _best_product_identity_photo(photos: list) -> str:
     onto the packaging. Falls back to filename hints, then the first photo."""
     if not photos:
         return ""
-    # 1) a transparent cut-out (alpha channel) = product isolated on no background
-    try:
-        from PIL import Image as _Img
-        for p in photos:
-            try:
-                with _Img.open(p) as im:
-                    if im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info):
-                        return p
-            except Exception:
-                continue
-    except Exception:
-        pass
-    # 2) filename hints that mark a clean cut-out
+    # 1) a transparent cut-out (alpha channel or filename hint)
     for p in photos:
-        n = Path(p).name.lower()
-        if any(w in n for w in ("removebg", "cutout", "cut-out", "transparent", "nobg", "no-bg")):
+        if _photo_is_cutout(p):
             return p
-    # 3) last resort — first photo
+    # 2) last resort — first photo
     return photos[0]
 
 def pick_product_photo_for_template(photos: list, template_product_style: str) -> str:
@@ -2668,8 +2782,7 @@ def load_templates() -> list:
     return []
 
 def save_templates(tpls: list):
-    with open(TEMPLATES_JSON, "w", encoding="utf-8") as f:
-        json.dump(tpls, f, indent=2, ensure_ascii=False)
+    atomic_write_json(TEMPLATES_JSON, tpls)
 
 def next_tpl_id(tpls: list) -> int:
     return max((t["id"] for t in tpls), default=0) + 1
@@ -3251,16 +3364,11 @@ def api_generate_one():
     # Cached per session/product so a multi-image batch only pays for this once.
     product_visual = ""
     if product_ref:
-        _pv_cache = meta.get("product_visual_cache", {})
-        product_visual = _pv_cache.get(product_ref, "")
-        if not product_visual:
-            product_visual = analyze_product_visual(product_ref) or ""
-            if product_visual:
-                _pv_cache[product_ref] = product_visual
-                meta["product_visual_cache"] = _pv_cache
-                with open(session_dir / "meta.json", "w") as fp:
-                    json.dump(meta, fp)
-        print(f"[generate] product_visual {'cached' if product_ref in _pv_cache and product_visual else 'MISSING'} "
+        # Global, disk-backed cache with a last-good-description fallback (see
+        # product_visual_for) — so a 429 on the vision call can no longer silently
+        # drop grounding and spike product hallucination.
+        product_visual = product_visual_for(product_ref)
+        print(f"[generate] product_visual {'OK' if product_visual else 'MISSING'} "
               f"({len(product_visual)} chars)")
 
     # ── CRITICAL: product photo goes FIRST so the model weights it highest ──
@@ -3649,8 +3757,7 @@ def load_campaigns() -> list:
     return []
 
 def save_campaigns(items: list):
-    with open(CAMPAIGNS_JSON, "w", encoding="utf-8") as f:
-        json.dump(items, f, indent=2, ensure_ascii=False)
+    atomic_write_json(CAMPAIGNS_JSON, items)
 
 @app.route("/api/campaigns", methods=["GET"])
 def get_campaigns():
@@ -3708,8 +3815,7 @@ def load_board() -> list:
     return []
 
 def save_board(items: list):
-    with open(BOARD_JSON, "w", encoding="utf-8") as f:
-        json.dump(items, f, indent=2, ensure_ascii=False)
+    atomic_write_json(BOARD_JSON, items)
 
 @app.route("/api/spend", methods=["GET"])
 def get_spend():
@@ -4477,4 +4583,8 @@ if __name__ == "__main__":
 
     print(f"\n  static-remix UI  ->  http://localhost:{PORT}\n")
     threading.Timer(1.2, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()
-    app.run(host="0.0.0.0", port=PORT, debug=False)
+    # Bind to loopback only — this is a local single-user app with NO authentication
+    # on any route (including endpoints that spend real Gemini money and delete data).
+    # Binding 0.0.0.0 exposed all of that to anyone on the same WiFi/LAN. Override
+    # with HOST=0.0.0.0 only if you deliberately need LAN access.
+    app.run(host=os.environ.get("HOST", "127.0.0.1"), port=PORT, debug=False)
