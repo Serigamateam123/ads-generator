@@ -1197,6 +1197,33 @@ def classify_product_photo(image_path: str) -> str:
     save_photo_styles(cache)
     return category
 
+def _best_product_identity_photo(photos: list) -> str:
+    """Choose the best product-IDENTITY reference (the IMAGE 1 slot) for fidelity —
+    NOT for matching a template's scene. An isolated cut-out (transparent
+    background) is ideal: nothing else in frame for the model to copy, so it locks
+    onto the packaging. Falls back to filename hints, then the first photo."""
+    if not photos:
+        return ""
+    # 1) a transparent cut-out (alpha channel) = product isolated on no background
+    try:
+        from PIL import Image as _Img
+        for p in photos:
+            try:
+                with _Img.open(p) as im:
+                    if im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info):
+                        return p
+            except Exception:
+                continue
+    except Exception:
+        pass
+    # 2) filename hints that mark a clean cut-out
+    for p in photos:
+        n = Path(p).name.lower()
+        if any(w in n for w in ("removebg", "cutout", "cut-out", "transparent", "nobg", "no-bg")):
+            return p
+    # 3) last resort — first photo
+    return photos[0]
+
 def pick_product_photo_for_template(photos: list, template_product_style: str) -> str:
     """Auto-match: given the candidate product photos and the chosen template's
     own product presentation style, pick whichever photo's classified category
@@ -2083,17 +2110,30 @@ What IMAGE 1 actually looks like:
 
 Product name on label: {product_name}
 RULES — violating any of these makes the generation wrong:
-- Bottle/jar shape, silhouette, proportions: same as IMAGE 1
-- Label colors, text, logo, layout: same as IMAGE 1
-- Cap/lid shape, color, material: same as IMAGE 1
-- Material finish (plastic, glass, matte, glossy): same as IMAGE 1
+- Bottle/jar shape, silhouette, proportions: IDENTICAL to IMAGE 1 — trace it
+- Label text, logo, colors, layout: IDENTICAL to IMAGE 1, character-for-character. Do NOT paraphrase,
+  re-typeset, translate, or "clean up" the label — copy the exact wording and lettering you see
+- Cap/lid shape, color, material: IDENTICAL to IMAGE 1
+- Material/finish: IDENTICAL to IMAGE 1. If IMAGE 1's bottle is CLEAR/TRANSPARENT, keep it transparent
+  with the same liquid colour and fill level — do NOT make it an opaque or coloured bottle
+- If the logo/label is metallic, foil, or holographic in IMAGE 1, keep it metallic/foil — do not
+  flatten it to plain print
 - Never swap in a generic dark amber/brown "herbal tonic" bottle — the real product looks different
 - Never invent a random unbranded container that isn't grounded in IMAGE 1 (or IMAGE 3 for liquid look)
+- The product in IMAGE 2 belongs to a DIFFERENT brand — never copy IMAGE 2's bottle, label, or cap.
+  Only IMAGE 1's product may appear in the output.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
     else:
-        product_section = f"""PRODUCT: IMAGE 1 is your product reference.
-Render it exactly — same bottle/jar shape, label, cap, and finish as IMAGE 1.
-Do not substitute a generic container. Product name: {product_name}"""
+        product_section = f"""━━━ YOUR PRODUCT — REPRODUCE IMAGE 1 EXACTLY ━━━
+IMAGE 1 is a photo of your real product. Reproduce it exactly, character-for-character:
+- Bottle/jar shape, silhouette, cap: IDENTICAL to IMAGE 1
+- Label text, logo, colours, layout: IDENTICAL to IMAGE 1 — copy the exact wording, do not paraphrase
+- Finish: IDENTICAL to IMAGE 1. If IMAGE 1's bottle is CLEAR/TRANSPARENT, keep it transparent with the
+  same liquid colour and fill level; if the logo is metallic/foil/holographic, keep it that way
+- Do NOT substitute a generic bottle, glass, cup, or tin, and do NOT invent label text
+- The product in IMAGE 2 is a DIFFERENT brand — never copy it; only IMAGE 1's product may appear
+Product name on label: {product_name}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
     # layout_section removed — main prompt uses CREATIVE DIRECTION block instead
 
@@ -3170,9 +3210,17 @@ def api_generate_one():
     if saved_default_photo and not os.path.exists(saved_default_photo):
         saved_default_photo = ""
     if brand_product_photos:
-        matched_photo = (pick_product_photo_for_template(brand_product_photos, _tpl_product_style)
-                          if _tpl_product_style else "")
-        best_photo = matched_photo or saved_default_photo or brand_product_photos[0]
+        # PRIORITY (fixes product hallucination from a wrong reference):
+        #   1. saved default photo — the user's deliberate "this is the product" pick
+        #   2. the clearest identity shot (isolated cut-out preferred)
+        #   3. first photo — last resort
+        # The template-presentation auto-matcher is intentionally NOT allowed to
+        # override 1 or 2. Matching the IMAGE 1 reference to the template's scene
+        # (poured/held/lifestyle) was pulling in photos where the real bottle is
+        # small or obscured, which is exactly what made Gemini render the wrong
+        # vessel. Presentation is handled by the prompt + IMAGE 3, never by
+        # swapping the identity reference.
+        best_photo = saved_default_photo or _best_product_identity_photo(brand_product_photos)
     else:
         best_photo = ""
     product_ref = product_path or best_photo
