@@ -851,7 +851,7 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
       <div class="field-label" style="margin-top:4px">Active Product</div>
       <select id="sidebar-product-select" class="form-input" style="margin-bottom:6px;font-size:12px"
         onchange="onSidebarProductChange()">
-        <option value="">— select product —</option>
+        <option value="">— Select a product —</option>
       </select>
       <div id="prod-knowledge-status" style="font-size:10.5px;margin-bottom:12px;padding:5px 8px;
         border-radius:6px;background:#f0fdf4;color:#166534;display:none">
@@ -2240,16 +2240,22 @@ function copyMetaField(elId, btn) {
 // ── Generate ──────────────────────────────────────────────────────────────────
 async function generate() {
   // ── Collect fresh state from ALL sidebar inputs ──────────────────────────────
+  // The sidebar "Active Product" dropdown is the single source of truth for which
+  // product this batch uses — read it fresh so a stale global (e.g. set while
+  // editing in Brand Setup) can't override the user's visible choice.
   const selProd = document.getElementById('sidebar-product-select');
-  if (selProd && selProd.value && !activeProductId) {
-    activeProductId = parseInt(selProd.value) || null;
-  }
-  // Re-run product change to ensure kit preview is current
-  if (selProd && selProd.value) onSidebarProductChange();
+  activeProductId = (selProd && selProd.value) ? (parseInt(selProd.value) || null) : null;
+  if (selProd && selProd.value) onSidebarProductChange();  // refresh kit preview
 
   const hasStyleRef = state.adsFiles.length > 0 || selectedTplIds.size > 0 || allTemplates.length > 0;
   if (!hasStyleRef) { toast('Please upload at least one winning ad in the Template Library first.'); return; }
-  // Product: session upload OR per-product brand kit photos OR global brand kit photos
+  // Require a conscious product choice — unless a product photo was uploaded just
+  // for this session. Without this, leaving "— select product —" would silently
+  // fall back to whatever product was last saved.
+  if (!activeProductId && !state.productFile) {
+    toast('Please choose a product in “Active Product” first (or upload a product photo).'); return;
+  }
+  // Product photos must exist somewhere: session upload OR brand kit photos.
   if (!state.productFile && !state.brandHasProduct) {
     toast('Please upload your product photo, or add photos in Brand Setup → Assets first.'); return;
   }
@@ -3463,7 +3469,7 @@ function renderProductSelectorInSidebar() {
   const sel = document.getElementById('sidebar-product-select');
   if (!sel) return;
   const cur = sel.value;
-  sel.innerHTML = '<option value="">— no product selected —</option>';
+  sel.innerHTML = '<option value="">— Select a product —</option>';
   allProducts.forEach(p => {
     const opt = document.createElement('option');
     opt.value       = p.id;
@@ -4100,22 +4106,13 @@ async function checkKeyStatus() {
       document.getElementById('brand-aware-badge').style.display = 'inline-flex';
     }
 
-    // Auto-select active product — prefer saved ID, fall back to first with knowledge, then first overall
-    let targetId = brand.active_product_id || null;
-    if (!targetId) {
-      // Pick first product that has any knowledge filled in
-      const withKnowledge = allProducts.find(p => {
-        const kb = p.knowledge || {};
-        return Object.values(kb).some(v => v && v.trim && v.trim().length > 0);
-      });
-      if (withKnowledge) targetId = withKnowledge.id;
-      else if (allProducts.length > 0) targetId = allProducts[0].id; // fall back to first
-    }
-    if (targetId) {
-      activeProductId = targetId;   // set JS global immediately
-      const sel = document.getElementById('sidebar-product-select');
-      if (sel) { sel.value = targetId; onSidebarProductChange(); }
-    }
+    // Do NOT auto-select a product on load — start at "— select product —" so the
+    // user consciously picks one each session. Previously this force-selected the
+    // saved active_product_id (or the first product), which made one product
+    // (e.g. Minyak Urut) look permanently stuck as the default.
+    activeProductId = null;
+    const sel = document.getElementById('sidebar-product-select');
+    if (sel) sel.value = '';
   } catch(e) { state.brandHasProduct = false; }
 })();
 </script>
