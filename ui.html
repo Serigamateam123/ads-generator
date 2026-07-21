@@ -2782,7 +2782,7 @@ function renderBoard() {
     card.innerHTML = `
       <div class="board-card-check">${sel ? '✓' : ''}</div>
       <div class="board-card-img">
-        <img src="/api/board/image/${b.filename}?t=${Date.now()}" alt="${b.label}" loading="lazy">
+        <img src="/api/board/image/${b.filename}?t=${Date.now()}" alt="${b.label}" decoding="async">
         <div class="board-card-actions">
           <button class="bca-btn bca-dl" onclick="boardCardDownload(event,'${b.filename}','${safeLabel}')" title="Download">⬇ Download</button>
           <button class="bca-btn bca-cv" id="bca-cv-${b.id}" onclick="boardCardCanva(event,${b.id},'${b.filename}','${safeLabel}')" title="Send to Canva">🎨 Canva</button>
@@ -3095,7 +3095,7 @@ function buildTplCard(t) {
   card.dataset.id = t.id;
   card.innerHTML = `
     <div class="tpl-card-img">
-      <img src="${t.url}?t=${Date.now()}" alt="${t.label}" loading="lazy">
+      <img src="${t.url}?t=${Date.now()}" alt="${t.label}" decoding="async">
     </div>
     <div class="tpl-select-check">✓</div>
     <div class="tpl-num-badge">#${t.id}</div>
