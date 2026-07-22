@@ -4123,6 +4123,86 @@ def board_delete():
 def board_image(filename):
     return send_from_directory(BOARD_DIR, filename)
 
+# ── Export to "Download Board" ────────────────────────────────────────────────
+# A browser <a download> always lands in ~/Downloads and the page cannot change
+# that, which is how exported ads ended up mixed in with everything else. The
+# server has real disk access, so exporting server-side writes straight into a
+# dated folder with a meaningful filename and skips the browser entirely.
+EXPORT_DIR = SKILLS_DIR / "Download Board"
+
+def _clean_part(text: str, limit: int = 40) -> str:
+    """Filename-safe fragment: keep letters/digits, collapse the rest to '-'."""
+    s = re.sub(r"[^A-Za-z0-9]+", "-", (text or "")).strip("-")
+    return s[:limit].strip("-")
+
+def _real_ext(path: Path) -> str:
+    """Actual image format, not whatever the name claims. board/ holds a mix —
+    some board_NNNNN.png files really contain JPEG data — and handing an ad
+    platform a .png that is secretly a JPEG invites a rejected upload."""
+    try:
+        from PIL import Image as _I
+        with _I.open(path) as im:
+            return {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp",
+                    "GIF": ".gif"}.get(im.format, ".png")
+    except Exception:
+        return ".png"
+
+def _export_name(item: dict, ext: str = ".png") -> str:
+    """<product>_<use-case>_<quality>_b<id><ext> — the board id at the end keeps
+    every name unique, so two exports can never silently overwrite each other."""
+    label = item.get("label") or ""
+    # labels look like "Ad 01 — Minyak Urut Aromatik Gamat 75ML"; keep the product half
+    product = label.split("—")[-1] if "—" in label else label
+    parts = [_clean_part(product) or "Ad",
+             _clean_part(item.get("problem"), 32),
+             _clean_part(item.get("quality"), 8) or "draft",
+             f"b{int(item.get('id', 0)):05d}"]
+    return "_".join(p for p in parts if p) + ext
+
+@app.route("/api/board/export", methods=["POST"])
+def board_export():
+    """Copy selected board images into Download Board/<YYYY-MM-DD>/ with readable
+    names. Pass {"ids": [...]} or {"all": true}. Re-exporting is a no-op for files
+    already present, so pressing it twice never duplicates."""
+    data = request.json or {}
+    ids  = set(int(i) for i in data.get("ids", []))
+    board = load_board()
+    items = board if data.get("all") else [b for b in board if b.get("id") in ids]
+    if not items:
+        return jsonify({"error": "Nothing selected to export"}), 400
+
+    written, skipped, missing = [], 0, 0
+    for it in items:
+        src = BOARD_DIR / Path(it.get("filename", "")).name
+        if not src.exists():
+            missing += 1
+            continue
+        day = (it.get("created_at") or "")[:10] or "undated"
+        day_dir = EXPORT_DIR / day
+        day_dir.mkdir(parents=True, exist_ok=True)
+        dest = day_dir / _export_name(it, _real_ext(src))
+        # same id -> same name, so an existing file is the same image already exported
+        if dest.exists() and dest.stat().st_size == src.stat().st_size:
+            skipped += 1
+            continue
+        shutil.copy2(str(src), str(dest))
+        written.append(f"{day}/{dest.name}")
+
+    return jsonify({"ok": True, "exported": len(written), "skipped": skipped,
+                    "missing": missing, "folder": str(EXPORT_DIR),
+                    "files": written[:20]})
+
+@app.route("/api/board/open-export-folder", methods=["POST"])
+def open_export_folder():
+    """Reveal the export folder in Finder."""
+    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        subprocess.run(["open", str(EXPORT_DIR)], timeout=10)
+        return jsonify({"ok": True, "folder": str(EXPORT_DIR)})
+    except Exception as e:
+        return jsonify({"error": f"{type(e).__name__}: {e}",
+                        "folder": str(EXPORT_DIR)}), 500
+
 @app.route("/api/snapshot", methods=["POST"])
 def api_snapshot():
     """Manually force a data snapshot (same thing the timer does)."""

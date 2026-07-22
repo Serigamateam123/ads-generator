@@ -1020,6 +1020,8 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
       <div style="display:flex;gap:8px">
         <button class="ws-btn" onclick="boardSelectAll()">Select All</button>
         <button class="ws-btn" onclick="boardClearSelection()">Deselect All</button>
+        <button class="ws-btn" onclick="boardOpenExportFolder()"
+                title="Open Ads Generator › Download Board in Finder">📁 Open Download Board</button>
       </div>
     </div>
     <div class="board-sub">
@@ -1041,7 +1043,10 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
       <div class="board-sel-count" id="board-sel-count">0 selected</div>
       <div class="board-toolbar-btns">
         <button class="btn-board-sel-all" onclick="boardSelectAll()">Select All</button>
-        <button class="btn-board-dl" onclick="boardDownloadSelected()">⬇ Download</button>
+        <button class="btn-board-dl" onclick="boardExportSelected()"
+                title="Save into Ads Generator › Download Board, in a folder for today's date">📁 Save to Download Board</button>
+        <button class="btn-board-dl" onclick="boardDownloadSelected()"
+                title="Normal browser download — goes to your Downloads folder">⬇ Download</button>
         <button class="btn-board-del" onclick="boardDeleteSelected()">🗑 Delete</button>
       </div>
     </div>
@@ -3016,6 +3021,41 @@ function updateBoardToolbar() {
   document.getElementById('board-sel-count').textContent =
     n ? `${n} selected` : '0 selected';
   bar.classList.toggle('hidden', n === 0);
+}
+
+// ── Board: save selected into "Download Board" (server-side, NOT a browser
+// download). A browser download always lands in ~/Downloads and the page cannot
+// change that, which is why exported ads used to mix in with everything else.
+// The local server writes them into Download Board/<date>/ with readable names.
+async function boardExportSelected() {
+  if (!boardSelected.size) return;
+  const n = boardSelected.size;
+  toast(`📁 Saving ${n} image${n>1?'s':''}…`);
+  try {
+    const r = await fetch('/api/board/export', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ ids: [...boardSelected] })
+    });
+    const d = await r.json();
+    if (d.error) { toast('⚠️ ' + d.error); return; }
+    let msg = `✅ Saved ${d.exported} to Download Board`;
+    if (d.skipped) msg += ` (${d.skipped} already there)`;
+    if (d.missing) msg += ` — ${d.missing} image file missing`;
+    toast(msg);
+  } catch (e) {
+    toast('⚠️ Save failed: ' + e.message);
+  }
+}
+
+// Reveal the Download Board folder in Finder.
+async function boardOpenExportFolder() {
+  try {
+    const r = await fetch('/api/board/open-export-folder', { method:'POST' });
+    const d = await r.json();
+    if (d.error) toast('⚠️ ' + d.error);
+  } catch (e) {
+    toast('⚠️ ' + e.message);
+  }
 }
 
 async function boardDownloadSelected() {

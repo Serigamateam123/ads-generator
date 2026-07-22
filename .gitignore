@@ -6,3 +6,6 @@ __pycache__/
 app.log
 venv/
 .DS_Store
+
+# Exported images — copies of what is already in board/, no need to version them
+Download Board/
