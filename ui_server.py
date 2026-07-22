@@ -3852,10 +3852,27 @@ def save_persona():
         "narrative": data.get("narrative", "").strip(),
         "use_cases": data.get("use_cases", []),
         "style_cues": data.get("style_cues") or DEFAULT_PERSONA_STYLE_CUES,
+        # Preserve the hidden flag across edits — editing a persona must not
+        # silently un-hide it from the Campaign Brief picker.
+        "hidden":    data.get("hidden", PERSONAS.get(pid, {}).get("hidden", False)),
     }
     PERSONAS[pid] = _hydrate_persona(entry)
     save_personas(PERSONAS)
     return jsonify({"ok": True, "id": pid, "persona": PERSONAS[pid]})
+
+@app.route("/api/personas/hide", methods=["POST"])
+def hide_persona():
+    """Toggle (or set) a persona's hidden flag. Hidden personas stay in the
+    management list but are removed from the Campaign Brief customer-persona
+    picker, so the user can retire a persona without deleting it."""
+    data = request.json or {}
+    pid  = data.get("id", "")
+    if pid not in PERSONAS:
+        return jsonify({"error": "not found"}), 404
+    PERSONAS[pid]["hidden"] = bool(data["hidden"]) if "hidden" in data \
+                              else not PERSONAS[pid].get("hidden", False)
+    save_personas(PERSONAS)
+    return jsonify({"ok": True, "id": pid, "hidden": PERSONAS[pid]["hidden"]})
 
 @app.route("/api/personas/delete", methods=["POST"])
 def delete_persona():

@@ -1639,9 +1639,12 @@ function renderPersonaPills() {
   // this product's use cases). If nothing matches (e.g. a non-Jeli product), fall
   // back to showing all — better than an empty picker.
   const productUseCases = allUseCases.map(u => u.label);
-  let visible = allPersonas;
+  // Hidden personas are retired from the Campaign Brief picker entirely (still
+  // editable/restorable in the Personas management tab).
+  const shown = allPersonas.filter(p => !p.hidden);
+  let visible = shown;
   if (productUseCases.length) {
-    const filtered = allPersonas.filter(p =>
+    const filtered = shown.filter(p =>
       (p.use_cases||[]).some(uc => productUseCases.includes(uc)));
     if (filtered.length) visible = filtered;
   }
@@ -1751,15 +1754,16 @@ function renderPersonaAdminList() {
   const wrap = document.getElementById('pa-persona-list');
   if (!wrap) return;
   wrap.innerHTML = allPersonas.map(p => `
-    <div class="pa-item">
+    <div class="pa-item" style="${p.hidden?'opacity:.5':''}">
       <div class="pa-item-emoji">${p.emoji||'🙂'}</div>
       <div class="pa-item-body">
-        <div class="pa-item-label">${p.label}</div>
+        <div class="pa-item-label">${p.label}${p.hidden?' <span style="font-size:10px;font-weight:600;color:var(--muted);border:1px solid var(--border,#ccc);border-radius:4px;padding:1px 5px;margin-left:6px">HIDDEN</span>':''}</div>
         <div class="pa-item-sub">${p.subtitle||''}${(p.use_cases&&p.use_cases.length) ? ' · ' + p.use_cases.join(', ') : ''}</div>
         <div class="pa-item-text">${p.narrative||''}</div>
       </div>
       <div class="pa-item-btns">
         <button onclick="openPersonaForm('${p.id}')">Edit</button>
+        <button onclick="toggleHidePersona('${p.id}')">${p.hidden?'Show':'Hide'}</button>
         <button onclick="deletePersonaItem('${p.id}','${(p.label||'').replace(/'/g,"\\'")}')">Delete</button>
       </div>
     </div>`).join('') || `<div style="font-size:12px;color:var(--muted);padding:8px 0">No personas yet.</div>`;
@@ -1816,6 +1820,17 @@ async function savePersonaForm() {
     await loadPersonas();   // refresh the Campaign Brief picker immediately
     toast('✓ Persona saved');
   } catch(e) { toast('Save failed: ' + e.message); }
+}
+async function toggleHidePersona(id) {
+  // Retire (or restore) a persona from the Campaign Brief picker without deleting it.
+  try {
+    const r = await fetch('/api/personas/hide', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id})});
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    await loadPersonasPanel();
+    await loadPersonas();   // refresh the Campaign Brief picker immediately
+    toast(d.hidden ? 'Persona hidden from Campaign Brief' : 'Persona shown in Campaign Brief');
+  } catch(e) { toast('Failed: ' + e.message); }
 }
 async function deletePersonaItem(id, label) {
   if (!confirm(`Delete persona "${label}"?`)) return;
