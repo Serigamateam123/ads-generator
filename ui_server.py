@@ -125,6 +125,14 @@ def snapshot_data(reason="auto"):
         except Exception as e:
             return False, f"{type(e).__name__}: {e}"
 
+def snapshot_async(reason="auto"):
+    """Fire-and-forget snapshot so a just-created image is committed within
+    seconds instead of waiting up to SNAPSHOT_INTERVAL. Tweak variants in
+    particular have no other backup (they're written straight to board/ with no
+    copy in sessions/), so an unsnapshotted variant is unrecoverable if the
+    folder is lost. The snapshot lock serialises overlapping calls."""
+    threading.Thread(target=lambda: snapshot_data(reason), daemon=True).start()
+
 def _snapshot_loop():
     while True:
         time.sleep(SNAPSHOT_INTERVAL)
@@ -3763,6 +3771,7 @@ def api_generate_one():
                 break
         save_campaigns(camps)
     save_board(board)
+    snapshot_async("new-image")   # commit right away, don't wait for the timer
 
     # ── STEP 5: Match score — non-fatal, skip silently if it fails ────────────────
     match_result = None
@@ -4415,6 +4424,10 @@ OUTPUT RULES:
         v_filename  = f"{src_path.stem}_v{variant_idx}.png"
         with open(BOARD_DIR / v_filename, "wb") as fp:
             fp.write(img_bytes)
+        # Tweak variants live ONLY here — there is no copy in sessions/ like there
+        # is for normal generations — so snapshot immediately or an unlucky wipe
+        # loses them permanently (which is exactly what happened on 21-22 Jul).
+        snapshot_async("tweak-variant")
 
         results.append({"filename": v_filename,
                          "board_url": f"/api/board/image/{v_filename}",
