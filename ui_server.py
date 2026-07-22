@@ -4,7 +4,8 @@ Run: python ui_server.py
 Opens at: http://localhost:7373
 """
 import base64, json, os, uuid, urllib.request, urllib.error, shutil, re, textwrap, random, time, socket
-import concurrent.futures, threading
+import concurrent.futures, threading, subprocess
+from datetime import datetime as _dt
 from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
 
@@ -82,6 +83,57 @@ def atomic_write_json(path, obj, *, indent=2, ensure_ascii=False):
             f.flush()
             os.fsync(f.fileno())
         os.replace(tmp, path)
+
+# ── Automatic data snapshots ──────────────────────────────────────────────────
+# Everything the user generates (board.json + board images, brand kit, personas)
+# lives only on disk. When the board folder was wiped, recovery was possible ONLY
+# because the data happened to have been committed to git — and anything created
+# since that commit was lost. This commits the data files on a timer so there is
+# never a large uncommitted window to lose. Git de-duplicates unchanged blobs, so
+# repeated snapshots are cheap.
+SNAPSHOT_PATHS = ["board", "sessions", "personas.json", "angles.json", "styles.json",
+                  "brand_kit.json", "templates/templates.json", "spend_ledger.json",
+                  "photo_styles.json", "product_benefits.json"]
+SNAPSHOT_INTERVAL = 600          # seconds between automatic snapshots
+_SNAPSHOT_LOCK = threading.Lock()
+
+def _git(*args, timeout=180):
+    return subprocess.run(["git", *args], cwd=str(SKILLS_DIR),
+                          capture_output=True, text=True, timeout=timeout)
+
+def snapshot_data(reason="auto"):
+    """Commit just the data paths to git. Uses an explicit pathspec so it can never
+    sweep up unrelated work the user has staged. Returns (committed?, message)."""
+    with _SNAPSHOT_LOCK:
+        try:
+            if not (SKILLS_DIR / ".git").exists():
+                return False, "not a git repository"
+            paths = [p for p in SNAPSHOT_PATHS if (SKILLS_DIR / p).exists()]
+            if not paths:
+                return False, "nothing to snapshot"
+            _git("add", "--", *paths)
+            # nothing staged for these paths -> nothing to do
+            if _git("diff", "--cached", "--quiet", "--", *paths).returncode == 0:
+                return False, "no changes"
+            msg = f"Auto-snapshot ({reason}) {_dt.now():%Y-%m-%d %H:%M:%S}"
+            r = _git("-c", "user.name=Ads Generator", "-c", "user.email=noreply@local",
+                     "commit", "-m", msg, "--", *paths)
+            if r.returncode == 0:
+                return True, msg
+            return False, (r.stderr or r.stdout or "commit failed").strip()[:200]
+        except Exception as e:
+            return False, f"{type(e).__name__}: {e}"
+
+def _snapshot_loop():
+    while True:
+        time.sleep(SNAPSHOT_INTERVAL)
+        ok, msg = snapshot_data("timer")
+        if ok:
+            print(f"[snapshot] {msg}")
+
+def start_snapshot_thread():
+    threading.Thread(target=_snapshot_loop, daemon=True).start()
+    print(f"[snapshot] auto-snapshot every {SNAPSHOT_INTERVAL//60} min")
 
 # ── Use cases per product — from 10_customers/use_cases.md ─────────────────────
 # Only confidence-rated ✅ use cases are included (Primary/Strong/Common/Documented).
@@ -3997,6 +4049,74 @@ def board_delete():
 def board_image(filename):
     return send_from_directory(BOARD_DIR, filename)
 
+@app.route("/api/snapshot", methods=["POST"])
+def api_snapshot():
+    """Manually force a data snapshot (same thing the timer does)."""
+    ok, msg = snapshot_data("manual")
+    return jsonify({"ok": ok, "message": msg})
+
+@app.route("/api/board/repair", methods=["POST"])
+def board_repair():
+    """Rebuild missing board entries from the generated images still in
+    sessions/. Every generation is auto-added to the board, so any session image
+    with no board entry means that entry was lost — this re-registers it.
+    Pass {"dry_run": true} to only report what would be recovered."""
+    import collections
+    data     = request.json or {}
+    dry_run  = bool(data.get("dry_run"))
+    board    = load_board()
+    next_id  = (max([b["id"] for b in board]) + 1) if board else 1
+    by_sess  = collections.Counter(b.get("session_id", "") for b in board)
+
+    brand = load_brand()
+    prods = {p.get("id"): p.get("name", "") for p in brand.get("products", [])}
+    pname = prods.get(brand.get("active_product_id")) or brand.get("brand_name") or "Product"
+
+    todo = []
+    for sdir in sorted(SESSIONS_DIR.glob("*")):
+        if not sdir.is_dir():
+            continue
+        imgs = sorted([p for p in sdir.glob("img_*.png") if not p.name.endswith("_bg.png")],
+                      key=lambda p: p.name)
+        gap = len(imgs) - by_sess.get(sdir.name, 0)
+        if gap > 0:
+            todo.extend(imgs[-gap:])
+    todo.sort(key=lambda p: p.stat().st_mtime)
+
+    if dry_run:
+        return jsonify({"ok": True, "would_recover": len(todo),
+                        "files": [f"{p.parent.name}/{p.name}" for p in todo[:50]]})
+
+    recovered = 0
+    for src in todo:
+        meta = {}
+        mp = src.parent / "meta.json"
+        if mp.exists():
+            try:
+                with open(mp, encoding="utf-8") as f: meta = json.load(f)
+            except Exception:
+                meta = {}
+        cached = meta.get("cached_copy_by_problem") or {}
+        fname  = f"board_{next_id:05d}.png"
+        shutil.copy2(str(src), str(BOARD_DIR / fname))
+        board.append({
+            "id": next_id, "filename": fname,
+            "label": f"Ad {src.stem.split('_')[1]} — {pname}",
+            "problem": meta.get("problem", ""),
+            "persona": "", "angle": "", "style": "",
+            "quality": "final" if "_final" in src.name else "draft",
+            "session_id": src.parent.name,
+            "campaign_id": "recovered", "campaign_name": "Recovered",
+            "created_at": _dt.fromtimestamp(src.stat().st_mtime).isoformat(timespec="seconds"),
+            "copy_data": next(iter(cached.values()), {}) if cached else {},
+        })
+        next_id += 1; recovered += 1
+
+    if recovered:
+        save_board(board)
+        snapshot_data("after-repair")
+    return jsonify({"ok": True, "recovered": recovered, "board_total": len(board)})
+
 @app.route("/api/board/<int:board_id>/generate-meta", methods=["POST"])
 def board_generate_meta(board_id):
     """Generate META copy (primary text, headline, description) for an existing board item
@@ -4602,6 +4722,12 @@ if __name__ == "__main__":
 
     if not os.environ.get("GEMINI_API_KEY"):
         print("WARNING: GEMINI_API_KEY not set")
+
+    # Snapshot on boot (captures anything created while the server was down),
+    # then keep snapshotting on a timer so data is never left uncommitted.
+    _ok, _msg = snapshot_data("startup")
+    print(f"[snapshot] startup: {_msg}")
+    start_snapshot_thread()
 
     print(f"\n  static-remix UI  ->  http://localhost:{PORT}\n")
     threading.Timer(1.2, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()
