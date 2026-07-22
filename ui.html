@@ -2798,14 +2798,20 @@ function renderBoard() {
     card.dataset.id = b.id;
 
     const date = b.created_at ? b.created_at.slice(0,10) : '';
-    const safeLabel = (b.label||'Ad').replace(/"/g,'&quot;');
+    // Escaped for an HTML attribute, NOT for a JS string literal: the old version
+    // replaced only double quotes while being interpolated into a single-quoted JS
+    // string inside onclick="...", so a product named e.g. "Gamat O'Riginal" broke
+    // the Download and Canva buttons on every card. Listeners are attached below
+    // instead, so the label never has to survive a round-trip through markup.
+    const safeLabel = (b.label||'Ad').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                                     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     card.innerHTML = `
       <div class="board-card-check">${sel ? '✓' : ''}</div>
       <div class="board-card-img">
-        <img src="/api/board/image/${b.filename}?t=${Date.now()}" alt="${b.label}" decoding="async">
+        <img src="/api/board/image/${b.filename}?t=${Date.now()}" alt="${safeLabel}" decoding="async">
         <div class="board-card-actions">
-          <button class="bca-btn bca-dl" onclick="boardCardDownload(event,'${b.filename}','${safeLabel}')" title="Download">⬇ Download</button>
-          <button class="bca-btn bca-cv" id="bca-cv-${b.id}" onclick="boardCardCanva(event,${b.id},'${b.filename}','${safeLabel}')" title="Send to Canva">🎨 Canva</button>
+          <button class="bca-btn bca-dl" title="Download">⬇ Download</button>
+          <button class="bca-btn bca-cv" id="bca-cv-${b.id}" title="Send to Canva">🎨 Canva</button>
         </div>
       </div>
       <div class="board-card-info">
@@ -2825,6 +2831,12 @@ function renderBoard() {
       e.stopPropagation();
       boardToggleSelect(b.id);
     });
+    // Bound as listeners rather than onclick="" attributes so the label is passed
+    // as a real JS value — no quoting/escaping to get wrong.
+    card.querySelector('.bca-dl').addEventListener('click',
+      (e) => boardCardDownload(e, b.filename, b.label || 'Ad'));
+    card.querySelector('.bca-cv').addEventListener('click',
+      (e) => boardCardCanva(e, b.id, b.filename, b.label || 'Ad'));
     card.addEventListener('click', () => openBoardModal(b.id));
     grid.appendChild(card);
   });

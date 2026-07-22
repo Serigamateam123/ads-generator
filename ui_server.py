@@ -105,6 +105,10 @@ def atomic_write_json(path, obj, *, indent=2, ensure_ascii=False):
 # _SPEND_LOCK already does for the spend ledger. RLock so nested helpers are safe.
 _BOARD_LOCK = threading.RLock()
 
+# Same problem for a session's meta.json: all slots of a batch share one session
+# file and each merges its generated copy into it.
+_META_LOCK = threading.RLock()
+
 # ── Client-supplied path safety ───────────────────────────────────────────────
 # Several endpoints take a filename or path straight from the request body and
 # then read/copy/upload that file. Without a containment check, "../.env" reaches
@@ -438,8 +442,7 @@ def load_product_benefits() -> dict:
     return {k: dict(v) for k, v in DEFAULT_PRODUCT_BENEFITS.items()}
 
 def save_product_benefits(benefits: dict):
-    with open(BENEFITS_JSON, "w", encoding="utf-8") as f:
-        json.dump(benefits, f, indent=2, ensure_ascii=False)
+    atomic_write_json(BENEFITS_JSON, benefits)
 
 PRODUCT_BENEFITS = load_product_benefits()
 
@@ -1394,8 +1397,9 @@ def load_photo_styles() -> dict:
     return {}
 
 def save_photo_styles(data: dict):
-    with open(PHOTO_STYLE_JSON, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    # Written from parallel generation slots (classify_product_photo), and this
+    # file is in SNAPSHOT_PATHS — a bare open("w") could truncate it.
+    atomic_write_json(PHOTO_STYLE_JSON, data)
 
 def classify_product_photo(image_path: str) -> str:
     """Cheap vision pass: bucket how this product photo presents the product
@@ -2873,14 +2877,16 @@ def api_upload():
             "texture_path": texture_path,
             "problem": request.form.get("problem","Selepas Bersalin"),
             "count": int(request.form.get("count",6))}
-    with open(session_dir / "meta.json","w") as fp:
-        json.dump(meta, fp)
+    atomic_write_json(session_dir / "meta.json", meta, indent=None)
     return jsonify({"session_id": session_id, "ads_count": len(ad_paths),
                     "has_product": bool(product_path)})
 
 @app.route("/api/image/<session_id>/<filename>")
 def api_image(session_id, filename):
-    return send_from_directory(SESSIONS_DIR / session_id, filename)
+    # send_from_directory sanitises `filename` but NOT the directory it is given,
+    # and session_id is user-supplied — reduce it to a bare name so it can only
+    # ever address a direct child of sessions/.
+    return send_from_directory(SESSIONS_DIR / Path(session_id).name, filename)
 
 # ── Template library ──────────────────────────────────────────────────────────
 def load_templates() -> list:
@@ -3259,9 +3265,12 @@ def next_auto_templates(all_lib, batch_nonce, count):
 # ── Updated generate-one: accept template_ids ─────────────────────────────────
 @app.route("/api/generate-one", methods=["POST"])
 def api_generate_one():
-    data         = request.json
-    session_id   = data["session_id"]
-    idx          = int(data["index"])
+    data         = request.json or {}
+    # Bare name only: session_id is used to build a filesystem path below.
+    session_id   = Path(str(data.get("session_id", ""))).name
+    if not session_id or not (SESSIONS_DIR / session_id / "meta.json").exists():
+        return jsonify({"error": "Unknown session — please upload again"}), 400
+    idx          = int(data.get("index", 1))
     quality      = data.get("quality", "draft")
     problem      = data.get("problem", "Selepas Bersalin")
     problem_ids  = data.get("problem_ids", [])    # list of use-case labels, e.g. ["Gastric / GERD Relief", ...]
@@ -3656,19 +3665,31 @@ def api_generate_one():
             copy_data["benefit_bullets"]= benefits
             print(f"[framework] {detected_framework} — using single-column benefits: {benefits[:2]}")
 
-        if vary_copy:
-            # Don't cache for reuse — but DO remember this headline so the next
-            # variation for this same use case/persona/angle avoids repeating it.
-            headline_history.setdefault(_copy_key, []).append(copy_data.get("h1", ""))
-            meta["headline_history_by_problem"] = headline_history
-        else:
-            # Cache in session meta, keyed by use case + persona + angle, so repeats
-            # of the same triple later in the batch skip copy gen — a different
-            # persona or angle on the same use case still gets its own copy.
-            cached_copy_map[_copy_key] = copy_data
-            meta["cached_copy_by_problem"] = cached_copy_map
-        with open(session_meta_path, "w") as fp:
-            json.dump(meta, fp)
+        # Merge this slot's result into meta.json under a lock, re-reading from disk
+        # first. Every slot of the batch shares one session and reached this point
+        # from a copy of meta loaded ~30s ago (before the Gemini calls), so writing
+        # that stale copy back wholesale dropped whatever the other slots cached in
+        # the meantime — costing a repeat copy-generation call (real money) and
+        # losing headline history, which is what stops vary_copy repeating itself.
+        # The bare open("w") was also non-atomic, so a kill mid-write truncated
+        # meta.json — and board_repair depends on it to recover lost creatives.
+        with _META_LOCK:
+            disk_meta = {}
+            try:
+                with open(session_meta_path, encoding="utf-8") as fp:
+                    disk_meta = json.load(fp)
+            except Exception:
+                disk_meta = meta
+            if vary_copy:
+                hist = disk_meta.get("headline_history_by_problem", {})
+                hist.setdefault(_copy_key, []).append(copy_data.get("h1", ""))
+                disk_meta["headline_history_by_problem"] = hist
+            else:
+                cmap = disk_meta.get("cached_copy_by_problem", {})
+                cmap[_copy_key] = copy_data
+                disk_meta["cached_copy_by_problem"] = cmap
+            atomic_write_json(session_meta_path, disk_meta, indent=None)
+            meta = disk_meta
 
     layout_analysis = ""
 
@@ -4273,8 +4294,12 @@ def board_repair():
 
         if recovered:
             save_board(board)
-            snapshot_data("after-repair")
         total = len(board)
+    # Snapshot AFTER releasing the lock: it shells out to git over a ~550 MB repo,
+    # and holding the board lock across that would stall every in-flight generation
+    # for the whole commit.
+    if recovered:
+        snapshot_async("after-repair")
     return jsonify({"ok": True, "recovered": recovered, "board_total": total})
 
 @app.route("/api/board/<int:board_id>/generate-meta", methods=["POST"])
@@ -4732,7 +4757,11 @@ def env_set(name: str, value):
             if lines and not lines[-1].endswith("\n"):
                 lines[-1] += "\n"
             lines.append(f"{name}={value}\n")
-        tmp = ENV_PATH.with_suffix(".env.tmp")
+        # with_suffix() on a dotfile produces ".env.env.tmp" (Path(".env").suffix is
+        # empty), and that name is NOT matched by the ".env" line in .gitignore — a
+        # crash mid-write would leave an untracked file holding both API keys, ready
+        # to be swept into a commit by `git add -A`. Build the name explicitly.
+        tmp = ENV_PATH.with_name(ENV_PATH.name + ".tmp")
         with open(tmp, "w", encoding="utf-8") as f:
             f.writelines(lines)
             f.flush()

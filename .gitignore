@@ -1,6 +1,8 @@
 *.key
 *.crt
 .env
+.env.*
+*.tmp
 __pycache__/
 *.pyc
 app.log
