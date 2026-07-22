@@ -7068,5 +7068,768 @@
       ],
       "size": "portrait"
     }
+  },
+  {
+    "id": 98,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0098.jpg",
+    "label": "Winning Ad #98",
+    "section": "Uploaded",
+    "source": "Gastric 1.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with text on the left and a visual element on the right",
+        "product_placement": "The medical illustration of the digestive system occupies the right half of the image, within a human torso.",
+        "headline_placement": "The main headline 'Keep your digestive tract on track' is in the lower-left quadrant. The departmental headline 'DEPARTMENT OF Gastroenterology' is in the top-left quadrant.",
+        "cta_placement": "The call to action 'Book an Appointment with our Gastroenterologist' is in the bottom-left quadrant, above the location details.",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#0a0a0a",
+        "background_description": "photographic scene (human torso) with a dark gradient and medical illustration overlay",
+        "dominant_color": "#ffffff",
+        "dominant_description": "Main body text of headlines and CTA",
+        "accent_color": "#ffbf00",
+        "accent_description": "Highlighted keywords ('Gastroenterology', 'track', 'Gastroenterologist'), Deepam Hospitals logo, and location pins/icons, as well as the glowing effect on the digestive system.",
+        "text_color_headline": "#ffffff and #ffbf00",
+        "text_color_subheadline": "#ffffff and #ffbf00",
+        "cta_color": "#ffffff and #ffbf00"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase and title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines for both departmental and main headlines",
+        "subheadline_weight": "regular and bold",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "dark moody",
+        "overall_feel": "A professional and informative advertisement promoting specialized medical care for digestive health with a focus on expertise."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph with medical illustration and dark gradient overlay",
+        "overlay_style": "gradient overlay",
+        "props": "none",
+        "product_style": "The medical service is represented by an illuminated anatomical illustration within a human body."
+      },
+      "graphic_elements": [
+        "Deepam Hospitals logo (text and flame icon) in the top-right corner, in gold.",
+        "Anatomical illustration of the stomach and intestines, glowing orange, overlaid on the right side of a darkened human torso.",
+        "Four gold location pin icons at the bottom-left, preceding each location name (Tambaram, Guduvanchery, Urapakkam, MM Nagar)."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The main headline 'Keep your digestive'",
+        "second_attention": "The glowing digestive system illustration",
+        "third_attention": "The accented words 'Gastroenterology' and 'track'",
+        "fourth_attention": "The Deepam Hospitals logo and the CTA/location information"
+      },
+      "forbidden_elements": [
+        "NO cartoon illustrations",
+        "NO bright, overly cheerful colors",
+        "NO cluttered background elements",
+        "NO speech bubbles",
+        "NO discount badges or explicit pricing",
+        "NO abstract patterns as background",
+        "NO irrelevant props (e.g., food items, unrelated medical equipment)"
+      ],
+      "size": "1080x1080 square"
+    }
+  },
+  {
+    "id": 99,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0099.jpg",
+    "label": "Winning Ad #99",
+    "section": "Uploaded",
+    "source": "Gastric 2.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with a bottom information strip",
+        "product_placement": "The service is represented by a human figure with glowing internal organs (stomach and intestines) on the right side of the canvas.",
+        "headline_placement": "Upper to middle left section of the canvas.",
+        "cta_placement": "Bottom strip of the canvas, containing contact details and website.",
+        "negative_space": "Moderate, with generous breathing room around the headline text on the left."
+      },
+      "colors": {
+        "background": "#F8F8FA",
+        "background_description": "Soft gradient from white to a very light grey/purple.",
+        "dominant_color": "#4A157C",
+        "dominant_description": "Used for main logo text, part of the headline, and the bottom contact strip background.",
+        "accent_color": "#E72F5F",
+        "accent_description": "Used for 'Advanced Care' in the headline, the glowing internal organs, and the stomach icon.",
+        "text_color_headline": "Gastroenterology: #4A157C, Advanced Care: #E72F5F, For a Healthier You: #2B2B2B",
+        "text_color_subheadline": "#2B2B2B",
+        "cta_color": "#4A157C"
+      },
+      "typography": {
+        "headline_weight": "bold for 'Gastroenterology' and 'Advanced Care', medium for 'For a Healthier You'",
+        "headline_case": "title case",
+        "headline_size": "very large for main keywords, large for supporting phrase",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines, each phrase on a new line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "A professional and compassionate multi-speciality hospital offering advanced care for digestive health."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "visualized as glowing internal organs within a human figure indicating discomfort"
+      },
+      "graphic_elements": [
+        "Umaraani logo (abstract purple flower symbol) top-left",
+        "Dotted pattern top-right",
+        "Horizontal lines below 'Advanced Care, Better Life' and 'For a Healthier You' on the left side",
+        "Circular icon with stylized stomach and intestines mid-left",
+        "Small plus sign graphic (partially visible) mid-right",
+        "Rectangular card with shield and cross icon (Personalized Treatment) bottom-left",
+        "Rectangular card with monitor and stomach icon (Advanced Technology) bottom-center",
+        "Rectangular card with shield and checkmark icon (Compassionate Care) bottom-right",
+        "Location pin icon bottom-left strip",
+        "Phone icon bottom-center strip",
+        "Globe icon bottom-right strip"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large text 'Gastroenterology Advanced Care'",
+        "second_attention": "The human figure with the glowing internal organs",
+        "third_attention": "The phrase 'For a Healthier You' and 'Expert care for your digestive well-being'",
+        "fourth_attention": "The three benefit cards and the contact information strip at the bottom"
+      },
+      "forbidden_elements": [
+        "NO cartoonish character illustrations (beyond simple icons)",
+        "NO busy photographic background scenes",
+        "NO aggressive or overly vibrant background colors",
+        "NO speech bubbles",
+        "NO discount or promotional badges",
+        "NO certifications or awards logos",
+        "NO complex patterns other than subtle dots/gradients",
+        "NO imagery of doctors or medical equipment"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 100,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0100.jpg",
+    "label": "Winning Ad #100",
+    "section": "Uploaded",
+    "source": "Gastric 3.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right",
+        "product_placement": "The 'product' (pharmacy service) is represented by the happy man within the pharmacy scene on the right side of the canvas, with the brand logo bottom-left and website/socials bottom-right.",
+        "headline_placement": "top center",
+        "cta_placement": "bottom center-right (website and social media icons), and implicitly in the subheadline text 'de Chemist'",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "left side: #D62F36 (red), right side: #72B78D (green)",
+        "background_description": "gradient and photographic scene (pharmacy interior)",
+        "dominant_color": "#D62F36",
+        "dominant_description": "left half background, shield, and pain indicator",
+        "accent_color": "#72B78D",
+        "accent_description": "right half background, shield, relief indicator, and subheadline text",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#2B694F",
+        "cta_color": "#2B694F"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "medium",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "medium",
+        "lighting": "gradient soft (background), bright studio (subjects)",
+        "overall_feel": "The ad presents a common discomfort and offers a clear, reliable solution through a trusted pharmacy brand."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "gradient with real photograph",
+        "overlay_style": "none",
+        "props": "shelves with medicine bottles in the pharmacy background",
+        "product_style": "The 'product' (pharmacy service) is represented by a person in a pharmacy setting."
+      },
+      "graphic_elements": [
+        "split shield icon with red on the left (showing a white cross) and green on the right (showing a white cross), center-middle",
+        "glowing red concentric circles around the stomach area of the man on the left, indicating pain",
+        "glowing green concentric circles around the stomach area of the man on the right, indicating relief",
+        "subtle plus sign icons scattered in the background, red on the left side and green on the right side",
+        "de Chemist logo with 'Since 2005' and 'Together in Wellness' text, bottom-left",
+        "Instagram and Facebook social media icons, bottom-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large headline text: 'GASTRIC, ACIDITY, OR BLOATING BOTHERING YOU?'",
+        "second_attention": "The man in pain on the left side with the red background and glowing red stomach area.",
+        "third_attention": "The smiling man in the pharmacy on the right side with the green background and glowing green stomach area.",
+        "fourth_attention": "The subheadline 'Your relief starts at the right pharmacy - de Chemist' and the brand information at the bottom."
+      },
+      "forbidden_elements": [
+        "NO cartoon characters",
+        "NO abstract illustrations as primary focus",
+        "NO discount callouts or badges",
+        "NO complex patterns on the background",
+        "NO speech bubbles",
+        "NO testimonials",
+        "NO stock images unrelated to health or pharmacy",
+        "NO cluttered layout"
+      ],
+      "size": "1080x1080 square"
+    }
+  },
+  {
+    "id": 101,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0101.jpg",
+    "label": "Winning Ad #101",
+    "section": "Uploaded",
+    "source": "Gastric 4.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The ad is broadly divided into a left section depicting discomfort, a right section showing a happy outcome, and a central column introducing the brand and core message. A horizontal band at the bottom provides details on the approach and call to action.",
+        "product_placement": "The service ('Ayurveda') is represented by the brand logo at the top-middle, a circular image of herbs and mortar/pestle in the middle, and the overall narrative of problem-solution. The happy customer on the right also signifies the product's success.",
+        "headline_placement": "The main headline 'Gas, Acidity, Bloating?' is positioned prominently in the upper-middle section of the ad.",
+        "cta_placement": "The call to action is a large orange and green block located in the bottom-right corner of the ad.",
+        "negative_space": "Moderate. While there's a lot of information, it's organized into distinct blocks, preventing it from feeling overly cluttered."
+      },
+      "colors": {
+        "background": "#F7F7F7",
+        "background_description": "Subtle textured, light off-white/cream color.",
+        "dominant_color": "#3F9242",
+        "dominant_description": "This green is used for the brand logo, several icons, the 'Healthy Gut, Happy You!' banner, and parts of the CTA button.",
+        "accent_color": "#F9A23E",
+        "accent_description": "This orange is used for the question mark in the headline, to highlight 'Ignoring it can lead to:', the CTA background, and the 'Heal your gut...' quote box.",
+        "text_color_headline": "#2B2B2B",
+        "text_color_subheadline": "#2B2B2B",
+        "cta_color": "#F9A23E"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "medium",
+        "lighting": "bright studio",
+        "overall_feel": "A professional and reassuring brand experience offering natural, holistic solutions for common digestive health issues."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph blended with solid color blocks and a textured base.",
+        "overlay_style": "solid color block panels for information and quotes.",
+        "props": "laptop, mortar and pestle with herbs, small bowls of ingredients.",
+        "product_style": "The service is represented implicitly through the brand logo, imagery of natural ingredients, and the contrast between the problematic and healthy states of the human figures."
+      },
+      "graphic_elements": [
+        "Jeevniya Ayurveda logo at the top-middle.",
+        "Small leaf design separator below the main headline.",
+        "Five distinct icons illustrating 'Digestive Discomfort?' on the top-left panel (gas, acidity, bloating, heaviness, fatigue).",
+        "Anatomy illustration of a stomach with a 'hot spot' at the bottom-left.",
+        "Five distinct icons illustrating 'Healthy Gut, Happy You!' on the top-right panel (better digestion, no bloating, more energy, clear skin, better mood).",
+        "Circular image with a mortar, pestle, and various herbs/natural ingredients in the middle section.",
+        "An arrow pointing right accompanying 'OUR AYURVEDIC APPROACH' text in the bottom-middle.",
+        "Five icons representing 'OUR AYURVEDIC APPROACH' elements (personalized consultation, diet & lifestyle guidance, herbal therapies, detox & rejuvenation, long term digestive wellness) at the bottom-middle.",
+        "Three icons at the bottom-left signifying 'Expert Ayurvedic Doctors', '100% Natural & Safe', and 'Holistic & Root-Cause Healing'.",
+        "'Trusted by Thousands' icon at the very bottom-right.",
+        "Location pin icon next to the clinic address at the bottom.",
+        "Globe icon next to the website address at the bottom.",
+        "WhatsApp icon within the CTA block at the bottom-right."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large, bold headline 'Gas, Acidity, Bloating?' and the distressed man on the left with the red-highlighted stomach.",
+        "second_attention": "The happy man on the right and the 'HEALTHY GUT, HAPPY YOU!' benefits list.",
+        "third_attention": "The call to action block ('Contact us for Consultation' with phone number).",
+        "fourth_attention": "The circular image of herbs and the 'Ayurveda treats the root cause...' message."
+      },
+      "forbidden_elements": [
+        "NO cartoonish or overly simplistic illustrations for human figures.",
+        "NO gradient background for the entire canvas (only solid or textured background).",
+        "NO abstract or psychedelic patterns.",
+        "NO irrelevant lifestyle imagery unrelated to digestive health.",
+        "NO speech bubbles.",
+        "NO overwhelming single dominant color without complementary accents.",
+        "NO aggressive or overly dramatic fonts.",
+        "NO cluttered or disorganised layout."
+      ],
+      "size": "1200x1200 square"
+    }
+  },
+  {
+    "id": 102,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0102.jpg",
+    "label": "Winning Ad #102",
+    "section": "Uploaded",
+    "source": "Gastric 5.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric with product on left and text/icons on right",
+        "product_placement": "main product bottle on the lower left-center, gummies held by hand top-right and on surface bottom-right",
+        "headline_placement": "centered at the top-middle of the image",
+        "cta_placement": "bottom-center, spanning horizontally across the bottom third",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F8F6F1",
+        "background_description": "flat solid",
+        "dominant_color": "#EA969F",
+        "dominant_description": "product bottle label",
+        "accent_color": "#2B5A4B",
+        "accent_description": "headline text, brand logo, icon outlines, icon descriptions, bottle cap, CTA button",
+        "text_color_headline": "#2B5A4B",
+        "text_color_subheadline": "#2B5A4B",
+        "cta_color": "#2B5A4B"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "serif",
+        "headline_line_breaks": "stacked short lines (3 lines total)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The brand conveys a sense of gentle, natural well-being and reliability through its clean design and calming color palette."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "gummy held by a hand, two gummies resting on a surface",
+        "product_style": "bottle standing on a surface, gummies held by hand and resting on surface"
+      },
+      "graphic_elements": [
+        "semaine brand logo (text with rainbow arch) at top-center",
+        "three circular icons on the right (smiling face with sparkles, speckled mound, brain with checkmark) each with descriptive text",
+        "yellow highlighted rectangle on bottle label for 'DOCTOR FORMULATED De-Stress Naturally+'"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the large headline text and the main product bottle",
+        "second_attention": "the hand holding the gummy and the product label text 'Daily Stress Less'",
+        "third_attention": "the three circular benefit icons and their descriptions",
+        "fourth_attention": "the CTA button 'Restore your health today'"
+      },
+      "forbidden_elements": [
+        "NO gradient on background",
+        "NO busy background scene or photography",
+        "NO bright or neon colors",
+        "NO cluttered layout",
+        "NO dramatic lighting or shadows",
+        "NO hard-edged or sharp graphic elements",
+        "NO speech bubbles"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 103,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0103.jpg",
+    "label": "Winning Ad #103",
+    "section": "Uploaded",
+    "source": "gastric 10.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with a central dividing element, showcasing before and after states",
+        "product_placement": "bottom center, on a raised white circular platform",
+        "headline_placement": "top center",
+        "cta_placement": "none",
+        "negative_space": "moderate, particularly in the top corners and around the headline"
+      },
+      "colors": {
+        "background": "soft gradient from white to light green/teal",
+        "background_description": "photographic scene with blurred background elements and a soft gradient overlay",
+        "dominant_color": "#E6F3EE",
+        "dominant_description": "background, speech bubbles",
+        "accent_color": "#20576A",
+        "accent_description": "headline text, product packaging text, brand logos, divider glow",
+        "text_color_headline": "#20576A",
+        "text_color_subheadline": "#20576A",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (two lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "A modern and reassuring brand feel that promises digestive comfort and health through a clear visual contrast."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "gradient overlay",
+        "props": "none (besides the product and the platform it sits on)",
+        "product_style": "standing on a surface"
+      },
+      "graphic_elements": [
+        "transparent, glowing, wavy vertical divider in the center, separating two human figures",
+        "speech bubbles with icons and Arabic text on the left side (indicating discomfort/issues): intestine icon, weight icon, sad face icon",
+        "speech bubbles with icons and Arabic text on the right side (indicating comfort/benefits): happy face icon, balance scales icon, stomach/gut icon",
+        "subtle glowing particles/streaks around the central divider and product",
+        "IPC logo and tagline, bottom right corner",
+        "Quatro Probio Care Immune logo, top left corner"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "headline text at the top center",
+        "second_attention": "the two contrasting human figures",
+        "third_attention": "the product packaging at the bottom center",
+        "fourth_attention": "the speech bubbles with icons and text"
+      },
+      "forbidden_elements": [
+        "NO speech bubble outlines (they are soft, minimal style)",
+        "NO bright or warm dominant colors (e.g., red, orange, yellow)",
+        "NO complex or busy background patterns",
+        "NO explicit call-to-action buttons",
+        "NO price tags or discount badges",
+        "NO bold or contrasting accent colors (only subtle dark teal)",
+        "NO dramatic or harsh lighting",
+        "NO clutter or overlapping elements"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 104,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0104.jpg",
+    "label": "Winning Ad #104",
+    "section": "Uploaded",
+    "source": "Gastric Suami 1.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "top section is a solid blue background with text, bottom section features a human subject at a table. The blue section covers about 60% of the image from the top, while the bottom 40% is white/photographic.",
+        "product_placement": "The glucose meter is held by the man in the bottom right quadrant of the overall image.",
+        "headline_placement": "The main headline text 'I don't even eat sweets...' is located in the top left-center of the blue background. The sub-headline question 'so why is my SUGAR HIGH?' is below and to the right of the main headline, still within the blue background.",
+        "cta_placement": "The call to action 'Let's talk about this' is in the mid-right section, within the blue background, above the man's right shoulder.",
+        "negative_space": "Moderate, the solid blue background provides ample breathing room, especially in the top-left and top-right sections, while the bottom section is more filled with the man and his meal."
+      },
+      "colors": {
+        "background": "#0066CC (blue) and #FFFFFF (white)",
+        "background_description": "Flat solid blue in the upper two-thirds, transitions to white at the bottom with a photographic scene of a man at a table.",
+        "dominant_color": "#0066CC",
+        "dominant_description": "Upper background and man's polo shirt.",
+        "accent_color": "#33CC33",
+        "accent_description": "Circular graphic highlight around the man's head and the CTA button background.",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "#33CC33 (button background) with #FFFFFF (text)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "mixed case (Title Case for 'I don't even', lowercase for 'eat sweets...', Title Case for 'so why is my', uppercase for 'SUGAR HIGH?')",
+        "headline_size": "very large for 'eat sweets...' and 'SUGAR HIGH?', large for 'I don't even', medium for 'so why is my'",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines for both headline parts",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "clinical, trustworthy, concerned",
+        "energy_level": "medium",
+        "lighting": "flat natural",
+        "overall_feel": "A trustworthy and informative advertisement that addresses common health misconceptions with a relatable, concerned human element."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "flat solid color and a subtle real photograph for the table setting",
+        "overlay_style": "none",
+        "props": "a plate of white rice, a bowl of mixed vegetables, flatbread, a wooden table",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [
+        "green circular graphic outlining the man's head, positioned in the middle-left of the blue background",
+        "white underline graphic beneath 'eat sweets...' text, top-center",
+        "green rectangular button containing the CTA 'Let's talk about this', positioned mid-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large white text 'eat sweets...' and 'SUGAR HIGH?'",
+        "second_attention": "The man's concerned face and the glucose meter he is holding",
+        "third_attention": "The leading question 'I don't even' and 'so why is my'",
+        "fourth_attention": "The green 'Let's talk about this' CTA button"
+      },
+      "forbidden_elements": [
+        "NO gradient on background",
+        "NO busy photographic background scene (e.g., city, abstract patterns)",
+        "NO speech bubbles",
+        "NO certification badges or seals",
+        "NO warm orange or red dominant tones",
+        "NO highly stylized or script fonts",
+        "NO floating product without interaction",
+        "NO abstract geometric patterns beyond simple shapes"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 105,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0105.jpg",
+    "label": "Winning Ad #105",
+    "section": "Uploaded",
+    "source": "Gastric Suami 2.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split horizontally with a dark text block at the top and a photographic scene below, partially overlaid by the text block",
+        "product_placement": "The 'product' (medical service) is represented by the suffering person, who is centered in the bottom two-thirds of the image",
+        "headline_placement": "top-left corner, within a dark overlay block",
+        "cta_placement": "horizontal strip across the very bottom of the image",
+        "negative_space": "moderate, primarily in the top-left dark block around the headline text"
+      },
+      "colors": {
+        "background": "#292929 (dark grey/black) for the top overlay, #EDE7DD (cream/off-white) for the couch and wall",
+        "background_description": "photographic scene (interior room with a man on a couch) partially covered by a solid dark color block",
+        "dominant_color": "#EDE7DD",
+        "dominant_description": "couch, man's traditional attire, and the room's wall",
+        "accent_color": "#FFE500 (yellow)",
+        "accent_description": "headline text and the flame element in the Apollo Sage logo",
+        "text_color_headline": "#FFE500",
+        "text_color_subheadline": "#FFFFFF (white)",
+        "cta_color": "#008FB2 (teal/cyan) for the background strip, with #FFFFFF text"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase for 'TUMMY TROUBLE', title case for 'AFTER DIWALI?'",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (headline on 3 lines, subheadline on 3 lines)",
+        "subheadline_weight": "bold for 'Expert Gastroenterologist', regular for other parts",
+        "subheadline_size": "medium, significantly smaller than the headline"
+      },
+      "mood": {
+        "tone": "urgent, trustworthy",
+        "energy_level": "medium",
+        "lighting": "flat natural for the photographic scene, dark moody for the overlay",
+        "overall_feel": "A direct and empathetic appeal to those suffering from post-festive indigestion, offering a professional medical solution."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph with a solid color block overlay",
+        "overlay_style": "solid color block (dark grey/black) covering the top-left and blending into the top-right",
+        "props": "boxes of Indian sweets and savories, crumpled paper, a glass coffee table",
+        "product_style": "The subject of the ad (the person needing the service) is seated on a couch, holding his stomach in discomfort."
+      },
+      "graphic_elements": [
+        "Apollo Sage Hospitals logo with a stylized flame icon, top-right corner",
+        "phone icon next to 'Book An Appointment' text, bottom-left",
+        "emergency icon (telephone handset) next to 'Emergency' text, bottom-right",
+        "location pin icon next to the address, bottom-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the large, yellow headline 'TUMMY TROUBLE AFTER DIWALI?'",
+        "second_attention": "the man's pained expression and posture, drawing empathy",
+        "third_attention": "the Apollo Sage Hospitals brand logo and name",
+        "fourth_attention": "the call-to-action strip at the very bottom"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO cartoon illustrations of people or organs",
+        "NO sunburst or complex gradient backgrounds",
+        "NO price tags or discount badges",
+        "NO abstract patterns or textures as a primary background element",
+        "NO cluttered or highly busy layouts beyond the intended scene"
+      ],
+      "size": "portrait (assumed 1080x1350 or similar standard vertical social media ad size)"
+    }
+  },
+  {
+    "id": 106,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0106.jpg",
+    "label": "Winning Ad #106",
+    "section": "Uploaded",
+    "source": "Gastric Suami 3.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with a dominant content block on the right, and a human figure on the left overlapping slightly",
+        "product_placement": "the concept of stomach issues is illustrated by a man holding his stomach with a glowing internal organ overlay on the left side of the canvas",
+        "headline_placement": "top portion of the right-hand content block",
+        "cta_placement": "bottom strip of the entire canvas",
+        "negative_space": "moderate, providing breathing room around text blocks and icons"
+      },
+      "colors": {
+        "background": "White (left), #E79C9C (right)",
+        "background_description": "split between solid white and a textured solid reddish-pink",
+        "dominant_color": "#E79C9C",
+        "dominant_description": "the right-hand content block background",
+        "accent_color": "#FFFFFF",
+        "accent_description": "headline text, warning sign boxes, and some icons",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF and #692B40",
+        "cta_color": "#692B40 (text and icons) and #FFFFFF (background of CTA strip)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase for main headline, title case for sub-headline part",
+        "headline_size": "very large for 'NOT JUST ACIDITY', large for '5 WARNING SIGNS', medium for 'YOUR STOMACH IS GIVING YOU'",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines for readability",
+        "subheadline_weight": "medium to regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy, urgent, clinical",
+        "energy_level": "medium",
+        "lighting": "flat natural for the human subject, gradient soft for the internal illustration, flat solid for backgrounds",
+        "overall_feel": "A professional and informative medical advertisement designed to raise awareness and encourage early diagnosis of serious stomach conditions."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "split flat solid color and textured solid color",
+        "overlay_style": "none (the internal organ illustration is an overlay on the man's torso)",
+        "props": "none (apart from the illustrative internal organs)",
+        "product_style": "the medical issue is represented by a person expressing discomfort with an internal organ illustration"
+      },
+      "graphic_elements": [
+        "hospital logo (flower-like symbol) top-left of the right pink section",
+        "small stylized flower patterns subtly textured on the pink background",
+        "five square icon boxes with white backgrounds for the warning signs, arranged in two rows within the pink section: 'stomach with flame' (Frequent Acidity), 'person choking' (Food Getting Stuck), 'bloated stomach' (Daily Bloating), 'weighing scale' (Unexplained Weight Loss), 'flame icon' (Recurrent Vomiting)",
+        "a large white bracket graphic enclosing the text 'IGNORING THESE SYMPTOMS CAN DELAY DIAGNOSIS' towards the bottom of the pink section",
+        "an illustrative glowing stomach and intestines overlaid on the man's abdominal area",
+        "three circular icons for contact information at the very bottom: phone icon, globe icon, email icon"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the man clutching his stomach and the glowing internal organ illustration",
+        "second_attention": "the main headline 'NOT JUST ACIDITY'",
+        "third_attention": "the '5 WARNING SIGNS' text and the accompanying icons",
+        "fourth_attention": "the contact information at the bottom"
+      },
+      "forbidden_elements": [
+        "NO photographic background scenes",
+        "NO doctors or medical professionals visible",
+        "NO direct product images (e.g., medicine bottles)",
+        "NO speech bubbles",
+        "NO price or discount information",
+        "NO busy or cluttered layout with excessive design elements"
+      ],
+      "size": "portrait"
+    }
+  },
+  {
+    "id": 107,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0107.jpg",
+    "label": "Winning Ad #107",
+    "section": "Uploaded",
+    "source": "Gastric Suami 4.jpg",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "single column with text at the top and subject centered below",
+        "product_placement": "red water bottle held by the man in the central part of the image; glass of water on the table to the right of center",
+        "headline_placement": "top third of the image, horizontally centered",
+        "cta_placement": "bottom center of the image",
+        "negative_space": "moderate, particularly in the top corners and surrounding the background elements"
+      },
+      "colors": {
+        "background": "#F2EFEA",
+        "background_description": "photographic scene of a minimalist living room with light walls and furniture",
+        "dominant_color": "#F2EFEA",
+        "dominant_description": "background wall, couch, man's shirt",
+        "accent_color": "#9B1C2C",
+        "accent_description": "headline text, headline box, water bottle",
+        "text_color_headline": "white (#FFFFFF) for 'You Eat Healthy Food', deep red (#9B1C2C) for 'BUT WHAT ABOUT YOUR HYDRATION?'",
+        "text_color_subheadline": "#3E3E3E",
+        "cta_color": "#FFFFFF"
+      },
+      "typography": {
+        "headline_weight": "medium for 'You Eat Healthy Food', bold for 'BUT WHAT ABOUT YOUR HYDRATION?'",
+        "headline_case": "title case for 'You Eat Healthy Food', uppercase for 'BUT WHAT ABOUT YOUR HYDRATION?'",
+        "headline_size": "medium for 'You Eat Healthy Food', very large for 'BUT WHAT ABOUT YOUR HYDRATION?'",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "'You Eat Healthy Food' on one line, 'BUT WHAT ABOUT YOUR HYDRATION?' stacked on three short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small, significantly smaller than the main headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A thoughtful and clean brand feel that prompts reflection on comprehensive healthy living."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "red water bottle, healthy food bowl, clear glass of water, notebook, pen, sofa, throw pillows, potted plant",
+        "product_style": "held by hand for the bottle, standing on surface for the glass"
+      },
+      "graphic_elements": [
+        "deep red rectangular block behind 'You Eat Healthy Food' at the top",
+        "small decorative divider line below 'HYDRATION' text",
+        "small 'burst' lines around the question mark of the main headline",
+        "horizontal arrow pointing right, below the CTA text at the bottom center"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the large headline 'BUT WHAT ABOUT YOUR HYDRATION?'",
+        "second_attention": "the man's face and the red water bottle he is holding",
+        "third_attention": "the supporting subheadline text below the main headline",
+        "fourth_attention": "the healthy food on the plate, the glass of water, and the CTA at the bottom"
+      },
+      "forbidden_elements": [
+        "NO cartoon graphics",
+        "NO bright, artificial color palettes",
+        "NO cluttered background",
+        "NO extreme close-ups of the product without contextual elements",
+        "NO hard, dramatic shadows",
+        "NO busy patterns",
+        "NO speech bubbles",
+        "NO certification badges"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
