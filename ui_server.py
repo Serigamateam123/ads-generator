@@ -93,7 +93,8 @@ def atomic_write_json(path, obj, *, indent=2, ensure_ascii=False):
 # repeated snapshots are cheap.
 SNAPSHOT_PATHS = ["board", "sessions", "personas.json", "angles.json", "styles.json",
                   "brand_kit.json", "templates/templates.json", "spend_ledger.json",
-                  "photo_styles.json", "product_benefits.json"]
+                  "photo_styles.json", "product_benefits.json",
+                  "product_visuals.json", "template_rotation.json"]
 SNAPSHOT_INTERVAL = 600          # seconds between automatic snapshots
 _SNAPSHOT_LOCK = threading.Lock()
 
