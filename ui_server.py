@@ -3992,9 +3992,17 @@ def get_use_cases():
     product_name = request.args.get("product_name", "")
     return jsonify(get_use_cases_for_product(product_name))
 
+def board_sorted(board):
+    """Newest first, by when the image was actually generated. Sorting here (not
+    relying on insertion order) keeps the board correct even for entries added
+    out of order — e.g. items recovered from sessions, which get appended."""
+    return sorted(board,
+                  key=lambda b: ((b.get("created_at") or ""), b.get("id", 0)),
+                  reverse=True)
+
 @app.route("/api/board", methods=["GET"])
 def get_board():
-    board = load_board()
+    board = board_sorted(load_board())
     cid   = request.args.get("campaign_id")
     if cid:
         board = [b for b in board if str(b.get("campaign_id","")) == cid]
