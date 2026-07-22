@@ -179,12 +179,45 @@ def snapshot_async(reason="auto"):
     folder is lost. The snapshot lock serialises overlapping calls."""
     threading.Thread(target=lambda: snapshot_data(reason), daemon=True).start()
 
+# ── Log size cap ──────────────────────────────────────────────────────────────
+# launchd owns app.log (StandardOutPath) and appends to it forever — it was at
+# 3 MB and had no upper bound. We cannot rotate it by renaming, because launchd
+# keeps writing to the original file descriptor and the new file would stay
+# empty. Truncating IN PLACE works: the fd is in append mode, so writes simply
+# resume at the new end. Keep the tail so recent history survives the trim.
+LOG_PATH      = SKILLS_DIR / "app.log"
+LOG_MAX_BYTES = 20 * 1024 * 1024      # trim once it passes 20 MB
+LOG_KEEP_TAIL = 2 * 1024 * 1024       # ...down to the most recent 2 MB
+
+def trim_log_if_large():
+    try:
+        if not LOG_PATH.exists() or LOG_PATH.stat().st_size <= LOG_MAX_BYTES:
+            return False
+        with open(LOG_PATH, "r+b") as f:
+            f.seek(-LOG_KEEP_TAIL, os.SEEK_END)
+            tail = f.read()
+            # start at a line boundary so the first kept line isn't a fragment
+            nl = tail.find(b"\n")
+            if nl != -1:
+                tail = tail[nl + 1:]
+            f.seek(0)
+            f.write(("[log trimmed %s - older lines removed to cap app.log]\n"
+                     % _dt.now().strftime("%Y-%m-%d %H:%M:%S")).encode())
+            f.write(tail)
+            f.truncate()
+        return True
+    except Exception as e:
+        print(f"[log] trim failed: {e}")
+        return False
+
 def _snapshot_loop():
     while True:
         time.sleep(SNAPSHOT_INTERVAL)
         ok, msg = snapshot_data("timer")
         if ok:
             print(f"[snapshot] {msg}")
+        if trim_log_if_large():
+            print("[log] app.log trimmed to its recent tail")
 
 def start_snapshot_thread():
     threading.Thread(target=_snapshot_loop, daemon=True).start()
@@ -780,6 +813,30 @@ AD_FRAMEWORKS = [
 ]
 
 app = Flask(__name__, static_folder=None)
+
+# Cap request bodies. A stray multi-GB upload would otherwise be buffered and
+# could take the whole server down; 256 MB is far above any real ad/template PDF.
+app.config["MAX_CONTENT_LENGTH"] = 256 * 1024 * 1024
+
+# ── Always answer API calls with JSON, never an HTML error page ───────────────
+# The UI does `fetch(...).then(r => r.json())` everywhere. Flask's default error
+# page is HTML, so any unhandled exception made the browser throw
+# "Unexpected token '<'" and the UI showed a bare "Generation failed" with the
+# real reason visible only in app.log. Returning JSON means the actual error
+# reaches the toast, and the traceback still goes to the log.
+@app.errorhandler(Exception)
+def _json_errors(e):
+    from werkzeug.exceptions import HTTPException
+    if isinstance(e, HTTPException):
+        # Keep the intended status; just change the body to JSON.
+        if request.path.startswith("/api/"):
+            return jsonify({"error": e.description, "status": e.code}), e.code
+        return e
+    import traceback
+    traceback.print_exc()          # full detail to app.log for diagnosis
+    if request.path.startswith("/api/"):
+        return jsonify({"error": f"{type(e).__name__}: {e}"}), 500
+    raise e
 
 # ── Brand kit helpers ──────────────────────────────────────────────────────────
 DEFAULT_BRAND = {
@@ -4946,8 +5003,42 @@ if __name__ == "__main__":
                         os.environ[k.strip()] = v.strip()
         print("[startup] Loaded API keys from .env")
 
+    # ── Startup self-check ────────────────────────────────────────────────────
+    # Surface a broken install at boot, in one obvious block, instead of letting
+    # it appear later as a mid-generation failure with a confusing message.
+    problems = []
     if not os.environ.get("GEMINI_API_KEY"):
-        print("WARNING: GEMINI_API_KEY not set")
+        problems.append("GEMINI_API_KEY not set — generation will fail. "
+                        "Paste your key in the app (Brand Setup), it now persists.")
+    for _f in (FONT_H1, FONT_BODY, FONT_REGULAR, FONT_BOLD):
+        if not os.path.exists(_f):
+            problems.append(f"missing font {Path(_f).name} — text overlay will fall back")
+    try:
+        from PIL import Image as _chk  # noqa: F401
+    except Exception as _e:
+        problems.append(f"Pillow not importable ({_e}) — image processing will fail")
+    for _d, _label in ((SESSIONS_DIR, "sessions"), (BOARD_DIR, "board"),
+                       (BRAND_DIR, "brand_kit"), (TEMPLATES_DIR, "templates")):
+        if not os.access(_d, os.W_OK):
+            problems.append(f"{_label}/ is not writable — data cannot be saved")
+    try:
+        _free_gb = shutil.disk_usage(str(SKILLS_DIR)).free / 1e9
+        if _free_gb < 2:
+            problems.append(f"only {_free_gb:.1f} GB disk free — generations may fail to save")
+    except Exception:
+        pass
+
+    if problems:
+        print("\n" + "!" * 70)
+        for p in problems:
+            print(f"[startup] PROBLEM: {p}")
+        print("!" * 70 + "\n")
+    else:
+        print("[startup] self-check OK — key, fonts, folders and disk all fine")
+
+    # Keep app.log from growing without bound (launchd appends to it forever).
+    if trim_log_if_large():
+        print("[log] app.log trimmed at startup")
 
     # Snapshot on boot (captures anything created while the server was down),
     # then keep snapshotting on a timer so data is never left uncommitted.

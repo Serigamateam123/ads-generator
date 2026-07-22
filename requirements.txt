@@ -1,5 +1,13 @@
-flask
-cryptography
-pymupdf
-Pillow
-google-generativeai
+# Pinned to the versions this app is actually running and tested against.
+# Unpinned, a fresh `pip install` could pull a Flask/Werkzeug/Pillow major
+# release with breaking changes, and the failure would look like an app bug.
+# Bump these deliberately, not by accident.
+flask==3.1.3
+werkzeug==3.1.8        # pinned explicitly: upload filename handling depends on it
+Pillow==11.3.0
+pymupdf==1.26.5        # PDF -> template extraction (imported lazily on template upload)
+cryptography==49.0.0   # only used by gen_cert.py (local HTTPS cert helper)
+
+# google-generativeai was listed here but is imported nowhere — this app calls the
+# Gemini REST endpoint directly with urllib, and the package is deprecated
+# upstream. Deliberately dropped.
