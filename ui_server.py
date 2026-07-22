@@ -8,6 +8,15 @@ import concurrent.futures, threading, subprocess
 from datetime import datetime as _dt
 from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
+from werkzeug.utils import secure_filename
+
+def safe_name(filename: str, fallback: str = "upload") -> str:
+    """Sanitise a browser-supplied upload filename. Werkzeug does NOT strip path
+    separators from multipart filenames (verified on werkzeug 3.1.8), so an upload
+    named '../../../evil.png' would otherwise be written outside the project
+    folder. secure_filename can return '' (e.g. a name that is all dots), so keep
+    a fallback rather than building a path from an empty string."""
+    return secure_filename(filename or "") or fallback
 
 # ── Font paths ────────────────────────────────────────────────────────────────
 FONTS_DIR       = Path(__file__).parent / "fonts"
@@ -83,6 +92,39 @@ def atomic_write_json(path, obj, *, indent=2, ensure_ascii=False):
             f.flush()
             os.fsync(f.fileno())
         os.replace(tmp, path)
+
+# ── Board / campaign mutation lock ────────────────────────────────────────────
+# atomic_write_json only makes a single write atomic — it does NOT protect a
+# read-modify-write. Batches fire every slot of /api/generate-one in parallel
+# (see ui.html "Generate all in parallel") and Flask serves them on threads, so
+# without this lock two finishing slots both read the same board, compute the
+# SAME next id, write to the same board_NNNNN.png (the later image silently
+# overwriting the earlier one), and the last save_board() drops the other's
+# entry. That is how creatives kept disappearing from the board. Every
+# load_board()->mutate->save_board() sequence must hold this lock, exactly like
+# _SPEND_LOCK already does for the spend ledger. RLock so nested helpers are safe.
+_BOARD_LOCK = threading.RLock()
+
+# ── Client-supplied path safety ───────────────────────────────────────────────
+# Several endpoints take a filename or path straight from the request body and
+# then read/copy/upload that file. Without a containment check, "../.env" reaches
+# the API keys. Resolve the path and confirm it really sits under one of the
+# roots we're willing to serve; return None otherwise. (Same idea as the
+# is_relative_to check on product_photo_path in /api/upload.)
+def safe_path_under(candidate, *roots):
+    if not candidate:
+        return None
+    try:
+        p = Path(candidate).resolve()
+    except (OSError, ValueError):
+        return None
+    for root in roots:
+        try:
+            if p.is_relative_to(Path(root).resolve()):
+                return p
+        except (OSError, ValueError):
+            continue
+    return None
 
 # ── Automatic data snapshots ──────────────────────────────────────────────────
 # Everything the user generates (board.json + board images, brand kit, personas)
@@ -2681,7 +2723,7 @@ def upload_logo():
     f = request.files.get("logo")
     if not f or not f.filename:
         return jsonify({"error": "No file"}), 400
-    ext  = Path(f.filename).suffix
+    ext  = Path(safe_name(f.filename, "logo.png")).suffix
     dest = BRAND_DIR / f"logo{ext}"
     f.save(str(dest))
     brand = load_brand()
@@ -2695,7 +2737,7 @@ def upload_brand_product():
     saved = []
     for f in request.files.getlist("photos"):
         if not f.filename: continue
-        name = f"product_{len(list(BRAND_DIR.glob('product_*')))}_{f.filename}"
+        name = f"product_{len(list(BRAND_DIR.glob('product_*')))}_{safe_name(f.filename)}"
         dest = BRAND_DIR / name
         f.save(str(dest))
         saved.append({"url": f"/api/brand-kit/asset/{name}", "path": str(dest)})
@@ -2715,7 +2757,7 @@ def upload_product_photo(product_id):
     saved = []
     for f in request.files.getlist("photos"):
         if not f.filename: continue
-        name = f"prod{product_id}_{len(list(BRAND_DIR.glob(f'prod{product_id}_*')))}_{f.filename}"
+        name = f"prod{product_id}_{len(list(BRAND_DIR.glob(f'prod{product_id}_*')))}_{safe_name(f.filename)}"
         dest = BRAND_DIR / name
         f.save(str(dest))
         saved.append({"url": f"/api/brand-kit/asset/{name}", "path": str(dest)})
@@ -2749,7 +2791,7 @@ def upload_brand_creative():
     saved = []
     for f in request.files.getlist("creatives"):
         if not f.filename: continue
-        name = f"creative_{len(list(BRAND_DIR.glob('creative_*')))}_{f.filename}"
+        name = f"creative_{len(list(BRAND_DIR.glob('creative_*')))}_{safe_name(f.filename)}"
         dest = BRAND_DIR / name
         f.save(str(dest))
         saved.append({"url": f"/api/brand-kit/asset/{name}", "path": str(dest)})
@@ -2790,13 +2832,13 @@ def api_upload():
     ad_paths = []
     for f in request.files.getlist("ads"):
         if f.filename:
-            dest = session_dir / f"ad_{len(ad_paths):02d}_{f.filename}"
+            dest = session_dir / f"ad_{len(ad_paths):02d}_{safe_name(f.filename)}"
             f.save(str(dest))
             ad_paths.append(str(dest))
     product_path = ""
     pf = request.files.get("product")
     if pf and pf.filename:
-        dest = session_dir / f"product_{pf.filename}"
+        dest = session_dir / f"product_{safe_name(pf.filename)}"
         pf.save(str(dest))
         product_path = str(dest)
     else:
@@ -2960,7 +3002,7 @@ def upload_templates():
         if not img_file.filename:
             continue
         tid      = next_tpl_id(tpls + added)
-        ext      = Path(img_file.filename).suffix or ".png"
+        ext      = Path(safe_name(img_file.filename)).suffix or ".png"
         filename = f"tpl_{tid:04d}{ext}"
         dest     = TEMPLATES_DIR / filename
         img_file.save(str(dest))
@@ -3175,8 +3217,11 @@ def next_auto_templates(all_lib, batch_nonce, count):
     with _ROTATION_LOCK:
         state = {}
         if ROTATION_JSON.exists():
-            try: state = json.load(open(ROTATION_JSON))
-            except Exception: state = {}
+            try:
+                with open(ROTATION_JSON, encoding="utf-8") as _rf:
+                    state = json.load(_rf)
+            except Exception:
+                state = {}
         order  = state.get("order") or []
         cursor = int(state.get("cursor", 0))
         batches = state.get("batches", {})
@@ -3204,7 +3249,9 @@ def next_auto_templates(all_lib, batch_nonce, count):
                 for k in list(batches.keys())[:-24]:
                     batches.pop(k, None)
         state = {"sig": sig, "order": order, "cursor": cursor, "batches": batches}
-        try: json.dump(state, open(ROTATION_JSON, "w"))
+        # atomic_write_json, not a bare open("w") — this file is in SNAPSHOT_PATHS
+        # (it is real state), and a truncated write loses the whole rotation.
+        try: atomic_write_json(ROTATION_JSON, state, indent=None)
         except Exception as e: print(f"[auto-tpl] rotation save failed: {e}")
     n = len(order)
     return [order[(base + i) % n] for i in range(max(1, count))]
@@ -3740,37 +3787,40 @@ def api_generate_one():
     _angle_label   = ANGLES.get(angle_key_for_idx, {}).get("label", "") if angle_key_for_idx else ""
     _style_label   = STYLES.get(style_key_for_idx, {}).get("label", "") if style_key_for_idx else ""
 
-    # Auto-save to Board
-    board     = load_board()
-    bid       = max((b["id"] for b in board), default=0) + 1
-    b_filename= f"board_{bid:05d}.png"
-    b_dest    = BOARD_DIR / b_filename
-    shutil.copy2(str(out_path), str(b_dest))
+    # Auto-save to Board. Every slot of a batch reaches here in parallel, so the
+    # whole claim-id -> copy-image -> append -> save sequence has to be atomic as
+    # a unit, not just per-write (see _BOARD_LOCK).
     prod_name = brand.get("_active_product_name", "")
-    board.insert(0, {
-        "id":           bid,
-        "filename":     b_filename,
-        "label":        f"Ad {idx}" + (f" — {prod_name}" if prod_name else ""),
-        "problem":      problem,
-        "persona":      _persona_label,
-        "angle":        _angle_label,
-        "style":        _style_label,
-        "quality":      quality,
-        "session_id":   session_id,
-        "campaign_id":  campaign_id,
-        "campaign_name":campaign_name,
-        "created_at":   __import__("datetime").datetime.now().isoformat(timespec="seconds"),
-        "copy_data":    copy_data if isinstance(copy_data, dict) else {},
-    })
-    # Update campaign image count
-    if campaign_id:
-        camps = load_campaigns()
-        for c in camps:
-            if c["id"] == campaign_id:
-                c["image_count"] = c.get("image_count", 0) + 1
-                break
-        save_campaigns(camps)
-    save_board(board)
+    with _BOARD_LOCK:
+        board     = load_board()
+        bid       = max((b["id"] for b in board), default=0) + 1
+        b_filename= f"board_{bid:05d}.png"
+        b_dest    = BOARD_DIR / b_filename
+        shutil.copy2(str(out_path), str(b_dest))
+        board.insert(0, {
+            "id":           bid,
+            "filename":     b_filename,
+            "label":        f"Ad {idx}" + (f" — {prod_name}" if prod_name else ""),
+            "problem":      problem,
+            "persona":      _persona_label,
+            "angle":        _angle_label,
+            "style":        _style_label,
+            "quality":      quality,
+            "session_id":   session_id,
+            "campaign_id":  campaign_id,
+            "campaign_name":campaign_name,
+            "created_at":   __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+            "copy_data":    copy_data if isinstance(copy_data, dict) else {},
+        })
+        # Update campaign image count
+        if campaign_id:
+            camps = load_campaigns()
+            for c in camps:
+                if c["id"] == campaign_id:
+                    c["image_count"] = c.get("image_count", 0) + 1
+                    break
+            save_campaigns(camps)
+        save_board(board)
     snapshot_async("new-image")   # commit right away, don't wait for the timer
 
     # ── STEP 5: Match score — non-fatal, skip silently if it fails ────────────────
@@ -4027,26 +4077,31 @@ def board_add():
     quality   = data.get("quality", "draft")
     session_id= data.get("session_id", "")
 
-    if not src_path or not Path(src_path).exists():
+    # src_path is client-supplied. Only ever accept a file that already lives in
+    # sessions/ or board/ — otherwise this endpoint copies ANY file on disk into
+    # board/, where /api/board/image/ then serves it back out.
+    safe_src = safe_path_under(src_path, SESSIONS_DIR, BOARD_DIR)
+    if not safe_src or not safe_src.exists():
         return jsonify({"error": "Source file not found"}), 400
 
-    board    = load_board()
-    bid      = max((b["id"] for b in board), default=0) + 1
-    filename = f"board_{bid:05d}.png"
-    dest     = BOARD_DIR / filename
-    shutil.copy2(src_path, str(dest))
+    with _BOARD_LOCK:
+        board    = load_board()
+        bid      = max((b["id"] for b in board), default=0) + 1
+        filename = f"board_{bid:05d}.png"
+        dest     = BOARD_DIR / filename
+        shutil.copy2(str(safe_src), str(dest))
 
-    entry = {
-        "id":         bid,
-        "filename":   filename,
-        "label":      label,
-        "problem":    problem,
-        "quality":    quality,
-        "session_id": session_id,
-        "created_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
-    }
-    board.insert(0, entry)
-    save_board(board)
+        entry = {
+            "id":         bid,
+            "filename":   filename,
+            "label":      label,
+            "problem":    problem,
+            "quality":    quality,
+            "session_id": session_id,
+            "created_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+        }
+        board.insert(0, entry)
+        save_board(board)
     return jsonify({"ok": True, "entry": entry,
                     "url": f"/api/board/image/{filename}"})
 
@@ -4054,13 +4109,14 @@ def board_add():
 def board_delete():
     data = request.json or {}
     ids  = set(int(i) for i in data.get("ids", []))
-    board = load_board()
-    to_del = [b for b in board if b["id"] in ids]
-    for b in to_del:
-        try: (BOARD_DIR / b["filename"]).unlink(missing_ok=True)
-        except Exception: pass
-    board = [b for b in board if b["id"] not in ids]
-    save_board(board)
+    with _BOARD_LOCK:
+        board = load_board()
+        to_del = [b for b in board if b["id"] in ids]
+        for b in to_del:
+            try: (BOARD_DIR / Path(b["filename"]).name).unlink(missing_ok=True)
+            except Exception: pass
+        board = [b for b in board if b["id"] not in ids]
+        save_board(board)
     return jsonify({"ok": True, "deleted": len(to_del)})
 
 @app.route("/api/board/image/<filename>")
@@ -4082,58 +4138,64 @@ def board_repair():
     import collections
     data     = request.json or {}
     dry_run  = bool(data.get("dry_run"))
-    board    = load_board()
-    next_id  = (max([b["id"] for b in board]) + 1) if board else 1
-    by_sess  = collections.Counter(b.get("session_id", "") for b in board)
 
     brand = load_brand()
     prods = {p.get("id"): p.get("name", "") for p in brand.get("products", [])}
     pname = prods.get(brand.get("active_product_id")) or brand.get("brand_name") or "Product"
 
-    todo = []
-    for sdir in sorted(SESSIONS_DIR.glob("*")):
-        if not sdir.is_dir():
-            continue
-        imgs = sorted([p for p in sdir.glob("img_*.png") if not p.name.endswith("_bg.png")],
-                      key=lambda p: p.name)
-        gap = len(imgs) - by_sess.get(sdir.name, 0)
-        if gap > 0:
-            todo.extend(imgs[-gap:])
-    todo.sort(key=lambda p: p.stat().st_mtime)
+    # Held across the whole repair: a generation finishing mid-repair would other-
+    # wise claim an id this loop has already handed out, and one of the two images
+    # would overwrite the other.
+    with _BOARD_LOCK:
+        board    = load_board()
+        next_id  = (max([b["id"] for b in board]) + 1) if board else 1
+        by_sess  = collections.Counter(b.get("session_id", "") for b in board)
 
-    if dry_run:
-        return jsonify({"ok": True, "would_recover": len(todo),
-                        "files": [f"{p.parent.name}/{p.name}" for p in todo[:50]]})
+        todo = []
+        for sdir in sorted(SESSIONS_DIR.glob("*")):
+            if not sdir.is_dir():
+                continue
+            imgs = sorted([p for p in sdir.glob("img_*.png") if not p.name.endswith("_bg.png")],
+                          key=lambda p: p.name)
+            gap = len(imgs) - by_sess.get(sdir.name, 0)
+            if gap > 0:
+                todo.extend(imgs[-gap:])
+        todo.sort(key=lambda p: p.stat().st_mtime)
 
-    recovered = 0
-    for src in todo:
-        meta = {}
-        mp = src.parent / "meta.json"
-        if mp.exists():
-            try:
-                with open(mp, encoding="utf-8") as f: meta = json.load(f)
-            except Exception:
-                meta = {}
-        cached = meta.get("cached_copy_by_problem") or {}
-        fname  = f"board_{next_id:05d}.png"
-        shutil.copy2(str(src), str(BOARD_DIR / fname))
-        board.append({
-            "id": next_id, "filename": fname,
-            "label": f"Ad {src.stem.split('_')[1]} — {pname}",
-            "problem": meta.get("problem", ""),
-            "persona": "", "angle": "", "style": "",
-            "quality": "final" if "_final" in src.name else "draft",
-            "session_id": src.parent.name,
-            "campaign_id": "recovered", "campaign_name": "Recovered",
-            "created_at": _dt.fromtimestamp(src.stat().st_mtime).isoformat(timespec="seconds"),
-            "copy_data": next(iter(cached.values()), {}) if cached else {},
-        })
-        next_id += 1; recovered += 1
+        if dry_run:
+            return jsonify({"ok": True, "would_recover": len(todo),
+                            "files": [f"{p.parent.name}/{p.name}" for p in todo[:50]]})
 
-    if recovered:
-        save_board(board)
-        snapshot_data("after-repair")
-    return jsonify({"ok": True, "recovered": recovered, "board_total": len(board)})
+        recovered = 0
+        for src in todo:
+            meta = {}
+            mp = src.parent / "meta.json"
+            if mp.exists():
+                try:
+                    with open(mp, encoding="utf-8") as f: meta = json.load(f)
+                except Exception:
+                    meta = {}
+            cached = meta.get("cached_copy_by_problem") or {}
+            fname  = f"board_{next_id:05d}.png"
+            shutil.copy2(str(src), str(BOARD_DIR / fname))
+            board.append({
+                "id": next_id, "filename": fname,
+                "label": f"Ad {src.stem.split('_')[1]} — {pname}",
+                "problem": meta.get("problem", ""),
+                "persona": "", "angle": "", "style": "",
+                "quality": "final" if "_final" in src.name else "draft",
+                "session_id": src.parent.name,
+                "campaign_id": "recovered", "campaign_name": "Recovered",
+                "created_at": _dt.fromtimestamp(src.stat().st_mtime).isoformat(timespec="seconds"),
+                "copy_data": next(iter(cached.values()), {}) if cached else {},
+            })
+            next_id += 1; recovered += 1
+
+        if recovered:
+            save_board(board)
+            snapshot_data("after-repair")
+        total = len(board)
+    return jsonify({"ok": True, "recovered": recovered, "board_total": total})
 
 @app.route("/api/board/<int:board_id>/generate-meta", methods=["POST"])
 def board_generate_meta(board_id):
@@ -4268,9 +4330,16 @@ Return JSON only:
     except Exception as e:
         return jsonify({"error": f"Generation failed: {e}"}), 500
 
-    # Persist to board item
-    item.setdefault("copy_data", {}).update(meta)
-    save_board(board)
+    # Persist to board item. Re-read under the lock instead of writing back the
+    # copy loaded before the (multi-second) Gemini call — generations that landed
+    # in the meantime are in the fresh board and would be erased by the stale one.
+    with _BOARD_LOCK:
+        board = load_board()
+        fresh = next((b for b in board if b["id"] == board_id), None)
+        if fresh is None:
+            return jsonify({"error": "Board item no longer exists"}), 404
+        fresh.setdefault("copy_data", {}).update(meta)
+        save_board(board)
 
     return jsonify({
         "meta_primary_text": meta.get("meta_primary_text", ""),
@@ -4565,12 +4634,45 @@ def test_product_image():  # kept as debug utility (no route, called manually)
         return jsonify({"error": str(e)}), 500
 
 
+# ── .env persistence ──────────────────────────────────────────────────────────
+ENV_PATH  = Path(__file__).parent / ".env"
+_ENV_LOCK = threading.Lock()
+
+def env_set(name: str, value):
+    """Set (value given) or remove (value None) a key in .env AND in the live
+    process env. Written via a temp file + os.replace for the same reason the JSON
+    data files are: a crash or a second concurrent write during the old
+    read-truncate-rewrite left .env holding neither API key."""
+    with _ENV_LOCK:
+        lines = []
+        if ENV_PATH.exists():
+            with open(ENV_PATH, encoding="utf-8") as f:
+                lines = [l for l in f.readlines() if not l.startswith(f"{name}=")]
+        if value is not None:
+            if lines and not lines[-1].endswith("\n"):
+                lines[-1] += "\n"
+            lines.append(f"{name}={value}\n")
+        tmp = ENV_PATH.with_suffix(".env.tmp")
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, ENV_PATH)
+        os.chmod(ENV_PATH, 0o600)   # it holds API keys
+    if value is None:
+        os.environ.pop(name, None)
+    else:
+        os.environ[name] = value
+
 @app.route("/api/set-key", methods=["POST"])
 def set_api_key():
     key = (request.json or {}).get("key", "").strip()
     if not key:
         return jsonify({"error": "Empty key"}), 400
-    os.environ["GEMINI_API_KEY"] = key
+    # Persist to .env, not just os.environ — the server is launchd-managed and
+    # restarts on its own, and an env-only key vanished on every restart, leaving
+    # generation failing with "GEMINI_API_KEY not set" for no visible reason.
+    env_set("GEMINI_API_KEY", key)
     return jsonify({"ok": True, "hint": key[:8] + "…"})
 
 @app.route("/api/key-status")
@@ -4602,27 +4704,13 @@ def api_set_canva_token():
     token = (request.json or {}).get("token", "").strip()
     if not token:
         return jsonify({"error": "Token is empty"}), 400
-    env_path = Path(__file__).parent / ".env"
-    lines = []
-    if env_path.exists():
-        with open(env_path, encoding="utf-8") as f:
-            lines = [l for l in f.readlines() if not l.startswith("CANVA_API_TOKEN")]
-    lines.append(f"CANVA_API_TOKEN={token}\n")
-    with open(env_path, "w", encoding="utf-8") as f:
-        f.writelines(lines)
-    os.environ["CANVA_API_TOKEN"] = token
+    env_set("CANVA_API_TOKEN", token)
     return jsonify({"ok": True, "hint": token[:10] + "…"})
 
 @app.route("/api/canva-token", methods=["DELETE"])
 def api_delete_canva_token():
     """Remove the stored Canva PAT (disconnect)."""
-    env_path = Path(__file__).parent / ".env"
-    if env_path.exists():
-        with open(env_path, encoding="utf-8") as f:
-            lines = [l for l in f.readlines() if not l.startswith("CANVA_API_TOKEN")]
-        with open(env_path, "w", encoding="utf-8") as f:
-            f.writelines(lines)
-    os.environ.pop("CANVA_API_TOKEN", None)
+    env_set("CANVA_API_TOKEN", None)
     return jsonify({"ok": True})
 
 @app.route("/api/canva-token-status")
@@ -4662,10 +4750,17 @@ def api_canva_queue():
     if not filename:
         return jsonify({"error": "Missing filename"}), 400
 
-    img_path = SESSIONS_DIR / session_id / filename if session_id else None
+    # session_id and filename come straight from the request body and the file
+    # they name gets UPLOADED to Canva. Without containment, {"filename": "../.env"}
+    # ships the Gemini and Canva keys off the machine. Strip both to bare names and
+    # confirm the result really is inside sessions/ or board/.
+    session_id = Path(session_id).name
+    filename   = Path(filename).name
+    img_path   = safe_path_under(SESSIONS_DIR / session_id / filename,
+                                 SESSIONS_DIR) if session_id else None
     if not img_path or not img_path.exists():
-        img_path = BOARD_DIR / filename
-        if not img_path.exists():
+        img_path = safe_path_under(BOARD_DIR / filename, BOARD_DIR)
+        if not img_path or not img_path.exists():
             return jsonify({"error": f"Image not found: {filename}"}), 404
 
     token = _get_canva_token()
