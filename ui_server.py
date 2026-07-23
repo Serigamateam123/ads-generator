@@ -924,16 +924,23 @@ def brand_to_prompt_block(brand: dict) -> str:
         lines.append(f"TAGLINE: {brand['tagline']}")
     # Price intentionally excluded — never shown in generated ads
     if brand.get("certifications"):
-        lines.append(f"CERTIFICATIONS (show prominently): {', '.join(brand['certifications'])}")
-        if any("halal" in c.lower() for c in brand["certifications"]):
-            lines.append(
-                "⚠️ HALAL LOGO RULE: if a Halal logo/badge appears anywhere in this ad — whether you're "
-                "adding one fresh or copying a badge shape from a reference template — it MUST be the "
-                "Malaysian JAKIM Halal logo (the official Malaysian government halal certification mark), "
-                "never Indonesia's (MUI/BPJPH), Singapore's (MUIS), or any other country's halal mark. If "
-                "you're not confident you can render the real JAKIM logo accurately, use a plain text badge "
-                "reading \"Halal JAKIM\" instead of an inaccurate logo."
-            )
+        lines.append(f"CERTIFICATIONS — SHOW AS PLAIN TEXT ONLY: {', '.join(brand['certifications'])}")
+        lines.append(
+            "⚠️ ABSOLUTE NO-LOGO RULE FOR CERTIFICATIONS — breaking this makes the ad unusable:\n"
+            "- NEVER draw, invent, imitate or redraw ANY certification logo, emblem, seal, crest, stamp, "
+            "shield, coat of arms, ministry mark or official-looking symbol. This includes the JAKIM/Halal "
+            "logo, KKM (Kementerian Kesihatan Malaysia) logo, GMP mark, MAL/registration marks, HACCP, MeSTI, "
+            "ISO, and any country's halal mark (MUI, MUIS, etc.).\n"
+            "- Render every certification ONLY as written words, e.g. \"Diperakui Halal\", \"KKM\", "
+            "\"Pengilangan Taraf GMP\" — set in the ad's own typeface. A plain text label, or text inside a "
+            "simple plain shape (pill/rounded rectangle/underline) with NO emblem or pictogram inside it, "
+            "is the only acceptable treatment.\n"
+            "- If IMAGE 2 (the template) shows any certification logo, badge, seal or official emblem, DO NOT "
+            "copy or recreate it. Replace it with plain certification text, or remove it entirely.\n"
+            "- Do NOT place any certification mark, sticker or seal onto the product packaging either — the "
+            "packaging must match IMAGE 1 exactly and gains no new marks.\n"
+            "- An AI-drawn regulatory logo is always wrong and misleading. When in doubt, use text only."
+        )
     if brand.get("key_claims"):
         lines.append("KEY CLAIMS:")
         for c in brand["key_claims"]:
@@ -2603,10 +2610,10 @@ Product name on label: {product_name}
                                   "inside a callout; exactly ONE photographic hero shot in the whole ad\n"
                                   "- Any badge with a stat/claim (sold-count, timing, review score) needs a real "
                                   "matching fact from the brand knowledge below, or gets dropped — never invented\n"
-                                  "- If IMAGE 2 has any certification/country badge (halal mark, quality seal, "
-                                  "flag, etc.), do NOT copy IT — replace it with this brand's own certification "
-                                  "badge per the HALAL LOGO RULE / CERTIFICATIONS above, or drop it entirely if "
-                                  "this brand has no equivalent certification")
+                                  "- If IMAGE 2 has any certification logo, seal, emblem, ministry mark, halal "
+                                  "mark or country flag, do NOT copy or redraw it. Replace it with this brand's "
+                                  "certification wording as PLAIN TEXT (see the NO-LOGO RULE under CERTIFICATIONS "
+                                  "below), or drop that slot entirely. Never draw an official-looking emblem.")
 
         # ── How the product itself should be PRESENTED — read straight from the
         # template so the product can take whatever form the winning ad actually
