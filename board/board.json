@@ -1,5 +1,35 @@
 [
   {
+    "id": 342,
+    "filename": "board_00342.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Lega Gastrik / Refluks Asid",
+    "persona": "Gastrik (Professional Worker)",
+    "angle": "Social Proof",
+    "style": "",
+    "quality": "final",
+    "session_id": "06514fa8",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-23T10:23:05",
+    "copy_data": {
+      "h1": "Ramai Kembali Fokus Tanpa Gastrik.",
+      "h2": "Diperakui Halal, KKM, dan Pengilangan Taraf GMP.",
+      "cta": "Sertai Komuniti Bebas Gastrik.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pembaharuan tisu penghadaman.",
+        "Kekal kesihatan lapisan perut.",
+        "Bantu pembaharuan sel.",
+        "Sokong kesihatan badan."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 341,
     "filename": "board_00341.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
