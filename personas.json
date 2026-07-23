@@ -55,9 +55,11 @@
   "gastrik_professional_worker": {
     "label": "Gastrik (Professional Worker)",
     "emoji": "🙂",
-    "subtitle": "iti, 28, is a high-flying marketing executive always failing behind because of gastric",
-    "narrative": "Siti, 28, is a high-flying marketing executive whose career demands long hours and skipped meals. Her constant gastric pain isn't just a physical ache; it's a huge mental block, making her lose focus during presentations and cancelling late-night calls. She's tried every quick-fix antacid and even changed her diet, but the pain always comes back, making her feel like she's always falling behind and can't perform her best. She just wants a daily solution that lets her chase her ambitions without sacrificing her health or her peace of mind.",
-    "use_cases": [],
+    "subtitle": "Woman, 28, is a high-flying marketing executive always failing behind because of gastric",
+    "narrative": "Woman, 28, is a high-flying marketing executive whose career demands long hours and skipped meals. Her constant gastric pain isn't just a physical ache; it's a huge mental block, making her lose focus during presentations and cancelling late-night calls. She's tried every quick-fix antacid and even changed her diet, but the pain always comes back, making her feel like she's always falling behind and can't perform her best. She just wants a daily solution that lets her chase her ambitions without sacrificing her health or her peace of mind.",
+    "use_cases": [
+      "Lega Gastrik / Refluks Asid"
+    ],
     "style_cues": "Believable Malaysian home setting. Natural lighting — window light or warm indoor lamp light. The mood is a moment of relief or connection, not a staged product demonstration. Follow the winning ad template's color palette and background — do not impose warm/gold tones.",
     "hidden": false
   }
