@@ -1651,8 +1651,13 @@ function renderPersonaPills() {
   const shown = allPersonas.filter(p => !p.hidden);
   let visible = shown;
   if (productUseCases.length) {
-    const filtered = shown.filter(p =>
-      (p.use_cases||[]).some(uc => productUseCases.includes(uc)));
+    // A persona with NO use cases is unrestricted — show it for every product.
+    // Previously it matched nothing and silently vanished from this picker, so a
+    // freshly-created persona appeared to "not save" until use cases were added.
+    const filtered = shown.filter(p => {
+      const ucs = p.use_cases || [];
+      return ucs.length === 0 || ucs.some(uc => productUseCases.includes(uc));
+    });
     if (filtered.length) visible = filtered;
   }
   // Drop selections that are no longer visible so state stays consistent with the UI.
@@ -1766,6 +1771,9 @@ function renderPersonaAdminList() {
       <div class="pa-item-body">
         <div class="pa-item-label">${p.label}${p.hidden?' <span style="font-size:10px;font-weight:600;color:var(--muted);border:1px solid var(--border,#ccc);border-radius:4px;padding:1px 5px;margin-left:6px">HIDDEN</span>':''}</div>
         <div class="pa-item-sub">${p.subtitle||''}${(p.use_cases&&p.use_cases.length) ? ' · ' + p.use_cases.join(', ') : ''}</div>
+        ${(!p.use_cases || !p.use_cases.length) ? `<div style="font-size:10.5px;color:#92400e;background:#fef3c7;
+          border:1px solid #fcd34d;border-radius:5px;padding:3px 7px;margin-top:4px;display:inline-block">
+          ⚠ No use case set — ad copy will fall back to this product's first use case. Click Edit to pick one.</div>` : ''}
         <div class="pa-item-text">${p.narrative||''}</div>
       </div>
       <div class="pa-item-btns">
