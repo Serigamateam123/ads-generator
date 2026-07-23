@@ -137,10 +137,15 @@ def safe_path_under(candidate, *roots):
 # since that commit was lost. This commits the data files on a timer so there is
 # never a large uncommitted window to lose. Git de-duplicates unchanged blobs, so
 # repeated snapshots are cheap.
-SNAPSHOT_PATHS = ["board", "sessions", "personas.json", "angles.json", "styles.json",
-                  "brand_kit.json", "templates/templates.json", "spend_ledger.json",
+SNAPSHOT_PATHS = ["board", "sessions", "brand_kit", "templates",
+                  "personas.json", "angles.json", "styles.json",
+                  "brand_kit.json", "spend_ledger.json",
                   "photo_styles.json", "product_benefits.json",
                   "product_visuals.json", "template_rotation.json"]
+# NOTE: "templates" and "brand_kit" are whole DIRECTORIES on purpose — uploaded
+# template images and product photos were previously not backed up (only the
+# templates.json index was), so a folder wipe would have lost the images while
+# keeping the index that references them.
 SNAPSHOT_INTERVAL = 600          # seconds between automatic snapshots
 _SNAPSHOT_LOCK = threading.Lock()
 
