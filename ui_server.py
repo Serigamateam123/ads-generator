@@ -2169,12 +2169,18 @@ def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
         # read like it was for a different use case. Always keep the leading bullets
         # (the ones actually about this use case) and only vary the remainder, so
         # copy stays on-problem while still differing across a batch.
-        LEAD = 3
+        # Balance RELEVANCE vs VARIETY: always keep the leading on-problem bullets
+        # (so a gastric ad always says something about digestion/stomach), but pick
+        # the remaining slots randomly from the rest and shuffle them, so repeated
+        # images don't show identical bullet lists.
+        LEAD = 2
         lead = authored_benefits[:LEAD]
-        rest = authored_benefits[LEAD:]
+        rest = [b for b in authored_benefits[LEAD:]]
         extra = random.sample(rest, min(max(0, 5 - len(lead)), len(rest))) if rest else []
+        random.shuffle(extra)
         direct_benefits = lead + extra
-        print(f"[copy-gen] Authored benefits for '{problem}' (lead-first): {direct_benefits}")
+        print(f"[copy-gen] Authored benefits for '{problem}' "
+              f"(on-problem lead + varied fill): {direct_benefits}")
     else:
         benefit_keywords = get_benefit_keywords(product_name, problem)
         other_keywords   = get_other_benefit_keywords(product_name, problem)
