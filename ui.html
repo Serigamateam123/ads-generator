@@ -1022,6 +1022,8 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <button class="ws-btn" onclick="boardClearSelection()">Deselect All</button>
         <button class="ws-btn" onclick="boardOpenExportFolder()"
                 title="Open Ads Generator › Download Board in Finder">📁 Open Download Board</button>
+        <button class="ws-btn" onclick="boardRelabel()"
+                title="Restore product / persona / angle labels on recovered creatives">🏷 Fix Labels</button>
       </div>
     </div>
     <div class="board-sub">
@@ -3056,6 +3058,30 @@ async function boardExportSelected() {
     toast(msg);
   } catch (e) {
     toast('⚠️ Save failed: ' + e.message);
+  }
+}
+
+// Restore labels on creatives that were rebuilt by a board recovery. Recovery
+// cannot know the original persona/angle, and it used to name every recovered
+// creative after whichever product was active at the time — this reads the real
+// values back out of each session's meta.json.
+async function boardRelabel() {
+  try {
+    const dry = await (await fetch('/api/board/relabel', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ dry_run:true })
+    })).json();
+    if (!dry.changed) { toast('✅ All labels already correct'); return; }
+    if (!confirm(`Fix labels on ${dry.changed} creative${dry.changed>1?'s':''}?\n\n`
+               + `Example:\n${dry.examples[0].before.label}\n  →  ${dry.examples[0].after.label}\n\n`
+               + `Only the labels change — no images are touched.`)) return;
+    const r = await (await fetch('/api/board/relabel', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'
+    })).json();
+    toast(`✅ Fixed labels on ${r.changed} creative${r.changed>1?'s':''}`);
+    loadBoard();
+  } catch (e) {
+    toast('⚠️ ' + e.message);
   }
 }
 

@@ -331,6 +331,19 @@ def _product_key(product_name: str) -> str:
 def get_use_cases_for_product(product_name: str) -> list:
     return PRODUCT_USE_CASES.get(_product_key(product_name), DEFAULT_USE_CASES)
 
+def product_key_for_use_case(use_case_label: str) -> str:
+    """Reverse lookup: which product does this use case belong to? Every use case
+    in PRODUCT_USE_CASES belongs to exactly one product, so a board entry's
+    recorded use case identifies its product even when nothing else does. Used to
+    label recovered creatives correctly instead of naming them after whichever
+    product happens to be active right now."""
+    if not use_case_label:
+        return ""
+    for prod_key, cases in PRODUCT_USE_CASES.items():
+        if any(c["label"] == use_case_label for c in cases):
+            return prod_key
+    return ""
+
 def get_benefit_keywords(product_name: str, problem_label: str) -> list:
     """Look up the explicit benefit-matching keywords for a given product + use case."""
     for uc in get_use_cases_for_product(product_name):
@@ -4287,6 +4300,90 @@ def api_snapshot():
     ok, msg = snapshot_data("manual")
     return jsonify({"ok": ok, "message": msg})
 
+def _facts_from_session(meta: dict, fallback_product: str = "") -> dict:
+    """Recover a creative's real use case / persona / angle / style / product from
+    its session meta.json.
+
+    Why this exists: a recovered board entry used to be labelled with whichever
+    product was globally active AT RECOVERY TIME, and with blank persona/angle —
+    so Jeli Gamat ads came back labelled "Minyak Urut Aromatik Gamat 75ML". The
+    session's copy cache is keyed "<use case>||<persona>||<angle>||<style>", which
+    is exactly the missing information, and every use case belongs to exactly one
+    product — so the correct product follows from the use case rather than from a
+    global setting that has since changed.
+    """
+    out = {"problem": "", "persona": "", "angle": "", "style": "", "product": ""}
+    keys = list((meta.get("cached_copy_by_problem") or {}).keys())
+    keys += list((meta.get("headline_history_by_problem") or {}).keys())
+    # Only trust the key when the session is unambiguous (one combo used).
+    parts = None
+    if len(set(keys)) == 1:
+        parts = keys[0].split("||")
+    problem = (parts[0] if parts else "") or meta.get("problem", "")
+    out["problem"] = problem
+    if parts and len(parts) >= 4:
+        out["persona"] = PERSONAS.get(parts[1], {}).get("label", "") if parts[1] else ""
+        out["angle"]   = ANGLES.get(parts[2], {}).get("label", "")   if parts[2] else ""
+        out["style"]   = STYLES.get(parts[3], {}).get("label", "")   if parts[3] else ""
+
+    # Product from the use case; fall back only when the use case is unknown.
+    prod_key = product_key_for_use_case(problem)
+    if prod_key:
+        brand = load_brand()
+        match = next((p.get("name", "") for p in brand.get("products", [])
+                      if _product_key(p.get("name", "")) == prod_key), "")
+        out["product"] = match or prod_key.title()
+    else:
+        out["product"] = fallback_product
+    return out
+
+@app.route("/api/board/relabel", methods=["POST"])
+def board_relabel():
+    """Repair board entries whose label/persona/angle were lost or guessed wrong by
+    an earlier recovery. Reads the truth back out of each session's meta.json.
+    {"dry_run": true} reports what would change without writing."""
+    data    = request.json or {}
+    dry_run = bool(data.get("dry_run"))
+    changes = []
+    with _BOARD_LOCK:
+        board = load_board()
+        for b in board:
+            sid = b.get("session_id") or ""
+            mp  = SESSIONS_DIR / Path(sid).name / "meta.json" if sid else None
+            if not mp or not mp.exists():
+                continue
+            try:
+                with open(mp, encoding="utf-8") as f:
+                    meta = json.load(f)
+            except Exception:
+                continue
+            facts = _facts_from_session(meta)
+            if not facts["product"] and not facts["persona"]:
+                continue
+            before = {k: b.get(k, "") for k in ("label", "persona", "angle", "style", "problem")}
+            new_label = b.get("label", "")
+            if facts["product"]:
+                # keep the existing "Ad N" prefix, replace only the product half
+                head = (b.get("label") or "Ad").split("—")[0].strip() or "Ad"
+                new_label = f"{head} — {facts['product']}"
+            after = {
+                "label":   new_label,
+                "persona": facts["persona"] or b.get("persona", ""),
+                "angle":   facts["angle"]   or b.get("angle", ""),
+                "style":   facts["style"]   or b.get("style", ""),
+                "problem": facts["problem"] or b.get("problem", ""),
+            }
+            if after != before:
+                changes.append({"id": b["id"], "before": before, "after": after})
+                if not dry_run:
+                    b.update(after)
+        if changes and not dry_run:
+            save_board(board)
+    if changes and not dry_run:
+        snapshot_async("relabel")
+    return jsonify({"ok": True, "changed": len(changes),
+                    "dry_run": dry_run, "examples": changes[:15]})
+
 @app.route("/api/board/repair", methods=["POST"])
 def board_repair():
     """Rebuild missing board entries from the generated images still in
@@ -4336,11 +4433,13 @@ def board_repair():
             cached = meta.get("cached_copy_by_problem") or {}
             fname  = f"board_{next_id:05d}.png"
             shutil.copy2(str(src), str(BOARD_DIR / fname))
+            facts = _facts_from_session(meta, fallback_product=pname)
             board.append({
                 "id": next_id, "filename": fname,
-                "label": f"Ad {src.stem.split('_')[1]} — {pname}",
-                "problem": meta.get("problem", ""),
-                "persona": "", "angle": "", "style": "",
+                "label": f"Ad {src.stem.split('_')[1]}" +
+                         (f" — {facts['product']}" if facts["product"] else ""),
+                "problem": facts["problem"] or meta.get("problem", ""),
+                "persona": facts["persona"], "angle": facts["angle"], "style": facts["style"],
                 "quality": "final" if "_final" in src.name else "draft",
                 "session_id": src.parent.name,
                 "campaign_id": "recovered", "campaign_name": "Recovered",
