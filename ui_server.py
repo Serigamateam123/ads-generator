@@ -2162,8 +2162,19 @@ def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
     # matching only for use cases with no authored content yet. ─────────────────
     authored_benefits = get_authored_benefits(product_name, problem)
     if authored_benefits:
-        direct_benefits = random.sample(authored_benefits, min(5, len(authored_benefits)))
-        print(f"[copy-gen] Authored benefits for '{problem}': {direct_benefits}")
+        # These lists are authored MOST-SPECIFIC-FIRST (e.g. the gastric list opens
+        # with stomach-lining / digestive-tract bullets, then falls back to generic
+        # "repairs body tissue" filler). random.sample() over the whole list ignored
+        # that order, so a gastric ad routinely showed 5 generic recovery bullets and
+        # read like it was for a different use case. Always keep the leading bullets
+        # (the ones actually about this use case) and only vary the remainder, so
+        # copy stays on-problem while still differing across a batch.
+        LEAD = 3
+        lead = authored_benefits[:LEAD]
+        rest = authored_benefits[LEAD:]
+        extra = random.sample(rest, min(max(0, 5 - len(lead)), len(rest))) if rest else []
+        direct_benefits = lead + extra
+        print(f"[copy-gen] Authored benefits for '{problem}' (lead-first): {direct_benefits}")
     else:
         benefit_keywords = get_benefit_keywords(product_name, problem)
         other_keywords   = get_other_benefit_keywords(product_name, problem)
@@ -2508,6 +2519,21 @@ Product name on label: {product_name}
             "- Strong contrast between text and background (shadow or scrim if needed)\n"
             f"- Render EXACTLY {bullet_count} bullet slot{'s' if bullet_count != 1 else ''} — "
             "delete any extra icon slots from IMAGE 2's layout so the count matches"
+            "\n\nICONS BESIDE THE BULLETS — each icon MUST match the meaning of its own bullet:\n"
+            "- Read each bullet line and draw an icon that depicts THAT specific benefit. Do not reuse a\n"
+            "  generic tick/check/star for every bullet, and do not pick icons at random.\n"
+            "- Match the subject of the bullet, for example:\n"
+            "    stomach / gut / digestion / lapisan perut / penghadaman  -> stomach or digestive-tract icon\n"
+            "    joints / cartilage / sendi / rawan                        -> knee or joint icon\n"
+            "    cell renewal / pembaharuan sel / tisu                     -> cell or regeneration icon\n"
+            "    collagen / kolagen / skin elasticity                      -> skin/elasticity icon\n"
+            "    nutrients / nutrien / vitamins                            -> leaf or nutrient-drop icon\n"
+            "    natural / marine / gamat / semula jadi                    -> sea-cucumber, wave or leaf icon\n"
+            "    energy / tenaga / focus                                   -> lightning bolt icon\n"
+            "    immunity / imun / protection                              -> shield icon\n"
+            "- Every bullet gets a DIFFERENT icon — never repeat the same pictogram twice in one ad.\n"
+            "- Icons are simple flat pictograms in IMAGE 2's icon style: no photographs, no product shots\n"
+            "  inside an icon, and no letters, words or numbers drawn inside an icon."
         )
 
     color_block        = ""
