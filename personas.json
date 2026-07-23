@@ -29,7 +29,8 @@
     "use_cases": [
       "Lega Gastrik / Refluks Asid"
     ],
-    "style_cues": "Believable Malaysian home setting. Natural lighting. Follow the winning ad template's color palette and background exactly — do not impose warm or gold tones. The mood is a moment of relief or connection, not a staged product demonstration."
+    "style_cues": "Believable Malaysian home setting. Natural lighting — window light or warm indoor lamp light. The mood is a moment of relief or connection, not a staged product demonstration. Follow the winning ad template's color palette and background — do not impose warm/gold tones.",
+    "hidden": false
   },
   "gastric_husband": {
     "label": "Gastrik (Husband)",
