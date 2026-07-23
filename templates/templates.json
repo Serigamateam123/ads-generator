@@ -7831,5 +7831,78 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 108,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0108.png",
+    "label": "Winning Ad #108",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with shared top headline and bottom CTA",
+        "product_placement": "Left side, slightly below vertical center, occupying roughly 1/3 of the width",
+        "headline_placement": "Top 15% of the canvas, spanning horizontally across both left and right sections",
+        "cta_placement": "Bottom center, spanning horizontally across the entire width",
+        "negative_space": "moderate, with clear separation between elements"
+      },
+      "colors": {
+        "background": "#F8F4E6",
+        "background_description": "flat solid",
+        "dominant_color": "#F8F4E6",
+        "dominant_description": "background",
+        "accent_color": "#000000",
+        "accent_description": "main text, product bottle body",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#000000",
+        "cta_color": "#000000"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines, with the second line highlighted",
+        "subheadline_weight": "bold",
+        "subheadline_size": "small to medium compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A trustworthy and premium feel promoting a clear, achievable path to improved skin radiance."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "Glutathione capsules",
+        "product_style": "standing on a surface with scattered capsules in front"
+      },
+      "graphic_elements": [
+        "circular badge/logo with 'Ayaani' text, top-left",
+        "gold liquid droplet partially visible behind the product bottle on the left",
+        "three rectangular frames on the right, each containing an image of a woman, with text '0 Week', '4 Week', '8 Week' below them",
+        "yellow highlight box around the text 'Course for Lasting Radiance' in the headline"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Headline 'Up to two months Glutathione Course for Lasting Radiance'",
+        "second_attention": "The product bottle 'Ayaani 1500MG Glutathione'",
+        "third_attention": "The sequence of human images showing progress on the right",
+        "fourth_attention": "The website URL 'www.ayaani.co.uk' at the bottom"
+      },
+      "forbidden_elements": [
+        "NO busy photographic background",
+        "NO cluttered layout",
+        "NO vibrant, high-contrast color scheme (beyond black/gold text on light background)",
+        "NO complex illustrations or icons (other than the brand logo)",
+        "NO speech bubbles or pointers directly on the product",
+        "NO discount badges or urgent calls to action"
+      ],
+      "size": "1080x1080 square"
+    }
   }
 ]
