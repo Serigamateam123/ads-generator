@@ -7904,5 +7904,78 @@
       ],
       "size": "1080x1080 square"
     }
+  },
+  {
+    "id": 109,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0109.png",
+    "label": "Winning Ad #109",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The main subject (person eating) is positioned in the upper-left to center-left, with food items and table setting occupying the lower and right portions of the frame, creating an asymmetric balance.",
+        "product_placement": "The yellow bowl with food is held by the person in the center, while a rattan tray containing green and white cakes and fried pastries is placed on the table in the lower-right quadrant.",
+        "headline_placement": "none",
+        "cta_placement": "none",
+        "negative_space": "Moderate, with a blurred outdoor background behind the person, allowing the main subjects and food on the table to stand out."
+      },
+      "colors": {
+        "background": "#8B7A5C",
+        "background_description": "photographic scene, blurred outdoor setting with foliage and natural light",
+        "dominant_color": "#C1D9ED",
+        "dominant_description": "the light blue stripes on the woman's shirt",
+        "accent_color": "#73B860",
+        "accent_description": "the vibrant green color of the cakes on the tray",
+        "text_color_headline": "none",
+        "text_color_subheadline": "none",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "none",
+        "headline_case": "none",
+        "headline_size": "none",
+        "font_style": "none",
+        "headline_line_breaks": "none",
+        "subheadline_weight": "none",
+        "subheadline_size": "none"
+      },
+      "mood": {
+        "tone": "warm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad conveys a natural, relaxed, and authentic feeling of enjoying traditional food in an outdoor setting."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "yellow bowl, yellow spoon, rattan tray, banana leaves, green and white cakes (kuih puteri ayu), fried pastries (karipap), decorative enamel bowl with hair ties, patterned batik tablecloth",
+        "product_style": "held by hand (yellow bowl), standing on surface (tray with cakes and pastries)"
+      },
+      "graphic_elements": [
+        "small embroidered logo on shirt, mid-right chest area"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the woman's face and the yellow bowl she is eating from",
+        "second_attention": "the vibrant green and white cakes on the rattan tray",
+        "third_attention": "the fried pastries next to the cakes",
+        "fourth_attention": "the patterned tablecloth and the enamel bowl with accessories"
+      },
+      "forbidden_elements": [
+        "NO digital text overlays (headlines, subheadlines, CTA)",
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges",
+        "NO gradient on background",
+        "NO high-contrast studio lighting",
+        "NO cluttered layout",
+        "NO explicit price tags",
+        "NO urgency messaging"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
