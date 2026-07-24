@@ -8050,5 +8050,157 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 111,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0111.png",
+    "label": "Winning Ad #111",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The image features a still life arrangement on a rustic wooden table, with items extending into the background, creating depth. The primary product (coffee cup) is positioned in the lower-middle, slightly off-center.",
+        "product_placement": "The main product, a cup of coffee on a saucer, is situated in the lower-middle section of the canvas, slightly to the right of the vertical center.",
+        "headline_placement": "The watermark/signature 'SURIANI SUZIE | PHOTOGRAPHY 2022' is placed at the bottom center.",
+        "cta_placement": "none",
+        "negative_space": "moderate, with a warm, lived-in feel, allowing sufficient breathing room around the main subjects while keeping the frame rich with details."
+      },
+      "colors": {
+        "background": "#5D402B",
+        "background_description": "photographic scene, featuring a wooden wall and a rustic wooden table.",
+        "dominant_color": "#8B5F3E",
+        "dominant_description": "the weathered wooden table and wall planks.",
+        "accent_color": "#5C7F60",
+        "accent_description": "the green floral pattern on the coffee cup and saucer.",
+        "text_color_headline": "#E0D3C4",
+        "text_color_subheadline": "none",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case for name and profession, uppercase for year",
+        "headline_size": "small",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "none"
+      },
+      "mood": {
+        "tone": "warm, calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "dark moody, with soft, natural-looking light highlighting the foreground elements.",
+        "overall_feel": "A nostalgic and comforting scene depicting a traditional tea or coffee break, inviting a sense of peace and familiarity."
+      },
+      "composition": {
+        "style": "balanced, rich with texture and detail, leaning towards a rustic aesthetic.",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "vintage aluminum kettle, tin container with toast, glass jar with stick biscuits, newspaper, an old book, a dark brown cloth, a spoon, and a cup and saucer with a green floral pattern, a calendar fragment.",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "calendar fragment on the wooden wall, top-left corner",
+        "newspaper spread partially visible on the table, middle-right",
+        "watermark/signature 'SURIANI SUZIE | PHOTOGRAPHY 2022' at the bottom center"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the coffee cup with its distinctive green pattern, due to its central placement and contrast.",
+        "second_attention": "the antique kettle in the background, drawing attention with its size and metallic sheen.",
+        "third_attention": "the various snacks (biscuits in jar, toast in tin) and the newspaper, adding context to the scene.",
+        "fourth_attention": "the rich, textured details of the wooden table and wall."
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges or seals",
+        "NO vibrant, highly saturated colors or neon tones",
+        "NO modern, sleek, or minimalist design elements",
+        "NO digital graphics or illustrations (other than text)",
+        "NO bright, artificial studio lighting",
+        "NO human presence or body parts (e.g., hands)",
+        "NO gradient overlays or color blocks (other than natural shadows)",
+        "NO cluttered or disorienting layouts",
+        "NO abstract patterns or geometric shapes",
+        "NO bold, sans-serif headlines or calls to action in large font"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 112,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0112.png",
+    "label": "Winning Ad #112",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "two subjects seated at a table, occupying the center-midground, with a dark, blurred background",
+        "product_placement": "coffee cup held by the man on the right, another cup and cigarettes on the wooden table in the foreground",
+        "headline_placement": "lower right quadrant, on the table surface",
+        "cta_placement": "none",
+        "negative_space": "moderate to generous, especially in the dark background and lower left foreground"
+      },
+      "colors": {
+        "background": "dark grey/brownish black, e.g. #363636",
+        "background_description": "photographic scene, dark and blurred",
+        "dominant_color": "dark brown/grey, e.g. #4a413d",
+        "dominant_description": "wooden table, clothing, and overall environment",
+        "accent_color": "muted green and off-white, e.g. #a6c4a6",
+        "accent_description": "patterns on the coffee cups and saucer, plaid scarf, striped shirt",
+        "text_color_headline": "light grey/white, e.g. #e0e0e0",
+        "text_color_subheadline": "none"
+      },
+      "typography": {
+        "headline_weight": "light",
+        "headline_case": "lowercase (with initial letters capitalized by convention)",
+        "headline_size": "medium",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "none",
+        "subheadline_size": "none"
+      },
+      "mood": {
+        "tone": "calm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "dark moody, dramatic with focused light on subjects",
+        "overall_feel": "A quiet, contemplative moment of shared experience and reflection, evoking a sense of heritage or timeless tradition."
+      },
+      "composition": {
+        "style": "balanced, with two subjects interacting within the frame",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "coffee cups, saucers, small metal coffee pot, cigarettes, lighter, plaid scarf",
+        "product_style": "held by hand (coffee cup), standing on surface (cups, pot, cigarettes)"
+      },
+      "graphic_elements": [],
+      "visual_hierarchy": {
+        "first_attention": "the face of the man drinking coffee (right)",
+        "second_attention": "the face of the man smoking (left)",
+        "third_attention": "the items on the wooden table (coffee cups, cigarettes)",
+        "fourth_attention": "the hashtag #dongèngnagariku"
+      },
+      "forbidden_elements": [
+        "NO bright, saturated colors",
+        "NO cartoonish or illustrated elements",
+        "NO modern technology",
+        "NO abstract shapes or patterns",
+        "NO urgent or aggressive text",
+        "NO prominent call-to-action buttons",
+        "NO clean or minimalist background",
+        "NO floating elements",
+        "NO product shown in isolation without human interaction",
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges",
+        "NO gradient on background"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
