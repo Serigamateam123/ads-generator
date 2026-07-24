@@ -7977,5 +7977,78 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 110,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0110.png",
+    "label": "Winning Ad #110",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout is dynamic and asymmetric, with food items clustered in the mid-to-lower right, a drink in the mid-left, and text positioned at the top-center. Elements are distributed across the canvas rather than a strict grid.",
+        "product_placement": "The kaya toast is in the mid-right, the soft-boiled eggs are in the bottom-center, and the coffee/tea cup is in the mid-left.",
+        "headline_placement": "The headline text \"VEZORA PRODUCTION\" is positioned at the top-center of the image, with the subheadline directly below it.",
+        "cta_placement": "none",
+        "negative_space": "Moderate, with breathing room around the text at the top and blurred areas in the background and foreground."
+      },
+      "colors": {
+        "background": "Photographic scene with blurred greens and warm browns.",
+        "background_description": "photographic scene, featuring blurred green foliage outside a window and a wooden table surface.",
+        "dominant_color": "#8C6A5A",
+        "dominant_description": "the wooden table surface and dark chess pieces, contributing to a warm, earthy tone.",
+        "accent_color": "#5F7F60",
+        "accent_description": "the blurred green foliage in the background and subtle patterns on the crockery.",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "uppercase",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (headline on one line, subheadline on another)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small"
+      },
+      "mood": {
+        "tone": "calm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "dramatic",
+        "overall_feel": "The brand evokes a cozy, comfortable, and thoughtful experience with a touch of artistic flair through a morning meal setting."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "coffee/tea cup, kaya toast, soft-boiled eggs, magazine/newspaper, dark wooden chess pieces, a metallic decorative object (possibly part of a fan or light fixture), blurred green foliage",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "metallic object in top-left corner",
+        "dark wooden chess pieces on a chessboard section, top-right to mid-right",
+        "magazine/newspaper spread on the table, bottom-left to bottom-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The headline text \"VEZORA PRODUCTION\" and the stack of kaya toast.",
+        "second_attention": "The soft-boiled eggs in the bowl.",
+        "third_attention": "The cup of coffee/tea.",
+        "fourth_attention": "The surrounding elements like the newspaper and chess pieces, and the background foliage."
+      },
+      "forbidden_elements": [
+        "NO bright, oversaturated colors",
+        "NO stark, artificial studio lighting",
+        "NO abstract or geometric patterns dominating the background",
+        "NO prominent human figures or faces",
+        "NO cartoonish or overly playful graphics",
+        "NO price callouts or discount badges",
+        "NO strong gradient overlays on the product or background"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
