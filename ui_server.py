@@ -4344,7 +4344,7 @@ def api_snapshot():
     ok, msg = snapshot_data("manual")
     return jsonify({"ok": ok, "message": msg})
 
-def _facts_from_session(meta: dict, fallback_product: str = "") -> dict:
+def _facts_from_session(meta: dict, fallback_product: str = "", brand: dict = None) -> dict:
     """Recover a creative's real use case / persona / angle / style / product from
     its session meta.json.
 
@@ -4373,7 +4373,10 @@ def _facts_from_session(meta: dict, fallback_product: str = "") -> dict:
     # Product from the use case; fall back only when the use case is unknown.
     prod_key = product_key_for_use_case(problem)
     if prod_key:
-        brand = load_brand()
+        # brand can be passed in by batch callers (relabel loops over the whole
+        # board) so we don't re-read brand_kit.json once per entry under the lock.
+        if brand is None:
+            brand = load_brand()
         match = next((p.get("name", "") for p in brand.get("products", [])
                       if _product_key(p.get("name", "")) == prod_key), "")
         out["product"] = match or prod_key.title()
@@ -4389,6 +4392,7 @@ def board_relabel():
     data    = request.json or {}
     dry_run = bool(data.get("dry_run"))
     changes = []
+    brand = load_brand()   # read once, not once per board entry under the lock
     with _BOARD_LOCK:
         board = load_board()
         for b in board:
@@ -4401,7 +4405,7 @@ def board_relabel():
                     meta = json.load(f)
             except Exception:
                 continue
-            facts = _facts_from_session(meta)
+            facts = _facts_from_session(meta, brand=brand)
             if not facts["product"] and not facts["persona"]:
                 continue
             before = {k: b.get(k, "") for k in ("label", "persona", "angle", "style", "problem")}
@@ -4477,7 +4481,7 @@ def board_repair():
             cached = meta.get("cached_copy_by_problem") or {}
             fname  = f"board_{next_id:05d}.png"
             shutil.copy2(str(src), str(BOARD_DIR / fname))
-            facts = _facts_from_session(meta, fallback_product=pname)
+            facts = _facts_from_session(meta, fallback_product=pname, brand=brand)
             board.append({
                 "id": next_id, "filename": fname,
                 "label": f"Ad {src.stem.split('_')[1]}" +
@@ -4794,10 +4798,21 @@ OUTPUT RULES:
 
         # Save as a variant file alongside the original — NOT added to the
         # main board grid, so the original board item stays unchanged.
-        variant_idx = len(list(BOARD_DIR.glob(f"{src_path.stem}_v*.png"))) + 1
-        v_filename  = f"{src_path.stem}_v{variant_idx}.png"
-        with open(BOARD_DIR / v_filename, "wb") as fp:
-            fp.write(img_bytes)
+        # Number from the HIGHEST existing suffix + 1, not the COUNT of files:
+        # counting reused a number after any middle variant was deleted (delete
+        # v2 of v1/v2/v3, then regenerate -> count=2 -> "v3" -> overwrote the real
+        # v3). Reserve the name under the board lock so parallel tweaks on the
+        # same item can't both claim it, and these files have no other backup.
+        with _BOARD_LOCK:
+            existing = []
+            for p in BOARD_DIR.glob(f"{src_path.stem}_v*.png"):
+                m = re.fullmatch(rf"{re.escape(src_path.stem)}_v(\d+)\.png", p.name)
+                if m:
+                    existing.append(int(m.group(1)))
+            variant_idx = (max(existing) + 1) if existing else 1
+            v_filename  = f"{src_path.stem}_v{variant_idx}.png"
+            with open(BOARD_DIR / v_filename, "wb") as fp:
+                fp.write(img_bytes)
         # Tweak variants live ONLY here — there is no copy in sessions/ like there
         # is for normal generations — so snapshot immediately or an unlucky wipe
         # loses them permanently (which is exactly what happened on 21-22 Jul).

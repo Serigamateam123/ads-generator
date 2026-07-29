@@ -137,5 +137,47 @@ ts = [threading.Thread(target=bslot, args=(i,)) for i in range(10)]
 b = U.load_board()
 check("10 concurrent writes all survive", len(b) == 10 and len(set(x["id"] for x in b)) == 10, f"{len(b)}")
 
+
+# tweak-variant filename must not collide after a middle variant is deleted
+def _test_variant_naming():
+    import re as _re
+    from pathlib import Path as _P
+    print("\n=== 7. Tweak-variant naming survives a middle delete ===")
+    d = U.BOARD_DIR
+    for p in d.glob("board_09999_v*.png"):
+        p.unlink()
+    stem = "board_09999"
+
+    def claim_and_write(payload):
+        # mirrors the fixed logic in board_regenerate
+        with U._BOARD_LOCK:
+            ex = []
+            for p in d.glob(f"{stem}_v*.png"):
+                m = _re.fullmatch(rf"{_re.escape(stem)}_v(\d+)\.png", p.name)
+                if m:
+                    ex.append(int(m.group(1)))
+            i = (max(ex) + 1) if ex else 1
+            (d / f"{stem}_v{i}.png").write_bytes(payload)
+            return i
+
+    for k in range(3):
+        claim_and_write(f"orig-{k+1}".encode())
+    (d / f"{stem}_v2.png").unlink()                 # user deletes the middle one
+    v3_before = (d / f"{stem}_v3.png").read_bytes()
+    new_i = claim_and_write(b"NEW")                 # regenerate one more
+    _fails = []
+    if new_i != 4:
+        _fails.append(f"expected v4, got v{new_i}")
+    if (d / f"{stem}_v3.png").read_bytes() != v3_before:
+        _fails.append("v3 was overwritten")
+    for p in d.glob(f"{stem}_v*.png"):
+        p.unlink()
+    print("  " + ("PASS" if not _fails else "FAIL") + "  regenerate after delete does not overwrite  " + "; ".join(_fails))
+    return not _fails
+
+
+if not _test_variant_naming():
+    fails.append("variant naming")
+
 print("\n" + ("ALL CHECKS PASSED" if not fails else f"{len(fails)} FAILED: {fails}"))
 sys.exit(1 if fails else 0)
