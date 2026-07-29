@@ -8202,5 +8202,164 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 113,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0113.png",
+    "label": "Winning Ad #113",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "central image with radiating information points, headline at top, brand logo top right, CTA at bottom",
+        "product_placement": "The central image of a mother and baby serves as the focal point representing the service, occupying the lower-middle section of the canvas.",
+        "headline_placement": "Top center of the canvas",
+        "cta_placement": "Bottom center of the canvas",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#F2EBEB",
+        "background_description": "subtle gradient from white to very light pinkish-grey",
+        "dominant_color": "#992C5F",
+        "dominant_description": "headline keywords, logo, icons, and CTA text",
+        "accent_color": "#333333",
+        "accent_description": "remaining headline text, descriptive text, and contact information",
+        "text_color_headline": "mixed: #333333 and #992C5F",
+        "text_color_subheadline": "#333333",
+        "cta_color": "#992C5F"
+      },
+      "typography": {
+        "headline_weight": "mixed: bold for keywords, medium for others",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "bold for the central statement, regular for icon descriptions",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "warm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad evokes a feeling of gentle care, expertise, and support for new mothers, focusing on their well-being alongside their baby's."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "The service is represented by a central photographic image of a mother holding her baby, surrounded by descriptive icons."
+      },
+      "graphic_elements": [
+        "Nisha Nursing Home logo (stylized pregnant woman) top-right",
+        "Dashed circular line radiating from the central image",
+        "Circular icon for 'Healing from stitches or C-section' (stitches) top-left",
+        "Circular icon for 'Uterus recovery check' (uterus shape) mid-left",
+        "Circular icon for 'Breastfeeding support' (baby bottles) top-right within the dashed circle",
+        "Circular icon for 'Birth control discussion' (contraceptive device) mid-right within the dashed circle",
+        "Circular icon for 'Mental health & mood screening' (brain with light rays) bottom-right within the dashed circle",
+        "Lines connecting each icon to the dashed circle",
+        "Phone icon preceding contact number at the bottom",
+        "Globe icon preceding website URL at the bottom"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The central image of the mother and baby",
+        "second_attention": "The main headline 'Postpartum checkup every new mom deserves after delivery!'",
+        "third_attention": "The surrounding circular icons and their brief descriptions",
+        "fourth_attention": "The statement 'A healthy mom is just as important as a healthy baby.' and the contact information"
+      },
+      "forbidden_elements": [
+        "NO aggressive or urgent calls to action",
+        "NO dark or moody lighting",
+        "NO vibrant or highly saturated background colors",
+        "NO complex or busy background scenes",
+        "NO cartoonish or overly simplistic illustrations for the main image",
+        "NO strong contrasting borders or frames",
+        "NO pop-up elements or overlapping text blocks",
+        "NO certification badges or trust seals that aren't integrated into the brand logo"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 114,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0114.png",
+    "label": "Winning Ad #114",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "composite photographic scene with overlayed text, featuring two primary visual narratives: a distressed mother and baby in a crib (split across top-left and main right panel) and the headline text positioned centrally on the lower half.",
+        "product_placement": "A multi-function baby monitor/night light on the left crib rail (top-left panel) and a mushroom-shaped night light on the bedside table next to the crib (bottom-right panel).",
+        "headline_placement": "Central, overlaying the lower half of the crib and baby.",
+        "cta_placement": "none",
+        "negative_space": "minimal"
+      },
+      "colors": {
+        "background": "#A3BFB8",
+        "background_description": "photographic scene of a baby's nursery room",
+        "dominant_color": "#A3BFB8",
+        "dominant_description": "nursery wall color",
+        "accent_color": "#B8A9C9",
+        "accent_description": "mother's t-shirt color (main panel)",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "STOP DOING THIS on one line, BIG MISTAKE! stacked on two lines below it (BIG smaller, centered above MISTAKE!)",
+        "subheadline_weight": "medium",
+        "subheadline_size": "small relative to headline"
+      },
+      "mood": {
+        "tone": "urgent",
+        "energy_level": "medium",
+        "lighting": "dark moody, with warm localized light sources",
+        "overall_feel": "The ad evokes a sense of parental exhaustion and frustration, offering an urgent call to action for a better solution."
+      },
+      "composition": {
+        "style": "busy",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "cribs, blankets, baby monitors/lights, wall art, baby mobile, tea cups, water bottle, clothes basket",
+        "product_style": "integrated into the scene, standing on surfaces or attached to crib"
+      },
+      "graphic_elements": [
+        "Moon-shaped light on crib rail top-left",
+        "Wall art with 'Dream BIG Little One' top-right",
+        "Framed ultrasound images top-right",
+        "Baby mobile with animal figures top-right",
+        "Mushroom-shaped night light on bedside table bottom-left",
+        "Laundry basket bottom-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "distressed mother's face on the right",
+        "second_attention": "headline text 'STOP DOING THIS BIG MISTAKE!'",
+        "third_attention": "the peacefully sleeping baby in the bottom crib",
+        "fourth_attention": "the baby/mother scene in the top-left"
+      },
+      "forbidden_elements": [
+        "NO bright, direct studio lighting",
+        "NO cartoon characters or overly playful graphics",
+        "NO explicit CTA button graphic",
+        "NO abstract patterns or gradients on background",
+        "NO certification badges or trust seals",
+        "NO speech bubbles",
+        "NO arrows pointing to specific product features",
+        "NO strong, saturated primary colors",
+        "NO minimalist layout"
+      ],
+      "size": "portrait"
+    }
   }
 ]
