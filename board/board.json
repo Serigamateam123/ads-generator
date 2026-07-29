@@ -1,5 +1,35 @@
 [
   {
+    "id": 357,
+    "filename": "board_00357.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Comparison",
+    "style": "",
+    "quality": "final",
+    "session_id": "8df447fc",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-29T13:49:44",
+    "copy_data": {
+      "h1": "Pulih Czer Cepat, Cergas Urus Si Kecil.",
+      "h2": "Pulihkan luka, badan agar cergas semula.",
+      "cta": "Rasai bezanya sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan badan menyeluruh.",
+        "Bantu percepat pemulihan luka.",
+        "Bina semula tisu baharu.",
+        "Galak penghasilan kolagen asli."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 356,
     "filename": "board_00356.png",
     "label": "Ad 1 — Jeli Gamat 550ML",

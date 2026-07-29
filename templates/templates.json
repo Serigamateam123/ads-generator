@@ -8361,5 +8361,77 @@
       ],
       "size": "portrait"
     }
+  },
+  {
+    "id": 115,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0115.png",
+    "label": "Winning Ad #115",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout is divided into a top text section and a bottom section featuring two side-by-side photographic images. The top text is centrally aligned above the images.",
+        "product_placement": "The company logo and handle are placed at the very bottom center of the canvas.",
+        "headline_placement": "The main headline is positioned at the top center of the canvas. Sub-headlines are placed directly above their respective images.",
+        "cta_placement": "The brand logo and Instagram handle '@LifeOnPurposeDoulas' at the bottom serve as a soft CTA/branding element.",
+        "negative_space": "Moderate, with ample white space around the main headline and between the image section and the concluding text/logo."
+      },
+      "colors": {
+        "background": "#FFFFFF",
+        "background_description": "Flat solid white for the overall canvas and text areas.",
+        "dominant_color": "#FDFDFD",
+        "dominant_description": "The light, neutral beige/tan color of the mothers' clothing and the baby's onesie in both photographs.",
+        "accent_color": "#E9729B",
+        "accent_description": "The pink color used for the directional arrows.",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#000000",
+        "cta_color": "#000000"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "serif",
+        "headline_line_breaks": "stacked short lines, three lines for the main headline",
+        "subheadline_weight": "medium",
+        "subheadline_size": "medium compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The brand conveys an empathetic and supportive feel, aiming to highlight the importance of assistance for new mothers."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "baby bottle, crying baby, messy background (left image); sleeping baby, mug, blanket, tidy background (right image)",
+        "product_style": "The 'product' (doula services) is indirectly represented by the contrasting outcomes shown in the images, with the brand logo placed at the bottom."
+      },
+      "graphic_elements": [
+        "Pink curved arrow pointing from 'She is surviving.' text to the head of the mother in the left image, located in the top-left of the image section.",
+        "Pink curved arrow pointing from 'She is supported.' text to the head of the mother in the right image, located in the top-right of the image section.",
+        "Circular logo badge 'LIFE ON PURPOSE DOULAS' with a stylized purple and green icon, centered at the bottom of the ad."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The main headline 'BOTH OF THESE MOMS LOVE THEIR BABIES.' due to its large size and prominent placement.",
+        "second_attention": "The two contrasting photographic images, particularly the distressed mother and crying baby on the left.",
+        "third_attention": "The concluding statement 'Love isn't the difference. Support is.' with 'Support is.' being bold and underlined.",
+        "fourth_attention": "The company logo and Instagram handle at the very bottom of the ad."
+      },
+      "forbidden_elements": [
+        "NO vibrant, saturated color filters over photos",
+        "NO aggressive or high-pressure CTA buttons",
+        "NO complex illustrations beyond the brand logo",
+        "NO abstract or patterned backgrounds behind the text",
+        "NO cartoonish or overly playful elements",
+        "NO certification badges or star ratings"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
