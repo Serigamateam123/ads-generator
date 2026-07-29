@@ -8433,5 +8433,80 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 116,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0116.png",
+    "label": "Winning Ad #116",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "top section with a large photographic scene, bottom section with infographic comparisons and icons",
+        "product_placement": "center-left of the upper half, positioned on a bed",
+        "headline_placement": "top center",
+        "cta_placement": "none",
+        "negative_space": "moderate, particularly around the main photographic subject"
+      },
+      "colors": {
+        "background": "#F8F5EF",
+        "background_description": "photographic scene of a bedroom with soft, light tones",
+        "dominant_color": "#845D4B",
+        "dominant_description": "the brown parts of the baby positioner",
+        "accent_color": "#4A3C32",
+        "accent_description": "headline text and text in icons/infographics",
+        "text_color_headline": "#4A3C32",
+        "text_color_subheadline": "#4A3C32",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (two lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium, significantly smaller than headline"
+      },
+      "mood": {
+        "tone": "warm, calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A gentle and reassuring brand feel focused on baby comfort and parent convenience."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "bedding, wooden bedside table (partially visible)",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "three circular icons with text (baby in fetal position, happy baby face, hands holding heart) below the subheadline, top-center",
+        "curved arrow with text 'Góc nghiêng nhẹ' (Gentle incline) pointing to the incline of the product, center-left",
+        "two comparison diagrams (inclined vs. flat baby) with a green checkmark (left) and a grey cross (right), bottom-left and bottom-right",
+        "three circular icons with text (angle symbol, cloud symbol, refresh/recycle symbol) along the very bottom"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the baby and the mother, as they are human subjects and centrally positioned",
+        "second_attention": "the large headline text 'TƯ THẾ NGHIÊNG NHẸ SAU BÚ'",
+        "third_attention": "the product itself, the baby positioner",
+        "fourth_attention": "the comparison diagrams and descriptive icons at the bottom"
+      },
+      "forbidden_elements": [
+        "NO strong, vibrant, or neon colors",
+        "NO dramatic or harsh lighting/shadows",
+        "NO busy or cluttered background patterns",
+        "NO speech bubbles",
+        "NO discount percentages or urgent sales language",
+        "NO certification badges or star ratings in prominent positions",
+        "NO dark or moody tones",
+        "NO gradient overlays on the product or background"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
