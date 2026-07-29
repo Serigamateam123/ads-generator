@@ -8737,5 +8737,382 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 120,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0120.png",
+    "label": "Winning Ad #120",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "text aligned top-left, products stacked bottom-right, creating an asymmetric balance",
+        "product_placement": "bottom-right to middle-right section of the canvas",
+        "headline_placement": "top-left quadrant of the canvas",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F2EDE4",
+        "background_description": "flat solid",
+        "dominant_color": "#F2EDE4",
+        "dominant_description": "background",
+        "accent_color": "#0C775D",
+        "accent_description": "headline text and brand logos",
+        "text_color_headline": "#0C775D",
+        "text_color_subheadline": "#0C775D",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "calm, trustworthy, premium",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clean, natural, and confident brand promoting wellness with a premium, gentle aesthetic."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "green plant stem with a few white pills, in foreground",
+        "product_style": "standing on surface, leaning against each other"
+      },
+      "graphic_elements": [
+        "yellow highlight box with text 'hair, skin, anti-aging' on the light blue box, mid-right",
+        "yellow highlight box with text 'relaxation + sleep' on the purple box, mid-left",
+        "green plant stem in the foreground, extending from bottom-left to middle-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large green text 'Bundle + Save 15%'",
+        "second_attention": "The two distinct product boxes",
+        "third_attention": "The 'MOOM' logo at the top",
+        "fourth_attention": "The yellow highlighted text on the product boxes"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex photographic background scenes",
+        "NO aggressive call-to-action buttons",
+        "NO bright, highly saturated colors for main branding",
+        "NO overly playful or script fonts for headlines",
+        "NO speech bubbles",
+        "NO sunburst or gradient background",
+        "NO certification badges as primary graphic elements",
+        "NO cluttered layout",
+        "NO warm orange or red tones in the main design"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 121,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0121.png",
+    "label": "Winning Ad #121",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with product and main headlines on the left and ingredient details on the right",
+        "product_placement": "bottom-left to center-left",
+        "headline_placement": "top-left quadrant",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#FFFDC8 (gradient from top-left to bottom-right, transitioning from #FEE79D to #FFFDC8)",
+        "background_description": "gradient from light yellow to a lighter cream/yellow",
+        "dominant_color": "#FFFDC8",
+        "dominant_description": "background",
+        "accent_color": "#000000",
+        "accent_description": "headline and primary text",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#000000",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase for main questions, title case for sub-headline",
+        "headline_size": "very large for questions, medium for sub-headline",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines for questions, one long line for sub-headline",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "The ad conveys a calm and trustworthy feeling, emphasizing natural relief and support for digestive issues with clear, concise information."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "gradient",
+        "overlay_style": "none",
+        "props": "slippery elm bark, whole green papaya, bunch of green bananas",
+        "product_style": "standing on an implied surface at the bottom"
+      },
+      "graphic_elements": [
+        "product packaging 'STOMACH SOOTHE' at center-left",
+        "small green circular logo 'SOOTHE' on product packaging",
+        "green banner 'Natural Gut Relief + Support' on product packaging",
+        "text bullet points above product name: 'HEARTBURN - INDIGESTION - BLOAT'",
+        "image of slippery elm bark pieces with text 'Slippery Elm' and 'Coats & Protects G.I. Tract', top-right",
+        "image of a whole green papaya with text 'Papaya' and 'Papain enzyme promotes healing', middle-right",
+        "image of a bunch of green bananas with text 'Green Banana' and 'Regulates acid & feeds good gut bacteria', bottom-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large bold headline 'ACID? BURPING? BLOAT?'",
+        "second_attention": "The product 'STOMACH SOOTHE' packaging",
+        "third_attention": "The ingredient images and their descriptive text on the right",
+        "fourth_attention": "The sub-headline 'Real ingredients, safe and drug free'"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO complex or photographic background scenes",
+        "NO vibrant or highly saturated background colors",
+        "NO speech bubbles or starburst graphics",
+        "NO explicit CTA button (e.g., 'Shop Now')",
+        "NO cluttered or busy layout"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 122,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0122.png",
+    "label": "Winning Ad #122",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "centered product with headline top-left, callouts around the product",
+        "product_placement": "slightly below the vertical center, angled diagonally",
+        "headline_placement": "top-left quadrant of the image",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#FFFFFF",
+        "background_description": "flat solid",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "background",
+        "accent_color": "#FFEE58",
+        "accent_description": "headline highlight and callout boxes",
+        "text_color_headline": "black for 'Goodbye', red for 'Gas, Acid & Burps'",
+        "text_color_subheadline": "black (for callout text)",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "serif for 'Goodbye', sans-serif for 'Gas, Acid & Burps'",
+        "headline_line_breaks": "stacked short lines (visually, as 'Goodbye' and 'Gas, Acid & Burps' are distinct lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clean, trustworthy, and effective solution for digestive health, presented with clarity."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "illustrated fruits, roots, and herbs on product packaging",
+        "product_style": "floating"
+      },
+      "graphic_elements": [
+        "yellow highlight box behind 'Goodbye' text, top-left",
+        "four yellow rectangular callout boxes with green checkmarks and black text, connected to the product by black lines: 'DRUG-FREE & NON-ADDICTIVE' (top-right), 'HEALTHIER GUT' (middle-right), 'NATURAL RELIEF' (middle-left), 'SOOTHES & HEALS' (bottom-left)"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the headline 'Goodbye Gas, Acid & Burps'",
+        "second_attention": "the product packaging 'STOMACH SOOTHE'",
+        "third_attention": "the callout boxes with benefits",
+        "fourth_attention": "smaller text on the product packaging"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy or photographic background scenes",
+        "NO gradient or textured background",
+        "NO price tags or discount badges",
+        "NO speech bubbles",
+        "NO dark or moody lighting",
+        "NO cluttered layout",
+        "NO certification badges (beyond simple checkmarks)"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 123,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0123.png",
+    "label": "Winning Ad #123",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The image is vertically split into two main sections: a top section featuring three photographic panels illustrating health problems, and a bottom section presenting the product and solution. The product is placed on the right side of the bottom section, and the main headline and CTA elements are on the left.",
+        "product_placement": "Bottom right of the overall canvas.",
+        "headline_placement": "Bottom left of the overall canvas, above the e-commerce platform logos.",
+        "cta_placement": "Bottom left of the overall canvas, below the main headline, represented by platform logos.",
+        "negative_space": "Moderate, with a clear white space in the bottom section, contrasting with the more packed photographic top section."
+      },
+      "colors": {
+        "background": "Varies: photographic scenes at the top (muted greys, browns, and blues), and a textured white (#FFFFFF) for the bottom section.",
+        "background_description": "Photographic scene (top) and textured white surface (bottom).",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "Bottom section background and product label.",
+        "accent_color": "#1A665A",
+        "accent_description": "Product lid, ethnique logo, main headline text, and key product text on the label.",
+        "text_color_headline": "#1A665A",
+        "text_color_subheadline": "Light grey (#D0D0D0) for questions at the top, bright white (#FFFFFF) for emphasized words in questions, and black (#000000) for small text on the product label.",
+        "cta_color": "Varied (Amazon: black/orange, Tata 1mg: black/red, Blinkit: yellow/white)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (4 lines)",
+        "subheadline_weight": "medium (for questions), bold (for emphasized words in questions), regular (for product details)",
+        "subheadline_size": "small (for questions), medium (for product details) - significantly smaller than headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "medium",
+        "lighting": "flat natural (for human scenes), bright studio (for product)",
+        "overall_feel": "A direct and empathetic ad that addresses common respiratory issues and offers a natural, trustworthy solution."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph (top), textured white (bottom)",
+        "overlay_style": "none (on photos, except for a red glow effect on one person's chest), torn paper effect (between top and bottom sections)",
+        "props": "Tissues in one of the human panels, product packaging.",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "A small square icon with a circle inside, placed on the top right corner of the product label.",
+        "A textured, torn paper-like graphic element forming the separation line between the top photographic section and the bottom white section.",
+        "A small dot pattern (logo) integrated with the 'ethniq' brand name on the product label.",
+        "A subtle red glow effect on the chest of the woman in the middle panel, visually representing tightness/pain."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large headline 'Relief you can feel in every sip!' due to its size, color, and prominent placement.",
+        "second_attention": "The 'ethniq LUNG DETOX TEA' product packaging, strategically placed to be easily seen after the headline.",
+        "third_attention": "The three photographic panels at the top, particularly the middle one with the red glow indicating discomfort.",
+        "fourth_attention": "The questions at the top and the e-commerce platform logos at the bottom."
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO cartoon characters or illustrations (aside from brand logos)",
+        "NO overtly aggressive or alarmist text",
+        "NO price tags or discount percentages",
+        "NO large, prominent certification badges (beyond the small icon on the product)"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 124,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0124.png",
+    "label": "Winning Ad #124",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "layered composition with text at top, reminder card in middle, and product with props at bottom",
+        "product_placement": "bottom center, standing on a surface",
+        "headline_placement": "top center, below the brand logo",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#F0EDE5",
+        "background_description": "photographic scene, light warm beige with soft shadows",
+        "dominant_color": "#F0EDE5",
+        "dominant_description": "background surface and general ambiance",
+        "accent_color": "#3F5E4F",
+        "accent_description": "headline text 'Stronger you.', brand logo, and plant leaves",
+        "text_color_headline": "#333333 (for 'Small habits.') and #3F5E4F (for 'Stronger you.')",
+        "text_color_subheadline": "#333333",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "mixed: regular for 'Small habits.', bold for 'Stronger you.'",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (two lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "calm, trustworthy, warm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural, soft diffused light",
+        "overall_feel": "A calm and supportive brand feel, promoting healthy habits and well-being through gentle reminders and a natural setting."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "solid color block for the reminder card",
+        "props": "mug, wooden coaster, knitted blanket, plant in a glass vase, open book",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "partner.co logo, top-center",
+        "Reminder notification card, top-middle, with bell icon and 'now' text",
+        "Gold bell icon next to 'Weekend Reminder' inside the card",
+        "Red pill icon next to 'Take your Culturiix' inside the card",
+        "Blue water drop icon next to 'Drink Water' inside the card",
+        "Yellow smiling face icon next to 'Enjoy Yourself' inside the card",
+        "Green checkmark icons on the right side of each reminder item",
+        "Small green square icon with a leaf/plant symbol on the product label next to 'NUTRIFIL'"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Headline 'Small habits. Stronger you.'",
+        "second_attention": "Reminder card",
+        "third_attention": "Product bottle 'Culturiix'",
+        "fourth_attention": "Surrounding props (mug, plant, book)"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges (beyond the small leaf icon)",
+        "NO strong or saturated colors in the overall palette",
+        "NO urgent or aggressive calls to action",
+        "NO human models",
+        "NO dark or moody lighting",
+        "NO abstract art backgrounds"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
