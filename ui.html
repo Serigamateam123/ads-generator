@@ -874,6 +874,10 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <div class="prod-kit-chip-text">
           <strong id="prod-kit-name"></strong>
           <span id="prod-kit-mode">Brand kit photo in use</span>
+          <a href="#" id="prod-kit-autopick" onclick="autoPickPhotos(event)"
+             style="display:none;font-size:11px;text-decoration:underline;margin-top:3px"
+             title="Let the app choose the clearest bottle photo and the best clear-liquid photo automatically">✨ Auto-pick best photos</a>
+          <span id="prod-kit-autopick-status" style="font-size:11px;color:var(--muted)"></span>
         </div>
       </div>
 
@@ -3716,6 +3720,10 @@ function onSidebarProductChange() {
         modeEl.textContent = `Auto-matching photo to template (${prod.photos.length} available)`;
       }
     }
+    // Offer the one-click auto role assignment when there's more than one photo to
+    // choose between (with a single photo there is nothing to pick).
+    const autoLink = document.getElementById('prod-kit-autopick');
+    if (autoLink) autoLink.style.display = (prod.photos.length > 1) ? 'inline-block' : 'none';
   } else if (prod) {
     kitPreview.style.display  = 'none';
     warnEl.style.display      = 'none';   // no photo warning — knowledge still works
@@ -3743,6 +3751,42 @@ async function saveDefaultPhotos(productId, fields) {
     const prod = allProducts.find(p => p.id === productId);
     if (prod) Object.assign(prod, fields);
   } catch (e) { console.error('Failed to save default photo:', e); }
+}
+
+// Let the app choose the two photo roles automatically: the clearest bottle shot
+// as the product-identity reference, and the best clear-liquid/pour shot as the
+// texture reference. Identity stays one consistent bottle (never a per-render
+// swap), so this doesn't reintroduce the wrong-bottle problem.
+async function autoPickPhotos(e) {
+  if (e) e.preventDefault();
+  const pid = activeProductId;
+  if (pid == null) return;
+  const status = document.getElementById('prod-kit-autopick-status');
+  const link   = document.getElementById('prod-kit-autopick');
+  if (link) link.style.pointerEvents = 'none';
+  if (status) { status.textContent = ' · analysing photos…'; status.style.color = '#f59e0b'; }
+  try {
+    const r = await fetch(`/api/brand-kit/products/${pid}/auto-assign-photos`, { method:'POST' });
+    const d = await r.json();
+    if (d.error) { if (status) { status.textContent = ' · ' + d.error; status.style.color = '#dc2626'; } return; }
+    // Reflect the new defaults in memory + UI immediately.
+    const prod = allProducts.find(p => p.id === pid);
+    if (prod) { prod.default_photo_path = d.identity; prod.default_texture_path = d.texture; }
+    state.selectedProductPhotoPath = d.identity || state.selectedProductPhotoPath;
+    state.selectedTexturePhotoPath = d.texture  || null;
+    state.productPhotoManuallyPicked = false;
+    _lastPhotoInitProductId = null;   // force the preview to re-init from new defaults
+    onSidebarProductChange();
+    if (status) {
+      status.style.color = '#16a34a';
+      status.innerHTML = ` · ✓ bottle: <b>${(d.identity_reason||'').trim()}</b>, texture: <b>${(d.texture_reason||'none').trim()}</b>`;
+    }
+    toast('✨ Auto-picked: identity + texture photo set');
+  } catch (err) {
+    if (status) { status.textContent = ' · failed: ' + err.message; status.style.color = '#dc2626'; }
+  } finally {
+    if (link) link.style.pointerEvents = '';
+  }
 }
 
 // ── Brand persistence helpers ─────────────────────────────────────────────────

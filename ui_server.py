@@ -1499,6 +1499,14 @@ def classify_product_photo(image_path: str) -> str:
         "'group of bottles', 'lifestyle scene with props'. Reply with ONLY the short phrase.",
         image_path, timeout=15
     )
+    # A failed/rate-limited vision call returns "" which buckets to 'bottle_alone'.
+    # Caching that POISONS the photo's classification forever — one transient blip
+    # (or a keyless call) permanently mislabels a pour/lifestyle shot as a plain
+    # bottle. Only cache a REAL answer; on failure return the neutral default
+    # WITHOUT persisting, so the next call retries. (Same lesson as product_visual_for.)
+    if not (raw or "").strip():
+        print(f"[classify] vision call empty for {Path(image_path).name} — not caching, will retry")
+        return "bottle_alone"
     category = _bucket_presentation(raw)
     cache[image_path] = category
     save_photo_styles(cache)
@@ -4905,6 +4913,68 @@ def set_default_product_photos(product_id):
         prod["default_texture_path"] = _validate(data.get("default_texture_path", ""))
     save_brand(brand)
     return jsonify({"ok": True, "product": prod})
+
+@app.route("/api/brand-kit/products/<int:product_id>/auto-assign-photos", methods=["POST"])
+def auto_assign_product_photos(product_id):
+    """Let the app pick the two photo ROLES automatically from the product's photos,
+    using the same vision classification used elsewhere:
+      • IDENTITY (IMAGE 1) — the cleanest isolated single-bottle shot. A transparent
+        cut-out wins; otherwise a photo classified 'bottle_alone'. Group/pour/
+        lifestyle shots are never chosen as identity, because feeding one of those
+        as the thing-to-reproduce is what made Gemini render the wrong vessel.
+      • TEXTURE (IMAGE 3) — the best shot of the actual contents: a 'poured_glass'
+        photo, else a spoon/pour 'lifestyle' shot. Group shots are de-prioritised.
+    Identity stays a single consistent bottle (no per-render swapping). Saves the
+    choices as this product's defaults and returns them with reasons."""
+    brand = load_brand()
+    prod  = next((p for p in brand.get("products", []) if p.get("id") == product_id), None)
+    if prod is None:
+        return jsonify({"error": "Product not found"}), 404
+    photos = [p for p in prod.get("photos", []) if os.path.exists(p)]
+    if not photos:
+        return jsonify({"error": "This product has no photos to choose from."}), 400
+
+    # Classify every photo once (cached to disk by classify_product_photo).
+    info = []
+    for p in photos:
+        info.append({"path": p, "name": Path(p).name,
+                     "bucket": classify_product_photo(p),
+                     "cutout": _photo_is_cutout(p)})
+
+    def first(pred):
+        return next((i["path"] for i in info if pred(i)), "")
+
+    # IDENTITY: cut-out > lone bottle > any non-group/non-pour > cleanest fallback
+    identity = (first(lambda i: i["cutout"])
+                or first(lambda i: i["bucket"] == "bottle_alone")
+                or first(lambda i: i["bucket"] not in ("group_bottles", "poured_glass"))
+                or _best_product_identity_photo(photos))
+
+    # TEXTURE: a poured-into-glass shot > a spoon/pour lifestyle shot, preferring a
+    # non-group one; never the identity photo itself.
+    texture = (first(lambda i: i["bucket"] == "poured_glass" and i["path"] != identity)
+               or first(lambda i: i["bucket"] == "lifestyle_scene" and i["path"] != identity)
+               or first(lambda i: i["path"] != identity)
+               or "")
+
+    prod["default_photo_path"]   = identity
+    prod["default_texture_path"] = texture
+    save_brand(brand)
+
+    reason = {i["path"]: (("cut-out " if i["cutout"] else "") + i["bucket"]) for i in info}
+    return jsonify({
+        "ok": True,
+        "identity":         identity,
+        "identity_name":    Path(identity).name if identity else "",
+        "identity_reason":  reason.get(identity, ""),
+        "texture":          texture,
+        "texture_name":     Path(texture).name if texture else "",
+        "texture_reason":   reason.get(texture, ""),
+        "classified":       [{"name": i["name"], "role":
+                              ("identity" if i["path"] == identity else
+                               "texture"  if i["path"] == texture  else "unused"),
+                              "kind": reason[i["path"]]} for i in info],
+    })
 
 def test_product_image():  # kept as debug utility (no route, called manually)
     """
