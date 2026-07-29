@@ -8508,5 +8508,93 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 117,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0117.png",
+    "label": "Winning Ad #117",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric multi-panel layout with a large primary image at the top, a headline block at the bottom-left, and a grid of supporting images at the bottom-right",
+        "product_placement": "The product (nursing pillow) is centrally featured in the large top image being used by a mother and baby. It also appears in all four smaller images within the bottom-right grid, demonstrating different uses.",
+        "headline_placement": "The main headline 'NURSING PILLOW to ease your postpartum journey.' is positioned in the bottom-left quadrant of the canvas.",
+        "cta_placement": "none",
+        "negative_space": "moderate, with breathing room around text blocks and between visual elements, contributing to a calm aesthetic"
+      },
+      "colors": {
+        "background": "#F5F5F5",
+        "background_description": "flat solid",
+        "dominant_color": "#F5F5F5",
+        "dominant_description": "the main canvas background",
+        "accent_color": "#E2B1B1",
+        "accent_description": "decorative rounded shapes, pillow trim, and floral patterns",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#000000",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold for 'NURSING PILLOW', medium for 'to ease your postpartum journey.'",
+        "headline_case": "uppercase for 'NURSING PILLOW', lowercase for 'to ease your postpartum journey.'",
+        "headline_size": "very large for 'NURSING PILLOW', large for 'to ease your postpartum journey.'",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "medium for 'PROMOTING POSTPARTUM COMFORT' and 'FEEDING', 'BACK SUPPORT', 'TUMMY TIME', 'LOUNGING'; bold for 'VERSATILE PILLOW FOR EVERY STAGE'",
+        "subheadline_size": "small for 'PROMOTING POSTPARTUM COMFORT', medium for 'VERSATILE PILLOW FOR EVERY STAGE', small for usage labels"
+      },
+      "mood": {
+        "tone": "warm, calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad conveys a gentle, supportive, and reassuring brand feel focused on comfort and ease for new parents."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "flat solid color for the overall canvas with real photographs integrated",
+        "overlay_style": "solid color block (for the rounded content panels)",
+        "props": "nursing pillow, baby bottle, babies, sofa, toy",
+        "product_style": "held by hand and supporting babies in various stages"
+      },
+      "graphic_elements": [
+        "large rounded rectangular frame for the main image at the top",
+        "large rounded rectangular frame for the 'VERSATILE PILLOW' section at the bottom-right",
+        "two large overlapping rounded shapes (pink and sage green) in the top-left corner, partially obscuring the main image background",
+        "two smaller overlapping rounded shapes (pink and sage green) behind the headline text in the bottom-left",
+        "one small rounded shape (cream) at the very bottom-left",
+        "four small rounded rectangular frames for the individual demonstration images within the 'VERSATILE PILLOW' grid",
+        "a small leaf logo with 'COMFORT CARE' text at the very bottom-right corner"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the mother and baby using the pillow in the large top image",
+        "second_attention": "the bold headline 'NURSING PILLOW' in the bottom-left",
+        "third_attention": "the 'VERSATILE PILLOW FOR EVERY STAGE' text and the grid of four smaller images",
+        "fourth_attention": "the vertical text 'PROMOTING POSTPARTUM COMFORT' along the right edge"
+      },
+      "forbidden_elements": [
+        "NO hard geometric shapes (all shapes are rounded)",
+        "NO aggressive or urgent language",
+        "NO bright or neon color palette",
+        "NO complex graphical patterns in the background (outside of the pillow itself)",
+        "NO explicit pricing or discount callouts",
+        "NO speech bubbles or thought bubbles",
+        "NO certification badges or seals",
+        "NO busy or cluttered layout",
+        "NO gradient backgrounds",
+        "NO stock photo looking people (authentic human photography)"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 118,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0118.png",
+    "label": "Winning Ad #118",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0
   }
 ]
