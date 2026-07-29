@@ -2195,14 +2195,26 @@ def generate_copy_from_knowledge(framework_hint, problem, problem_ctx, brand,
         # (so a gastric ad always says something about digestion/stomach), but pick
         # the remaining slots randomly from the rest and shuffle them, so repeated
         # images don't show identical bullet lists.
+        # Keep copy on-problem WITHOUT repeating the same opening benefits every
+        # render. Lists are ordered most-specific-first, so the front is the
+        # on-problem zone and the tail is more generic ("supports body recovery").
+        # The old code ALWAYS took bullets 0-1 as the lead, so e.g. every C-section
+        # ad opened with the identical two benefits and only the fill varied — which
+        # is exactly the "same benefit every time" complaint. Instead, pick the
+        # leads RANDOMLY from the specific front half (so they stay on-problem but
+        # rotate across renders), then fill the rest from what's left. Leads stay
+        # first so a generic tail bullet never headlines the ad. Over many renders
+        # this cycles through all authored benefits.
         LEAD = 2
-        lead = authored_benefits[:LEAD]
-        rest = [b for b in authored_benefits[LEAD:]]
+        n = len(authored_benefits)
+        front = authored_benefits[:max(LEAD, (n + 1) // 2)]   # specific, on-problem zone
+        lead  = random.sample(front, min(LEAD, len(front)))
+        rest  = [b for b in authored_benefits if b not in lead]
         extra = random.sample(rest, min(max(0, 5 - len(lead)), len(rest))) if rest else []
         random.shuffle(extra)
         direct_benefits = lead + extra
         print(f"[copy-gen] Authored benefits for '{problem}' "
-              f"(on-problem lead + varied fill): {direct_benefits}")
+              f"(varied on-problem leads + fill): {direct_benefits}")
     else:
         benefit_keywords = get_benefit_keywords(product_name, problem)
         other_keywords   = get_other_benefit_keywords(product_name, problem)
