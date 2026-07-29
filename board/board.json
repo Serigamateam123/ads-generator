@@ -1,5 +1,35 @@
 [
   {
+    "id": 353,
+    "filename": "board_00353.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Social Proof",
+    "style": "",
+    "quality": "final",
+    "session_id": "3a3f90dd",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-07-29T13:33:11",
+    "copy_data": {
+      "h1": "Ibu lain yakin pulih selepas Czer.",
+      "h2": "Diperakui Halal, KKM, Taraf GMP.",
+      "cta": "Sertai ibu yang puas hati.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan selepas bersalin.",
+        "Bantu baiki tisu badan.",
+        "Bantu bina tisu baharu.",
+        "Sokong pemulihan kulit."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 352,
     "filename": "board_00352.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
