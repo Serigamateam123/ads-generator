@@ -8595,6 +8595,147 @@
     "label": "Winning Ad #118",
     "section": "Uploaded",
     "source": "image.png",
-    "page": 0
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout is primarily a photographic scene on the left featuring a mother and baby, with text elements arranged on the right and top. The main headline is at the top, and a checklist is on the right side.",
+        "product_placement": "N/A - The 'product' is the concept of self-care, embodied by the mother and baby, positioned in the center-left of the image.",
+        "headline_placement": "The main headline \"Small Steps, Big Difference\" is centered at the top, slightly to the left of the image's vertical center.",
+        "cta_placement": "The call to action \"YOU DESERVE CARE TOO Save this as a reminder\" is prominently placed in a horizontal bar at the bottom center of the image.",
+        "negative_space": "Generous, particularly in the upper right quadrant and around the text elements on the right, allowing breathing room for the copy."
+      },
+      "colors": {
+        "background": "#FBFBFB",
+        "background_description": "photographic scene of a light-filled living room with soft, muted tones",
+        "dominant_color": "#7F6D92",
+        "dominant_description": "light purple/lavender used in the baby's outfit, blanket, heart icons, checklist icons, and CTA background",
+        "accent_color": "#6A4C84",
+        "accent_description": "darker purple used for the main headline text and sub-headline text",
+        "text_color_headline": "#6A4C84",
+        "text_color_subheadline": "#6A4C84",
+        "cta_color": "#7F6D92"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "serif for main headline, sans-serif for sub-headlines and body text",
+        "headline_line_breaks": "stacked short lines, with 'Small Steps,' on the first line and 'Big Difference' on the second",
+        "subheadline_weight": "regular for most text, bold for 'YOU DESERVE CARE TOO'",
+        "subheadline_size": "small to medium compared to headline"
+      },
+      "mood": {
+        "tone": "warm, calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural, soft",
+        "overall_feel": "The brand conveys a comforting, gentle, and supportive feel, emphasizing care and well-being in a serene setting."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "rocking chair, lavender blanket, lavender plant in a pot, framed lavender drawing",
+        "product_style": "The subject (mother holding baby) is central to the visual narrative, presented naturally within a home setting."
+      },
+      "graphic_elements": [
+        "small heart icon above 'Small Steps, Big Difference' at the top center",
+        "six purple circular checkmark icons aligned vertically next to the checklist items on the right side",
+        "a small heart icon on the left side of the CTA bar at the bottom center",
+        "logo 'skymeds' with a medical cross icon at the top left"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The mother and baby",
+        "second_attention": "The main headline 'Small Steps, Big Difference'",
+        "third_attention": "The checklist items on the right",
+        "fourth_attention": "The CTA bar at the bottom"
+      },
+      "forbidden_elements": [
+        "NO harsh or bright primary colors",
+        "NO abstract or geometric patterns",
+        "NO bold or aggressive fonts for the main message",
+        "NO high-contrast or dramatic lighting",
+        "NO cluttered layout with too many elements",
+        "NO animated or busy backgrounds",
+        "NO speech bubbles or cartoon elements",
+        "NO price tags or discount badges"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 119,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0119.png",
+    "label": "Winning Ad #119",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right (before/after comparison)",
+        "product_placement": "right side, centered on the woman's lap",
+        "headline_placement": "top center",
+        "cta_placement": "bottom left ('Before') and bottom right ('After') as labels with emojis",
+        "negative_space": "moderate, mostly around the headline and along the center split line"
+      },
+      "colors": {
+        "background": "#FFFFFF (wall), #919395 (left couch), #DCC0AB (right couch), #E0E0E0 (left floor), #D4B28B (right floor)",
+        "background_description": "photographic scene (indoor living room with couch and wooden floor)",
+        "dominant_color": "#FFFFFF",
+        "dominant_description": "wall, woman's pants, and headline text (partially)",
+        "accent_color": "#D8A9B2",
+        "accent_description": "the product (nursing pillow) and parts of the headline text",
+        "text_color_headline": "mixture of #8C324D, #3C3C3C, and #CC3F5D",
+        "text_color_subheadline": "#5F5F5F",
+        "cta_color": "#F7D15A (After label background) and #F0F0F0 (Before label background)"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad conveys a sense of relief and comfort by presenting a clear solution to a common problem faced by mothers."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "nursing pillow (the product), two babies, two couches",
+        "product_style": "sitting on surface (on the woman's lap)"
+      },
+      "graphic_elements": [
+        "red glowing areas indicating pain on the neck, shoulders, and wrist of the woman in the 'Before' section (left side)",
+        "yellow glowing arcs/lines around the back, arms, and legs of the woman in the 'After' section, indicating comfort and ease of movement (right side)",
+        "sad face emoji icon on the 'Before' label, bottom left",
+        "happy face emoji icon on the 'After' label, bottom right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The headline 'Less Strain on Mom'",
+        "second_attention": "The 'After' scene with the happy mother and the product",
+        "third_attention": "The 'Before' scene with the uncomfortable mother and the red pain indicators",
+        "fourth_attention": "The subheadline and the 'Before' / 'After' labels at the bottom"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges or seals",
+        "NO abstract patterns or complex geometric shapes in the background",
+        "NO hand-drawn illustrations (other than stylistic glow effects)",
+        "NO discount stickers or percentage callouts",
+        "NO QR codes"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
