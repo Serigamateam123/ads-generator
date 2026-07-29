@@ -1333,6 +1333,17 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
               </div>
             </div>
 
+            <!-- Bottle / packaging size note — grounds Gemini on shape + scale so
+                 the product isn't rendered too tall/slim or the wrong size in a scene -->
+            <div class="form-row" style="margin-top:12px">
+              <label class="form-label">Bottle / packaging shape &amp; size note
+                <span style="font-weight:400;color:var(--muted)">— helps the AI render the right proportions and scale</span>
+              </label>
+              <textarea class="form-input" id="prod-bottle-note" rows="2"
+                oninput="scheduleProductAutoSave()"
+                placeholder="Describe SHAPE and SCALE, not millilitres — e.g. “A squat, wide jar, roughly as wide as it is tall, short body with a broad screw cap. About the size of a coffee mug — fits in one hand, stands roughly twice the height of its cap.”"></textarea>
+            </div>
+
             <!-- Knowledge tabs per product -->
             <div class="bp-knowledge-wrap" style="margin-top:16px">
               <div class="bp-knowledge-header">
@@ -3512,6 +3523,7 @@ function selectProduct(id) {
   document.getElementById('prod-sku').value        = prod.sku    || '';
   document.getElementById('prod-price').value      = prod.price  || '';
   document.getElementById('prod-url').value        = prod.product_url || '';
+  document.getElementById('prod-bottle-note').value = prod.bottle_note || '';
 
   const kb = prod.knowledge || {};
   document.getElementById('prod-know-product').value     = kb.product     || '';
@@ -3532,6 +3544,7 @@ function flushProductEditor() {
   prod.sku         = document.getElementById('prod-sku').value.trim();
   prod.price       = document.getElementById('prod-price').value.trim();
   prod.product_url = document.getElementById('prod-url').value.trim();
+  prod.bottle_note = document.getElementById('prod-bottle-note').value.trim();
   prod.knowledge   = {
     product:     document.getElementById('prod-know-product').value,
     audience:    document.getElementById('prod-know-audience').value,

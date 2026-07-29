@@ -1392,7 +1392,9 @@ def analyze_product_visual(image_path: str) -> str:
     return _vision_call(
         "You are a product photographer's assistant. Describe this product image precisely "
         "so an AI image generator can render it identically in an ad. Cover:\n"
-        "1. Container: shape, size, material (glass/plastic/HDPE), transparency\n"
+        "1. Container: shape and PROPORTIONS (is it taller than wide, or squat/wide? give the rough "
+        "height-to-width ratio, e.g. 'about 1.5x taller than wide' or 'as wide as it is tall'), "
+        "material (glass/plastic/HDPE), transparency — describe proportions, not millilitres\n"
         "2. Label: exact colors, font styles, all text visible on the label\n"
         "3. Cap/lid: shape, color, material\n"
         "4. Overall color mood: dominant colors in order\n"
@@ -2422,6 +2424,15 @@ def build_prompt(layout_analysis, product_visual, problem, problem_ctx,
     brand_block  = brand_to_prompt_block(brand)
     product_name = brand.get("_active_product_name") or brand.get("brand_name") or "this product"
 
+    # User-authored shape/scale note for this product. Image models ignore numeric
+    # sizes ("550ml") but do follow proportions ("squat, as wide as it is tall")
+    # and human-scale anchors ("about the size of a coffee mug, fits in one hand"),
+    # which is what stops the bottle rendering too tall/slim or the wrong size in a
+    # scene. Placed right in the strict product-identity block so it carries weight.
+    _bottle_note = (brand.get("_active_product_bottle_note") or "").strip()
+    _bottle_block = (f"\nSHAPE & SCALE (match this exactly — proportions and size relative "
+                     f"to the scene):\n{_bottle_note}\n") if _bottle_note else ""
+
     # ── Product identity section (most important — AI must render this exactly) ──
     if product_visual:
         product_section = f"""━━━ YOUR PRODUCT — MATCH IMAGE 1 EXACTLY ━━━
@@ -2432,10 +2443,11 @@ which of these forms to actually use.)
 
 What IMAGE 1 actually looks like:
 {product_visual}
-
+{_bottle_block}
 Product name on label: {product_name}
 RULES — violating any of these makes the generation wrong:
-- Bottle/jar shape, silhouette, proportions: IDENTICAL to IMAGE 1 — trace it
+- Bottle/jar shape, silhouette, proportions: IDENTICAL to IMAGE 1 — trace it. If a SHAPE & SCALE
+  note is given above, the rendered bottle MUST match those proportions and that in-scene size
 - Label text, logo, colors, layout: IDENTICAL to IMAGE 1, character-for-character. Do NOT paraphrase,
   re-typeset, translate, or "clean up" the label — copy the exact wording and lettering you see
 - Cap/lid shape, color, material: IDENTICAL to IMAGE 1
@@ -2451,7 +2463,7 @@ RULES — violating any of these makes the generation wrong:
     else:
         product_section = f"""━━━ YOUR PRODUCT — REPRODUCE IMAGE 1 EXACTLY ━━━
 IMAGE 1 is a photo of your real product. Reproduce it exactly, character-for-character:
-- Bottle/jar shape, silhouette, cap: IDENTICAL to IMAGE 1
+{_bottle_block}- Bottle/jar shape, silhouette, cap: IDENTICAL to IMAGE 1 (match any SHAPE & SCALE note above)
 - Label text, logo, colours, layout: IDENTICAL to IMAGE 1 — copy the exact wording, do not paraphrase
 - Finish: IDENTICAL to IMAGE 1. If IMAGE 1's bottle is CLEAR/TRANSPARENT, keep it transparent with the
   same liquid colour and fill level; if the logo is metallic/foil/holographic, keep it that way
@@ -3460,6 +3472,7 @@ def api_generate_one():
             if active_prod.get("product_url"): brand["product_url"] = active_prod["product_url"]
             if active_prod.get("knowledge"):   brand["knowledge"]   = active_prod["knowledge"]
             brand["_active_product_name"] = active_prod.get("name", "")
+            brand["_active_product_bottle_note"] = (active_prod.get("bottle_note") or "").strip()
             kb = active_prod.get("knowledge", {})
             filled = [k for k in ("product","audience","benefits","proof","objections","competitors")
                       if (kb.get(k) or "").strip()]
@@ -4702,6 +4715,7 @@ def board_regenerate():
             if active_prod.get("product_url"): brand["product_url"] = active_prod["product_url"]
             if active_prod.get("knowledge"):   brand["knowledge"]   = active_prod["knowledge"]
             brand["_active_product_name"] = active_prod.get("name", "")
+            brand["_active_product_bottle_note"] = (active_prod.get("bottle_note") or "").strip()
 
     # Resolve product photo (per-product first, then any product, then global pool)
     brand_product_photos = [p for p in brand.get("product_photos", []) if os.path.exists(p)]
