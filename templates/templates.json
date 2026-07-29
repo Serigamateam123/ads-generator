@@ -9114,5 +9114,78 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 125,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0125.png",
+    "label": "Winning Ad #125",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric with product on the right and text/benefits on the left and bottom-left",
+        "product_placement": "right side, angled towards the viewer, with the primary bottle roughly centered vertically on the right, and a secondary bottle partially visible behind it.",
+        "headline_placement": "Left side, in the lower-middle section of the image.",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+, primarily in the upper-left and bottom sections, providing ample breathing room."
+      },
+      "colors": {
+        "background": "#2D3F38",
+        "background_description": "textured solid dark forest green",
+        "dominant_color": "#2D3F38",
+        "dominant_description": "background and product labels",
+        "accent_color": "#FFFFFF",
+        "accent_description": "headline text, brand name on bottle, bottle caps, inner bottle elements",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#D7E1D2",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (two lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small for disclaimer, medium for benefit points"
+      },
+      "mood": {
+        "tone": "clinical, premium, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft, with a subtle brighter area towards the top right",
+        "overall_feel": "A sophisticated and informative brand experience that emphasizes the benefits of the product with a clean, modern, and trustworthy aesthetic."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "textured solid color",
+        "overlay_style": "none",
+        "props": "two glass pharmaceutical vials/bottles",
+        "product_style": "floating or standing on an implied surface, angled dynamically"
+      },
+      "graphic_elements": [
+        "rounded rectangular capsules for benefit points, stacked vertically on the lower-left",
+        "subtle grain/noise texture on the background"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large headline '5 Benefits of GLP-1s'",
+        "second_attention": "The primary product bottle with 'fridays' and 'Compounded GLP-1'",
+        "third_attention": "The list of benefit points within their capsules",
+        "fourth_attention": "The disclaimer text in the upper-left corner"
+      },
+      "forbidden_elements": [
+        "NO human figures",
+        "NO bright, high-saturation, or warm accent colors (e.g., red, orange, yellow)",
+        "NO photographic background scenes or complex illustrations",
+        "NO explicit CTA buttons or prominent calls to action",
+        "NO speech bubbles, cartoon elements, or overly playful graphics",
+        "NO sunburst or strong radial gradients",
+        "NO certification badges or logos prominently displayed outside of the product label itself",
+        "NO cluttered layout, maintains generous negative space"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
