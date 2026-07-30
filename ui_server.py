@@ -3973,6 +3973,12 @@ def api_generate_one():
             "persona":      _persona_label,
             "angle":        _angle_label,
             "style":        _style_label,
+            # Stable IDs alongside the display labels — labels are NOT unique (e.g.
+            # two different personas can both be "C-Section Recovery"), so anything
+            # that later needs the exact persona/angle (like META copy) must resolve
+            # by id, never by label.
+            "persona_id":   persona_key_for_idx or "",
+            "angle_id":     angle_key_for_idx or "",
             "quality":      quality,
             "session_id":   session_id,
             "campaign_id":  campaign_id,
@@ -4559,12 +4565,19 @@ def board_generate_meta(board_id):
     brand   = load_brand()
     product_name = brand.get("_active_product_name") or brand.get("brand_name") or "produk ini"
 
-    # Board items only ever stored the display label, not the underlying key —
-    # look the full entry back up so we can use the persona's real narrative and
-    # the angle's actual psychology/structure (the same ones that shaped the
-    # on-image h1/h2/cta), instead of just the label string.
-    persona_entry = next((v for v in PERSONAS.values() if v.get("label") == persona_label), None)
-    angle_entry   = next((v for v in ANGLES.values()   if v.get("label") == angle_label),   None)
+    # Resolve the persona/angle the ad was ACTUALLY made with. Prefer the stored
+    # stable id; only fall back to matching by label for older board items that
+    # predate persona_id. Matching by label alone is unsafe — two personas can
+    # share a label (e.g. two different "C-Section Recovery" stories), which made
+    # the caption pick the wrong persona entirely.
+    persona_id = item.get("persona_id") or ""
+    angle_id   = item.get("angle_id") or ""
+    persona_entry = PERSONAS.get(persona_id) if persona_id else None
+    if persona_entry is None:
+        persona_entry = next((v for v in PERSONAS.values() if v.get("label") == persona_label), None)
+    angle_entry = ANGLES.get(angle_id) if angle_id else None
+    if angle_entry is None:
+        angle_entry = next((v for v in ANGLES.values() if v.get("label") == angle_label), None)
     persona_narrative = (persona_entry or {}).get("narrative", "")
     angle_psychology  = (angle_entry or {}).get("psychology", "")
     angle_instruction = (angle_entry or {}).get("copy_instruction", "")
