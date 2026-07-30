@@ -4584,7 +4584,16 @@ def board_generate_meta(board_id):
     bullets_str = "\n".join(f"- {b}" for b in bullets[:4]) if bullets else ""
 
     prompt = f"""You are a senior direct-response copywriter, writing the META (Facebook/Instagram) ad copy
-that runs ALONGSIDE the visual below — not describing the visual, complementing it.
+that runs ALONGSIDE the attached ad visual (IMAGE 1) — complementing it, not merely describing it.
+
+GROUND THE COPY IN THE VISUAL (IMAGE 1):
+- The caption and the image must feel like ONE ad. Match the moment, the person, and the emotional
+  tone shown in IMAGE 1 — if it shows a mother with her child, a worker at a desk, a calm morning, etc.,
+  the copy must speak to THAT scene, not a different one.
+- Do NOT contradict the visual (e.g. don't say "before you sleep" if the scene is clearly daytime, or
+  reference someone who isn't in the image).
+- You may lightly nod to what's shown, but the copy's job is to add the persona's voice + proof the
+  image can't convey — never to caption/narrate the picture literally.
 
 PRODUCT: {product_name}
 USE CASE / PROBLEM: {problem}
@@ -4658,7 +4667,22 @@ Return JSON only:
 
     url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
            f"{VISION_MODEL}:generateContent?key={api_key}")
-    payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode()
+    # Attach the ACTUAL rendered ad so the caption is grounded in what the viewer
+    # sees — scene, person, setting, mood — instead of being written blind from
+    # copy_data alone (which is why captions could drift from the visual).
+    meta_parts = []
+    _img_file = BOARD_DIR / item.get("filename", "")
+    if _img_file.exists():
+        try:
+            _b64, _mime = img_to_b64(str(_img_file))
+            meta_parts.append({"text": "IMAGE 1 = the actual finished ad this copy will run alongside. "
+                                       "Study its scene, the person shown, the setting and the mood before "
+                                       "writing, and make sure the caption is consistent with what is visible."})
+            meta_parts.append({"inline_data": {"mime_type": _mime, "data": _b64}})
+        except Exception as e:
+            print(f"[meta-copy] could not attach visual: {e}")
+    meta_parts.append({"text": prompt})
+    payload = json.dumps({"contents": [{"parts": meta_parts}]}).encode()
     req = urllib.request.Request(url, data=payload,
           headers={"Content-Type": "application/json"}, method="POST")
     try:
