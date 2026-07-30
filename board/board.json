@@ -4,7 +4,7 @@
     "filename": "board_00365.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Curiosity",
     "style": "",
     "quality": "final",
@@ -31,14 +31,14 @@
       "meta_headline": "Rahsia Ibu Kembali Bertenaga",
       "meta_description": "Diperakui Halal & KKM"
     },
-    "persona_id": ""
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 364,
     "filename": "board_00364.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Authority / Expertise",
     "style": "",
     "quality": "final",
@@ -64,14 +64,15 @@
       "meta_primary_text": "Ibu, risau anak lepas Czer lambat pulih sampai susah nak urus baby?\n\nBila dia tak cergas, rumah pun jadi tak terurus. Hati ibu mana yang tak sayu?\n\nKebaikan gamat untuk pemulihan luka & bina tisu baharu memang diyakini turun-temurun. Serigama ekstrak gamat diformulasi khas, dengan jaminan Halal, KKM & GMP.",
       "meta_headline": "Anak Cergas, Ibu Tenang",
       "meta_description": "Diperakui Halal & KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 363,
     "filename": "board_00363.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Comparison",
     "style": "",
     "quality": "final",
@@ -94,14 +95,15 @@
         "Sokong pemulihan kulit."
       ],
       "_framework": "BENEFIT"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 362,
     "filename": "board_00362.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Social Proof",
     "style": "",
     "quality": "final",
@@ -124,14 +126,15 @@
         "Hasilkan kolagen semula jadi."
       ],
       "_framework": "BENEFIT"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 361,
     "filename": "board_00361.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Contrarian Truth",
     "style": "",
     "quality": "final",
@@ -154,14 +157,15 @@
         "Sokong proses pemulihan badan"
       ],
       "_framework": "BENEFIT"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 360,
     "filename": "board_00360.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Contrarian Truth",
     "style": "",
     "quality": "final",
@@ -184,14 +188,15 @@
         "Bantu bina sel baharu."
       ],
       "_framework": "BENEFIT"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 359,
     "filename": "board_00359.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Problem Agitate",
     "style": "",
     "quality": "final",
@@ -214,14 +219,15 @@
         "Bantu baiki tisu badan."
       ],
       "_framework": "BENEFIT"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 358,
     "filename": "board_00358.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Transformation",
     "style": "",
     "quality": "final",
@@ -247,14 +253,15 @@
       "meta_primary_text": "Tengok anak sendiri lepas Czer, hati ibu mana tak risau? Lambat sangat nak pulih, nak gerak pun susah.\n\nAnak penat, susah nak menyusu baby, satu rumah pun jadi tak keruan.\n\nSerigama membantu badan anak bina semula kekuatan dari dalam, menyokong pemulihan yang menyeluruh.\n\nBiar anak muda kembali ceria, dapat menjaga cucu dengan tenang. Ini masanya untuk anak anda kembali bersemangat.",
       "meta_headline": "Pemulihan Lancar, Ibu Bahagia",
       "meta_description": "Halal & KKM Diperakui"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 357,
     "filename": "board_00357.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Comparison",
     "style": "",
     "quality": "final",
@@ -280,14 +287,15 @@
       "meta_primary_text": "Tentu risau kan, tengok anak sendiri merangkak nak uruskan baby lepas Czer?\nLuka Czer lambat pulih, badan pun masih lemah. Macam mana nak berpantang sempurna?\nJangan biarkan pemulihan ambil masa lama. Serigama bantu pecutkan penyembuhan luka dan kuatkan badan, untuk dia lebih cergas.\nBantu anak anda rasai bezanya, dari hari ke hari.",
       "meta_headline": "Anak Cergas, Ibu Lega!",
       "meta_description": "Diperakui Halal & KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 356,
     "filename": "board_00356.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Comparison",
     "style": "",
     "quality": "final",
@@ -313,14 +321,15 @@
       "meta_primary_text": "Pernah tak rasa risau bila tengok anak yang baru lepas Czer tu susah sangat nak bergerak, apatah lagi nak uruskan baby?\n\nBukan saja anak tak selesa, satu rumah pun jadi tak terurus.\n\nProses pemulihan badan selepas bersalin Czer memang perlukan sokongan ekstra untuk membina tisu dan kulit baru.\n\nBantu anak anda rasai pemulihan yang lebih cepat dan selesa.",
       "meta_headline": "Rumah Kembali Harmoni",
       "meta_description": "Diperakui Halal & KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 355,
     "filename": "board_00355.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Curiosity",
     "style": "",
     "quality": "final",
@@ -346,14 +355,15 @@
       "meta_primary_text": "Puan risau melihat anak Czer lambat pulih, sampai rumah pun tak terurus?\n\nSusah hati bila anak tak cukup rehat, nak bergerak pun sakit, apatah lagi nak urus si kecil?\n\nRamai tak tahu, ada cara badan boleh pulih lebih cepat dari dalaman.\n\nNak tahu apa rahsianya yang bantu pemulihan tisu baru dan kulit?",
       "meta_headline": "Rahsia Pemulihan Czer Pantas",
       "meta_description": "Produk Halal & KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 354,
     "filename": "board_00354.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Authority / Expertise",
     "style": "",
     "quality": "final",
@@ -379,14 +389,15 @@
       "meta_primary_text": "Risau tengok anak baru lepas Czer masih lemah, susah nak urus diri & bayi, sampai rumah pun tak terurus?\n\nPakar faham cabaran pemulihan selepas bersalin Czer, terutamanya untuk ibu muda.\n\nSebab itu Serigama diformulasi dengan piawaian Pengilangan Taraf GMP.\n\nDapatkan pilihan pemulihan yang berwibawa untuknya.",
       "meta_headline": "Diperakui: Pemulihan Ibu Bersalin",
       "meta_description": "Diperakui Halal & KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 353,
     "filename": "board_00353.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Social Proof",
     "style": "",
     "quality": "final",
@@ -412,14 +423,15 @@
       "meta_primary_text": "Macam mana nak bantu anak pulih cepat lepas Czer, biar rumah kembali ceria?\n\nKita tahu risau sangat bila tengok anak masih perlahan nak bergerak, nak urus bayi pun susah, sampai rumah pun jadi tak terurus.\n\nRamai ibu lain dah pilih Serigama untuk sokong pemulihan pantas selepas bersalin. Jangan biarkan anak terus bergelut. Sertai mereka yang dah nampak perbezaan dan legakan hati awak.",
       "meta_headline": "Czer Pulih Cepat, Rumah Bahagia",
       "meta_description": "Diperakui Halal & KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 352,
     "filename": "board_00352.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Contrarian Truth",
     "style": "",
     "quality": "final",
@@ -445,14 +457,15 @@
       "meta_primary_text": "Ibu, hati mana tak sebak tengok anak terbaring lesu lepas Czer, sampai nak urus diri dan baby pun susah? Ramai sangka memang kena sabar je.\n\nTapi sebenarnya, ada cara untuk bantu dia pulih lebih cepat dan selesa.\n\nBila pemulihan perlahan, bukan anak je tak selesa, satu rumah pun rasa terbeban. Dengan sokongan Jeli Gamat yang bantu bina tisu baharu, dia boleh kembali cergas.\n\nBiarkan dia alami proses pemulihan yang lebih tenang dan Ibu pun tak perlu risau lagi.",
       "meta_headline": "Bantu Anak Pulih Czer Cepat?",
       "meta_description": "Produk KKM & Halal"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 351,
     "filename": "board_00351.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
-    "persona": "C-Section Recovery",
+    "persona": "C-Section Recovery (Ibu 3 Anak)",
     "angle": "Problem Agitate",
     "style": "",
     "quality": "final",
@@ -478,7 +491,8 @@
       "meta_primary_text": "Ibu risau tengok anak Czer masih lemah, susah nak gerak urus cucu, rumah pun tak terjaga?\n\nBayangkan jika keadaan ini berlarutan. Anak makin stres, ibu pula makin terbeban.\n\nMasa pulih yang sepatutnya cepat, jadi lambat. Jangan biar keadaan semakin runcing.",
       "meta_headline": "Anak Czer lemah? Ibu buntu.",
       "meta_description": "Lulus KKM"
-    }
+    },
+    "persona_id": "c_section_recovery"
   },
   {
     "id": 350,
