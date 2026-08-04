@@ -9187,5 +9187,233 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 126,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0126.png",
+    "label": "Winning Ad #126",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "centered product with surrounding informational callouts",
+        "product_placement": "slightly right of center, occupying the middle vertical space",
+        "headline_placement": "top center, within a white rounded rectangle",
+        "cta_placement": "bottom center",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#e82c3c",
+        "background_description": "flat solid",
+        "dominant_color": "#e82c3c",
+        "dominant_description": "background",
+        "accent_color": "#FFFFFF",
+        "accent_description": "text, product label, bottle cap, graphical elements, CTA text",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "#000000"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy, playful",
+        "energy_level": "medium",
+        "lighting": "bright studio",
+        "overall_feel": "A friendly, approachable, and reliable health supplement brand promoting simple health solutions."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "two loose gummies next to the bottle",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "white rounded rectangle for headline, top center",
+        "handwritten style 'HEALTH SIMPLE!' text, top right of product",
+        "circular red badge with white star and dotted outline, top left, linked by squiggly arrow to text 'Patented formula made with Vitamins B9 & B12'",
+        "three circular red badges (Vegan, Gluten-Free, Non-GMO icons), bottom left, linked by squiggly arrows to bottle and text 'and MORE!'",
+        "circular red badge with white '1' and ribbon, top right, linked by squiggly arrow to text 'America's #1 ACV Vitamin Brand!®'",
+        "circular red badge with smiling face and tongue out, bottom right, linked by squiggly arrow to text 'Delicious taste!'",
+        "black rectangular button with pink border for 'LEARN MORE', bottom center"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Why Goli®? headline and Goli bottle logo",
+        "second_attention": "the Goli bottle and 'Apple Cider Vinegar Gummies' text",
+        "third_attention": "the surrounding circular badges and their associated benefits",
+        "fourth_attention": "LEARN MORE button"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO photographic background scene",
+        "NO gradient on background",
+        "NO complex textures on background",
+        "NO animals",
+        "NO speech bubbles"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 127,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0127.png",
+    "label": "Winning Ad #127",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "asymmetric, with product bottom-center and headline top-left, split diagonal background",
+        "product_placement": "bottom half of the canvas, slightly left of center, standing on a light pink surface",
+        "headline_placement": "top-left quadrant of the canvas",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "diagonal split: #CD1D26 (red) top-left, #F9DDE1 (light pink) bottom-right",
+        "background_description": "two-tone, flat solid colors, diagonally split",
+        "dominant_color": "#CD1D26",
+        "dominant_description": "main background color",
+        "accent_color": "#F9DDE1",
+        "accent_description": "secondary background color and product pedestal surface",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF (on product label), #CD1D26 (for icons on light pink background)",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "mixed (first words of phrases in Title Case, key product elements in Uppercase)",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "playful, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A clean, friendly, and confident brand promoting a tasty and beneficial health supplement."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none (besides the product bottle)",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "Goli logo (top-left and on product bottle)",
+        "Nutrition text (under Goli logo, top-left and on product bottle)",
+        "Leaf icon for Gluten-Free (top-right and left of product bottle)",
+        "Heart icon for Vegan (middle-right and left of product bottle)",
+        "Hourglass/DNA icon for Non-GMO (middle-right and left of product bottle)",
+        "Droplet icon for Unfiltered (bottom-right and left of product bottle)"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Goli logo and main headline text",
+        "second_attention": "The product bottle itself",
+        "third_attention": "Benefit icons and corresponding text on the right side",
+        "fourth_attention": "Small text details on the product label"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO photographic background scenes",
+        "NO busy or cluttered layouts",
+        "NO gradient backgrounds",
+        "NO warm orange or yellow background tones",
+        "NO speech bubbles",
+        "NO sunburst graphics",
+        "NO certification badges (beyond the simple icons used)",
+        "NO explicit CTA button"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 128,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0128.png",
+    "label": "Winning Ad #128",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "single column, headline at top, product in mid-section, CTA at bottom",
+        "product_placement": "Lower two-thirds of the image, two bottles arranged dynamically (one standing, one tilted), slightly right-of-center.",
+        "headline_placement": "Top third of the image, horizontally centered.",
+        "cta_placement": "Bottom edge of the image, horizontally centered.",
+        "negative_space": "moderate, approximately 35-40% primarily the red background"
+      },
+      "colors": {
+        "background": "#D31E20",
+        "background_description": "flat solid color",
+        "dominant_color": "#D31E20",
+        "dominant_description": "background and product bottle color",
+        "accent_color": "#FFFFFF",
+        "accent_description": "main headline text, product caps, product label details",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#8A1A1C",
+        "cta_color": "#000000"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines ('MAINTAINING A' on one line, 'WELLNESS ROUTINE?' on another), with a smaller sub-line above ('Are you struggling with')",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to main headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "medium",
+        "lighting": "bright studio",
+        "overall_feel": "A direct and clean brand feel that offers a simple wellness solution with a bold question."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "red geometric blocks (pyramid and cuboids) used to elevate and support products",
+        "product_style": "standing on surface and tilted against props"
+      },
+      "graphic_elements": [
+        "red geometric pyramid shape, bottom-left",
+        "red geometric cuboid shape, mid-right",
+        "red geometric cuboid shape, bottom-right"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The bold white text 'MAINTAINING A WELLNESS ROUTINE?'",
+        "second_attention": "The Goli product bottles",
+        "third_attention": "The leading question 'Are you struggling with'",
+        "fourth_attention": "The 'Learn More' CTA"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO natural background scene",
+        "NO cluttered layout",
+        "NO gradient on background",
+        "NO warm orange/yellow primary tones",
+        "NO certification badges on the main canvas",
+        "NO speech bubbles",
+        "NO sunburst background"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
