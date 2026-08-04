@@ -2943,6 +2943,36 @@ structure, background and style; just place the quote where a review/quote natur
 - Do NOT change the wording of the quote or invent any extra testimonial text.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
+    # ── ALWAYS-ON: recast people as Malaysian + reflect the persona ──────────────
+    # Applies on every generation (not gated on extracted_style/has_human), because
+    # a foreign template (e.g. an Indian ad) was being cloned so faithfully that its
+    # models' ethnicity carried straight through. Placed at top-level so it outranks
+    # the "clone IMAGE 2" direction.
+    if persona_desc:
+        _cast = ("Any person shown MUST match the TARGET CUSTOMER PERSONA described above — same gender, "
+                 "age range, tudung/hijab if a Malay woman, life stage, build and setting. Cast them to "
+                 "LOOK LIKE that persona.")
+    else:
+        _cast = ("Cast Malaysian people who reflect this brand's customers — primarily Malay women "
+                 "(occasionally Chinese), clearly Asian/Malaysian; Malay women wear a hijab/tudung by default.")
+    casting_block = f"""
+
+━━━ PEOPLE — ALWAYS RECAST AS MALAYSIAN (never copy IMAGE 2's models) ━━━
+If any person appears: do NOT reproduce IMAGE 2's people — not their faces, ethnicity, skin tone, hair,
+or outfits. Generate NEW Malaysian people. {_cast}
+Never use Western/Caucasian or Indian/South-Asian casting unless the brand knowledge above explicitly asks."""
+
+    foreign_strip_block = """
+
+━━━ REMOVE ALL THIRD-PARTY & FOREIGN MARKS ━━━
+This is an ad for a Malaysian brand. Even if IMAGE 2 shows them, do NOT copy, draw or recreate:
+- Any retailer / marketplace logo or wordmark (Amazon, Blinkit, Tata 1mg, Flipkart, Shopee, Lazada,
+  TikTok Shop, Watsons, Guardian, etc.) — delete the entire logo row if present.
+- Any foreign flag, foreign-language wordmark, or foreign regulatory / dietary symbol (e.g. the Indian
+  green or brown vegetarian dot, FSSAI, etc.).
+- Any brand name or logo other than the one brand named in BRAND & PRODUCT KNOWLEDGE above.
+Keep ONLY the product's own packaging (from IMAGE 1) and the certifications as PLAIN TEXT."""
+
     if has_style_ref and has_product:
         return f"""Generate a 4:5 advertisement image.
 
@@ -2971,7 +3001,7 @@ PRODUCT: use IMAGE 1 — your real product — exactly as it appears.
   or be held — whichever form IMAGE 2 uses, but always still recognizably IMAGE 1's real product
 {product_section}
 
-CAMERA ANGLE VARIATION (subtle — keep IMAGE 2's overall framing): {variation_note}{human_block}{persona_block}{copy_block}{testimonial_block}
+CAMERA ANGLE VARIATION (subtle — keep IMAGE 2's overall framing): {variation_note}{human_block}{persona_block}{copy_block}{testimonial_block}{casting_block}{foreign_strip_block}
 
 OUTPUT RULES:
 - No watermarks or signatures
