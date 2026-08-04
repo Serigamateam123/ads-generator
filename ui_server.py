@@ -2916,6 +2916,20 @@ following requested change. This instruction overrides any conflicting guidance 
         _q  = testimonial["quote"].strip().strip('"')
         _nm = (testimonial.get("first_name") or "").strip()
         _attrib = f"— {_nm}, Pengguna Serigama" if _nm else "— Pengguna Serigama (disahkan)"
+        # The person shown with the testimonial must match the TARGET PERSONA (that's
+        # who the ad speaks to) — not a random generic customer. Without this the
+        # model defaulted to a generic person and ignored the persona casting.
+        if persona_desc:
+            _person_line = (
+                "- The person shown with the testimonial MUST match the TARGET CUSTOMER PERSONA described "
+                "above — same gender, age range, tudung/hijab if applicable, life stage, body and setting. "
+                "Cast the reviewer to LOOK LIKE that persona. They are an ILLUSTRATIVE model — NEVER a real "
+                "identifiable individual, never a real customer photo, and never a fake chat/screenshot UI.")
+        else:
+            _person_line = (
+                "- If a person appears, use a believable Malaysian customer who fits this ad's use case — an "
+                "ILLUSTRATIVE model, NEVER a real identifiable individual, never a real customer photo, and "
+                "never a fake chat/screenshot UI.")
         testimonial_block = f"""
 
 ━━━ REAL CUSTOMER TESTIMONIAL — INCLUDE THIS IN THE AD ━━━
@@ -2925,8 +2939,7 @@ structure, background and style; just place the quote where a review/quote natur
   "{_q}"
 - Attribution line directly beneath it: "{_attrib}"
 - Show 5 gold review stars near the quote.
-- If a person appears, they are an ILLUSTRATIVE model (a believable Malaysian customer) — NEVER a real
-  identifiable individual, never a real customer photo, and never a fake chat/screenshot UI.
+{_person_line}
 - Do NOT change the wording of the quote or invent any extra testimonial text.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
