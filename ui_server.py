@@ -2915,7 +2915,7 @@ following requested change. This instruction overrides any conflicting guidance 
     if testimonial and testimonial.get("quote"):
         _q  = testimonial["quote"].strip().strip('"')
         _nm = (testimonial.get("first_name") or "").strip()
-        _attrib = f"— {_nm}, pelanggan Serigama" if _nm else "— Pelanggan Serigama (disahkan)"
+        _attrib = f"— {_nm}, Pengguna Serigama" if _nm else "— Pengguna Serigama (disahkan)"
         testimonial_block = f"""
 
 ━━━ REAL CUSTOMER TESTIMONIAL — INCLUDE THIS IN THE AD ━━━
