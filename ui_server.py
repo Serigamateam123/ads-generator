@@ -71,6 +71,9 @@ ROTATION_JSON = _TMP / "template_rotation.json" # persistent auto-template rotat
                                                   # library is used before any template repeats
 TEMPLATES_DIR = SKILLS_DIR / "templates"
 TEMPLATES_JSON= TEMPLATES_DIR / "templates.json"
+TESTIMONIALS_DIR  = SKILLS_DIR / "testimonials"   # real customer testimonial screenshots (from Google Drive)
+TESTIMONIALS_JSON = _TMP / "testimonials.json"    # OCR'd library: {path, quote, first_name, product, use_case}
+                                                    # NOT git-snapshotted — screenshots contain customer PII
 for d in (SESSIONS_DIR, BRAND_DIR, TEMPLATES_DIR):
     d.mkdir(exist_ok=True)
 
@@ -1559,6 +1562,130 @@ def pick_product_photo_for_template(photos: list, template_product_style: str) -
     print(f"[photo-match] no photo matches '{target}' — using first photo as fallback")
     return photos[0]
 
+# ── Customer testimonials (real screenshots from Google Drive) ─────────────────
+# Screenshots are labelled by use case via their folder path (e.g.
+# ".../Jeli Gamat/Bersalin_Berpantang/..."). We OCR each once to pull the real
+# customer quote, then can weave it into a generated ad on demand. Attribution
+# defaults to first name only for privacy (no customer face is ever used — an AI
+# person stands in when a person is shown).
+_TESTI_LOCK = threading.Lock()
+
+# Map a folder name (any depth) to one of the app's use-case labels.
+_TESTI_FOLDER_USECASE = {
+    "bersalin_berpantang": "Pemulihan Selepas Bersalin Caesar",
+    "berpantang":          "Pemulihan Selepas Bersalin Caesar",
+    "bersalin":            "Pemulihan Selepas Bersalin Caesar",
+    "czer":                "Pemulihan Selepas Bersalin Caesar",
+    "accident":            "Pemulihan Selepas Kemalangan",
+    "eksiden":             "Pemulihan Selepas Kemalangan",
+    "luka":                "Pemulihan Luka Selepas Pembedahan",
+    "luka operation":      "Pemulihan Luka Selepas Pembedahan",
+    "sendi":               "Sakit Sendi / Keradangan",
+    "lutut":               "Sakit Sendi / Keradangan",
+    "gastrik":             "Lega Gastrik / Refluks Asid",
+    "gastric":             "Lega Gastrik / Refluks Asid",
+    "bertahun dalam pasaran": "Kesihatan & Kecergasan Umum",
+    "general":             "Kesihatan & Kecergasan Umum",
+    # Gel Gamat (topical) topics — kept as their own labels for matching
+    "melecur_burn":        "Melecur / Luka Bakar",
+    "melecur":             "Melecur / Luka Bakar",
+    "eczema_gatal2":       "Eczema / Gatal",
+}
+
+def _testi_meta_from_path(path: str) -> dict:
+    """Derive product + use-case tags from a testimonial screenshot's folder path."""
+    parts = [p.lower() for p in Path(path).parts]
+    product = ""
+    for p in parts:
+        if "jeli gamat" in p: product = "Jeli Gamat"
+        elif "gel gamat" in p: product = "Gel Gamat"
+    use_case = ""
+    for p in reversed(parts):                       # deepest (most specific) folder wins
+        if p in _TESTI_FOLDER_USECASE:
+            use_case = _TESTI_FOLDER_USECASE[p]; break
+    return {"product": product, "use_case": use_case,
+            "folder": Path(path).parent.name}
+
+def load_testimonials() -> list:
+    if TESTIMONIALS_JSON.exists():
+        try:
+            with open(TESTIMONIALS_JSON, encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
+
+def save_testimonials(items: list):
+    atomic_write_json(TESTIMONIALS_JSON, items)
+
+def _ocr_one_testimonial(path: str) -> list:
+    """OCR a single screenshot → list of {first_name, quote, topic} for the genuine
+    customer testimonials in it (brand replies / UI chrome are ignored)."""
+    prompt = (
+        "This is a social-media screenshot. Extract ONLY genuine CUSTOMER testimonial comments about "
+        "the product — ignore the brand's own replies, UI buttons, timestamps and unrelated chatter. "
+        "Keep each quote in the customer's original Malay, lightly cleaned (fix obvious typos) but "
+        "TRUTHFUL — never add or exaggerate a claim. Reply with JSON only: "
+        '{"testimonials":[{"first_name":"...","quote":"..."}]}. Use just the first name. '
+        "If there is no real customer testimonial, return an empty list."
+    )
+    raw = _vision_call(prompt, path, timeout=40)
+    raw = re.sub(r"^```(?:json)?\s*", "", (raw or "").strip())
+    raw = re.sub(r"\s*```$", "", raw.strip())
+    try:
+        data = json.loads(raw)
+        return [t for t in data.get("testimonials", []) if t.get("quote")]
+    except Exception:
+        return []
+
+def ingest_testimonials(force: bool = False) -> dict:
+    """Walk the testimonials/ folder, OCR any screenshot not already in the library,
+    and persist. Cached per file path so re-running is cheap. Returns a summary."""
+    with _TESTI_LOCK:
+        existing = load_testimonials()
+        done_paths = {t["source_path"] for t in existing} if not force else set()
+        lib = [] if force else list(existing)
+        added = 0
+        exts = {".png", ".jpg", ".jpeg", ".webp"}
+        files = [p for p in TESTIMONIALS_DIR.rglob("*") if p.suffix.lower() in exts]
+        for fp in files:
+            sp = str(fp)
+            if sp in done_paths:
+                continue
+            meta = _testi_meta_from_path(sp)
+            for t in _ocr_one_testimonial(sp):
+                lib.append({
+                    "id": uuid.uuid4().hex[:10],
+                    "source_path": sp,
+                    "first_name": (t.get("first_name") or "").strip(),
+                    "quote":      (t.get("quote") or "").strip(),
+                    "product":    meta["product"],
+                    "use_case":   meta["use_case"],
+                    "folder":     meta["folder"],
+                })
+                added += 1
+            done_paths.add(sp)
+        save_testimonials(lib)
+        return {"files_seen": len(files), "testimonials": len(lib), "added": added}
+
+def pick_testimonial(use_case: str, product_name: str, seed=None) -> dict:
+    """Choose a real testimonial that best fits this ad: same product + same use
+    case first, then same product (any topic), then nothing. Returns {} if none."""
+    lib = load_testimonials()
+    if not lib:
+        return {}
+    pname = (product_name or "").lower()
+    def prod_ok(t):
+        return (not t.get("product")) or (t["product"].lower() in pname) or (pname in t["product"].lower())
+    rng = random.Random(seed)
+    exact = [t for t in lib if prod_ok(t) and t.get("use_case") == use_case and t.get("quote")]
+    if exact:
+        return rng.choice(exact)
+    same_prod = [t for t in lib if prod_ok(t) and t.get("quote")]
+    if same_prod:
+        return rng.choice(same_prod)
+    return {}
+
 def fetch_product_facts(product_url: str) -> str:
     """
     Fetch live product facts from the product URL.
@@ -2436,7 +2563,8 @@ def build_prompt(layout_analysis, product_visual, problem, problem_ctx,
                  has_style_ref, has_product, brand,
                  copy_h1="", copy_h2="", copy_cta="", copy_data=None,
                  vibe_idx=0, extracted_style=None, skip_overlay=False, tweak_instructions="",
-                 persona_desc="", persona_style_cues="", angle_visual="", style_visual=""):
+                 persona_desc="", persona_style_cues="", angle_visual="", style_visual="",
+                 testimonial=None):
     """
     Replication brief: keep exact winning-ad layout, swap in the correct product + copy.
     product_visual = vision analysis of the product photo (describes bottle precisely).
@@ -2782,6 +2910,26 @@ following requested change. This instruction overrides any conflicting guidance 
 {tweak_instructions}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
+    # ── Optional real customer testimonial, woven INTO the chosen template ──────
+    testimonial_block = ""
+    if testimonial and testimonial.get("quote"):
+        _q  = testimonial["quote"].strip().strip('"')
+        _nm = (testimonial.get("first_name") or "").strip()
+        _attrib = f"— {_nm}, pelanggan Serigama" if _nm else "— Pelanggan Serigama (disahkan)"
+        testimonial_block = f"""
+
+━━━ REAL CUSTOMER TESTIMONIAL — INCLUDE THIS IN THE AD ━━━
+Weave this genuine customer testimonial INTO the IMAGE 2 layout you are already cloning — keep IMAGE 2's
+structure, background and style; just place the quote where a review/quote naturally fits that design.
+- Render this exact quote, in quotation marks, clearly readable (Bahasa Malaysia — do not translate):
+  "{_q}"
+- Attribution line directly beneath it: "{_attrib}"
+- Show 5 gold review stars near the quote.
+- If a person appears, they are an ILLUSTRATIVE model (a believable Malaysian customer) — NEVER a real
+  identifiable individual, never a real customer photo, and never a fake chat/screenshot UI.
+- Do NOT change the wording of the quote or invent any extra testimonial text.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+
     if has_style_ref and has_product:
         return f"""Generate a 4:5 advertisement image.
 
@@ -2810,11 +2958,11 @@ PRODUCT: use IMAGE 1 — your real product — exactly as it appears.
   or be held — whichever form IMAGE 2 uses, but always still recognizably IMAGE 1's real product
 {product_section}
 
-CAMERA ANGLE VARIATION (subtle — keep IMAGE 2's overall framing): {variation_note}{human_block}{persona_block}{copy_block}
+CAMERA ANGLE VARIATION (subtle — keep IMAGE 2's overall framing): {variation_note}{human_block}{persona_block}{copy_block}{testimonial_block}
 
 OUTPUT RULES:
 - No watermarks or signatures
-- No invented text other than the headline, subheadline, and CTA specified above
+- No invented text other than the headline, subheadline, CTA{", and the testimonial quote + attribution above" if testimonial_block else ""} specified above
 - Clean, professional Meta ad quality
 - 4:5 aspect ratio{tweak_block}"""
 
@@ -3471,6 +3619,7 @@ def api_generate_one():
     copy_cta     = (data.get("copy_cta") or "").strip()
     skip_overlay = bool(data.get("skip_overlay", False))
     vary_copy    = bool(data.get("vary_copy", False))   # if True, generate fresh copy per image instead of reusing cache
+    include_testimonial = bool(data.get("include_testimonial", False))  # opt-in: weave a real customer testimonial in
 
     session_dir = SESSIONS_DIR / session_id
     with open(session_dir / "meta.json") as fp:
@@ -3860,6 +4009,19 @@ def api_generate_one():
             persona_desc = persona["prompt"]
             persona_style_cues = persona.get("style_cues", "")
 
+    # ── Opt-in: pick a real customer testimonial matching this ad's use case ──────
+    # Only when the user turned the toggle on. Seeded per slot so different images
+    # in a batch pull different testimonials instead of repeating one.
+    chosen_testimonial = {}
+    if include_testimonial:
+        chosen_testimonial = pick_testimonial(problem, brand.get("_active_product_name", ""),
+                                              seed=f"{batch_nonce}_{idx}")
+        if chosen_testimonial:
+            print(f"[testimonial] idx={idx} using {chosen_testimonial.get('first_name')!r} "
+                  f"({chosen_testimonial.get('use_case')})")
+        else:
+            print(f"[testimonial] idx={idx} — none available for '{problem}'/{brand.get('_active_product_name')}")
+
     # ── Step 4: Build prompt with extracted style ────────────────────────────────
     prompt = build_prompt(layout_analysis, product_visual, problem, problem_ctx,
                           bool(style_refs), bool(product_ref), brand,
@@ -3871,7 +4033,8 @@ def api_generate_one():
                           persona_desc=persona_desc,
                           persona_style_cues=persona_style_cues,
                           angle_visual=ANGLES.get(angle_key_for_idx, {}).get("visual_treatment", "") if angle_key_for_idx else "",
-                          style_visual=STYLES.get(style_key_for_idx, {}).get("visual_treatment", "") if style_key_for_idx else "")
+                          style_visual=STYLES.get(style_key_for_idx, {}).get("visual_treatment", "") if style_key_for_idx else "",
+                          testimonial=chosen_testimonial or None)
 
     # Pass winning_ad and product separately so Gemini knows exactly what each image is
     winning_ad_img  = style_ref[0] if style_ref else None
@@ -4232,6 +4395,21 @@ def board_sorted(board):
     return sorted(board,
                   key=lambda b: ((b.get("created_at") or ""), b.get("id", 0)),
                   reverse=True)
+
+@app.route("/api/testimonials", methods=["GET"])
+def api_testimonials():
+    """List the OCR'd testimonial library, optionally filtered by use case."""
+    lib = load_testimonials()
+    uc  = request.args.get("use_case")
+    if uc:
+        lib = [t for t in lib if t.get("use_case") == uc]
+    return jsonify({"count": len(lib), "items": lib})
+
+@app.route("/api/testimonials/ingest", methods=["POST"])
+def api_testimonials_ingest():
+    """(Re)OCR the testimonials/ folder into the library. force=true re-does all."""
+    force = bool((request.json or {}).get("force"))
+    return jsonify(ingest_testimonials(force=force))
 
 @app.route("/api/board", methods=["GET"])
 def get_board():

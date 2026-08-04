@@ -11,3 +11,5 @@ venv/
 
 # Exported images — copies of what is already in board/, no need to version them
 Download Board/
+testimonials/
+testimonials.json

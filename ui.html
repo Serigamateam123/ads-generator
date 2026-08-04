@@ -927,6 +927,10 @@ input[type=color]{position:absolute;opacity:0;width:28px;height:28px;cursor:poin
         <input type="checkbox" id="vary-copy-toggle" checked>
         🔀 Vary copy across batch <span style="font-weight:400;color:var(--muted)">(slower)</span>
       </label>
+      <label class="vary-copy-row" title="When on, a real customer testimonial that matches this ad's use case is woven into the winning-ad template you chose (real quote, 5 stars, first-name attribution; any person shown is an AI model, never the real customer).">
+        <input type="checkbox" id="include-testimonial-toggle">
+        💬 Include customer testimonial <span style="font-weight:400;color:var(--muted)">(real review)</span>
+      </label>
       <button class="btn-preview-plan" id="btn-gen" onclick="generate()">
         Generate Images
       </button>
@@ -2364,6 +2368,7 @@ async function generate() {
   // Generate all in parallel — each slot fires immediately, cards update as each finishes
   let done = 0;
   const varyCopy = document.getElementById('vary-copy-toggle').checked;
+  const includeTestimonial = document.getElementById('include-testimonial-toggle').checked;
   const tasks = Array.from({length: count}, (_, idx) => {
     const i = idx + 1;
     const ph = placeholders[idx];
@@ -2383,6 +2388,7 @@ async function generate() {
         angle_ids:         state.angleIds,
         style_ids:         state.styleIds,
         vary_copy:         varyCopy,
+        include_testimonial: includeTestimonial,
         campaign_id:       activeCampaign ? activeCampaign.id   : null,
         campaign_name:     activeCampaign ? activeCampaign.name : '',
         active_product_id: activeProductId,
