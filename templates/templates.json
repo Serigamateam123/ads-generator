@@ -9415,5 +9415,151 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 129,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0129.png",
+    "label": "Winning Ad #129",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split top and bottom with a distinct product section at the bottom-left and text/benefits at the top and right",
+        "product_placement": "bottom-left quadrant, extending towards the center",
+        "headline_placement": "top-center to top-left area of the canvas",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+, particularly in the upper left and bottom right"
+      },
+      "colors": {
+        "background": "#F6F1ED",
+        "background_description": "flat solid",
+        "dominant_color": "#F6F1ED",
+        "dominant_description": "background",
+        "accent_color": "#703D5C",
+        "accent_description": "product container",
+        "text_color_headline": "#474747",
+        "text_color_subheadline": "#474747",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one line for 'WeNatal For Her', subheadline stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "medium"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A sophisticated and reassuring brand for prenatal health, emphasizing calm and essential benefits."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "standing on surface (implied by bottom crop)"
+      },
+      "graphic_elements": [
+        "five vertically stacked rectangular boxes on the right side of the image, each with a checkmark icon and text",
+        "circular checkmark icons within each rectangular benefit box, colored dark green/grey with a light background",
+        "gold metallic concentric circle design on the left side of the product container"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "Headline 'WeNatal For Her'",
+        "second_attention": "The product container",
+        "third_attention": "The list of benefits on the right",
+        "fourth_attention": "The detailed subheadline text below the main headline"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy or photographic background scenes",
+        "NO gradient background",
+        "NO speech bubbles",
+        "NO bright or clashing colors",
+        "NO explicit CTA button or text",
+        "NO certification badges or seals",
+        "NO cluttered layout"
+      ],
+      "size": "1080x1350 portrait"
+    }
+  },
+  {
+    "id": 130,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0130.png",
+    "label": "Winning Ad #130",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "centered photographic scene of mother and baby, surrounded by informational callout bubbles",
+        "product_placement": "Product name 'Bundavin Multivitamin and mineral' top-left. Product (as an icon) within a callout bubble bottom-right.",
+        "headline_placement": "Top-left corner",
+        "cta_placement": "Bottom-left corner (website and social media links)",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#F0DDE2",
+        "background_description": "gradient from white (top) to light pink (bottom), with a photographic scene of a mother and baby",
+        "dominant_color": "#FF69B4",
+        "dominant_description": "callout bubbles, text highlights, and background gradient",
+        "accent_color": "#FFFFFF",
+        "accent_description": "main headline text, icons, and detailed description text",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#FFFFFF"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "bold",
+        "subheadline_size": "smaller than headline"
+      },
+      "mood": {
+        "tone": "warm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "gradient soft",
+        "overall_feel": "A gentle and informative advertisement promoting the benefits of breastfeeding and a multivitamin for mothers in a reassuring manner."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "gradient overlay",
+        "props": "pillows supporting the baby",
+        "product_style": "Product name presented as text; product ingredients/category shown as icons within floating callout bubbles."
+      },
+      "graphic_elements": [
+        "Six circular pink callout bubbles with white icons (DNA, droplets, starburst, bottle+droplet, wheat/grain) surrounding the central mother and baby image.",
+        "White curved lines connecting some of the callout bubbles, creating a visual flow.",
+        "Small white plus signs (+) indicating health/wellness, placed on the background.",
+        "Red oval SAMCO logo at the top-right corner.",
+        "Facebook and Instagram social media icons at the bottom-left."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The mother and baby",
+        "second_attention": "The pink circular callout bubbles with their bold titles",
+        "third_attention": "The headline 'Bundavin Multivitamin and mineral' and SAMCO logo",
+        "fourth_attention": "The detailed explanatory text within the bubbles and the website/social media links"
+      },
+      "forbidden_elements": [
+        "NO aggressive or urgent call-to-action button",
+        "NO bright, jarring colors",
+        "NO complex or abstract background patterns",
+        "NO direct product shot of a bottle/packaging as a central element",
+        "NO harsh shadows or high-contrast lighting"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
