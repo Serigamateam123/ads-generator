@@ -9942,5 +9942,84 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 136,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0136.png",
+    "label": "Winning Ad #136",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "central main figure with surrounding narrative elements in a montage style",
+        "product_placement": "calendar and pill bottle in the bottom-left corner, held by hands",
+        "headline_placement": "none",
+        "cta_placement": "none",
+        "negative_space": "minimal, busy with narrative elements"
+      },
+      "colors": {
+        "background": "#C7A68C",
+        "background_description": "photographic scene of an indoor room, warm ambient lighting",
+        "dominant_color": "#D4C1AE",
+        "dominant_description": "bedding and room tones",
+        "accent_color": "#6E899E",
+        "accent_description": "woman's jeans, some elements within thought bubbles, and faint blue tones",
+        "text_color_headline": "none",
+        "text_color_subheadline": "none",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "N/A",
+        "headline_case": "N/A",
+        "headline_size": "N/A",
+        "font_style": "sans-serif (for calendar numbers)",
+        "headline_line_breaks": "N/A",
+        "subheadline_weight": "N/A",
+        "subheadline_size": "N/A"
+      },
+      "mood": {
+        "tone": "urgent, anxious, reflective",
+        "energy_level": "medium",
+        "lighting": "flat natural with warm artificial accents",
+        "overall_feel": "The brand evokes empathy and understanding for women navigating complex decisions related to family planning, fertility, or reproductive health."
+      },
+      "composition": {
+        "style": "busy, narrative montage, asymmetric",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "calendar, pills/medicine bottle, multiple hands, thought bubbles containing babies/fetuses",
+        "product_style": "elements representing a 'product' (calendar, pills) are held by hands or placed on a surface within the scene"
+      },
+      "graphic_elements": [
+        "cloud-shaped thought bubble containing a fetus/embryo, top-left",
+        "cloud-shaped thought bubble containing a fetus/embryo with orange tones, top-right",
+        "small cloud icons (thought trail) leading from the woman's head to the larger thought bubbles, top-center",
+        "cut-out image of hands gesturing, mid-left",
+        "cut-out image of a crying baby, mid-right",
+        "cut-out image of hands interacting with an implied partner, bottom-right",
+        "cut-out image of a hand holding a pill bottle, bottom-left"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the woman's face and anxious expression",
+        "second_attention": "the large thought bubbles depicting fetuses/embryos",
+        "third_attention": "the crying baby image and the various hands around the woman",
+        "fourth_attention": "the calendar and pills at the bottom-left"
+      },
+      "forbidden_elements": [
+        "NO distinct product branding visible",
+        "NO bold, large textual headlines or subheadlines",
+        "NO speech bubbles (only thought bubbles)",
+        "NO sunburst background",
+        "NO certification badges",
+        "NO gradient on background",
+        "NO cartoon elements (other than stylized thought bubbles)",
+        "NO minimalistic layout",
+        "NO vibrant, high-contrast colors"
+      ],
+      "size": "1080x1620 portrait"
+    }
   }
 ]
