@@ -9639,5 +9639,227 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 132,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0132.png",
+    "label": "Winning Ad #132",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "The layout features a large central circular cutout showcasing people, with a prominent headline above it. Product packaging and a benefits list are arranged on the right side of the canvas, balancing the visual weight.",
+        "product_placement": "Bottom right corner of the canvas, with the product bottle overlapping slightly with the circular graphic element.",
+        "headline_placement": "Top center of the canvas, above the main circular visual.",
+        "cta_placement": "none",
+        "negative_space": "moderate, with breathing room on the top-left and bottom-left, creating a sense of openness around the central figures."
+      },
+      "colors": {
+        "background": "#EBF6FC",
+        "background_description": "soft blue gradient, transitioning from lighter at the bottom to slightly darker blue at the top. The central circular element contains a photographic sky scene.",
+        "dominant_color": "#1A73E8",
+        "dominant_description": "Various shades of blue, used in the sky background, product packaging, and main headline text.",
+        "accent_color": "#FFD700",
+        "accent_description": "Yellow, used in the child's top, elderly man's shirt, and highlights on the product packaging.",
+        "text_color_headline": "#1F497D",
+        "text_color_subheadline": "#1F497D",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase for the first line, title case for the second line",
+        "headline_size": "very large",
+        "font_style": "sans-serif for the first line, script for the second line",
+        "headline_line_breaks": "stacked short lines, two lines in total",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy, warm, calm, health-focused",
+        "energy_level": "medium, quietly confident",
+        "lighting": "flat natural for the people (daylight sky), bright studio for the product",
+        "overall_feel": "A reassuring and wholesome brand feel that emphasizes health and happiness across all stages of life."
+      },
+      "composition": {
+        "style": "balanced, with a central focus on people and product/text on the right",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "gradient for the overall canvas, with a real photographic sky within the central circular element",
+        "overlay_style": "none",
+        "props": "none (people act as visual representations of target audience)",
+        "product_style": "standing on an implied surface at the bottom right"
+      },
+      "graphic_elements": [
+        "Large circular graphic element containing images of people (pregnant woman, child, elderly couple), positioned from center-left to center-right.",
+        "Blue horizontal banner/ribbon with 'PHÙ HỢP' text, positioned mid-right.",
+        "Blue right-pointing arrow bullet points preceding each benefit statement, mid-right.",
+        "Small illustrative icons on the product box (elderly couple, child, pregnant woman) representing target demographics, integrated into the design."
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large headline 'XƯƠNG KHỚP BỀN VỮNG Cuộc Sống Vui Khỏe' due to its size and top-center placement.",
+        "second_attention": "The images of the people within the circular frame, as they are central and visually engaging.",
+        "third_attention": "The product (Calci Nano bottle and box) in the bottom right, featuring the brand name.",
+        "fourth_attention": "The bullet-pointed benefits under 'PHÙ HỢP', providing specific information about the product's suitability."
+      },
+      "forbidden_elements": [
+        "NO aggressive or urgent call-to-action buttons (e.g., 'Buy Now').",
+        "NO speech bubbles or comic strip elements.",
+        "NO strong contrasting or warm orange/red tones as dominant colors.",
+        "NO cluttered or disorganized visual elements.",
+        "NO abstract patterns or busy textures in the main background.",
+        "NO certification badges or seals as prominent standalone elements (though small ones might be on packaging)."
+      ],
+      "size": "1080x1080 square"
+    }
+  },
+  {
+    "id": 133,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0133.png",
+    "label": "Winning Ad #133",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "dynamic composition with a large main subject on the left, angled text on the right, and three supporting images at the bottom, all set against a photographic background.",
+        "product_placement": "not a product ad; healthy lifestyle elements are shown in three photo frames at the bottom-center and bottom-right.",
+        "headline_placement": "top right, angled upwards.",
+        "cta_placement": "none explicit; hospital logo and name are at the very bottom right.",
+        "negative_space": "moderate, primarily in the top and middle right sky area."
+      },
+      "colors": {
+        "background": "photographic scene of bright blue sky with white clouds and green hills.",
+        "background_description": "photographic scene",
+        "dominant_color": "#4A90E2",
+        "dominant_description": "sky and blue banner behind subheadline",
+        "accent_color": "#6FC347",
+        "accent_description": "green landscape and floating leaves",
+        "text_color_headline": "white",
+        "text_color_subheadline": "white",
+        "cta_color": "dark blue/black for text, blue and white for badge"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase for 'KALAHKAN' and 'STROKE', title case for 'Mulai Dari Diri Sendiri'",
+        "headline_size": "very large for 'STROKE', large for 'KALAHKAN', medium for subheadline",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "'KALAHKAN' on one line, 'STROKE' on another. 'Mulai Dari' on one line, 'Diri Sendiri' on another, stacked within a banner.",
+        "subheadline_weight": "medium",
+        "subheadline_size": "medium, significantly smaller than 'STROKE' but comparable to 'KALAHKAN'"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "medium",
+        "lighting": "bright studio (for main human subject), flat natural (for background scene and smaller photos)",
+        "overall_feel": "An encouraging and positive ad promoting stroke prevention through a healthy lifestyle, presented by a credible medical institution."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "floating leaves, healthy food bowl, fork, bed, pillow, activity tracker on wrist, bicycle",
+        "product_style": "lifestyle elements are presented as photographs within white frames, the main human subject is integrated into the background."
+      },
+      "graphic_elements": [
+        "blue angled banner/ribbon behind the subheadline 'Mulai Dari Diri Sendiri' (top right)",
+        "three white Polaroid-style photo frames (bottom center and right) showing images of exercise, healthy food, and sleep",
+        "multiple green leaves floating in the mid-ground (right and bottom)",
+        "hospital logo and name/address (bottom right)"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "the large 'STROKE' text",
+        "second_attention": "the smiling man stretching",
+        "third_attention": "the subheadline 'Mulai Dari Diri Sendiri'",
+        "fourth_attention": "the three smaller lifestyle photos"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges on the main canvas (only within the hospital logo)",
+        "NO dark or moody lighting",
+        "NO abstract or highly stylized illustrations (photographic dominant)",
+        "NO cluttered layout",
+        "NO complex geometric patterns",
+        "NO warm orange or red dominant tones"
+      ],
+      "size": "portrait"
+    }
+  },
+  {
+    "id": 134,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0134.png",
+    "label": "Winning Ad #134",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "top section with text and logo, bottom section with a photographic scene",
+        "product_placement": "top center of the canvas",
+        "headline_placement": "center of the top section, below the logo",
+        "cta_placement": "none",
+        "negative_space": "moderate, with generous space around the headline and logo"
+      },
+      "colors": {
+        "background": "#C0E0E8",
+        "background_description": "flat solid light blue at the top, photographic scene at the bottom",
+        "dominant_color": "#C0E0E8",
+        "dominant_description": "background for the top section",
+        "accent_color": "#6B3F3B",
+        "accent_description": "headline text background bubble and small star graphics",
+        "text_color_headline": "#FFFFFF",
+        "text_color_subheadline": "#8B6E6A",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "title case",
+        "headline_size": "large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A calm and informative ad providing helpful medical advice in a reassuring manner."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "flat solid color and real photograph",
+        "overlay_style": "none",
+        "props": "clipboard, pen, stethoscope, child's toys",
+        "product_style": "logo as a graphic element"
+      },
+      "graphic_elements": [
+        "Bebigoo logo at top center",
+        "Brown 'bubble' shape behind 'kecapek'an' text in the headline",
+        "Four small starburst graphics around the headline text, in brown color",
+        "Individual text labels (e.g., 'Badan terasa hangat') spread across the canvas"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "headline text 'Ciri demam karena kecapek'an'",
+        "second_attention": "Bebigoo logo",
+        "third_attention": "the human figures (doctor and child) in the photographic scene",
+        "fourth_attention": "individual symptom labels"
+      },
+      "forbidden_elements": [
+        "NO aggressive or urgent typography",
+        "NO speech bubbles",
+        "NO discount badges or urgent CTAs",
+        "NO abstract illustrations",
+        "NO cluttered layout",
+        "NO complex patterns or textures on the background",
+        "NO bright, saturated colors for the background"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
