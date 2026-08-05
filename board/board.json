@@ -5,28 +5,28 @@
     "label": "Ad 1 — Jeli Gamat 550ML",
     "problem": "Pemulihan Selepas Bersalin Caesar",
     "persona": "C-Section Recovery (Ibu 3 Anak)",
-    "angle": "Problem Agitate",
+    "angle": "Contrarian Truth",
     "style": "",
     "persona_id": "c_section_recovery",
-    "angle_id": "problem_agitate",
+    "angle_id": "contrarian",
     "quality": "final",
-    "session_id": "d2a7e89d",
+    "session_id": "8bf5d11d",
     "campaign_id": null,
     "campaign_name": "",
-    "created_at": "2026-08-04T18:05:01",
+    "created_at": "2026-08-05T11:30:39",
     "copy_data": {
-      "h1": "Tenaga makin surut selepas C-sec ketiga?",
-      "h2": "Sakit berlarutan, jadi beban pada suami?",
-      "cta": "Usah biarkan berlarutan.",
+      "h1": "Ramai sangka penat c-section itu lumrah... Sebenarnya, boleh disokong kuat.",
+      "h2": "Gamat bantu pemulihan badan, sokong penyembuhan dalaman.",
+      "cta": "Dapatkan kekuatan semula jadi.",
       "left_header": "",
       "left_bullets": [],
       "right_header": "",
       "right_bullets": [],
       "benefit_bullets": [
         "Sokong pemulihan luka.",
-        "Bantu bina tisu baharu.",
-        "Hasil kolagen semula jadi.",
-        "Bantu bina sel baharu."
+        "Bantu baiki tisu badan.",
+        "Sokong proses pemulihan badan.",
+        "Kekal keanjalan kulit."
       ],
       "_framework": "BENEFIT"
     }
