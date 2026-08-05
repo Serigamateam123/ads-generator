@@ -9561,5 +9561,83 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 131,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0131.png",
+    "label": "Winning Ad #131",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with text on the left and products on the right, overlapping slightly, with additional text and icons spanning the bottom",
+        "product_placement": "right and bottom-right of the canvas, including a drink glass, a water bottle, two large tubs, and three small sachets",
+        "headline_placement": "top-left quadrant of the canvas",
+        "cta_placement": "none",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "#F6F2EE",
+        "background_description": "photographic scene with a subtle light beige wall and surface",
+        "dominant_color": "#F6F2EE",
+        "dominant_description": "background",
+        "accent_color": "#F78574",
+        "accent_description": "headline text, 'The Corals' product packaging, drink, and one product sachet",
+        "text_color_headline": "#212121",
+        "text_color_subheadline": "#212121",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "bold",
+        "headline_case": "uppercase",
+        "headline_size": "very large",
+        "font_style": "sans-serif for main text, script for a personal note",
+        "headline_line_breaks": "stacked short lines",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A clean, modern, and reassuring brand feel emphasizing health and well-being through natural products."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": false,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "glass with iced drink, water bottle, spoonful of powder being poured, various product containers and sachets",
+        "product_style": "standing on surface"
+      },
+      "graphic_elements": [
+        "proper logo, top-left",
+        "outlined droplet icon for HYDRATES, middle-left",
+        "outlined sparkle icon for SUPPORTS GLOW, middle-left",
+        "outlined gut icon for GUT FRIENDLY, middle-left",
+        "outlined leaf icon for CLEAN & CONSCIOUS, middle-left",
+        "outlined lightning bolt icon for MORE ENERGY, middle-left",
+        "small pink heart icon next to 'Every single day.', bottom-left",
+        "row of five outlined icons at the very bottom (droplet, sparkle, gut, lightning bolt, shield) each paired with a benefit text"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large 'WHY PROPER?' headline",
+        "second_attention": "The main product containers ('The Greens', 'The Corals') and the drink being poured",
+        "third_attention": "The bulleted list of benefits on the left side of the image",
+        "fourth_attention": "The smaller product sachets and the icon row at the bottom"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO explicit call-to-action button or phrase like 'Shop Now'",
+        "NO complex or busy background scenery (e.g., outdoor landscapes, cityscapes)",
+        "NO comic-style graphics or speech bubbles",
+        "NO aggressive sales language or urgent tone",
+        "NO strong gradients or patterns on the main background",
+        "NO certifications or badges on products other than flavor tags"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
