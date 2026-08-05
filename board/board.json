@@ -1,5 +1,37 @@
 [
   {
+    "id": 379,
+    "filename": "board_00379.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "persona_id": "",
+    "angle_id": "authority",
+    "quality": "final",
+    "session_id": "d1077aef",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-08-05T13:48:31",
+    "copy_data": {
+      "h1": "Diperakui Halal, KKM, GMP.",
+      "h2": "Bioaktif marin, kolagen sokong proses penyembuhan badan.",
+      "cta": "Dipercayai untuk pemulihan.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan kulit.",
+        "Bantu bina tisu baharu.",
+        "Sokong pembaikan tisu.",
+        "Sokong pemulihan selepas bersalin."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 378,
     "filename": "board_00378.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
