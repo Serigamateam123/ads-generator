@@ -8,7 +8,7 @@
       "Pemulihan Selepas Bersalin Caesar"
     ],
     "style_cues": "Believable Malaysian home setting. Natural lighting. Follow the winning ad template's color palette and background exactly — do not impose warm or gold tones. The mood is a moment of relief or connection, not a staged product demonstration.",
-    "hidden": false
+    "hidden": true
   },
   "knee": {
     "label": "Sakit Lutut (Knee Pain)",
@@ -66,10 +66,10 @@
     "hidden": true
   },
   "c_section_recovery": {
-    "label": "C-Section Recovery (Ibu 3 Anak)",
-    "emoji": "😟",
-    "subtitle": "Ibu kepada 3 orang anak, pemulihan bersalin anak ketiga terlalu perlahan",
-    "narrative": "Ibu kepada 3 orang anak, 38, baru lepas c-section anak ketiga. Dengan dua lagi anak kecil di rumah yang perlukan perhatian, proses pemulihan kali ni rasa lambat sangat. Rumah dah macam tongkang pecah, dia penat sangat nak kejar anak-anak, rasa lesu dan pinggang pun lenguh. Dia dah cuba makan ubat hospital, tapi dia risau kalau lama sangat ambil, dan dia cuma nak dapat balik tenaga dan semangat nak uruskan keluarga dan rumah tangga seperti biasa tanpa rasa sakit atau jadi beban pada suaminya.",
+    "label": "C-Section Recovery",
+    "emoji": "",
+    "subtitle": "First Timer Mom",
+    "narrative": "Siti, 28, a first-time mum, just had a c-section and the recovery feels endless. Her mum is far away in kampung, and her husband is busy with work, leaving her feeling utterly alone and helpless, struggling to even stand up by herself. The wound aches constantly, making it hard to bond with her newborn, and she feels like a burden to everyone. She's tried basic pain relief from the hospital but it's not enough, and she worries about long-term use; all she wants is to feel strong enough to care for her baby and not be such a drain on her husband's energy.",
     "use_cases": [
       "Pemulihan Selepas Bersalin Caesar"
     ],
