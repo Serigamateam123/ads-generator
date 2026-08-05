@@ -9861,5 +9861,86 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 135,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0135.png",
+    "label": "Winning Ad #135",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right, with a large illustrative image on the left and vertically stacked information blocks on the right",
+        "product_placement": "The 'product' (baby burping positions) is demonstrated by the mother and baby in the large left image and three smaller images on the right.",
+        "headline_placement": "Top center of the image canvas.",
+        "cta_placement": "Bottom horizontal banner, spanning across the width of the image.",
+        "negative_space": "Moderate, particularly around the headline and between information blocks on the right side."
+      },
+      "colors": {
+        "background": "#F8F6F1",
+        "background_description": "A light cream/off-white flat solid background blended with a photographic scene on the left and an organic shape graphic on the top right.",
+        "dominant_color": "#F8F6F1",
+        "dominant_description": "The main background color of the ad.",
+        "accent_color": "#47667C",
+        "accent_description": "Dark blue-grey used for the bottom CTA banner and 'Burping Positions' headline text.",
+        "text_color_headline": "Easy Baby: #A9B28D, Burping Positions: #47667C",
+        "text_color_subheadline": "#4A4A4A",
+        "cta_color": "#47667C"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "very large",
+        "font_style": "serif for headline, sans-serif for body text, script for CTA text",
+        "headline_line_breaks": "stacked short lines ('Easy Baby' on one line, 'Burping Positions' on the next)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "calm, trustworthy, warm",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "The ad evokes a gentle, helpful, and reassuring brand feel for new parents seeking advice."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph combined with solid color blocks and illustrated organic shapes",
+        "overlay_style": "none on the main photo, but solid color blocks for information sections",
+        "props": "burp cloth, simple leaf illustration",
+        "product_style": "held by hand (baby held by mother)"
+      },
+      "graphic_elements": [
+        "small heart icon below the main headline, center",
+        "organic blob shape graphic top right in light peach (#F2C8BB)",
+        "leaf branch illustration on the organic blob, top right",
+        "numbered circles (1, 2, 3) in greenish-grey (#A9B28D) next to each burping position description",
+        "small horizontal line dividers next to the sub-sections on the right in light peach",
+        "heart icon in the 'Pause during feeds' info box, bottom right",
+        "heart icon on the bottom left of the CTA banner",
+        "bookmark icon on the bottom right of the CTA banner",
+        "hand-drawn underscore beneath 'for after-feed moments' in the CTA text"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large headline 'Easy Baby Burping Positions'",
+        "second_attention": "The main image of the mother and baby on the left",
+        "third_attention": "The three numbered burping position descriptions on the right",
+        "fourth_attention": "The 'Pause during feeds' tip and the 'Save this for after-feed moments' CTA"
+      },
+      "forbidden_elements": [
+        "NO bright, highly saturated colors",
+        "NO aggressive or urgent call-to-action language",
+        "NO complex or cluttered background patterns",
+        "NO speech bubbles or thought bubbles",
+        "NO dramatic or high-contrast lighting",
+        "NO strong geometric shapes for content blocks (only soft, rounded rectangles and organic shapes)",
+        "NO certification badges or star ratings",
+        "NO bold, all-caps body text",
+        "NO distressed or grungy textures"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
