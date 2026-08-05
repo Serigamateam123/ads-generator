@@ -11,3 +11,6 @@ cryptography==49.0.0   # only used by gen_cert.py (local HTTPS cert helper)
 # google-generativeai was listed here but is imported nowhere — this app calls the
 # Gemini REST endpoint directly with urllib, and the package is deprecated
 # upstream. Deliberately dropped.
+
+# testimonial download from a shared Google Drive folder (one-time / refresh)
+gdown==5.2.2

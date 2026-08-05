@@ -2822,7 +2822,37 @@ function renderBoard() {
     </div>`; return;
   }
 
-  items.forEach(b => {
+  // Paginate: render a chunk at a time so opening the Board doesn't fetch all
+  // (hundreds of) images at once. More are appended on demand via "Load more".
+  boardFiltered = items;
+  boardShown = 0;
+  renderMoreBoard();
+}
+
+const BOARD_CHUNK = 60;
+let boardFiltered = [];
+let boardShown = 0;
+
+function renderMoreBoard() {
+  const grid = document.getElementById('board-grid');
+  const oldBtn = document.getElementById('board-load-more');
+  if (oldBtn) oldBtn.remove();
+  const slice = boardFiltered.slice(boardShown, boardShown + BOARD_CHUNK);
+  slice.forEach(b => grid.appendChild(makeBoardCard(b)));
+  boardShown += slice.length;
+  if (boardShown < boardFiltered.length) {
+    const btn = document.createElement('button');
+    btn.id = 'board-load-more';
+    btn.className = 'btn-meta-copy show';
+    btn.style.cssText = 'grid-column:1/-1;margin:12px auto;max-width:320px;padding:12px';
+    btn.textContent = `Load more (${boardFiltered.length - boardShown} remaining)`;
+    btn.onclick = renderMoreBoard;
+    grid.appendChild(btn);
+  }
+  updateBoardToolbar();
+}
+
+function makeBoardCard(b) {
     const sel  = boardSelected.has(b.id);
     const card = document.createElement('div');
     card.className = 'board-card' + (sel ? ' selected' : '');
@@ -2869,10 +2899,7 @@ function renderBoard() {
     card.querySelector('.bca-cv').addEventListener('click',
       (e) => boardCardCanva(e, b.id, b.filename, b.label || 'Ad'));
     card.addEventListener('click', () => openBoardModal(b.id));
-    grid.appendChild(card);
-  });
-
-  updateBoardToolbar();
+    return card;
 }
 
 function boardToggleSelect(id) {

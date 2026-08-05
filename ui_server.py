@@ -4324,7 +4324,7 @@ def get_spend():
 
 @app.route("/api/personas", methods=["GET"])
 def get_personas():
-    return jsonify([{"id": k, **v} for k, v in PERSONAS.items()])
+    return jsonify([{"id": k, **v} for k, v in list(PERSONAS.items())])
 
 def _slugify(label: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "_", (label or "").strip().lower()).strip("_")
@@ -4376,7 +4376,7 @@ def delete_persona():
 
 @app.route("/api/angles", methods=["GET"])
 def get_angles():
-    return jsonify([{"id": k, **v} for k, v in ANGLES.items()])
+    return jsonify([{"id": k, **v} for k, v in list(ANGLES.items())])
 
 @app.route("/api/angles", methods=["POST"])
 def save_angle():
@@ -4402,7 +4402,7 @@ def delete_angle():
 
 @app.route("/api/styles", methods=["GET"])
 def get_styles():
-    return jsonify([{"id": k, **v} for k, v in STYLES.items()])
+    return jsonify([{"id": k, **v} for k, v in list(STYLES.items())])
 
 @app.route("/api/styles", methods=["POST"])
 def save_style():
@@ -4795,10 +4795,10 @@ def board_generate_meta(board_id):
     angle_id   = item.get("angle_id") or ""
     persona_entry = PERSONAS.get(persona_id) if persona_id else None
     if persona_entry is None:
-        persona_entry = next((v for v in PERSONAS.values() if v.get("label") == persona_label), None)
+        persona_entry = next((v for v in list(PERSONAS.values()) if v.get("label") == persona_label), None)
     angle_entry = ANGLES.get(angle_id) if angle_id else None
     if angle_entry is None:
-        angle_entry = next((v for v in ANGLES.values() if v.get("label") == angle_label), None)
+        angle_entry = next((v for v in list(ANGLES.values()) if v.get("label") == angle_label), None)
     persona_narrative = (persona_entry or {}).get("narrative", "")
     angle_psychology  = (angle_entry or {}).get("psychology", "")
     angle_instruction = (angle_entry or {}).get("copy_instruction", "")
