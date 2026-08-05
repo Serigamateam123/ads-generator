@@ -1,5 +1,37 @@
 [
   {
+    "id": 375,
+    "filename": "board_00375.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Comparison",
+    "style": "",
+    "persona_id": "c_section_recovery",
+    "angle_id": "comparison",
+    "quality": "final",
+    "session_id": "b642219d",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-08-05T12:31:53",
+    "copy_data": {
+      "h1": "Terbaring Lemah vs Bangkit Kuat Selepas Bersalin.",
+      "h2": "Dengan sokongan pemulihan dalaman menyeluruh anda.",
+      "cta": "Rasai Bezanya Sekarang.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan selepas bersalin.",
+        "Sokong pembaikan tisu.",
+        "Bantu bina tisu baharu.",
+        "Bantu hasil kolagen semula jadi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 374,
     "filename": "board_00374.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
