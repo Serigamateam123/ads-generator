@@ -1,5 +1,37 @@
 [
   {
+    "id": 385,
+    "filename": "board_00385.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "persona_id": "c_section_recovery",
+    "angle_id": "authority",
+    "quality": "final",
+    "session_id": "067c3dca",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-08-06T10:25:31",
+    "copy_data": {
+      "h1": "Ekstrak Gamat Kaya Kolagen Semula Jadi",
+      "h2": "Membantu pemulihan badan serta sokong penyembuhan dalaman.",
+      "cta": "Jeli Gamat: Terbukti Berkesan.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan kulit.",
+        "Sokong pemulihan badan.",
+        "Sokong pemulihan selepas bersalin.",
+        "Kekal keanjalan kulit."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 384,
     "filename": "board_00384.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
