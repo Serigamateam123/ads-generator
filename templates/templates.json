@@ -10021,5 +10021,78 @@
       ],
       "size": "1080x1620 portrait"
     }
+  },
+  {
+    "id": 137,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0137.png",
+    "label": "Winning Ad #137",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "group of four models standing under an umbrella, slightly staggered across the frame",
+        "product_placement": "clothing worn by models across the canvas, and a suitcase held by the rightmost model",
+        "headline_placement": "none",
+        "cta_placement": "none",
+        "negative_space": "moderate"
+      },
+      "colors": {
+        "background": "photographic scene with green grass, light sky, and muted background elements",
+        "background_description": "photographic scene (outdoor with grass, trees, and light fabric backdrop)",
+        "dominant_color": "#302E39",
+        "dominant_description": "the patterned dress of the leftmost model",
+        "accent_color": "#8A7F50",
+        "accent_description": "the top and trousers of the rightmost model",
+        "text_color_headline": "none",
+        "text_color_subheadline": "none",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "none",
+        "headline_case": "none",
+        "headline_size": "none",
+        "font_style": "none",
+        "headline_line_breaks": "none",
+        "subheadline_weight": "none",
+        "subheadline_size": "none"
+      },
+      "mood": {
+        "tone": "premium, calm, trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural",
+        "overall_feel": "A sophisticated and serene brand feel with a touch of traditional elegance, suggesting quality and timeless style."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": true,
+        "has_background_scene": true,
+        "background_type": "real photograph",
+        "overlay_style": "none",
+        "props": "traditional parasol umbrella, vintage brown suitcase",
+        "product_style": "worn by models, held by hand (suitcase)"
+      },
+      "graphic_elements": [],
+      "visual_hierarchy": {
+        "first_attention": "the faces of the four models, particularly the one looking directly at the viewer on the right",
+        "second_attention": "the patterned dark blue dress on the leftmost model",
+        "third_attention": "the large traditional umbrella overhead",
+        "fourth_attention": "the brown vintage suitcase"
+      },
+      "forbidden_elements": [
+        "NO explicit text/headlines",
+        "NO logos",
+        "NO modern accessories",
+        "NO bright or neon colors",
+        "NO harsh shadows or dramatic lighting",
+        "NO busy patterns other than those on the clothing",
+        "NO graphic overlays or digital effects",
+        "NO discount badges or urgent messaging",
+        "NO close-ups of specific product details without a model",
+        "NO product shown floating",
+        "NO product shown in isolation"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
