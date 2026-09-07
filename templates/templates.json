@@ -10094,5 +10094,75 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 138,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0138.png",
+    "label": "Winning Ad #138",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "split left-right with human on left and product on right, generous background space",
+        "product_placement": "right side, slightly below center, held by a hand",
+        "headline_placement": "none (text is on product label)",
+        "cta_placement": "none",
+        "negative_space": "generous 40%+"
+      },
+      "colors": {
+        "background": "#FDC81D",
+        "background_description": "flat solid",
+        "dominant_color": "#FDC81D",
+        "dominant_description": "background",
+        "accent_color": "#D4AC64",
+        "accent_description": "skin tone of the human subject, product pills",
+        "text_color_headline": "#000000",
+        "text_color_subheadline": "#000000",
+        "cta_color": "none"
+      },
+      "typography": {
+        "headline_weight": "medium",
+        "headline_case": "title case",
+        "headline_size": "small",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "one long line (on label)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "smaller than headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "bright studio",
+        "overall_feel": "A calm and confident brand promoting wellness and essential supplements for pregnant women."
+      },
+      "composition": {
+        "style": "asymmetric",
+        "has_human": true,
+        "has_background_scene": false,
+        "background_type": "flat solid color",
+        "overlay_style": "none",
+        "props": "none",
+        "product_style": "held by hand"
+      },
+      "graphic_elements": [],
+      "visual_hierarchy": {
+        "first_attention": "the pregnant belly (human element)",
+        "second_attention": "the product bottle",
+        "third_attention": "the text on the product label",
+        "fourth_attention": "none"
+      },
+      "forbidden_elements": [
+        "NO speech bubbles",
+        "NO sunburst background",
+        "NO certification badges as separate graphic elements",
+        "NO busy patterns",
+        "NO complex photographic scenes",
+        "NO strong shadows or dramatic lighting",
+        "NO overlay text on the background",
+        "NO heavy text blocks"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
