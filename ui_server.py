@@ -2953,14 +2953,23 @@ structure, background and style; just place the quote where a review/quote natur
                  "age range, tudung/hijab if a Malay woman, life stage, build and setting. Cast them to "
                  "LOOK LIKE that persona.")
     else:
-        _cast = ("Cast Malaysian people who reflect this brand's customers — primarily Malay women "
-                 "(occasionally Chinese), clearly Asian/Malaysian; Malay women wear a hijab/tudung by default.")
+        _cast = ("Cast Malaysian Malay women who reflect this brand's customers — clearly Asian/Malaysian, "
+                 "each wearing a hijab/tudung and modest dress (see the hard rules below).")
     casting_block = f"""
 
-━━━ PEOPLE — ALWAYS RECAST AS MALAYSIAN (never copy IMAGE 2's models) ━━━
+━━━ PEOPLE — ALWAYS RECAST AS MALAYSIAN, MODEST MUSLIM DRESS (never copy IMAGE 2's models) ━━━
 If any person appears: do NOT reproduce IMAGE 2's people — not their faces, ethnicity, skin tone, hair,
 or outfits. Generate NEW Malaysian people. {_cast}
-Never use Western/Caucasian or Indian/South-Asian casting unless the brand knowledge above explicitly asks."""
+HARD CASTING RULES — these override IMAGE 2 and any template, and apply to EVERY person in frame
+(main model, anyone in the background, any face in a testimonial):
+- Appearance is Southeast Asian / Malaysian. Never Western/Caucasian, never Indian/South-Asian,
+  unless the brand knowledge above explicitly asks otherwise.
+- ANY WOMAN shown MUST be dressed modestly in proper Muslim attire: a neatly worn hijab/tudung that
+  fully covers the hair, ears and neck; long sleeves to the wrists; loose, non-figure-hugging clothing
+  covering to below the hip; NO exposed arms, legs, chest, cleavage or midriff; nothing tight, sheer,
+  short, or revealing. No woman is ever shown without a hijab and without her body modestly covered.
+- Men are dressed neatly and modestly too (no bare chest, no singlets).
+Keep everyone wholesome and family-appropriate for a Malaysian Muslim audience."""
 
     foreign_strip_block = """
 
@@ -3019,7 +3028,7 @@ PRODUCT: Feature only the product from the PRODUCT image. Do not change or repla
 BACKGROUND: Clean soft gradient, professional health product style.
 PRODUCT PLACEMENT: centered, large, clear hero shot.
 
-Variation for this slot: {variation_note}{copy_block}
+Variation for this slot: {variation_note}{copy_block}{casting_block}
 
 Rules:
 - Product centered and clearly visible
