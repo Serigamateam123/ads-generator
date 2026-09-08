@@ -1,5 +1,37 @@
 [
   {
+    "id": 392,
+    "filename": "board_00392.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Authority / Expertise",
+    "style": "",
+    "persona_id": "c_section_recovery",
+    "angle_id": "authority",
+    "quality": "final",
+    "session_id": "cd85e71a",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-09-08T10:56:15",
+    "copy_data": {
+      "h1": "Ekstrak Gamat Semula Jadi, Diperakui Halal, KKM.",
+      "h2": "Kolagen, Saponin Sokong Proses Penyembuhan Dalaman.",
+      "cta": "Pilih Pemulihan Terbukti, Dipercayai.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan luka.",
+        "Bantu bina tisu baharu.",
+        "Bantu bina sel baharu.",
+        "Bantu hasil kolagen semula jadi."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 391,
     "filename": "board_00391.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
