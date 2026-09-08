@@ -1,5 +1,37 @@
 [
   {
+    "id": 394,
+    "filename": "board_00394.png",
+    "label": "Ad 1 — Jeli Gamat 550ML",
+    "problem": "Pemulihan Selepas Bersalin Caesar",
+    "persona": "C-Section Recovery",
+    "angle": "Curiosity",
+    "style": "",
+    "persona_id": "c_section_recovery",
+    "angle_id": "curiosity",
+    "quality": "final",
+    "session_id": "dd4ea715",
+    "campaign_id": null,
+    "campaign_name": "",
+    "created_at": "2026-09-08T11:02:24",
+    "copy_data": {
+      "h1": "Mengapa pemulihan C-sec terasa lama?",
+      "h2": "Kuatkan badan untuk pulih, bukan terus menahan sakit.",
+      "cta": "Terokai sokongan dalaman anda.",
+      "left_header": "",
+      "left_bullets": [],
+      "right_header": "",
+      "right_bullets": [],
+      "benefit_bullets": [
+        "Sokong pemulihan selepas bersalin.",
+        "Sokong pembaikan tisu.",
+        "Sokong pemulihan kulit.",
+        "Bantu bina sel baharu."
+      ],
+      "_framework": "BENEFIT"
+    }
+  },
+  {
     "id": 393,
     "filename": "board_00393.png",
     "label": "Ad 1 — Jeli Gamat 550ML",
