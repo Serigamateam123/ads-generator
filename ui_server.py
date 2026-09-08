@@ -918,9 +918,18 @@ def brand_to_prompt_block(brand: dict) -> str:
     # ── Identity
     if brand.get("brand_name"):
         lines.append(f"\nBRAND: {brand['brand_name']}")
-        lines.append(f"⚠️ HARD RULE: \"{brand['brand_name']}\" is the ONLY brand name/wordmark permitted "
-                     f"anywhere in this ad. Any other brand name, logo, or wordmark — especially one copied "
-                     f"from a reference image — is strictly forbidden.")
+        # Do NOT stamp a separate brand logo/wordmark into the ad. The brand may
+        # appear ONLY where it naturally sits on the product's own label (IMAGE 1);
+        # everywhere else in the composition it must be absent. Previously this rule
+        # said the brand name was "the ONLY wordmark permitted anywhere in this ad",
+        # which actively invited Gemini to add a "{brand_name}" logo in a header/
+        # corner/badge — the user does not want that.
+        lines.append(f"⚠️ HARD RULE — NO ADDED BRAND LOGO: do NOT draw, add, place or invent a separate "
+                     f"\"{brand['brand_name']}\" logo, wordmark, header, corner badge or watermark anywhere "
+                     f"in the ad. The ONLY place \"{brand['brand_name']}\" may appear is where it already is "
+                     f"on the product's own packaging label in IMAGE 1 — reproduce that label as-is, but do "
+                     f"not duplicate it or add the brand name anywhere else. And never copy any OTHER brand "
+                     f"name, logo, or wordmark from a reference image.")
     if brand.get("_active_product_name"):
         lines.append(f"PRODUCT: {brand['_active_product_name']}")
     if brand.get("tagline"):
