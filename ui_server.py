@@ -924,12 +924,15 @@ def brand_to_prompt_block(brand: dict) -> str:
         # said the brand name was "the ONLY wordmark permitted anywhere in this ad",
         # which actively invited Gemini to add a "{brand_name}" logo in a header/
         # corner/badge — the user does not want that.
-        lines.append(f"⚠️ HARD RULE — NO ADDED BRAND LOGO: do NOT draw, add, place or invent a separate "
-                     f"\"{brand['brand_name']}\" logo, wordmark, header, corner badge or watermark anywhere "
-                     f"in the ad. The ONLY place \"{brand['brand_name']}\" may appear is where it already is "
-                     f"on the product's own packaging label in IMAGE 1 — reproduce that label as-is, but do "
-                     f"not duplicate it or add the brand name anywhere else. And never copy any OTHER brand "
-                     f"name, logo, or wordmark from a reference image.")
+        lines.append(f"⚠️ HARD RULE — NO ADDED BRAND LOGO ANYWHERE: the ONLY pixels in the whole image that "
+                     f"may show \"{brand['brand_name']}\" are the ones physically printed on the product's own "
+                     f"packaging label in IMAGE 1. Reproduce that label as-is. Do NOT place, draw, print, "
+                     f"embroider, stitch, stamp, emboss or invent the \"{brand['brand_name']}\" name or logo "
+                     f"ANYWHERE ELSE — specifically NOT on the person's shirt, top, hijab/tudung, sleeve, "
+                     f"apron or any clothing or fabric; NOT on a header, title, corner, badge, sticker, "
+                     f"watermark or caption; NOT on props, plates, cups, the table, furniture, a wall, sign, "
+                     f"banner or the background. If a template or reference image shows a logo on clothing or "
+                     f"in the scene, leave that area blank. Never copy any OTHER brand's name or logo either.")
     if brand.get("_active_product_name"):
         lines.append(f"PRODUCT: {brand['_active_product_name']}")
     if brand.get("tagline"):
