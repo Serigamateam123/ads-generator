@@ -10164,5 +10164,81 @@
       ],
       "size": "1080x1350 portrait"
     }
+  },
+  {
+    "id": 139,
+    "path": "/Users/nrmalisa/Applications/Ads Generator/templates/tpl_0139.png",
+    "label": "Winning Ad #139",
+    "section": "Uploaded",
+    "source": "image.png",
+    "page": 0,
+    "extracted_style": {
+      "layout": {
+        "structure": "single column, with products anchored at the bottom on a platform",
+        "product_placement": "lower-mid to bottom-right of the canvas, standing on a white platform",
+        "headline_placement": "upper-middle section, slightly to the left",
+        "cta_placement": "bottom-left corner",
+        "negative_space": "moderate, providing ample breathing room around text and products"
+      },
+      "colors": {
+        "background": "#8198E4",
+        "background_description": "textured, muted periwinkle blue with subtle abstract lines",
+        "dominant_color": "#8198E4",
+        "dominant_description": "background color",
+        "accent_color": "#E8FF00",
+        "accent_description": "headline text and circular elements on product labels",
+        "text_color_headline": "#E8FF00",
+        "text_color_subheadline": "#FFFFFF",
+        "cta_color": "#FFFFFF"
+      },
+      "typography": {
+        "headline_weight": "medium to bold",
+        "headline_case": "Mixed (Title Case, Uppercase for 'GLP-1', and Italicized for 'Tablet')",
+        "headline_size": "very large",
+        "font_style": "sans-serif",
+        "headline_line_breaks": "stacked short lines (two lines)",
+        "subheadline_weight": "regular",
+        "subheadline_size": "small compared to headline"
+      },
+      "mood": {
+        "tone": "trustworthy",
+        "energy_level": "low energy quiet confident",
+        "lighting": "flat natural, soft",
+        "overall_feel": "A clean, modern, and reassuring brand feel for a health and wellness product."
+      },
+      "composition": {
+        "style": "balanced",
+        "has_human": false,
+        "has_background_scene": false,
+        "background_type": "flat solid color with subtle texture and abstract lines",
+        "overlay_style": "none",
+        "props": "white rectangular platform",
+        "product_style": "standing on a white rectangular platform"
+      },
+      "graphic_elements": [
+        "White 'w' logo in the top-left corner",
+        "Subtle, thin, light blue abstract lines/curves in the background (e.g., diagonal lines, partial circles)",
+        "Yellow 'w' logo on each product label",
+        "Yellow abstract curved/circular shapes on each product label"
+      ],
+      "visual_hierarchy": {
+        "first_attention": "The large yellow headline 'Meet Your GLP-1 Tablet'",
+        "second_attention": "The product bottles in the lower half of the image",
+        "third_attention": "The white subheadline 'A needle-free option...'",
+        "fourth_attention": "The 'Learn more' call to action"
+      },
+      "forbidden_elements": [
+        "NO human models",
+        "NO busy photographic backgrounds",
+        "NO serif fonts",
+        "NO gradient background (the background is textured but a solid color)",
+        "NO certification badges in a prominent position",
+        "NO bright, distracting colors beyond the primary palette",
+        "NO direct arrows or pointers",
+        "NO speech bubbles",
+        "NO discount callouts"
+      ],
+      "size": "1080x1350 portrait"
+    }
   }
 ]
